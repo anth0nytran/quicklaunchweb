@@ -175,12 +175,25 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Build URLs
+    const successUrl = `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${siteUrl}/cancel`;
+
+    // Debug logging
+    console.log("Checkout config:", {
+      siteUrl,
+      successUrl,
+      cancelUrl,
+      priceId,
+      lineItemsCount: lineItems.length,
+    });
+
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: lineItems,
-      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/cancel`,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       customer_email: email || undefined,
