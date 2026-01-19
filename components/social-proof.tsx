@@ -61,21 +61,21 @@ type Project = {
 const projects: Project[] = [
   {
     name: "Tomi Jewelry",
-    type: "E-commerce Website",
+    type: "Shopify Store Launch",
     url: "tomijewelry.com",
-    tags: ["Shopify Integration", "Inventory Sync"],
+    tags: ["Accounts + Cart Setup", "Analytics Tracking"],
   },
   {
     name: "Diamond Street Realty",
-    type: "Landing Page",
+    type: "Seller Lead Machine",
     url: "diamondstreetrealty.com",
-    tags: ["Lead Capture", "Map Integration"],
+    tags: ["Home Valuation Funnel", "CRM + Automation"],
   },
   {
-    name: "BeCreativesCo",
-    type: "Marketing Agency",
+    name: "Becreativesco",
+    type: "Agency Site Built To Book",
     url: "becreativesco.com",
-    tags: ["3-Page Site", "Portfolio"],
+    tags: ["Portfolio + Video Showcase", "Automated Lead Capture"],
   },
 ];
 
@@ -87,10 +87,10 @@ export function SocialProofSection() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mb-12 md:text-center">
           <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
-            Recent <span className="text-accent">Launches</span>
+            Recently <span className="text-accent">Shipped</span>
           </h2>
           <p className="mt-3 text-secondary">
-            See what we've built for other businesses this month.
+          Real businesses. Real launches. Built fast — engineered to convert.
           </p>
         </div>
 

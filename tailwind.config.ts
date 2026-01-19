@@ -70,7 +70,19 @@ const config: Config = {
       
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-lato)",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
+        heading: [
+          "var(--font-montserrat)",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

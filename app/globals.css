@@ -100,6 +100,15 @@
 }
 
 @layer components {
+  /* Typography - Montserrat for headings and buttons */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  }
+  
+  button, .btn, [role="button"], summary {
+    font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  }
+  
   /* Glass surface base */
   .glass {
     background: var(--glass-bg);

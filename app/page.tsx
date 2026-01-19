@@ -628,6 +628,10 @@ export default function HomePage() {
   const [customError, setCustomError] = useState("");
   const [customSuccess, setCustomSuccess] = useState("");
 
+  // FAQ search and filter state
+  const [faqSearch, setFaqSearch] = useState("");
+  const [faqCategory, setFaqCategory] = useState("all");
+
   const year = useMemo(() => new Date().getFullYear(), []);
 
   // Open upsell modal
@@ -883,16 +887,120 @@ export default function HomePage() {
   ];
 
   const faqs = [
-    { q: "Is this actually free?", a: "Yes. We build the website for $0 down. You only pay the monthly hosting + support. If it's not a fit, you can cancel anytime." },
-    { q: "Why monthly instead of upfront?", a: "Because most websites fail when they never get updated. Monthly keeps your site fast, supported, and improving so it stays effective, not outdated." },
-    { q: "What if I cancel?", a: "No problem. There are no contracts. Cancel anytime and you won't be billed again." },
-    { q: "Do I own it?", a: "You own your domain, branding, and any content you provide. Your website runs on our hosting + support plan while you're subscribed." },
-    { q: "How fast can you launch?", a: "We launch within 48 hours after you submit your info (services, photos, contact details)." },
-    { q: "Can I request changes?", a: "Yes. Send changes anytime. We handle updates quickly (Pro includes priority edits)." },
-    { q: "What does support include?", a: "Support means we keep your website live, fast, and working properly - hosting, fixes, updates, and performance maintenance are included. You also get monthly content updates depending on your plan." },
-    { q: "What counts as a content update?", a: "Small updates like text changes, photo swaps, button/link changes, hours, services, and testimonials." },
-    { q: "What's not included?", a: "New pages, major redesigns, custom features, or integrations. Those can be added anytime as a paid upgrade." },
-    { q: "Can you use my current domain?", a: "Yes. Keep your current domain or use a new one - we'll connect everything so customers can find you." },
+    // Pricing & Billing
+    { 
+      q: "Is the website really free?", 
+      a: "Yes. The build fee is waived when you start a plan. You only pay monthly for hosting + support.",
+      category: "pricing"
+    },
+    { 
+      q: "What's the catch?", 
+      a: "No catch. It's simple: $0 down to build, then $99/mo (or $149/mo) to keep it live, supported, and updated.",
+      category: "pricing"
+    },
+    { 
+      q: "Why do you charge monthly?", 
+      a: "Because most \"one-time websites\" get outdated fast. Monthly covers hosting, fixes, and support so your site stays fast and working.",
+      category: "pricing"
+    },
+    { 
+      q: "Can I cancel anytime?", 
+      a: "Yes. No contracts. Cancel anytime through the Stripe portal (or email support if needed).",
+      category: "pricing"
+    },
+    { 
+      q: "What happens if I cancel?", 
+      a: "We stop billing you going forward, and your hosted site may be taken offline after your billing period ends.",
+      category: "pricing"
+    },
+    // Plans & What's Included
+    { 
+      q: "What do I get with Starter vs Pro?", 
+      a: "Starter ($99/mo): 1-page site + local SEO foundation + 1 content update/month.\nPro ($149/mo): 3-page site + stronger local structure + priority queue + 3 content updates/month.",
+      category: "plans"
+    },
+    { 
+      q: "What counts as a \"content update\"?", 
+      a: "Small changes like text edits, photo swaps, button/link updates, hours, services, or adding a testimonial.",
+      category: "plans"
+    },
+    { 
+      q: "What's not included?", 
+      a: "Big changes like new pages beyond your plan, full redesigns, custom features, ecommerce, or integrations. If you need that, we'll quote it as a project.",
+      category: "plans"
+    },
+    { 
+      q: "Can I request changes anytime?", 
+      a: "Yes — submit requests through our support form. Plans include monthly content updates, and Pro is handled faster via priority queue.",
+      category: "plans"
+    },
+    // Getting Started
+    { 
+      q: "How fast can you launch it?", 
+      a: "Typically 48 hours after you send your business details (services, contact info, photos/logo).",
+      category: "getting-started"
+    },
+    { 
+      q: "Do I need a domain?", 
+      a: "Yes — you'll need a domain (like yourbusiness.com). If you don't have one, we'll send a quick guide to buy it.",
+      category: "getting-started"
+    },
+    { 
+      q: "Can you connect my domain for me?", 
+      a: "Yes. If you already have a domain, you can either:\n\nDo it yourself (free) with our instructions, or\n\nWe connect it for you ($99 one-time)",
+      category: "getting-started"
+    },
+    // How It Works
+    { 
+      q: "How do leads come in?", 
+      a: "Through tap-to-call buttons and form submissions on your website.",
+      category: "how-it-works"
+    },
+    { 
+      q: "Where do form submissions go?", 
+      a: "By default, form leads go straight to your email so you can respond fast.",
+      category: "how-it-works"
+    },
+    { 
+      q: "Do you offer text message lead alerts?", 
+      a: "Yes — add Instant Lead Texts to get new leads texted to your phone instantly.",
+      category: "how-it-works"
+    },
+    { 
+      q: "Can you add Google Analytics / tracking?", 
+      a: "Yes. We can add Umami or Google Analytics—especially for Pro. If you have tracking scripts, we'll plug them in.",
+      category: "how-it-works"
+    },
+    // Results & Ownership
+    { 
+      q: "Do I own the website?", 
+      a: "You own your business info and branding, but the website is provided as a subscription service while active. If you want full ownership, you can request a website buyout.",
+      category: "results"
+    },
+    { 
+      q: "Do you do SEO?", 
+      a: "We build every site with a local SEO foundation (fast load, clean structure, service keywords). We don't promise rankings, but we set you up correctly from day one.",
+      category: "results"
+    },
+    { 
+      q: "Will this get me more calls?", 
+      a: "That's the goal — we build your site to convert visitors into calls and inquiries. Results depend on your market, offer, competition, and follow-up.",
+      category: "results"
+    },
+    { 
+      q: "Who is this best for?", 
+      a: "Local service businesses that want a clean website fast that helps drive calls and inquiries (HVAC, roofing, salons, medspas, dentists, auto, contractors, and more).",
+      category: "results"
+    },
+  ];
+
+  const faqCategories = [
+    { id: "all", label: "All Questions" },
+    { id: "pricing", label: "Pricing & Billing" },
+    { id: "plans", label: "Plans & What's Included" },
+    { id: "getting-started", label: "Getting Started" },
+    { id: "how-it-works", label: "How It Works" },
+    { id: "results", label: "Results & Ownership" },
   ];
 
   const stats = [
@@ -1086,7 +1194,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                  1-page website built to turn visitors into calls. Hosting + support included. Cancel anytime.
+                  1-page website built to turn visitors into leads. Hosting + support included. Cancel anytime.
                   </p>
                 </div>
 
@@ -1237,26 +1345,102 @@ export default function HomePage() {
         <section id="faq" className="relative px-6 py-24 md:py-32">
           <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
           
-          <div className="relative z-10 mx-auto max-w-3xl">
-            <h2 className="mb-12 text-center text-3xl font-bold text-white md:text-4xl">
+          <div className="relative z-10 mx-auto max-w-4xl">
+            <h2 className="mb-8 text-center text-3xl font-bold text-white md:text-4xl">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-3">
-              {faqs.map((item, i) => (
-                <details
-                  key={i}
-                  className="group rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-colors open:bg-white/[0.05] hover:border-white/[0.12]"
-                >
-                  <summary className="flex cursor-pointer items-center justify-between p-5 font-medium text-white text-sm list-none">
-                    {item.q}
-                    <ChevronDownIcon className="h-4 w-4 text-muted transition-transform duration-200 group-open:rotate-180 shrink-0 ml-4" />
-                  </summary>
-                  <div className="px-5 pb-5 text-sm text-secondary">
-                    {item.a}
+            
+            {/* Search Bar - Sticky on scroll */}
+            <div className="sticky top-4 z-20 mb-8">
+              <div className="relative">
+                <GlassCard className="p-4">
+                  <div className="flex items-center gap-3">
+                    <svg className="h-5 w-5 text-muted shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input
+                      type="text"
+                      placeholder="Search questions..."
+                      value={faqSearch}
+                      onChange={(e) => setFaqSearch(e.target.value)}
+                      className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-muted text-sm"
+                    />
+                    {faqSearch && (
+                      <button
+                        onClick={() => setFaqSearch("")}
+                        className="text-muted hover:text-white transition-colors"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
-                </details>
-              ))}
+                </GlassCard>
+              </div>
             </div>
+
+            {/* Category Filters */}
+            <div className="mb-8">
+              <div className="flex items-center gap-0 text-sm">
+                {faqCategories.map((cat, index) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setFaqCategory(cat.id)}
+                    className={`px-4 py-1.5 transition-all duration-200 relative ${
+                      faqCategory === cat.id
+                        ? "text-accent font-semibold"
+                        : "text-secondary hover:text-white"
+                    } ${
+                      index < faqCategories.length - 1 
+                        ? "border-r border-white/10" 
+                        : ""
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Filtered FAQ List */}
+            {(() => {
+              const filteredFaqs = faqs.filter((item) => {
+                const matchesCategory = faqCategory === "all" || item.category === faqCategory;
+                const matchesSearch = 
+                  !faqSearch || 
+                  item.q.toLowerCase().includes(faqSearch.toLowerCase()) ||
+                  item.a.toLowerCase().includes(faqSearch.toLowerCase());
+                return matchesCategory && matchesSearch;
+              });
+
+              if (filteredFaqs.length === 0) {
+                return (
+                  <GlassCard className="p-8 text-center">
+                    <p className="text-secondary">No questions found. Try adjusting your search or category filter.</p>
+                  </GlassCard>
+                );
+              }
+
+              return (
+                <div className="space-y-3">
+                  {filteredFaqs.map((item, i) => (
+                    <details
+                      key={i}
+                      className="group rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-200 open:bg-white/[0.05] hover:border-white/[0.12] hover:bg-white/[0.03]"
+                    >
+                      <summary className="flex cursor-pointer items-center justify-between p-5 font-medium text-white text-sm list-none">
+                        <span className="pr-4">{item.q}</span>
+                        <ChevronDownIcon className="h-4 w-4 text-muted transition-transform duration-200 group-open:rotate-180 shrink-0" />
+                      </summary>
+                      <div className="px-5 pb-5 text-sm text-secondary whitespace-pre-line leading-relaxed">
+                        {item.a}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       </main>
