@@ -28,7 +28,8 @@ export default function SupportPage() {
   const [supportError, setSupportError] = useState("");
   const [supportSuccess, setSupportSuccess] = useState("");
 
-  const submitSupportRequest = useCallback(async () => {
+  const submitSupportRequest = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setSupportError("");
     setSupportSuccess("");
 
@@ -47,14 +48,28 @@ export default function SupportPage() {
     }
 
     setSupportLoading(true);
+    setSupportSuccess("Sending....");
+    
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      const res = await fetch("/api/support", {
+      // Use web3forms to send email
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_SUPPORT_ACCESS_KEY;
+      if (!accessKey) {
+        throw new Error("Web3Forms access key is not configured.");
+      }
+
+      const formData = new FormData();
+      formData.append("access_key", accessKey);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("message", message);
+      formData.append("subject", "Support Request - QuickLaunchWeb");
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: formData,
         signal: controller.signal,
       });
 
@@ -62,18 +77,18 @@ export default function SupportPage() {
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        throw new Error(data?.error || `Server error (${res.status})`);
+      if (!res.ok || !data.success) {
+        throw new Error(data?.message || `Server error (${res.status})`);
       }
 
-      setSupportSuccess("Thanks! We'll get back to you soon.");
+      setSupportSuccess("Form Submitted Successfully");
       setSupportForm(createEmptySupportForm());
     } catch (error) {
       if (error instanceof Error) {
         if (error.name === "AbortError") {
           setSupportError("Request timed out. Please try again.");
         } else {
-          setSupportError(error.message);
+          setSupportError(error.message || "Failed to send request. Please try again.");
         }
       } else {
         setSupportError("An unexpected error occurred. Please try again.");
@@ -108,10 +123,7 @@ export default function SupportPage() {
         <GlassCard variant="elevated" className="p-6 md:p-10">
           <form
             className="space-y-3"
-            onSubmit={(e) => {
-              e.preventDefault();
-              submitSupportRequest();
-            }}
+            onSubmit={submitSupportRequest}
           >
             <GlassInput
               type="text"

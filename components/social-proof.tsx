@@ -81,7 +81,7 @@ const projects: Project[] = [
 
 export function SocialProofSection() {
   return (
-    <section className="relative px-6 py-24 md:py-32 overflow-hidden">
+    <section id="work" className="relative px-6 py-24 md:py-32 overflow-hidden">
       <AmbientGlow color="white" position="center" intensity="subtle" className="opacity-30" />
 
       <div className="relative z-10 mx-auto max-w-7xl">

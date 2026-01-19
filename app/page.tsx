@@ -61,6 +61,17 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email) && email.length <= 254;
 }
 
+function normalizeWebsite(website: string): string {
+  if (!website.trim()) return "";
+  const trimmed = website.trim();
+  // If it already starts with http:// or https://, return as is
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  // Otherwise, add https://
+  return `https://${trimmed}`;
+}
+
 // =============================================================================
 // Icon Components
 // =============================================================================
@@ -808,17 +819,27 @@ export default function HomePage() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      const res = await fetch("/api/custom", {
+      // Use web3forms to send email
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+      if (!accessKey) {
+        throw new Error("Web3Forms access key is not configured.");
+      }
+
+      const formData = new FormData();
+      formData.append("access_key", accessKey);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", customForm.phone.trim());
+      formData.append("company", customForm.company.trim());
+      // Normalize website URL - add https:// if missing, but keep it optional
+      const website = customForm.website.trim();
+      formData.append("website", website ? normalizeWebsite(website) : "");
+      formData.append("message", customForm.details.trim());
+      formData.append("subject", "Custom Website Request - QuickLaunchWeb");
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          phone: customForm.phone.trim(),
-          company: customForm.company.trim(),
-          website: customForm.website.trim(),
-          details: customForm.details.trim(),
-        }),
+        body: formData,
         signal: controller.signal,
       });
 
@@ -826,8 +847,8 @@ export default function HomePage() {
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        throw new Error(data?.error || `Server error (${res.status})`);
+      if (!res.ok || !data.success) {
+        throw new Error(data?.message || `Server error (${res.status})`);
       }
 
       setCustomSuccess("Thanks! We'll reach out to book a call.");
@@ -837,7 +858,7 @@ export default function HomePage() {
         if (error.name === "AbortError") {
           setCustomError("Request timed out. Please try again.");
         } else {
-          setCustomError(error.message);
+          setCustomError(error.message || "Failed to send request. Please try again.");
         }
       } else {
         setCustomError("An unexpected error occurred. Please try again.");
@@ -1031,6 +1052,7 @@ export default function HomePage() {
           {/* Nav links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
             <Link href="#features" className="hover:text-white transition-colors duration-200">Features</Link>
+            <Link href="#work" className="hover:text-white transition-colors duration-200">Work</Link>
             <Link href="#how-it-works" className="hover:text-white transition-colors duration-200">How it Works</Link>
             <Link href="#pricing" className="hover:text-white transition-colors duration-200">Pricing</Link>
             <Link href="#faq" className="hover:text-white transition-colors duration-200">FAQ</Link>
@@ -1714,12 +1736,12 @@ export default function HomePage() {
               placeholder="Company (optional)"
             />
             <GlassInput
-              type="url"
+              type="text"
               value={customForm.website}
               onChange={(e) =>
                 setCustomForm((prev) => ({ ...prev, website: e.target.value }))
               }
-              placeholder="Current Website (optional)"
+              placeholder="Current Website (e.g., example.com or www.example.com)"
             />
             <textarea
               value={customForm.details}
