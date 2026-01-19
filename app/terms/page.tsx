@@ -31,8 +31,8 @@ export default function TermsPage() {
               <p><span className="text-white font-medium">Owner/Operator:</span> Anthony Tran (QuickLaunchWeb, we, us)</p>
             </div>
             <div className="mt-4 space-y-2 md:mt-0">
-              <p><span className="text-white font-medium">Website:</span> quicklaunchweb.com</p>
-              <p><span className="text-white font-medium">Support Form:</span> quicklaunchweb.com/support</p>
+              <p><span className="text-white font-medium">Website:</span> quicklaunchweb.us</p>
+              <p><span className="text-white font-medium">Support Form:</span> quicklaunchweb.us/support</p>
               <p><span className="text-white font-medium">Support Email:</span> anthotranllc@gmail.com</p>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-base font-semibold text-white">8) Support + Content Updates (Fair Use)</h2>
               <p className="mt-3">
-                Support is provided primarily through our Support Form: quicklaunchweb.com/support
+                Support is provided primarily through our Support Form: quicklaunchweb.us/support
               </p>
               <p className="mt-2">If something urgent comes up, email: anthotranllc@gmail.com</p>
               <p className="mt-4">Content Updates are small changes such as:</p>
@@ -174,9 +174,10 @@ export default function TermsPage() {
             <section>
               <h2 className="text-base font-semibold text-white">9) Response Times (No Guaranteed SLA)</h2>
               <p className="mt-3">
-                We aim to respond and complete requests promptly, but we do not guarantee exact response
-                times or delivery timelines. Turnaround depends on request complexity, workload, and
-                whether onboarding assets were provided.
+                <strong>Launch Time Target:</strong> We aim to deliver your initial website within 48 hours AFTER you submit all required onboarding assets (logo, services, service area, contact info, photos).
+              </p>
+              <p className="mt-3">
+                <strong>Delays:</strong> If assets are missing or revisions are requested, timelines may extend.
               </p>
             </section>
 

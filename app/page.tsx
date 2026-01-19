@@ -1201,7 +1201,7 @@ export default function HomePage() {
               {/* Starter Plan */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">1-Page Site</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">Basic Presence</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Starter</h3>
                   <p className="mt-4 text-xs uppercase tracking-wider text-muted">TYPICAL BUILD FEE</p>
                   <div className="mt-2 flex items-center gap-3">
@@ -1216,7 +1216,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                  1-page website built to turn visitors into leads. Hosting + support included. Cancel anytime.
+                  Basic presence website built to turn visitors into leads. Hosting + support included. Cancel anytime.
                   </p>
                 </div>
 
@@ -1285,12 +1285,15 @@ export default function HomePage() {
                     "Everything in Starter",
                     "3 pages (Home + Services + Contact)",
                     "Enhanced local SEO structure",
+                    "Call + form tracking installed",
+                    "Google Analytics / Umami included",
+                    "Priority build queue (24–48h edits)",
                     "3 Content Updates / month",
                     "Cancel anytime. No contracts.",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "3 Content Updates / month" ? (
+                      {item === "3 Content Updates / month" || item === "Priority build queue (24–48h edits)" ? (
                         <span className="font-bold">{item}</span>
                       ) : (
                         item
