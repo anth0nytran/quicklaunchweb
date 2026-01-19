@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ColorSwitcherProvider } from "@/components/color-switcher-context";
+import { ColorSwitcher } from "@/components/color-switcher";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,14 +58,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-black text-white antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ColorSwitcherProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
+            {children}
+            <ColorSwitcher />
+          </ThemeProvider>
+        </ColorSwitcherProvider>
       </body>
     </html>
   );

@@ -400,7 +400,7 @@ export const AmbientGlow = React.forwardRef<HTMLDivElement, AmbientGlowProps>(
         )}
         style={{
           background: `radial-gradient(ellipse 50% 50% at center, ${
-            color === "accent" ? "rgba(249, 115, 22, 0.12)" : "rgba(255, 255, 255, 0.05)"
+            color === "accent" ? "rgba(var(--color-accent-rgb), 0.12)" : "rgba(255, 255, 255, 0.05)"
           }, transparent 70%)`,
         }}
         {...props}

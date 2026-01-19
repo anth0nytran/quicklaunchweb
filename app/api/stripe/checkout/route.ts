@@ -140,17 +140,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Add domain registration if they need a domain ($50/year one-time)
-    if (
-      addOns.hasDomain === false &&
-      process.env.STRIPE_PRICE_DOMAIN_REGISTRATION
-    ) {
-      lineItems.push({
-        price: process.env.STRIPE_PRICE_DOMAIN_REGISTRATION,
-        quantity: 1,
-      });
-    }
-
     // Add text alerts if selected ($29/mo)
     if (addOns.textAlerts && process.env.STRIPE_PRICE_TEXT_ALERTS) {
       lineItems.push({

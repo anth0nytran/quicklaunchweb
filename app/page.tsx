@@ -22,7 +22,7 @@ import {
   DialogCloseButton,
 } from "@/components/ui/dialog";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { GenerativeMountainScene } from "@/components/ui/mountain-scene";
+import { ExperienceHeroBackground } from "@/components/ui/experience-hero";
 
 type Plan = "starter" | "pro";
 
@@ -172,7 +172,7 @@ function ProgressRingCSS({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgb(249, 115, 22)"
+          stroke="rgb(var(--color-accent-rgb))"
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={isPast ? 0 : circumference}
@@ -200,7 +200,12 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
       <div className="absolute inset-0 flex flex-col animate-fadeIn">
         {/* Gradient background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(249,115,22,0.08),transparent_60%)] animate-glowPulse" />
+          <div 
+            className="absolute inset-0 animate-glowPulse" 
+            style={{
+              background: 'radial-gradient(circle at 50% 30%, rgba(var(--color-accent-rgb), 0.08), transparent 60%)'
+            }}
+          />
         </div>
         
         {/* Content */}
@@ -316,8 +321,11 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
             {/* Progress bar - starts hidden, animates fill */}
             <div className="h-1.5 w-full rounded-full bg-white/[0.12] mb-5 overflow-hidden opacity-0 animate-fadeIn" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
               <div
-                className="h-full w-full rounded-full bg-gradient-to-r from-accent to-orange-400 origin-left animate-progressFill"
-                style={{ animationDelay: '0.3s' }}
+                className="h-full w-full rounded-full origin-left animate-progressFill"
+                style={{ 
+                  animationDelay: '0.3s',
+                  background: 'linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))'
+                }}
               />
             </div>
             
@@ -412,7 +420,12 @@ function LaunchedVisualCSS({ isActive }: { isActive: boolean }) {
       <div className="absolute inset-0 flex flex-col overflow-hidden animate-fadeIn">
         {/* Gradient background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(249,115,22,0.07),transparent_50%)]" />
+          <div 
+            className="absolute inset-0" 
+            style={{
+              background: 'radial-gradient(circle at 30% 20%, rgba(var(--color-accent-rgb), 0.07), transparent 50%)'
+            }}
+          />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.06),transparent_50%)] opacity-0 animate-greenGlow" style={{ animationDelay: '2s', animationFillMode: 'both' }} />
         </div>
         
@@ -644,13 +657,12 @@ export default function HomePage() {
     let monthly = selectedPlan ? basePrices[selectedPlan] : 0;
     
     if (addOns.textAlerts) monthly += 29;
-    if (addOns.unlimitedEdits) monthly += 99;
+    if (addOns.unlimitedEdits) monthly += 49;
     
     let oneTime = addOns.googleBoost ? 199 : 0;
     if (addOns.domainRouting === "us") oneTime += 99;
-    const domainFee = addOns.hasDomain === false ? 50 : 0;
     
-    return { monthly, oneTime, domainFee };
+    return { monthly, oneTime };
   };
 
   // Proceed to Stripe checkout with add-ons
@@ -858,9 +870,9 @@ export default function HomePage() {
     "Full multi-page websites",
     "Custom design system + branding",
     "API integrations + automations",
-    "Full ecommerce + payments",
-    "Custom dashboards or client portals",
-    "CRM, booking, and marketing stack",
+    "Ecommerce + payments",
+    "Dashboards or client portals",
+    "CRM + Booking setup",
     "Advanced SEO + analytics",
   ];
 
@@ -929,31 +941,26 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* ===== Hero Section ===== */}
-        <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-32 md:pb-40 md:pt-52">
-          {/* 3D Mountain Scene Background */}
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
-            <GenerativeMountainScene />
-          </div>
-
-          {/* Gradient overlay for depth */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50 pointer-events-none" />
-
-          {/* Ambient glows */}
-          <AmbientGlow color="accent" position="top" intensity="medium" className="-top-32" />
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none" />
+        <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-32 md:pb-40 md:pt-52 min-h-screen bg-[#020202]">
+          {/* Experience Hero Background */}
+          <ExperienceHeroBackground />
 
           <div className="relative z-10 flex flex-col items-center">
             {/* Status pill */}
             <GlassPill variant="accent" pulse className="mb-10">
-              Accepting New Clients for {new Date().toLocaleString('default', { month: 'long' })}
+            NO SETUP FEES & CANCEL ANYTIME
             </GlassPill>
 
             {/* Headline */}
             <h1 className="mx-auto max-w-4xl text-center text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl text-balance">
-              Free Website That Gets You More Calls{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400">
-                Live in 48 Hours
+            Free Website. More Calls.{" "}
+              <span 
+                className="text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: 'linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))'
+                }}
+              >
+                <br/>Live in 48 Hours<br/>
               </span>
             </h1>
             
@@ -962,11 +969,10 @@ export default function HomePage() {
               We build it for <span className="text-white font-semibold">$0 down</span>. You only pay{" "}
               <span className="text-white font-semibold">$99/mo</span> for hosting + support.
               <br className="hidden md:block" />
-              <span className="text-white font-semibold">Cancel anytime.</span>{" "}
-              <span className="text-white font-semibold">No contracts.</span>
+              <span className="text-white font-semibold">Try it for 30 days — if you don’t love it, cancel anytime.</span>{" "}
             </p>
             <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted">
-              It&apos;s free because we only win if you stay - we earn your business month-to-month.
+              Simple: we waive the build fee and keep earning your business monthly.
             </p>
 
             {/* CTAs */}
@@ -1023,7 +1029,7 @@ export default function HomePage() {
                 <SpotlightCard
                   key={i}
                   className="p-8 border-white/[0.08] bg-white/[0.03] backdrop-blur-md"
-                  spotlightColor="rgba(249, 115, 22, 0.15)"
+                  spotlightColor="rgba(var(--color-accent-rgb), 0.15)"
                 >
                   <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     {feature.icon}
@@ -1071,7 +1077,7 @@ export default function HomePage() {
                   <div className="mt-2 flex items-center gap-3">
                     <span className="text-2xl md:text-3xl font-semibold text-white/60 line-through">$799</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                      FREE
+                      WAIVED
                     </GlassPill>
                   </div>
                   <p className="mt-4 text-xs uppercase tracking-wider text-accent">Only pay hosting + support</p>
@@ -1080,15 +1086,15 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Free build included. Best for single-location service businesses that want more calls fast. Cancel anytime. No contracts.
+                  1-page website built to turn visitors into calls. Hosting + support included. Cancel anytime.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-3 text-sm text-secondary">
                   {[
                     "Free build (waived)",
-                    "Hosting + support included",
-                    "Mobile-first design",
+                    "Hosting + site care included",
+                    "Mobile-first conversion layout",
                     "Speed optimization",
                     "Local SEO foundation",
                     "1 Content Update / month",
@@ -1096,7 +1102,11 @@ export default function HomePage() {
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item}
+                      {item === "1 Content Update / month" ? (
+                        <span className="font-bold">{item}</span>
+                      ) : (
+                        item
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -1121,36 +1131,40 @@ export default function HomePage() {
                 </div>
                 
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">3-Page Site</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">3-Page Lead System</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Pro</h3>
                   <p className="mt-4 text-xs uppercase tracking-wider text-muted">TYPICAL BUILD FEE</p>
                   <div className="mt-2 flex items-center gap-3">
                     <span className="text-2xl md:text-3xl font-semibold text-white/60 line-through">$1,499</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                      FREE
+                    WAIVED
                     </GlassPill>
                   </div>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-accent">Only pay hosting + support</p>
+                  <p className="mt-4 text-xs uppercase tracking-wider text-accent">BEST FOR GROWTH + LOCAL SEO</p>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">$149</span>
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Free build included. Best for multi-service businesses that want stronger SEO and faster updates. Cancel anytime. No contracts.
+                  More pages + stronger structure for multi-service businesses. Priority support and faster updates. Cancel anytime.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-3 text-sm text-secondary">
                   {[
                     "Everything in Starter",
-                    "Priority support queue",
+                    "3 pages (Home + Services + Contact)",
                     "Enhanced local SEO structure",
                     "3 Content Updates / month",
                     "Cancel anytime. No contracts.",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item}
+                      {item === "3 Content Updates / month" ? (
+                        <span className="font-bold">{item}</span>
+                      ) : (
+                        item
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -1184,8 +1198,7 @@ export default function HomePage() {
                     <span className="text-secondary">/project</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Built for serious operators. Integrations, ecommerce, full platforms. One call, clear
-                    scope, and a build plan.
+                  For ecommerce, integrations, booking systems, portals, and automation. One call, clear scope, fixed quote.
                   </p>
                 </div>
 
@@ -1364,7 +1377,7 @@ export default function HomePage() {
                   selected={addOns.domainRouting === "us"}
                   onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
                   label="We handle it"
-                  description="One-time fee. We'll connect your domain for you."
+                  description="We set it up and verify it works."
                   price="$99 one-time"
                   priceColor="accent"
                 />
@@ -1383,9 +1396,9 @@ export default function HomePage() {
           {addOns.hasDomain === false && (
             <div className="mb-6 rounded-xl border border-accent/30 bg-accent/10 p-4">
               <p className="text-sm text-accent">
-                <span className="font-medium">We&apos;ll get you one!</span> Flat fee:{" "}
-                <span className="text-white font-semibold">$50/year</span>. We&apos;ll pick the best
-                available domain for your business.
+                No problem — we&apos;ll send a quick guide to buy a domain (2 minutes).
+                <br />
+                After you buy it, we can connect it for <span className="text-white font-semibold">$99</span> — or you can do it yourself free.
               </p>
             </div>
           )}
@@ -1397,24 +1410,24 @@ export default function HomePage() {
               <GlassSelect
                 selected={addOns.textAlerts}
                 onClick={() => setAddOns({ ...addOns, textAlerts: !addOns.textAlerts })}
-                label="Instant Text Alerts"
-                description="Every lead texts your phone instantly."
+                label="Instant Lead Texts"
+                description="Get texted instantly when a lead comes in."
                 price="+$29/mo"
                 priceColor="accent"
               />
               <GlassSelect
                 selected={addOns.unlimitedEdits}
                 onClick={() => setAddOns({ ...addOns, unlimitedEdits: !addOns.unlimitedEdits })}
-                label="Unlimited Small Edits"
-                description="Change prices, swap photos, update services anytime."
-                price="+$99/mo"
+                label="Monthly Conversion Boost"
+                description="1 monthly upgrade to help you get more leads."
+                price="+$49/mo"
                 priceColor="accent"
               />
               <GlassSelect
                 selected={addOns.googleBoost}
                 onClick={() => setAddOns({ ...addOns, googleBoost: !addOns.googleBoost })}
                 label="Google Business Boost"
-                description="Get your Google profile tightened so you rank better."
+                description="Optimize your Google profile to get more inbound calls."
                 price="$199 one-time"
                 priceColor="accent"
               />
@@ -1428,12 +1441,6 @@ export default function HomePage() {
             <span className="text-secondary">Monthly Total</span>
             <span className="text-2xl font-bold text-white">${calculateTotal().monthly}/mo</span>
           </div>
-          {calculateTotal().domainFee > 0 && (
-            <div className="flex items-center justify-between mb-2 text-sm">
-              <span className="text-muted">+ Domain (yearly)</span>
-              <span className="text-secondary">${calculateTotal().domainFee}/yr</span>
-            </div>
-          )}
           {calculateTotal().oneTime > 0 && (
             <div className="flex items-center justify-between mb-4 text-sm">
               <span className="text-muted">+ One-time</span>
