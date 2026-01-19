@@ -1021,7 +1021,7 @@ export default function HomePage() {
     { id: "plans", label: "Plans & What's Included" },
     { id: "getting-started", label: "Getting Started" },
     { id: "how-it-works", label: "How It Works" },
-    { id: "results", label: "Results & Ownership" },
+    { id: "results", label: "Ownership & SEO" },
   ];
 
   const stats = [
@@ -1403,13 +1403,13 @@ export default function HomePage() {
             </div>
 
             {/* Category Filters */}
-            <div className="mb-8">
-              <div className="flex items-center gap-0 text-sm">
+            <div className="mb-8 w-full overflow-hidden">
+              <div className="flex items-center gap-0 text-sm overflow-x-auto scrollbar-hide pb-2 w-full max-w-full">
                 {faqCategories.map((cat, index) => (
                   <button
                     key={cat.id}
                     onClick={() => setFaqCategory(cat.id)}
-                    className={`px-4 py-1.5 transition-all duration-200 relative ${
+                    className={`px-4 py-1.5 transition-all duration-200 relative whitespace-nowrap flex-shrink-0 ${
                       faqCategory === cat.id
                         ? "text-accent font-semibold"
                         : "text-secondary hover:text-white"
