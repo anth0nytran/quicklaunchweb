@@ -1,7 +1,18 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+  // Ensure HTTPS and correct domain
+  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://quicklaunchweb.us";
+  
+  // Force HTTPS if not already
+  if (siteUrl.startsWith("http://")) {
+    siteUrl = siteUrl.replace("http://", "https://");
+  }
+  
+  // Ensure we're using the correct domain
+  if (!siteUrl.includes("quicklaunchweb.us")) {
+    siteUrl = "https://quicklaunchweb.us";
+  }
 
   const routes = [
     {
