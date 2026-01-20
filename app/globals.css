@@ -208,6 +208,7 @@
   .focus-ring {
     @apply outline-none ring-2 ring-accent/50 ring-offset-2 ring-offset-black;
   }
+
 }
 
 /* =============================================================================
@@ -270,6 +271,7 @@
     background-position: 200% 0;
   }
 }
+
 
 @keyframes pulse {
   0%, 100% {

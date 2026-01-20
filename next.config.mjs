@@ -1,4 +1,27 @@
 /** @type {import('next').NextConfig} */
+const isDev = process.env.NODE_ENV !== "production";
+
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  isDev ? "'unsafe-eval'" : null,
+  "https://www.googletagmanager.com",
+].filter(Boolean).join(" ");
+
+const csp = [
+  "default-src 'self'",
+  `script-src ${scriptSrc}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://images.unsplash.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://api.web3forms.com https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vitals.vercel-analytics.com",
+  "frame-src https://checkout.stripe.com https://billing.stripe.com https://js.stripe.com https://hooks.stripe.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' https://api.web3forms.com https://checkout.stripe.com https://billing.stripe.com",
+  "frame-ancestors 'none'",
+].join("; ");
+
 const nextConfig = {
   // ==========================================================================
   // Image Optimization
@@ -52,6 +75,10 @@ const nextConfig = {
           {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: csp,
           },
         ],
       },

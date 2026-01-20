@@ -253,7 +253,7 @@ export default function TermsPage() {
               <h2 className="text-base font-semibold text-white">16) No Guarantees (Results Disclaimer)</h2>
               <p className="mt-3">We do not guarantee:</p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
-                <li>Leads, calls, bookings, revenue, or ROI</li>
+                <li>Leads, clients, bookings, revenue, or ROI</li>
                 <li>Google ranking positions or SEO outcomes</li>
                 <li>Specific performance within any timeframe</li>
               </ul>

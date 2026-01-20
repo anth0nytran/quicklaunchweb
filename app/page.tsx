@@ -619,9 +619,6 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
 export default function HomePage() {
   const [loadingPlan, setLoadingPlan] = useState<Plan | null>(null);
   const [checkoutError, setCheckoutError] = useState("");
-  const [portalLoading, setPortalLoading] = useState(false);
-  const [portalEmail, setPortalEmail] = useState("");
-  const [portalError, setPortalError] = useState("");
   
   // Upsell Modal State
   const [showUpsellModal, setShowUpsellModal] = useState(false);
@@ -742,61 +739,6 @@ export default function HomePage() {
     }
   }, [addOns.hasDomain, addOns.domainRouting, selectedPlan, startCheckout]);
 
-  const startPortal = useCallback(async () => {
-    setPortalError("");
-    const email = portalEmail.trim().toLowerCase();
-
-    if (!email) {
-      setPortalError("Enter the email you used at checkout.");
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      setPortalError("Please enter a valid email address.");
-      return;
-    }
-
-    setPortalLoading(true);
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
-
-      const res = await fetch("/api/stripe/portal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        throw new Error(data?.error || `Server error (${res.status})`);
-      }
-
-      if (!data?.url || typeof data.url !== "string") {
-        throw new Error("Invalid portal response.");
-      }
-
-      window.location.href = data.url;
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.name === "AbortError") {
-          setPortalError("Request timed out. Please try again.");
-        } else {
-          setPortalError(error.message);
-        }
-      } else {
-        setPortalError("An unexpected error occurred. Please try again.");
-      }
-      console.error("Portal error:", error);
-    } finally {
-      setPortalLoading(false);
-    }
-  }, [portalEmail]);
-
   const submitCustomRequest = useCallback(async () => {
     setCustomError("");
     setCustomSuccess("");
@@ -889,6 +831,15 @@ export default function HomePage() {
       desc: "Structured for local search so you show up when people look for your services in your city.",
       icon: featureIcons.search,
     },
+  ];
+
+  const deliverables = [
+    { label: "01", title: "Mobile-first design", detail: "Tap-to-call ready" },
+    { label: "02", title: "Quote form", detail: "Straight to your inbox" },
+    { label: "03", title: "Local SEO foundation", detail: "Built for local search" },
+    { label: "04", title: "Speed + SSL", detail: "Fast, secure delivery" },
+    { label: "05", title: "Launched in 48 hours", detail: "Live and ready to share" },
+    { label: "06", title: "Ongoing support", detail: "Edits, fixes, updates" },
   ];
 
   const customWebsiteFeatures = [
@@ -1004,13 +955,13 @@ export default function HomePage() {
       category: "results"
     },
     { 
-      q: "Will this get me more calls?", 
-      a: "That's the goal — we build your site to convert visitors into calls and inquiries. Results depend on your market, offer, competition, and follow-up.",
+      q: "Will this get me more clients?", 
+      a: "That's the goal — we build your site to convert visitors into clients and inquiries. Results depend on your market, offer, competition, and follow-up.",
       category: "results"
     },
     { 
       q: "Who is this best for?", 
-      a: "Local service businesses that want a clean website fast that helps drive calls and inquiries (HVAC, roofing, salons, medspas, dentists, auto, contractors, and more).",
+      a: "Local service businesses that want a clean website fast that helps drive clients and inquiries (HVAC, roofing, salons, medspas, dentists, auto, contractors, and more).",
       category: "results"
     },
   ];
@@ -1083,7 +1034,7 @@ export default function HomePage() {
 
             {/* Headline */}
             <h1 className="mx-auto max-w-4xl text-center text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl text-balance">
-            Free Website. More Calls.{" "}
+            Free Website. More Clients.{" "}
               <span 
                 className="text-transparent bg-clip-text"
                 style={{
@@ -1146,7 +1097,7 @@ export default function HomePage() {
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-16 md:text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-                Built to convert <span className="text-accent">clicks into calls</span>.
+                Built to convert <span className="text-accent">clicks into clients</span>.
               </h2>
               <p className="mt-4 text-lg text-secondary md:mx-auto md:max-w-2xl">
                 We don&apos;t just build websites; we build revenue engines.
@@ -1168,6 +1119,59 @@ export default function HomePage() {
                   <p className="text-secondary leading-relaxed">{feature.desc}</p>
                 </SpotlightCard>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 48 Hours Section ===== */}
+        <section id="deliverables" className="relative px-6 pb-20 pt-10 md:pb-24 md:pt-12">
+          <AmbientGlow color="accent" position="center" intensity="subtle" className="opacity-40" />
+
+          <div className="relative z-10 mx-auto max-w-7xl">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="max-w-2xl">
+                  <p className="text-[11px] uppercase tracking-[0.4em] text-accent/80">
+                    Launch timeline
+                  </p>
+                  <h2 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">
+                    What You Get in <span className="text-accent">48 Hours</span>
+                  </h2>
+                  <p className="mt-4 text-lg text-secondary">
+                    A live website built to win clients.
+                  </p>
+                  <p className="mt-2 text-xs text-muted">
+                    Delivery starts after your details are submitted.
+                  </p>
+                </div>
+
+                <div className="text-right">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-white/50">
+                    delivery window
+                  </p>
+                  <p className="mt-2 font-mono text-3xl text-white/90 tracking-[0.18em]">
+                    24-48h
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+                {deliverables.map((item) => (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <span className="mt-1 text-[9px] font-mono tracking-[0.25em] text-white/20">
+                      {item.label}
+                    </span>
+                    <div className="space-y-1 max-w-md">
+                      <p className="text-lg font-medium text-white/85 tracking-tight md:text-xl text-balance">
+                        {item.title}
+                      </p>
+                      <p className="text-xs text-muted/80 leading-relaxed md:text-sm">
+                        {item.detail}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -1471,63 +1475,61 @@ export default function HomePage() {
       </main>
 
       {/* ===== Footer ===== */}
-      <footer className="relative border-t border-white/[0.06] py-16 text-sm">
+      <footer className="relative border-t border-white/[0.06] bg-gradient-to-b from-transparent via-white/[0.01] to-transparent py-16">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-12 md:grid-cols-4">
-            <div className="col-span-2">
-              <Link href="/" className="flex items-center gap-1.5 font-bold tracking-tight mb-4">
-                <span className="text-accent font-black">QL</span>
+          <div className="grid gap-10 md:grid-cols-[1.3fr_0.7fr_1fr]">
+            <div>
+              <Link href="/" className="flex items-center gap-1.5 font-bold tracking-tight">
+                <span className="text-accent font-black text-xl">QL</span>
                 <span className="text-white/20 font-light">|</span>
-                <span className="text-white/90">QuickLaunchWeb</span>
+                <span className="text-white/90 text-lg">QuickLaunchWeb</span>
               </Link>
-              <p className="max-w-xs text-muted">
-                Helping local businesses win online with high-converting, mobile-first websites.
+              <p className="mt-4 max-w-sm text-sm text-secondary leading-relaxed">
+                High-converting, mobile-first websites built fast for local businesses.
+              </p>
+              <p className="mt-3 text-xs text-muted">
+                Built for speed. Focused on clients.
               </p>
             </div>
             
             <div>
-              <h4 className="mb-4 font-semibold text-white">Links</h4>
-              <ul className="space-y-3 text-muted">
-                <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="#faq" className="hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/support" className="hover:text-white transition-colors">Support</Link></li>
+              <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Explore</h4>
+              <ul className="mt-4 space-y-3">
+                <li><Link href="#features" className="text-sm text-secondary hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="#work" className="text-sm text-secondary hover:text-white transition-colors">Recent Work</Link></li>
+                <li><Link href="#how-it-works" className="text-sm text-secondary hover:text-white transition-colors">How It Works</Link></li>
+                <li><Link href="#pricing" className="text-sm text-secondary hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="#faq" className="text-sm text-secondary hover:text-white transition-colors">FAQ</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-4 font-semibold text-white">Customer Portal</h4>
-              <p className="mb-4 text-xs text-muted">Manage your subscription</p>
-              <div className="flex flex-col gap-3">
-                <GlassInput
-                  type="email"
-                  value={portalEmail}
-                  onChange={(e) => setPortalEmail(e.target.value)}
-                  placeholder="Billing Email"
-                  error={!!portalError}
-                />
-                <GlassButton
-                  variant="ghost"
-                  size="sm"
-                  onClick={startPortal}
-                  loading={portalLoading}
-                  className="w-full"
-                >
-                  Manage Subscription
-                </GlassButton>
-                {portalError && <p className="text-xs text-red-400">{portalError}</p>}
-              </div>
-
+              <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Account</h4>
+              <p className="mt-4 text-sm text-secondary leading-relaxed">
+                Manage billing and subscriptions through Stripe.
+              </p>
+              <a
+                href="https://billing.stripe.com/p/login/4gMbJ1dxi6CffXsg6R4c800"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open the Stripe customer portal"
+                className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.05] px-4 py-2 text-sm font-medium text-white/90 transition-all duration-200 ease-smooth hover:bg-white/[0.10] hover:border-white/[0.15] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                Open Customer Portal
+              </a>
+              <p className="mt-3 text-[11px] text-muted">Use the email from your checkout.</p>
             </div>
           </div>
           
           <GlassDivider className="my-10" />
           
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row text-muted">
-            <p>© {year} QuickLaunchWeb. All rights reserved.</p>
-            <p>Made for speed.</p>
+            <p className="text-xs">(c) {year} QuickLaunchWeb. All rights reserved.</p>
+            <div className="flex items-center gap-4 text-xs">
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
+            </div>
           </div>
         </div>
       </footer>
@@ -1636,7 +1638,7 @@ export default function HomePage() {
                 selected={addOns.googleBoost}
                 onClick={() => setAddOns({ ...addOns, googleBoost: !addOns.googleBoost })}
                 label="Google Business Boost"
-                description="Optimize your Google profile to get more inbound calls."
+                description="Optimize your Google profile to get more inbound clients."
                 price="$199 one-time"
                 priceColor="accent"
               />

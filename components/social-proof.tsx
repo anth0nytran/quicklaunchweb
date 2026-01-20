@@ -56,6 +56,9 @@ type Project = {
   type: string;
   url: string;
   tags: string[];
+  proofLabel: string;
+  proofStat: string;
+  proofDetail: string;
 };
 
 const projects: Project[] = [
@@ -64,18 +67,27 @@ const projects: Project[] = [
     type: "Shopify Store Launch",
     url: "tomijewelry.com",
     tags: ["Accounts + Cart Setup", "Analytics Tracking"],
+    proofLabel: "30-Day Results",
+    proofStat: "1,750+ visitors",
+    proofDetail: "8,800+ page views in the first month.",
   },
   {
     name: "Diamond Street Realty",
     type: "Seller Lead Machine",
     url: "diamondstreetrealty.com",
     tags: ["Home Valuation Funnel", "CRM + Automation"],
+    proofLabel: "Lead Flow",
+    proofStat: "4-8 listing appointments / month",
+    proofDetail: "Conversion-focused seller funnel + CRM automation.",
   },
   {
     name: "Becreativesco",
     type: "Agency Site Built To Book",
     url: "becreativesco.com",
     tags: ["Portfolio + Video Showcase", "Automated Lead Capture"],
+    proofLabel: "First 30 Days",
+    proofStat: "2 high-value inbound leads",
+    proofDetail: "Booked from the new portfolio + capture flow.",
   },
 ];
 
@@ -96,28 +108,43 @@ export function SocialProofSection() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {projects.map((project, i) => (
-            <GlassCard key={i} className="group overflow-hidden p-0" hover>
-              <div className="p-5 pb-0">
-                <div className="mb-1 flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-wider text-accent border border-accent/20 bg-accent/5 px-2 py-0.5 rounded-full">
-                    {project.type}
-                  </span>
-                </div>
-                <div className="flex gap-2 mb-4 mt-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="text-[10px] text-muted">
-                      {tag}
+            <div key={i} className="group">
+              <GlassCard className="overflow-hidden p-0" hover>
+                <div className="p-5 pb-0">
+                  <div className="mb-1 flex items-center justify-between">
+                    <span className="text-[10px] uppercase tracking-wider text-accent border border-accent/20 bg-accent/5 px-2 py-0.5 rounded-full">
+                      {project.type}
                     </span>
-                  ))}
+                  </div>
+                  <div className="flex gap-2 mb-4 mt-2">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="text-[10px] text-muted">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="px-5 pb-5">
-                <div className="relative aspect-[16/10] w-full rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.01] group-hover:shadow-2xl">
-                  <BrandLink name={project.name} url={project.url} />
+                <div className="px-5 pb-5">
+                  <div className="relative aspect-[16/10] w-full rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.01] group-hover:shadow-2xl">
+                    <BrandLink name={project.name} url={project.url} />
+                  </div>
                 </div>
+              </GlassCard>
+
+              {/* Proof highlight */}
+              <div className="mt-4 px-1 text-left">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-accent/80">
+                  {project.proofLabel}
+                </p>
+                <p className="mt-2 text-lg font-semibold text-white md:text-xl">
+                  {project.proofStat}
+                </p>
+                <p className="mt-1 text-xs text-secondary leading-relaxed">
+                  {project.proofDetail}
+                </p>
               </div>
-            </GlassCard>
+            </div>
           ))}
         </div>
       </div>

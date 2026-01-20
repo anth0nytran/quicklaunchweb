@@ -1,8 +1,10 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Lato } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 
 const montserrat = Montserrat({ 
   subsets: ["latin"],
@@ -17,9 +19,13 @@ const lato = Lato({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "http://localhost:3000";
+const siteUrl = (() => {
+  const value = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (!value && process.env.NODE_ENV === "production") {
+    throw new Error("Missing NEXT_PUBLIC_SITE_URL in production.");
+  }
+  return value || "http://localhost:3000";
+})();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -102,6 +108,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased`}>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-DQ1N327ENZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DQ1N327ENZ');
+          `}
+        </Script>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -110,6 +129,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

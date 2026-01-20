@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 // =============================================================================
 // Configuration
 // =============================================================================
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "http://localhost:3000";
+const siteUrl = (() => {
+  const value = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (!value && process.env.NODE_ENV === "production") {
+    throw new Error("Missing NEXT_PUBLIC_SITE_URL in production.");
+  }
+  return value || "http://localhost:3000";
+})();
 
 const VALID_PLANS = ["starter", "pro"] as const;
 type ValidPlan = (typeof VALID_PLANS)[number];
@@ -84,6 +89,26 @@ export async function POST(req: NextRequest) {
   const headers = securityHeaders();
 
   try {
+    const ip = getClientIp(req);
+    const { ok, retryAfter } = rateLimit({
+      key: `stripe-checkout:${ip}`,
+      limit: 10,
+      windowMs: 60_000,
+    });
+
+    if (!ok) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: {
+            ...headers,
+            ...(retryAfter ? { "Retry-After": String(retryAfter) } : {}),
+          },
+        }
+      );
+    }
+
     // Validate plan parameter
     const plan = req.nextUrl.searchParams.get("plan");
     if (!isValidPlan(plan)) {
