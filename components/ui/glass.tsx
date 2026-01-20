@@ -258,8 +258,8 @@ GlassPill.displayName = "GlassPill";
 interface GlassSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   selected?: boolean;
   label: string;
-  description?: string;
-  price?: string;
+  description?: React.ReactNode;
+  price?: React.ReactNode;
   priceColor?: "default" | "accent" | "success";
 }
 
@@ -300,7 +300,7 @@ export const GlassSelect = React.forwardRef<HTMLButtonElement, GlassSelectProps>
           )}
         </div>
         {description && (
-          <p className="mt-1 text-xs text-white/50">{description}</p>
+          <div className="mt-1 text-xs text-white/50">{description}</div>
         )}
       </button>
     );

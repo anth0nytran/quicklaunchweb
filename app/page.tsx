@@ -1536,7 +1536,7 @@ export default function HomePage() {
 
       {/* ===== Upsell Modal (Radix Dialog) ===== */}
       <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
-        <DialogContent>
+      <DialogContent className="max-w-4xl">
           <DialogCloseButton />
           
           <DialogHeader>
@@ -1544,139 +1544,194 @@ export default function HomePage() {
               Customize Your {selectedPlan === "pro" ? "Pro" : "Starter"} Plan
             </DialogTitle>
             <DialogDescription>
-              Answer a quick question and choose any add-ons.
+              Quick choices, optional upgrades. You can change later.
             </DialogDescription>
           </DialogHeader>
 
-          {/* Domain Question */}
-          <div className="mb-6">
-            <p className="text-sm font-medium text-white mb-3">
-              Do you have your own domain? <span className="text-accent">*</span>
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
-                className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
-                  addOns.hasDomain === true
-                    ? "border-accent/50 bg-accent/10 text-accent"
-                    : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                }`}
-              >
-                Yes, I have one
-              </button>
-              <button
-                onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
-                className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
-                  addOns.hasDomain === false
-                    ? "border-accent/50 bg-accent/10 text-accent"
-                    : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                }`}
-              >
-                No, I need one
-              </button>
-            </div>
-          </div>
 
-          {/* Domain Routing */}
-          {addOns.hasDomain === true && (
-            <GlassCard className="mb-6 p-4">
-              <p className="text-sm font-medium text-white mb-3">
-                Who will connect your domain? <span className="text-accent">*</span>
-              </p>
-              <div className="space-y-2">
-                <GlassSelect
-                  selected={addOns.domainRouting === "us"}
-                  onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
-                  label="We handle it"
-                  description="We set it up and verify it works."
-                  price="$99 one-time"
-                  priceColor="accent"
-                />
-                <GlassSelect
-                  selected={addOns.domainRouting === "self"}
-                  onClick={() => setAddOns({ ...addOns, domainRouting: "self" })}
-                  label="I'll do it myself"
-                  description="We'll send you simple instructions."
-                  price="Free"
-                  priceColor="success"
-                />
+          <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
+            <div className="space-y-4 md:pr-2">
+              {/* Domain Question */}
+              <div>
+                <p className="text-sm font-medium text-white mb-3">
+                  Do you already own a domain? <span className="text-accent">*</span>
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
+                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
+                      addOns.hasDomain === true
+                        ? "border-accent/50 bg-accent/10 text-accent"
+                        : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                    }`}
+                  >
+                    Yes, I have one
+                  </button>
+                  <button
+                    onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
+                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
+                      addOns.hasDomain === false
+                        ? "border-accent/50 bg-accent/10 text-accent"
+                        : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                    }`}
+                  >
+                    No, I need one
+                  </button>
+                </div>
               </div>
-            </GlassCard>
-          )}
 
-          {addOns.hasDomain === false && (
-            <div className="mb-6 rounded-xl border border-accent/30 bg-accent/10 p-4">
-              <p className="text-sm text-accent">
-                No problem — we&apos;ll send a quick guide to buy a domain (2 minutes).
-                <br />
-                After you buy it, we can connect it for <span className="text-white font-semibold">$99</span> — or you can do it yourself free.
-              </p>
+              {/* Domain Routing */}
+              {addOns.hasDomain === true && (
+                <GlassCard className="p-4">
+                  <p className="text-sm font-medium text-white mb-3">
+                    Who should connect your domain? <span className="text-accent">*</span>
+                  </p>
+                  <div className="space-y-2">
+                    <GlassSelect
+                      selected={addOns.domainRouting === "us"}
+                      onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
+                      label="We handle it"
+                      description="We connect it and verify it works. Normally $99."
+                      price="$99 one-time"
+                      priceColor="accent"
+                    />
+                    <GlassSelect
+                      selected={addOns.domainRouting === "self"}
+                      onClick={() => setAddOns({ ...addOns, domainRouting: "self" })}
+                      label="I'll do it"
+                      description="Simple step-by-step instructions."
+                      price="Free"
+                      priceColor="success"
+                    />
+                  </div>
+                </GlassCard>
+              )}
+
+              {addOns.hasDomain === false && (
+                <div className="rounded-xl border border-accent/30 bg-accent/10 p-4">
+                  <p className="text-sm text-accent">
+                    We&apos;ll send a quick guide to buy a domain (2 minutes).
+                    After you buy it, we can connect it for <span className="text-white font-semibold">$99</span> or you can do it yourself free.
+                  </p>
+                </div>
+              )}
+
+              {/* Add-ons */}
+              <div>
+                <p className="text-sm font-medium text-white mb-3">Optional Add-ons</p>
+                <div className="space-y-2">
+                  <GlassSelect
+                    selected={addOns.textAlerts}
+                    onClick={() => setAddOns({ ...addOns, textAlerts: !addOns.textAlerts })}
+                    label="Instant Lead Texts"
+                    description="Get texted instantly when a lead comes in."
+                    price="+$29/mo"
+                    priceColor="accent"
+                  />
+                  <GlassSelect
+                    selected={addOns.unlimitedEdits}
+                    onClick={() => setAddOns({ ...addOns, unlimitedEdits: !addOns.unlimitedEdits })}
+                    label="Monthly Conversion Boost"
+                    description="Monthly upgrade focused on more leads."
+                    price="+$49/mo"
+                    priceColor="accent"
+                  />
+                  <GlassSelect
+                    selected={addOns.googleBoost}
+                    onClick={() => setAddOns({ ...addOns, googleBoost: !addOns.googleBoost })}
+                    label="Google Business Boost"
+                    description="Optimize your Google profile for inbound clients."
+                    price={
+                      <span className="inline-flex items-center gap-2">
+                        <span className="text-white/40 line-through decoration-2 decoration-white/40 text-xs">$499</span>
+                        <span className="text-accent font-bold">$199 one-time</span>
+                      </span>
+                    }
+                    priceColor="default"
+                  />
+                </div>
+              </div>
             </div>
-          )}
 
-          {/* Add-ons */}
-          <div className="mb-6">
-            <p className="text-sm font-medium text-white mb-3">Optional Add-ons</p>
-            <div className="space-y-2">
-              <GlassSelect
-                selected={addOns.textAlerts}
-                onClick={() => setAddOns({ ...addOns, textAlerts: !addOns.textAlerts })}
-                label="Instant Lead Texts"
-                description="Get texted instantly when a lead comes in."
-                price="+$29/mo"
-                priceColor="accent"
-              />
-              <GlassSelect
-                selected={addOns.unlimitedEdits}
-                onClick={() => setAddOns({ ...addOns, unlimitedEdits: !addOns.unlimitedEdits })}
-                label="Monthly Conversion Boost"
-                description="1 monthly upgrade to help you get more leads."
-                price="+$49/mo"
-                priceColor="accent"
-              />
-              <GlassSelect
-                selected={addOns.googleBoost}
-                onClick={() => setAddOns({ ...addOns, googleBoost: !addOns.googleBoost })}
-                label="Google Business Boost"
-                description="Optimize your Google profile to get more inbound clients."
-                price="$199 one-time"
-                priceColor="accent"
-              />
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
+                <p className="text-xs uppercase tracking-wider text-white/50">Your total</p>
+
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-secondary">{selectedPlan === "pro" ? "Pro" : "Starter"} plan</span>
+                    <span className="text-white">${selectedPlan === "pro" ? 149 : 99}/mo</span>
+                  </div>
+                  {addOns.textAlerts && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-secondary">Instant Lead Texts</span>
+                      <span className="text-white">+$29/mo</span>
+                    </div>
+                  )}
+                  {addOns.unlimitedEdits && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-secondary">Monthly Conversion Boost</span>
+                      <span className="text-white">+$49/mo</span>
+                    </div>
+                  )}
+                </div>
+
+                <GlassDivider className="my-4" />
+
+                {addOns.domainRouting === "us" || addOns.googleBoost ? (
+                  <div className="space-y-2">
+                    <p className="text-[10px] uppercase tracking-wider text-white/40">One-time</p>
+                    {addOns.domainRouting === "us" && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-secondary">Domain connection</span>
+                        <span className="text-white">+$99</span>
+                      </div>
+                    )}
+                    {addOns.googleBoost && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-secondary">Google Business Boost</span>
+                        <span className="text-white">+$199</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted">No one-time add-ons selected.</p>
+                )}
+
+                <GlassDivider className="my-4" />
+
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-secondary">Monthly total</span>
+                  <span className="text-2xl font-semibold text-white">${calculateTotal().monthly}/mo</span>
+                </div>
+                {calculateTotal().oneTime > 0 && (
+                  <div className="mt-2 flex items-center justify-between text-sm">
+                    <span className="text-muted">One-time total</span>
+                    <span className="text-secondary">${calculateTotal().oneTime}</span>
+                  </div>
+                )}
+
+                {checkoutError && (
+                  <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    {checkoutError}
+                  </div>
+                )}
+
+                <GlassButton
+                  variant="primary"
+                  size="lg"
+                  onClick={handleUpsellContinue}
+                  loading={loadingPlan !== null}
+                  className="mt-4 w-full"
+                >
+                  Continue to Checkout
+                </GlassButton>
+                <p className="mt-3 text-xs text-muted text-center">
+                  Secure Stripe checkout.
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* Total & Continue */}
-          <GlassDivider className="mb-4" />
-          
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-secondary">Monthly Total</span>
-            <span className="text-2xl font-bold text-white">${calculateTotal().monthly}/mo</span>
-          </div>
-          {calculateTotal().oneTime > 0 && (
-            <div className="flex items-center justify-between mb-4 text-sm">
-              <span className="text-muted">+ One-time</span>
-              <span className="text-secondary">${calculateTotal().oneTime}</span>
-            </div>
-          )}
-          
-          {checkoutError && (
-            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-              {checkoutError}
-            </div>
-          )}
-          
-          <GlassButton
-            variant="primary"
-            size="lg"
-            onClick={handleUpsellContinue}
-            loading={loadingPlan !== null}
-            className="w-full"
-          >
-            Continue to Checkout
-          </GlassButton>
-          <p className="text-xs text-muted text-center mt-3">
-            You&apos;ll be redirected to Stripe for secure payment.
-          </p>
         </DialogContent>
       </Dialog>
 

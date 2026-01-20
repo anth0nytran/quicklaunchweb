@@ -104,14 +104,15 @@ export default function SupportPage() {
       <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
       <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
 
-      <div className="relative z-10 mx-auto max-w-3xl">
+      <div className="relative z-10 mx-auto max-w-4xl">
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-wider text-muted">Support</p>
             <h1 className="mt-2 text-3xl font-bold text-white md:text-4xl">Support Request</h1>
-            <p className="mt-3 text-sm text-secondary">
-              Tell us what you need and we&apos;ll follow up.
+            <p className="mt-3 text-sm text-secondary text-balance max-w-lg">
+              Tell us what you need and we&apos;ll follow up quickly.
             </p>
+            <p className="mt-2 text-xs text-muted">Typical response: 1 business day.</p>
           </div>
           <Link href="/">
             <GlassButton variant="ghost" size="md" className="w-full md:w-auto">
@@ -121,6 +122,17 @@ export default function SupportPage() {
         </div>
 
         <GlassCard variant="elevated" className="p-6 md:p-10">
+          <div className="grid gap-4 text-xs text-muted md:grid-cols-2">
+            <div>
+              <p className="uppercase tracking-wider text-white/50">Email</p>
+              <p className="mt-1 text-sm text-white/90">anthotranllc@gmail.com</p>
+            </div>
+            <div>
+              <p className="uppercase tracking-wider text-white/50">Support Hours</p>
+              <p className="mt-1 text-sm text-white/90">Mon–Fri, 9am–6pm CST</p>
+            </div>
+          </div>
+          <GlassDivider className="my-6" />
           <form
             className="space-y-3"
             onSubmit={submitSupportRequest}
