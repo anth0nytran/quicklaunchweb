@@ -12,12 +12,12 @@
   --color-black: 0 0 0;
   --color-white: 255 255 255;
   
-  /* Accent (orange) - dynamically updated via ColorSwitcher */
-  --color-accent: 249 115 22;
-  --color-accent-hover: 251 146 60;
-  --color-accent-rgb: 249, 115, 22;
-  --color-accent-hover-rgb: 251, 146, 60;
-  --color-accent-gradient-to: 251, 146, 60;
+  /* Accent (teal) */
+  --color-accent: 20 184 166;
+  --color-accent-hover: 45 212 191;
+  --color-accent-rgb: 20, 184, 166;
+  --color-accent-hover-rgb: 45, 212, 191;
+  --color-accent-gradient-to: 45, 212, 191;
   
   /* Surface tokens - glass backgrounds */
   --glass-bg: rgba(255, 255, 255, 0.03);
