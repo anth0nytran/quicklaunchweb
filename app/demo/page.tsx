@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { DemoShell } from '@/components/demo/DemoShell';
 
 export const metadata: Metadata = {
@@ -17,6 +18,18 @@ export const metadata: Metadata = {
   },
 };
 
+function DemoLoading() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-black text-white">
+      <div className="animate-pulse text-sm text-white/60">Loading demo…</div>
+    </div>
+  );
+}
+
 export default function DemoPage() {
-  return <DemoShell />;
+  return (
+    <Suspense fallback={<DemoLoading />}>
+      <DemoShell />
+    </Suspense>
+  );
 }
