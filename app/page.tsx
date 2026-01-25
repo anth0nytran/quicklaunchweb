@@ -931,16 +931,21 @@ export default function HomePage() {
               </span>
             </h1>
             
-            {/* Subhead */}
-            <p className="mx-auto mt-6 max-w-2xl text-center text-lg text-secondary md:text-xl text-balance leading-relaxed">
-              We build it for <span className="text-white font-semibold">$0 down</span>. You only pay{" "}
-              <span className="text-white font-semibold">$99/mo</span> for hosting + support.
-              <br className="hidden md:block" />
-              <span className="text-white font-semibold">Try it for 30 days — if you don’t love it, cancel anytime.</span>{" "}
-            </p>
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted">
-              Simple: we waive the build fee and keep earning your business monthly.
-            </p>
+            {/* Subhead - Centered bullet points */}
+            <div className="mx-auto mt-8 w-full max-w-xl">
+              <ul className="space-y-3 text-base text-secondary md:text-lg">
+                {[
+                  "$799-$1,499 build fee waived when you start a plan",
+                  "Mobile-first + lead capture (call + form) built in",
+                  "Try it 30 days - cancel anytime, no contract",
+                ].map((item) => (
+                  <li key={item} className="flex items-center justify-center gap-3">
+                    <CheckIcon className="h-5 w-5 text-accent shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* CTAs */}
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
@@ -957,23 +962,42 @@ export default function HomePage() {
               <GlassButton
                 variant="ghost"
                 size="lg"
-                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
               >
-                See Plans
+                See Recent Launches
               </GlassButton>
             </div>
+            <p className="mt-4 text-center text-sm text-muted">
+              Takes 60 seconds to start. No calls needed.
+            </p>
 
-            {/* Stats row */}
-            <div className="mt-20 flex flex-wrap items-center justify-center gap-8 md:gap-16">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="text-3xl md:text-4xl font-bold text-accent">{stat.value}</p>
-                  <p className="text-xs text-muted uppercase tracking-widest mt-2">{stat.label}</p>
+            {/* Social proof stats - consolidated */}
+            <div className="mt-16 pt-12 border-t border-white/[0.06] w-full max-w-4xl">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted text-center mb-8">
+                Client Results
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-accent">FREE</p>
+                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Website Build</p>
                 </div>
-              ))}
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-white">48h</p>
+                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Launch Time</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-white">312%</p>
+                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Avg. ROI</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-white">$99</p>
+                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">/mo Hosting</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
 
         {/* ===== Features Section ===== */}
         <section id="features" className="relative px-6 py-24 md:py-32">
@@ -986,9 +1010,26 @@ export default function HomePage() {
                 Built to convert <span className="text-accent">clicks into clients</span>.
               </h2>
               <p className="mt-4 text-lg text-secondary md:mx-auto md:max-w-2xl">
-                We don&apos;t just build websites; we build revenue engines.
+                Built to get you calls, form leads, and booked inquiries - not just look pretty.
                 Every site is optimized for speed, SEO, and lead generation.
               </p>
+              <div className="mt-6 md:mx-auto md:max-w-4xl">
+                <p className="text-xs uppercase tracking-widest text-muted mb-4">Best for</p>
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-secondary">
+                  <span className="flex items-center gap-2">
+                    <CheckIcon className="h-4 w-4 text-accent" />
+                    Service businesses & local brands
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <CheckIcon className="h-4 w-4 text-accent" />
+                    Creators & startups
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <CheckIcon className="h-4 w-4 text-accent" />
+                    Anyone who wants done-for-you
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3 md:gap-8">
@@ -1087,6 +1128,43 @@ export default function HomePage() {
               </p>
             </div>
 
+            {/* Plan comparison helper - centered */}
+            <div className="mx-auto mb-16 max-w-4xl">
+              <div className="flex flex-col md:flex-row md:justify-center gap-12 md:gap-20 text-sm text-secondary">
+                <div className="text-center">
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4 font-medium">Most businesses choose Pro if:</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center justify-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                      <span>You offer multiple services</span>
+                    </li>
+                    <li className="flex items-center justify-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                      <span>You want stronger Google structure</span>
+                    </li>
+                    <li className="flex items-center justify-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                      <span>You want faster edits + tracking</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="hidden md:block w-px bg-white/[0.08]" />
+                <div className="text-center">
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted mb-4 font-medium">Choose Starter if:</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center justify-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
+                      <span>You only need a clean 1-page presence</span>
+                    </li>
+                    <li className="flex items-center justify-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
+                      <span>You want the lowest monthly cost</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <div className="grid gap-8 lg:grid-cols-3 lg:gap-10 max-w-6xl mx-auto">
               {/* Starter Plan */}
               <GlassCard hover className="flex flex-col p-8">
@@ -1118,11 +1196,12 @@ export default function HomePage() {
                     "Speed optimization",
                     "Local SEO foundation",
                     "1 Content Update / month",
+                    "6-month audit + optimization",
                     "Cancel anytime. No contracts.",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "1 Content Update / month" ? (
+                      {item === "1 Content Update / month" || item === "6-month audit + optimization" ? (
                         <span className="font-bold">{item}</span>
                       ) : (
                         item
@@ -1140,6 +1219,9 @@ export default function HomePage() {
                 >
                   Start My Free Website
                 </GlassButton>
+                <p className="mt-2 text-center text-xs text-muted">
+                  Takes 60 seconds to start. No calls needed.
+                </p>
               </GlassCard>
 
               {/* Pro Plan */}
@@ -1179,11 +1261,12 @@ export default function HomePage() {
                     "Google Analytics / Umami included",
                     "Priority build queue (24-48h edits)",
                     "3 Content Updates / month",
+                    "Quarterly audit + advanced optimization",
                     "Cancel anytime. No contracts.",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "3 Content Updates / month" || item === "Priority build queue (24-48h edits)" ? (
+                      {item === "3 Content Updates / month" || item === "Priority build queue (24-48h edits)" || item === "Quarterly audit + advanced optimization" ? (
                         <span className="font-bold">{item}</span>
                       ) : (
                         item
@@ -1201,6 +1284,9 @@ export default function HomePage() {
                 >
                   Start My Free Website
                 </GlassButton>
+                <p className="mt-2 text-center text-xs text-muted">
+                  Takes 60 seconds to start. No calls needed.
+                </p>
               </GlassCard>
 
               {/* Custom Website */}
@@ -1729,4 +1815,3 @@ export default function HomePage() {
     </div>
   );
 }
-
