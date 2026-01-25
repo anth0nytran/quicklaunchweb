@@ -129,7 +129,7 @@ export default function SupportPage() {
             </div>
             <div>
               <p className="uppercase tracking-wider text-white/50">Support Hours</p>
-              <p className="mt-1 text-sm text-white/90">Mon–Fri, 9am–6pm CST</p>
+              <p className="mt-1 text-sm text-white/90">Mon-Fri, 9am-6pm CST</p>
             </div>
           </div>
           <GlassDivider className="my-6" />
@@ -191,3 +191,4 @@ export default function SupportPage() {
     </main>
   );
 }
+

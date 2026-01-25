@@ -1,0 +1,156 @@
+'use client';
+
+import { useMemo, useState, type CSSProperties } from 'react';
+import { LayoutGrid, X, Sparkles } from 'lucide-react';
+import { DEFAULT_CONFIGS, BusinessCategory, BusinessConfig, CATEGORY_OPTIONS } from '@/lib/demoDefaults';
+import { TryYourInfoPanel } from './TryYourInfoPanel';
+import { TemplateHome } from './TemplateHome';
+import { TemplateHealth } from './TemplateHealth';
+import { TemplatePro } from './TemplatePro';
+
+export function DemoShell() {
+  const [activeCategory, setActiveCategory] = useState<BusinessCategory>('home');
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [configs, setConfigs] = useState<Record<BusinessCategory, BusinessConfig>>({
+    home: DEFAULT_CONFIGS.home,
+    health: DEFAULT_CONFIGS.health,
+    pro: DEFAULT_CONFIGS.pro,
+  });
+
+  const activeConfig = configs[activeCategory];
+  const panelWidth = 'min(94vw, 380px)';
+
+  const handleSave = (update: Partial<BusinessConfig>) => {
+    setConfigs((prev) => ({
+      ...prev,
+      [activeCategory]: {
+        ...prev[activeCategory],
+        ...update,
+      },
+    }));
+  };
+
+  const Template = useMemo(() => {
+    if (activeCategory === 'home') return TemplateHome;
+    if (activeCategory === 'health') return TemplateHealth;
+    return TemplatePro;
+  }, [activeCategory]);
+
+  return (
+    <div className="relative min-h-screen overflow-x-hidden bg-white text-slate-900">
+      {/* Floating Open Button */}
+      <button
+        type="button"
+        onClick={() => setPanelOpen(true)}
+        className="fixed right-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black px-4 py-2.5 text-xs font-semibold text-white shadow-xl backdrop-blur-sm transition hover:bg-black/90"
+      >
+        <LayoutGrid className="h-4 w-4" />
+        <span className="hidden sm:inline">Customize</span>
+      </button>
+
+      {/* Backdrop */}
+      {panelOpen && (
+        <button
+          type="button"
+          aria-label="Close panel"
+          onClick={() => setPanelOpen(false)}
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+        />
+      )}
+
+      {/* Main Content - shifts when panel opens */}
+      <div
+        className="transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        style={{
+          '--panel-width': panelWidth,
+          transform: panelOpen ? 'translateX(calc(-1 * (var(--panel-width) / 2)))' : 'translateX(0)',
+        } as CSSProperties}
+      >
+        <Template config={activeConfig} />
+      </div>
+
+      {/* Slide-out Panel */}
+      <aside
+        className="fixed right-0 top-0 z-50 flex h-full flex-col bg-[#0a0a0b] text-white shadow-2xl"
+        style={{
+          width: panelWidth,
+          transform: panelOpen ? 'translateX(0)' : `translateX(${panelWidth})`,
+          transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
+        {/* Panel Header */}
+        <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.06]">
+              <Sparkles className="h-4 w-4 text-white/60" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold">Demo Builder</div>
+              <div className="text-[10px] text-white/40">Customize your preview</div>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setPanelOpen(false)}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-white/60 transition hover:bg-white/[0.06] hover:text-white"
+            aria-label="Close panel"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Panel Content */}
+        <div className="flex-1 overflow-y-auto px-5 py-5">
+          {/* Template Selector */}
+          <section className="mb-6">
+            <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
+              Choose Template
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {CATEGORY_OPTIONS.map((option) => {
+                const isActive = activeCategory === option.id;
+                const icons: Record<BusinessCategory, string> = {
+                  home: '🏠',
+                  health: '✨',
+                  pro: '💼',
+                };
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setActiveCategory(option.id)}
+                    className={`flex flex-col items-center gap-1.5 rounded-xl border p-3 text-center transition-all ${
+                      isActive
+                        ? 'border-white/30 bg-white/[0.08]'
+                        : 'border-white/[0.06] bg-transparent hover:border-white/15 hover:bg-white/[0.03]'
+                    }`}
+                  >
+                    <span className="text-lg">{icons[option.id]}</span>
+                    <span className={`text-[10px] font-medium ${isActive ? 'text-white' : 'text-white/50'}`}>
+                      {option.label.split(' ')[0]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="mb-6 border-t border-white/[0.06]" />
+
+          {/* Customization Panel */}
+          <TryYourInfoPanel config={activeConfig} onSave={handleSave} />
+        </div>
+
+        {/* Panel Footer */}
+        <div className="border-t border-white/[0.06] px-5 py-4">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center">
+            <p className="text-[10px] text-white/40">
+              Preview only. We customize everything for your business.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  );
+}

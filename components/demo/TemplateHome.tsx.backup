@@ -1,0 +1,430 @@
+'use client';
+
+import { useMemo, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Phone, Star, Menu, X } from 'lucide-react';
+import type { BusinessConfig } from '@/lib/demoDefaults';
+import { LeadCaptureModal } from './LeadCaptureModal';
+import { ComparisonSlider } from './ComparisonSlider';
+import { ImagePlaceholder } from './ImagePlaceholder';
+import { PreviewBanner } from './PreviewBanner';
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
+export function TemplateHome({ config }: { config: BusinessConfig }) {
+  const accent = config.accent.hex;
+  const t = config.theme.colors;
+  const cleanPhone = useMemo(() => config.phone.replace(/\D/g, ''), [config.phone]);
+  const services = config.services.slice(0, 4);
+  const ratingText = config.rating ? config.rating.toFixed(1) : '4.9';
+  const reviewCount = config.reviewCount ?? 120;
+  const years = config.yearsInBusiness ?? 10;
+  const shellClass = 'mx-auto w-full max-w-6xl px-4 sm:px-6';
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { label: 'Services', href: '#services' },
+    { label: 'Our Work', href: '#work' },
+    { label: 'Reviews', href: '#reviews' },
+  ];
+
+  const benefits = [
+    'Same-week scheduling',
+    'Written estimates upfront',
+    'Licensed & insured crew',
+    'Photo updates throughout',
+  ];
+
+  const beforePlaceholder = config.imagePlaceholders[0] ?? {
+    label: 'Before Photo',
+    hint: 'Leak damage or worn shingles',
+  };
+  const afterPlaceholder = config.imagePlaceholders[1] ?? {
+    label: 'After Photo',
+    hint: 'Clean new install',
+  };
+  const crewPlaceholder = config.imagePlaceholders[2] ?? {
+    label: 'Crew Photo',
+    hint: 'Technicians on site',
+  };
+
+  return (
+    <div className="relative bg-white">
+      {showPreview && (
+        <PreviewBanner accent={accent} ctaHref="#cta" onClose={() => setShowPreview(false)} />
+      )}
+
+      {/* Nav */}
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-200 ${
+          scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white'
+        }`}
+        style={{ borderBottom: scrolled ? `1px solid #e5e7eb` : 'none' }}
+      >
+        <div className={`${shellClass} flex items-center justify-between py-3.5`}>
+          <a href="#" className="flex items-center gap-2">
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded font-bold text-sm text-white"
+              style={{ backgroundColor: accent }}
+            >
+              {config.businessName.charAt(0)}
+            </div>
+            <span className="text-sm font-bold text-slate-900">{config.businessName}</span>
+          </a>
+
+          <div className="hidden items-center gap-6 md:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href={`tel:${cleanPhone}`}
+              className="text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+            >
+              {config.phone}
+            </a>
+            <button
+              type="button"
+              onClick={() => setLeadOpen(true)}
+              className="rounded-lg px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
+              style={{ backgroundColor: accent }}
+            >
+              {config.ctaPrimary}
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="border-t bg-white px-4 py-4 md:hidden">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-sm font-medium text-slate-600"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="mt-4 flex flex-col gap-2 border-t pt-4">
+              <a
+                href={`tel:${cleanPhone}`}
+                className="flex items-center justify-center gap-2 rounded-lg border-2 py-2.5 text-sm font-bold"
+              >
+                <Phone className="h-4 w-4" />
+                {config.phone}
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setLeadOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="rounded-lg py-2.5 text-sm font-bold text-white"
+                style={{ backgroundColor: accent }}
+              >
+                {config.ctaPrimary}
+              </button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero */}
+      <section className="py-12 lg:py-20">
+        <div className={`${shellClass} grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16`}>
+          <motion.div initial="initial" animate="animate" variants={fadeInUp}>
+            <h1 className="text-4xl font-black leading-tight tracking-tight md:text-5xl lg:text-6xl">
+              Fast, Reliable{' '}
+              <span style={{ color: accent }}>{config.primaryService}</span>
+            </h1>
+            <div className="mt-5 h-1 w-20" style={{ backgroundColor: accent }} />
+            <p className="mt-5 text-lg font-bold text-slate-700 lg:text-xl">
+              Serving {config.city} - Licensed & Insured - {years}+ Years
+            </p>
+
+            <div className="mt-8 space-y-3">
+              {benefits.map((benefit) => (
+                <div key={benefit} className="flex items-center gap-3">
+                  <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: accent }} />
+                  <span className="text-base font-medium text-slate-600">{benefit}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                className="rounded-lg px-8 py-4 text-base font-black uppercase tracking-wide text-white shadow-lg hover:shadow-xl transition-all"
+                style={{ backgroundColor: accent }}
+                onClick={() => setLeadOpen(true)}
+              >
+                {config.ctaPrimary}
+              </button>
+              <a
+                href={`tel:${cleanPhone}`}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 px-8 py-4 text-base font-black uppercase tracking-wide transition-all hover:bg-slate-50"
+              >
+                <Phone className="h-5 w-5" />
+                Call Now
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.div initial="initial" animate="animate" variants={fadeInUp}>
+            <ComparisonSlider
+              accent={accent}
+              beforeLabel={beforePlaceholder.label}
+              beforeHint={beforePlaceholder.hint}
+              afterLabel={afterPlaceholder.label}
+              afterHint={afterPlaceholder.hint}
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="border-y bg-slate-50 py-16 scroll-mt-20">
+        <div className={shellClass}>
+          <div className="mb-10">
+            <div className="inline-block rounded px-3 py-1.5 text-xs font-black uppercase tracking-wider text-white" style={{ backgroundColor: accent }}>
+              Services
+            </div>
+            <h2 className="mt-3 text-3xl font-black lg:text-4xl">What We Do</h2>
+            <p className="mt-2 text-base font-medium text-slate-600">
+              Licensed professionals - Same-week availability
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, i) => (
+              <div
+                key={service}
+                className="group rounded-lg border-2 bg-white p-6 transition-shadow hover:shadow-lg"
+                style={{ borderLeft: `4px solid ${accent}` }}
+              >
+                <div
+                  className="inline-flex h-10 w-10 items-center justify-center rounded font-black text-white"
+                  style={{ backgroundColor: accent }}
+                >
+                  {i + 1}
+                </div>
+                <h3 className="mt-4 text-lg font-black uppercase">{service}</h3>
+                <p className="mt-2 text-xs font-bold text-slate-500">
+                  Written estimate - Licensed crew
+                </p>
+                <button
+                  type="button"
+                  className="mt-4 text-xs font-black uppercase tracking-wide transition-all hover:gap-2 inline-flex items-center gap-1"
+                  style={{ color: accent }}
+                  onClick={() => setLeadOpen(true)}
+                >
+                  Get Quote →
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews - Dark Parallax */}
+      <section
+        id="reviews"
+        className="relative overflow-hidden py-20 scroll-mt-20"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1600&q=80)',
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.92) 100%)',
+          }}
+        />
+        <div className={`${shellClass} relative z-10`}>
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-3 rounded-lg bg-white/10 px-5 py-3 backdrop-blur-sm">
+              <Star className="h-6 w-6" style={{ color: accent, fill: accent }} />
+              <div>
+                <div className="text-3xl font-black text-white">{ratingText}</div>
+                <div className="text-xs font-bold text-white/70">{reviewCount}+ Reviews</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {config.testimonials.map((testimonial) => (
+              <div
+                key={testimonial.name}
+                className="rounded-lg bg-white/95 p-6 shadow-2xl backdrop-blur-sm"
+              >
+                <p className="text-sm font-medium leading-relaxed text-slate-700">
+                  "{testimonial.quote}"
+                </p>
+                <div className="mt-4 flex items-center gap-3">
+                  <div
+                    className="flex h-10 w-10 items-center justify-center rounded font-black text-white"
+                    style={{ backgroundColor: accent }}
+                  >
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900">{testimonial.name}</div>
+                    <div className="text-xs font-medium text-slate-500">Verified Customer</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Work */}
+      <section id="work" className="bg-white py-16 scroll-mt-20">
+        <div className={shellClass}>
+          <div className="mb-10">
+            <div className="inline-block rounded px-3 py-1.5 text-xs font-black uppercase tracking-wider text-white" style={{ backgroundColor: accent }}>
+              Recent Work
+            </div>
+            <h2 className="mt-3 text-3xl font-black lg:text-4xl">Real Jobs, Real Results</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <ImagePlaceholder label={beforePlaceholder.label} hint={beforePlaceholder.hint} accent={accent} aspectClassName="aspect-[4/3]" />
+            <ImagePlaceholder label={afterPlaceholder.label} hint={afterPlaceholder.hint} accent={accent} aspectClassName="aspect-[4/3]" />
+            <ImagePlaceholder label={crewPlaceholder.label} hint={crewPlaceholder.hint} accent={accent} aspectClassName="aspect-[4/3]" />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-y bg-slate-50 py-16">
+        <div className={shellClass}>
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-10 text-center text-3xl font-black lg:text-4xl">Common Questions</h2>
+            <div className="space-y-3">
+              {config.faqs.map((faq, i) => (
+                <details
+                  key={faq.q}
+                  className="group rounded-lg border-2 bg-white transition-shadow open:shadow-lg"
+                  open={i === 0}
+                >
+                  <summary className="flex cursor-pointer items-center justify-between p-5 text-sm font-bold">
+                    {faq.q}
+                    <span
+                      className="flex h-7 w-7 items-center justify-center rounded-full transition-transform group-open:rotate-45"
+                      style={{ backgroundColor: `${accent}15`, color: accent }}
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <div className="border-t px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-600">
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section id="cta" className="py-16" style={{ backgroundColor: accent }}>
+        <div className={`${shellClass} text-center`}>
+          <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+            Ready to Start?
+          </h2>
+          <p className="mt-4 text-xl font-bold text-white">
+            Free estimate - Same-week start - Licensed crew
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <button
+              type="button"
+              className="rounded-lg bg-white px-8 py-4 text-base font-black uppercase tracking-wide shadow-xl transition-all hover:scale-105"
+              style={{ color: accent }}
+              onClick={() => setLeadOpen(true)}
+            >
+              {config.ctaPrimary}
+            </button>
+            <a
+              href={`tel:${cleanPhone}`}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border-3 px-8 py-4 text-base font-black uppercase tracking-wide text-white transition-all hover:bg-white/10"
+              style={{ borderWidth: '3px', borderColor: 'white' }}
+            >
+              <Phone className="h-5 w-5" />
+              {config.phone}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t py-6 text-xs text-slate-500">
+        <div className={`${shellClass} flex flex-col gap-2 text-center md:flex-row md:justify-between md:text-left`}>
+          <span>{config.businessName}</span>
+          <span>{config.city} | {config.phone}</span>
+          <span>Service hours 7am - 7pm</span>
+        </div>
+      </footer>
+
+      {/* Mobile sticky CTA */}
+      <div className="fixed bottom-4 left-0 right-0 z-40 px-4 md:hidden">
+        <div className="mx-auto flex max-w-md gap-3 rounded-lg bg-white p-3 shadow-2xl" style={{ border: `3px solid ${accent}` }}>
+          <a
+            href={`tel:${cleanPhone}`}
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 py-3 text-sm font-black uppercase"
+          >
+            <Phone className="h-4 w-4" />
+            Call
+          </a>
+          <button
+            type="button"
+            className="flex-1 rounded-lg py-3 text-sm font-black uppercase text-white"
+            style={{ backgroundColor: accent }}
+            onClick={() => setLeadOpen(true)}
+          >
+            Get Quote
+          </button>
+        </div>
+      </div>
+
+      <LeadCaptureModal
+        open={leadOpen}
+        onOpenChange={setLeadOpen}
+        accent={accent}
+        businessName={config.businessName}
+        serviceLabel={config.primaryService}
+        ctaLabel={config.ctaPrimary}
+      />
+    </div>
+  );
+}
+

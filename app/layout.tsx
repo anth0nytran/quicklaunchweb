@@ -29,9 +29,9 @@ const siteUrl = (() => {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Free Website Builder | Professional Sites $99/mo - QuickLaunchWeb",
+  title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
   description:
-    "Get a professional website built free. Just $99/month for hosting + support. Mobile-friendly, SEO-ready, converts visitors into customers. Launch in 48 hours. No contracts. Cancel anytime. Perfect for businesses, freelancers, service companies, and anyone who needs a professional online presence.",
+    "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
   keywords: [
     "free website builder",
     "professional website builder",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
     "service company website",
   ],
   openGraph: {
-    title: "Free Website Builder | Professional Sites $99/mo - QuickLaunchWeb",
+    title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
     description:
-      "Get a professional website built free. Just $99/month for hosting + support. Mobile-friendly, SEO-ready, converts visitors into customers. Launch in 48 hours. No contracts. Cancel anytime.",
+      "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
     url: siteUrl,
     siteName: "QuickLaunchWeb",
     type: "website",
@@ -63,15 +63,15 @@ export const metadata: Metadata = {
         url: `${siteUrl}/icon.jpg`,
         width: 1200,
         height: 630,
-        alt: "QuickLaunchWeb - Free Professional Website Builder",
+        alt: "QuickLaunchWeb - Done-For-You Websites in 48 Hours",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Website Builder | Professional Sites $99/mo",
+    title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
     description:
-      "Get a professional website built free. Just $99/month. Mobile-friendly, SEO-ready, converts visitors into customers. Launch in 48 hours. Cancel anytime.",
+      "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
     images: [`${siteUrl}/icon.jpg`],
   },
   alternates: {

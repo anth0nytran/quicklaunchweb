@@ -1,0 +1,367 @@
+export type BusinessCategory = 'home' | 'health' | 'pro';
+
+// =============================================================================
+// THEME SYSTEM
+// =============================================================================
+
+export type ThemeStyle = 'clean' | 'bold' | 'elegant' | 'warm';
+
+export type ThemePreset = {
+  id: ThemeStyle;
+  name: string;
+  description: string;
+  fonts: {
+    heading: string;
+    body: string;
+    headingClass: string; // Tailwind font class
+    bodyClass: string;
+  };
+  colors: {
+    // Backgrounds
+    pageBg: string;
+    cardBg: string;
+    surfaceBg: string;
+    // Text
+    textPrimary: string;
+    textSecondary: string;
+    textMuted: string;
+    // Borders
+    border: string;
+    borderLight: string;
+    // Dark sections
+    darkBg: string;
+    darkText: string;
+    darkTextMuted: string;
+  };
+  isDark: boolean;
+};
+
+export const THEME_PRESETS: ThemePreset[] = [
+  {
+    id: 'clean',
+    name: 'Clean Modern',
+    description: 'Light & professional',
+    fonts: {
+      heading: 'Inter',
+      body: 'Inter',
+      headingClass: 'font-sans',
+      bodyClass: 'font-sans',
+    },
+    colors: {
+      pageBg: '#ffffff',
+      cardBg: '#ffffff',
+      surfaceBg: '#f8fafc',
+      textPrimary: '#0f172a',
+      textSecondary: '#475569',
+      textMuted: '#94a3b8',
+      border: '#e2e8f0',
+      borderLight: '#f1f5f9',
+      darkBg: '#0f172a',
+      darkText: '#ffffff',
+      darkTextMuted: '#94a3b8',
+    },
+    isDark: false,
+  },
+  {
+    id: 'bold',
+    name: 'Bold Dark',
+    description: 'Dark & striking',
+    fonts: {
+      heading: 'Inter',
+      body: 'Inter',
+      headingClass: 'font-sans',
+      bodyClass: 'font-sans',
+    },
+    colors: {
+      pageBg: '#09090b',
+      cardBg: '#18181b',
+      surfaceBg: '#27272a',
+      textPrimary: '#fafafa',
+      textSecondary: '#a1a1aa',
+      textMuted: '#71717a',
+      border: '#3f3f46',
+      borderLight: '#27272a',
+      darkBg: '#000000',
+      darkText: '#ffffff',
+      darkTextMuted: '#71717a',
+    },
+    isDark: true,
+  },
+  {
+    id: 'elegant',
+    name: 'Luxe Elegant',
+    description: 'Rich & refined',
+    fonts: {
+      heading: 'Playfair Display',
+      body: 'Inter',
+      headingClass: 'font-serif',
+      bodyClass: 'font-sans',
+    },
+    colors: {
+      pageBg: '#faf9f7',
+      cardBg: '#ffffff',
+      surfaceBg: '#f5f3f0',
+      textPrimary: '#1c1917',
+      textSecondary: '#57534e',
+      textMuted: '#a8a29e',
+      border: '#e7e5e4',
+      borderLight: '#f5f5f4',
+      darkBg: '#1c1917',
+      darkText: '#fafaf9',
+      darkTextMuted: '#a8a29e',
+    },
+    isDark: false,
+  },
+  {
+    id: 'warm',
+    name: 'Soft Warm',
+    description: 'Gentle & inviting',
+    fonts: {
+      heading: 'Inter',
+      body: 'Inter',
+      headingClass: 'font-sans',
+      bodyClass: 'font-sans',
+    },
+    colors: {
+      pageBg: '#fffbf5',
+      cardBg: '#ffffff',
+      surfaceBg: '#fef7ed',
+      textPrimary: '#292524',
+      textSecondary: '#78716c',
+      textMuted: '#a8a29e',
+      border: '#f5e6d3',
+      borderLight: '#fef3e2',
+      darkBg: '#292524',
+      darkText: '#fafaf9',
+      darkTextMuted: '#a8a29e',
+    },
+    isDark: false,
+  },
+];
+
+// =============================================================================
+// ACCENT COLORS - Curated palettes that work with all themes
+// =============================================================================
+
+export type AccentPreset = {
+  name: string;
+  hex: string;
+  hoverHex: string;
+};
+
+export const ACCENT_PRESETS: AccentPreset[] = [
+  // Blues
+  { name: 'Ocean', hex: '#2563eb', hoverHex: '#1d4ed8' },
+  { name: 'Sky', hex: '#0ea5e9', hoverHex: '#0284c7' },
+  { name: 'Indigo', hex: '#6366f1', hoverHex: '#4f46e5' },
+  // Greens
+  { name: 'Emerald', hex: '#10b981', hoverHex: '#059669' },
+  { name: 'Teal', hex: '#14b8a6', hoverHex: '#0d9488' },
+  { name: 'Forest', hex: '#22c55e', hoverHex: '#16a34a' },
+  // Warm
+  { name: 'Amber', hex: '#f59e0b', hoverHex: '#d97706' },
+  { name: 'Orange', hex: '#f97316', hoverHex: '#ea580c' },
+  { name: 'Rose', hex: '#f43f5e', hoverHex: '#e11d48' },
+  // Neutral/Rich
+  { name: 'Violet', hex: '#8b5cf6', hoverHex: '#7c3aed' },
+  { name: 'Slate', hex: '#475569', hoverHex: '#334155' },
+  { name: 'Charcoal', hex: '#18181b', hoverHex: '#09090b' },
+];
+
+// =============================================================================
+// BUSINESS CONFIG
+// =============================================================================
+
+export type BusinessConfig = {
+  category: BusinessCategory;
+  businessName: string;
+  city: string;
+  phone: string;
+  primaryService: string;
+  services: string[];
+  rating?: number;
+  reviewCount?: number;
+  yearsInBusiness?: number;
+  theme: ThemePreset;
+  accent: AccentPreset;
+  ctaPrimary: string;
+  ctaSecondary?: string;
+  heroProofChips: string[];
+  testimonials: { quote: string; name: string }[];
+  faqs: { q: string; a: string }[];
+  imagePlaceholders: { label: string; hint: string }[];
+};
+
+export const DEFAULT_CONFIGS: Record<BusinessCategory, BusinessConfig> = {
+  home: {
+    category: 'home',
+    businessName: 'Summit Roofing + Trades',
+    city: 'Plano, TX',
+    phone: '(469) 555-0182',
+    primaryService: 'Roof Replacement',
+    services: ['Roof Repair', 'Storm Response', 'HVAC Tune-Ups'],
+    rating: 4.9,
+    reviewCount: 214,
+    yearsInBusiness: 12,
+    theme: THEME_PRESETS[0], // Clean Modern
+    accent: ACCENT_PRESETS[6], // Amber
+    ctaPrimary: 'Get Free Estimate',
+    ctaSecondary: 'Call Now',
+    heroProofChips: ['Same-week availability', 'Licensed and insured', 'On-site in 2 hours'],
+    testimonials: [
+      {
+        quote:
+          'They arrived the same day, explained the options, and fixed the leak in one visit. No pressure at all.',
+        name: 'Rachel M.',
+      },
+      {
+        quote:
+          'Clear pricing and fast scheduling. The crew left the site clean and the HVAC is running quiet again.',
+        name: 'David L.',
+      },
+    ],
+    faqs: [
+      {
+        q: 'How fast can you come out?',
+        a: 'Most calls are scheduled within 24 to 48 hours. Emergency leaks are handled sooner when possible.',
+      },
+      {
+        q: 'Do you offer free estimates?',
+        a: 'Yes. We provide a clear, written estimate before any work begins.',
+      },
+      {
+        q: 'Are you licensed and insured?',
+        a: 'Yes. We carry full licensing and insurance for roofing, HVAC, and plumbing work.',
+      },
+      {
+        q: 'Will I get updates during the job?',
+        a: 'We send text updates with arrival times and completion notes so you are never guessing.',
+      },
+    ],
+    imagePlaceholders: [
+      { label: 'Before Photo', hint: 'Leak damage or worn shingles' },
+      { label: 'After Photo', hint: 'Clean new shingle install' },
+      { label: 'Crew Photo', hint: 'Technicians on site' },
+    ],
+  },
+  health: {
+    category: 'health',
+    businessName: 'Lumen Med Spa',
+    city: 'Scottsdale, AZ',
+    phone: '(480) 555-0176',
+    primaryService: 'Laser Skin Resurfacing',
+    services: ['Injectables', 'Laser Treatments', 'Skin Renewal'],
+    rating: 4.8,
+    reviewCount: 328,
+    yearsInBusiness: 9,
+    theme: THEME_PRESETS[2], // Luxe Elegant
+    accent: ACCENT_PRESETS[4], // Teal
+    ctaPrimary: 'Book Consultation',
+    ctaSecondary: 'Check Availability',
+    heroProofChips: ['Appointments this week', 'Licensed providers', 'Private treatment suites'],
+    testimonials: [
+      {
+        quote:
+          'The consult was calm and clear. They explained every step and the results look natural.',
+        name: 'Jenna R.',
+      },
+      {
+        quote:
+          'Easy scheduling and a great experience. I was in and out without feeling rushed.',
+        name: 'Priya S.',
+      },
+    ],
+    faqs: [
+      {
+        q: 'How soon can I book?',
+        a: 'Most clients can book within the week. We reserve openings daily for new consultations.',
+      },
+      {
+        q: 'Is the consultation required?',
+        a: 'Yes. We start with a consult to confirm goals and recommend the right service plan.',
+      },
+      {
+        q: 'Do you offer membership pricing?',
+        a: 'We offer simple maintenance plans for ongoing treatments and priority scheduling.',
+      },
+      {
+        q: 'What should I expect after a visit?',
+        a: 'We provide clear aftercare instructions and a direct line for questions.',
+      },
+    ],
+    imagePlaceholders: [
+      { label: 'Treatment Room', hint: 'Calm, private suite' },
+      { label: 'Provider Photo', hint: 'Licensed clinician' },
+      { label: 'Results Photo', hint: 'Subtle before and after' },
+    ],
+  },
+  pro: {
+    category: 'pro',
+    businessName: 'Harrison + Cole Law',
+    city: 'Austin, TX',
+    phone: '(512) 555-0149',
+    primaryService: 'Business Counsel',
+    services: ['Contract Review', 'Employment Guidance', 'Risk Planning'],
+    rating: 4.9,
+    reviewCount: 92,
+    yearsInBusiness: 18,
+    theme: THEME_PRESETS[1], // Bold Dark
+    accent: ACCENT_PRESETS[0], // Ocean
+    ctaPrimary: 'Request Consultation',
+    ctaSecondary: 'Call the Office',
+    heroProofChips: ['Confidential consults', 'Clear next steps', 'Response in 1 business day'],
+    testimonials: [
+      {
+        quote:
+          'They clarified our options quickly and gave us a clean path forward. Very direct and practical.',
+        name: 'Michael T.',
+      },
+      {
+        quote:
+          'We felt informed after the first call. The process stayed structured and predictable.',
+        name: 'Lena C.',
+      },
+    ],
+    faqs: [
+      {
+        q: 'What happens in the first consultation?',
+        a: 'We review the situation, outline immediate options, and confirm the next steps.',
+      },
+      {
+        q: 'How fast do you respond?',
+        a: 'Most inquiries receive a response within one business day.',
+      },
+      {
+        q: 'Is the consultation confidential?',
+        a: 'Yes. Everything shared in the consult is treated as confidential.',
+      },
+      {
+        q: 'Do you provide flat-fee work?',
+        a: 'For many services we offer clear, upfront pricing before engagement.',
+      },
+    ],
+    imagePlaceholders: [
+      { label: 'Team Photo', hint: 'Partners and lead counsel' },
+      { label: 'Case Brief', hint: 'Sample deliverable' },
+      { label: 'Client Meeting', hint: 'Conference room consult' },
+    ],
+  },
+};
+
+export const CATEGORY_OPTIONS: { id: BusinessCategory; label: string; subtitle: string }[] = [
+  {
+    id: 'home',
+    label: 'Home Services',
+    subtitle: 'Fastest yes, fastest results',
+  },
+  {
+    id: 'health',
+    label: 'Health and Wellness',
+    subtitle: 'High value per appointment',
+  },
+  {
+    id: 'pro',
+    label: 'Professional Services',
+    subtitle: 'Slower yes, sticky once closed',
+  },
+];

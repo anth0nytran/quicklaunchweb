@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/dialog";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ExperienceHeroBackground } from "@/components/ui/experience-hero";
+import { FAQSchema } from "@/components/FAQSchema";
+import { faqs, faqCategories } from "@/lib/faqData";
 
 type Plan = "starter" | "pro";
 
@@ -858,123 +860,6 @@ export default function HomePage() {
     { step: "03", title: "We Build, Launch & Support", desc: "Your site goes live in 48 hours. We keep it updated, fast, and converting." },
   ];
 
-  const faqs = [
-    // Pricing & Billing
-    { 
-      q: "Is the website really free?", 
-      a: "Yes. The build fee is waived when you start a plan. You only pay monthly for hosting + support.",
-      category: "pricing"
-    },
-    { 
-      q: "What's the catch?", 
-      a: "No catch. It's simple: $0 down to build, then $99/mo (or $149/mo) to keep it live, supported, and updated.",
-      category: "pricing"
-    },
-    { 
-      q: "Why do you charge monthly?", 
-      a: "Because most \"one-time websites\" get outdated fast. Monthly covers hosting, fixes, and support so your site stays fast and working.",
-      category: "pricing"
-    },
-    { 
-      q: "Can I cancel anytime?", 
-      a: "Yes. No contracts. Cancel anytime through the Stripe portal (or email support if needed).",
-      category: "pricing"
-    },
-    { 
-      q: "What happens if I cancel?", 
-      a: "We stop billing you going forward, and your hosted site may be taken offline after your billing period ends.",
-      category: "pricing"
-    },
-    // Plans & What's Included
-    { 
-      q: "What do I get with Starter vs Pro?", 
-      a: "Starter ($99/mo): 1-page site + local SEO foundation + 1 content update/month.\nPro ($149/mo): 3-page site + stronger local structure + priority queue + 3 content updates/month.",
-      category: "plans"
-    },
-    { 
-      q: "What counts as a \"content update\"?", 
-      a: "Small changes like text edits, photo swaps, button/link updates, hours, services, or adding a testimonial.",
-      category: "plans"
-    },
-    { 
-      q: "What's not included?", 
-      a: "Big changes like new pages beyond your plan, full redesigns, custom features, ecommerce, or integrations. If you need that, we'll quote it as a project.",
-      category: "plans"
-    },
-    { 
-      q: "Can I request changes anytime?", 
-      a: "Yes — submit requests through our support form. Plans include monthly content updates, and Pro is handled faster via priority queue.",
-      category: "plans"
-    },
-    // Getting Started
-    { 
-      q: "How fast can you launch it?", 
-      a: "Typically 48 hours after you send your business details (services, contact info, photos/logo).",
-      category: "getting-started"
-    },
-    { 
-      q: "Do I need a domain?", 
-      a: "Yes — you'll need a domain (like yourbusiness.com). If you don't have one, we'll send a quick guide to buy it.",
-      category: "getting-started"
-    },
-    { 
-      q: "Can you connect my domain for me?", 
-      a: "Yes. If you already have a domain, you can either:\n\nDo it yourself (free) with our instructions, or\n\nWe connect it for you ($99 one-time)",
-      category: "getting-started"
-    },
-    // How It Works
-    { 
-      q: "How do leads come in?", 
-      a: "Through tap-to-call buttons and form submissions on your website.",
-      category: "how-it-works"
-    },
-    { 
-      q: "Where do form submissions go?", 
-      a: "By default, form leads go straight to your email so you can respond fast.",
-      category: "how-it-works"
-    },
-    { 
-      q: "Do you offer text message lead alerts?", 
-      a: "Yes — add Instant Lead Texts to get new leads texted to your phone instantly.",
-      category: "how-it-works"
-    },
-    { 
-      q: "Can you add Google Analytics / tracking?", 
-      a: "Yes. We can add Umami or Google Analytics—especially for Pro. If you have tracking scripts, we'll plug them in.",
-      category: "how-it-works"
-    },
-    // Results & Ownership
-    { 
-      q: "Do I own the website?", 
-      a: "You own your business info and branding, but the website is provided as a subscription service while active. If you want full ownership, you can request a website buyout.",
-      category: "results"
-    },
-    { 
-      q: "Do you do SEO?", 
-      a: "We build every site with a local SEO foundation (fast load, clean structure, service keywords). We don't promise rankings, but we set you up correctly from day one.",
-      category: "results"
-    },
-    { 
-      q: "Will this get me more clients?", 
-      a: "That's the goal — we build your site to convert visitors into clients and inquiries. Results depend on your market, offer, competition, and follow-up.",
-      category: "results"
-    },
-    { 
-      q: "Who is this best for?", 
-      a: "Local service businesses that want a clean website fast that helps drive clients and inquiries (HVAC, roofing, salons, medspas, dentists, auto, contractors, and more).",
-      category: "results"
-    },
-  ];
-
-  const faqCategories = [
-    { id: "all", label: "All Questions" },
-    { id: "pricing", label: "Pricing & Billing" },
-    { id: "plans", label: "Plans & What's Included" },
-    { id: "getting-started", label: "Getting Started" },
-    { id: "how-it-works", label: "How It Works" },
-    { id: "results", label: "Ownership & SEO" },
-  ];
-
   const stats = [
     { value: "FREE", label: "Website Build" },
     { value: "48h", label: "Launch Time" },
@@ -987,6 +872,7 @@ export default function HomePage() {
   // ==========================================================================
   return (
     <div className="flex min-h-screen flex-col font-sans relative">
+      <FAQSchema />
       {/* ===== Navbar ===== */}
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-6">
         <nav className="mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] px-5 py-3 shadow-glass">
@@ -1196,7 +1082,7 @@ export default function HomePage() {
                 Free website. Just pay hosting.
               </h2>
               <p className="mt-4 text-lg text-secondary max-w-2xl mx-auto">
-                Most designers charge $500–$2,000 upfront. We don&apos;t. Monthly fee covers hosting,
+                Most designers charge $500-$2,000 upfront. We don&apos;t. Monthly fee covers hosting,
                 maintenance, and keeping your site converting.
               </p>
             </div>
@@ -1291,13 +1177,13 @@ export default function HomePage() {
                     "Enhanced local SEO structure",
                     "Call + form tracking installed",
                     "Google Analytics / Umami included",
-                    "Priority build queue (24–48h edits)",
+                    "Priority build queue (24-48h edits)",
                     "3 Content Updates / month",
                     "Cancel anytime. No contracts.",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "3 Content Updates / month" || item === "Priority build queue (24–48h edits)" ? (
+                      {item === "3 Content Updates / month" || item === "Priority build queue (24-48h edits)" ? (
                         <span className="font-bold">{item}</span>
                       ) : (
                         item
@@ -1843,3 +1729,4 @@ export default function HomePage() {
     </div>
   );
 }
+

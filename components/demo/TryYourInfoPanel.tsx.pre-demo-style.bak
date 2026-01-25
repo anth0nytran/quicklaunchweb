@@ -1,0 +1,285 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { Building2, MapPin, Phone, Sparkles, Palette, Briefcase, Sun, Moon } from 'lucide-react';
+import { ACCENT_PRESETS, THEME_PRESETS, BusinessConfig, ThemeStyle } from '@/lib/demoDefaults';
+
+interface TryYourInfoPanelProps {
+  config: BusinessConfig;
+  onSave: (update: Partial<BusinessConfig>) => void;
+}
+
+export function TryYourInfoPanel({ config, onSave }: TryYourInfoPanelProps) {
+  const [businessName, setBusinessName] = useState(config.businessName);
+  const [city, setCity] = useState(config.city);
+  const [phone, setPhone] = useState(config.phone);
+  const [primaryService, setPrimaryService] = useState(config.primaryService);
+  const [servicesInput, setServicesInput] = useState(config.services.join(', '));
+  const [themeId, setThemeId] = useState<ThemeStyle>(config.theme.id);
+  const [accentName, setAccentName] = useState(config.accent.name);
+
+  const selectedTheme = useMemo(
+    () => THEME_PRESETS.find((preset) => preset.id === themeId) || config.theme,
+    [themeId, config.theme]
+  );
+
+  const selectedAccent = useMemo(
+    () => ACCENT_PRESETS.find((preset) => preset.name === accentName) || config.accent,
+    [accentName, config.accent]
+  );
+
+  useEffect(() => {
+    setBusinessName(config.businessName);
+    setCity(config.city);
+    setPhone(config.phone);
+    setPrimaryService(config.primaryService);
+    setServicesInput(config.services.join(', '));
+    setThemeId(config.theme.id);
+    setAccentName(config.accent.name);
+  }, [config]);
+
+  const handleSubmit = () => {
+    const parsedServices = servicesInput
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .slice(0, 4);
+
+    onSave({
+      businessName: businessName.trim() || config.businessName,
+      city: city.trim() || config.city,
+      phone: phone.trim() || config.phone,
+      primaryService: primaryService.trim() || config.primaryService,
+      services: parsedServices.length > 0 ? parsedServices : config.services,
+      theme: selectedTheme,
+      accent: selectedAccent,
+    });
+  };
+
+  const inputClass =
+    'mt-2 w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/25 focus:border-white/20 focus:outline-none focus:ring-1 focus:ring-white/10 transition';
+
+  // Theme preview mini-cards
+  const themeIcons: Record<ThemeStyle, React.ReactNode> = {
+    clean: <Sun className="h-3.5 w-3.5" />,
+    bold: <Moon className="h-3.5 w-3.5" />,
+    elegant: <Sparkles className="h-3.5 w-3.5" />,
+    warm: <Sun className="h-3.5 w-3.5" />,
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* Style Theme Section */}
+      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
+        <div className="mb-4 flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]">
+            <Palette className="h-3.5 w-3.5 text-white/50" />
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            Style
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          {THEME_PRESETS.map((theme) => {
+            const isActive = themeId === theme.id;
+            return (
+              <button
+                key={theme.id}
+                type="button"
+                onClick={() => setThemeId(theme.id)}
+                className={`group relative overflow-hidden rounded-xl border p-3 text-left transition-all ${
+                  isActive
+                    ? 'border-white/30 bg-white/[0.08]'
+                    : 'border-white/[0.06] bg-transparent hover:border-white/15 hover:bg-white/[0.03]'
+                }`}
+              >
+                {/* Mini preview */}
+                <div
+                  className="mb-2 flex h-10 items-end gap-1 rounded-lg p-1.5"
+                  style={{ backgroundColor: theme.colors.pageBg }}
+                >
+                  <div
+                    className="h-full w-1/3 rounded"
+                    style={{ backgroundColor: theme.colors.surfaceBg }}
+                  />
+                  <div className="flex h-full flex-1 flex-col justify-end gap-0.5">
+                    <div
+                      className="h-1 w-3/4 rounded-full"
+                      style={{ backgroundColor: theme.colors.textPrimary }}
+                    />
+                    <div
+                      className="h-1 w-1/2 rounded-full"
+                      style={{ backgroundColor: theme.colors.textMuted }}
+                    />
+                  </div>
+                  <div
+                    className="h-3 w-3 rounded"
+                    style={{ backgroundColor: selectedAccent.hex }}
+                  />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className={`${isActive ? 'text-white/80' : 'text-white/40'}`}>
+                    {themeIcons[theme.id]}
+                  </span>
+                  <span className={`text-[10px] font-medium ${isActive ? 'text-white' : 'text-white/50'}`}>
+                    {theme.name}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Accent Color Section */}
+      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
+        <div className="mb-3 flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]">
+            <Sparkles className="h-3.5 w-3.5 text-white/50" />
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            Accent Color
+          </span>
+        </div>
+
+        <div className="grid grid-cols-6 gap-1.5">
+          {ACCENT_PRESETS.map((preset) => {
+            const isActive = accentName === preset.name;
+            return (
+              <button
+                key={preset.name}
+                type="button"
+                onClick={() => setAccentName(preset.name)}
+                className="group relative"
+                title={preset.name}
+              >
+                <div
+                  className={`aspect-square rounded-lg transition-all ${
+                    isActive
+                      ? 'ring-2 ring-white/50 ring-offset-2 ring-offset-black/50'
+                      : 'hover:scale-110'
+                  }`}
+                  style={{ backgroundColor: preset.hex }}
+                />
+                {isActive && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-2 w-2 rounded-full bg-white shadow" />
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <p className="mt-2 text-center text-[9px] text-white/30">
+          {selectedAccent.name}
+        </p>
+      </section>
+
+      {/* Business Details Section */}
+      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
+        <div className="mb-4 flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]">
+            <Building2 className="h-3.5 w-3.5 text-white/50" />
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            Business Details
+          </span>
+        </div>
+
+        <div className="space-y-3">
+          <label className="block">
+            <span className="text-[10px] font-medium text-white/40">Business Name</span>
+            <input
+              type="text"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className={inputClass}
+              placeholder="Summit Roofing + Trades"
+            />
+          </label>
+
+          <div className="grid grid-cols-2 gap-3">
+            <label className="block">
+              <span className="text-[10px] font-medium text-white/40">City</span>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 mt-1 h-3.5 w-3.5 -translate-y-1/2 text-white/30" />
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className={`${inputClass} pl-8`}
+                  placeholder="Plano, TX"
+                />
+              </div>
+            </label>
+
+            <label className="block">
+              <span className="text-[10px] font-medium text-white/40">Phone</span>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 mt-1 h-3.5 w-3.5 -translate-y-1/2 text-white/30" />
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={`${inputClass} pl-8`}
+                  placeholder="(469) 555-0182"
+                />
+              </div>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
+        <div className="mb-4 flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]">
+            <Briefcase className="h-3.5 w-3.5 text-white/50" />
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            Services
+          </span>
+        </div>
+
+        <div className="space-y-3">
+          <label className="block">
+            <span className="text-[10px] font-medium text-white/40">Primary Service</span>
+            <div className="relative">
+              <Sparkles className="absolute left-3 top-1/2 mt-1 h-3.5 w-3.5 -translate-y-1/2 text-white/30" />
+              <input
+                type="text"
+                value={primaryService}
+                onChange={(e) => setPrimaryService(e.target.value)}
+                className={`${inputClass} pl-8`}
+                placeholder="Roof Replacement"
+              />
+            </div>
+          </label>
+
+          <label className="block">
+            <span className="text-[10px] font-medium text-white/40">Additional Services</span>
+            <textarea
+              value={servicesInput}
+              onChange={(e) => setServicesInput(e.target.value)}
+              rows={2}
+              className={`${inputClass} resize-none`}
+              placeholder="Roof Repair, HVAC Tune-Ups, Plumbing"
+            />
+            <p className="mt-1 text-[10px] text-white/30">Separate with commas (max 4)</p>
+          </label>
+        </div>
+      </section>
+
+      {/* Update Button */}
+      <button
+        type="button"
+        onClick={handleSubmit}
+        className="w-full rounded-xl py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+        style={{ backgroundColor: selectedAccent.hex }}
+      >
+        Update Preview
+      </button>
+    </div>
+  );
+}

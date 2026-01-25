@@ -53,3 +53,9 @@ coverage/
 *.seed
 *.pid.lock
 .cache/
+
+# Windows reserved names (invalid paths for Git on Windows)
+nul
+con
+prn
+aux
