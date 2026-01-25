@@ -95,6 +95,16 @@ const nextConfig = {
     ];
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/blogs/:path*",
+        destination: "/guides/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   // ==========================================================================
   // Production Optimizations
   // ==========================================================================

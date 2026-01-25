@@ -864,7 +864,7 @@ export default function HomePage() {
     { value: "FREE", label: "Website Build" },
     { value: "48h", label: "Launch Time" },
     { value: "$99", label: "/mo Hosting" },
-    { value: "∞", label: "Cancel Anytime" },
+    { value: "Unlimited", label: "Cancel Anytime" },
   ];
 
   // ==========================================================================
@@ -892,6 +892,7 @@ export default function HomePage() {
             <Link href="#work" className="hover:text-white transition-colors duration-200">Work</Link>
             <Link href="#how-it-works" className="hover:text-white transition-colors duration-200">How it Works</Link>
             <Link href="#pricing" className="hover:text-white transition-colors duration-200">Pricing</Link>
+            <Link href="/guides" className="hover:text-white transition-colors duration-200">Guides</Link>
             <Link href="#faq" className="hover:text-white transition-colors duration-200">FAQ</Link>
           </div>
 
@@ -1342,6 +1343,65 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ===== Guides Section ===== */}
+        <section id="guides" className="relative px-6 py-24 md:py-32">
+          <BGPattern variant="grid" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
+          <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-16" />
+
+          <div className="relative z-10 mx-auto max-w-7xl">
+            <div className="mb-10 md:text-center">
+              <p className="text-xs uppercase tracking-wider text-muted">Guides</p>
+              <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
+                Growth Guides for Local Businesses
+              </h2>
+              <p className="mt-3 text-sm text-secondary">
+                Straightforward, professional guides to help you launch faster and convert more leads.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              <GlassCard hover className="p-6">
+                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
+                <Link href="/guides/subscription-web-design" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  Subscription Web Design
+                </Link>
+                <p className="mt-3 text-sm text-secondary">
+                  Understand pay monthly web design, pricing, inclusions, and how it compares to agencies.
+                </p>
+                <Link href="/guides/subscription-web-design" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                  Read guide
+                </Link>
+              </GlassCard>
+
+              <GlassCard hover className="p-6">
+                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
+                <Link href="/guides/done-for-you-websites" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  Done for You Websites
+                </Link>
+                <p className="mt-3 text-sm text-secondary">
+                  Learn what done for you websites include and who they are best for.
+                </p>
+                <Link href="/guides/done-for-you-websites" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                  Read guide
+                </Link>
+              </GlassCard>
+
+              <GlassCard hover className="p-6">
+                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
+                <Link href="/guides/website-in-48-hours" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  Website in 48 Hours
+                </Link>
+                <p className="mt-3 text-sm text-secondary">
+                  See how a fast website launch works and what you need to get it live.
+                </p>
+                <Link href="/guides/website-in-48-hours" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                  Read guide
+                </Link>
+              </GlassCard>
+            </div>
+          </div>
+        </section>
+
         {/* ===== FAQ Section ===== */}
         <section id="faq" className="relative px-6 py-24 md:py-32">
           <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
@@ -1471,6 +1531,7 @@ export default function HomePage() {
                 <li><Link href="#work" className="text-sm text-secondary hover:text-white transition-colors">Recent Work</Link></li>
                 <li><Link href="#how-it-works" className="text-sm text-secondary hover:text-white transition-colors">How It Works</Link></li>
                 <li><Link href="#pricing" className="text-sm text-secondary hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/guides" className="text-sm text-secondary hover:text-white transition-colors">Guides</Link></li>
                 <li><Link href="#faq" className="text-sm text-secondary hover:text-white transition-colors">FAQ</Link></li>
               </ul>
             </div>

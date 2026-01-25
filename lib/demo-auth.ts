@@ -1,7 +1,8 @@
-const DEMO_COOKIE_NAME = "demo_auth";
+const DEMO_COOKIE_NAME = "demo_auth_v2";
 const DEMO_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 12;
 const DEMO_COOKIE_MAX_AGE_MS = DEMO_COOKIE_MAX_AGE_SECONDS * 1000;
 const DEFAULT_NEXT_PATH = "/demo";
+const ALLOWED_NEXT_PATH_PREFIXES = ["/demo"];
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -46,7 +47,7 @@ export function sanitizeNextPath(nextValue?: string): string {
     return DEFAULT_NEXT_PATH;
   }
 
-  if (!nextValue.startsWith("/demo")) {
+  if (!ALLOWED_NEXT_PATH_PREFIXES.some((prefix) => nextValue.startsWith(prefix))) {
     return DEFAULT_NEXT_PATH;
   }
 
