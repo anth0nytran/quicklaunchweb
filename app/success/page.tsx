@@ -1,5 +1,10 @@
+'use client';
+
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { GlassCard, GlassButton, GlassPill, AmbientGlow } from "@/components/ui/glass";
+import { usePageTracker, useCheckoutTracker } from "@/lib/analytics";
 
 function CheckCircleIcon({ className }: { className?: string }) {
   return (
@@ -34,6 +39,24 @@ function ArrowLeftIcon({ className }: { className?: string }) {
 }
 
 export default function SuccessPage() {
+  const searchParams = useSearchParams();
+
+  // Analytics tracking
+  usePageTracker('QuickLaunchWeb - Success', 'checkout_success');
+  const { trackPurchase } = useCheckoutTracker();
+
+  // Track purchase completion on mount
+  useEffect(() => {
+    const sessionId = searchParams.get('session_id');
+
+    // Track the conversion
+    trackPurchase(
+      sessionId || undefined,
+      'subscription', // We don't have plan info from URL, use generic value
+      0 // Value will be tracked server-side with actual amount
+    );
+  }, [searchParams, trackPurchase]);
+
   return (
     <main className="flex min-h-screen items-center justify-center px-5 py-16 relative">
       {/* Ambient background */}

@@ -76,7 +76,7 @@ export default function PayMonthlyVsUpfrontPage() {
           </ul>
           <p className="text-sm text-secondary leading-relaxed">
             Learn the full model in{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
               subscription web design
             </Link>
             .
@@ -141,7 +141,7 @@ export default function PayMonthlyVsUpfrontPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
                 Subscription Web Design
               </Link>
             </p>
@@ -151,3 +151,4 @@ export default function PayMonthlyVsUpfrontPage() {
     </main>
   );
 }
+

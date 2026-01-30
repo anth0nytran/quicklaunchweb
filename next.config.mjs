@@ -102,6 +102,22 @@ const nextConfig = {
         destination: "/guides/:path*",
         permanent: true,
       },
+      // Old pillar guide URLs → New SEO-optimized URLs
+      {
+        source: "/guides/subscription-web-design",
+        destination: "/guides/why-website-not-getting-customers",
+        permanent: true,
+      },
+      {
+        source: "/guides/done-for-you-websites",
+        destination: "/guides/how-to-get-more-customers-website",
+        permanent: true,
+      },
+      {
+        source: "/guides/website-in-48-hours",
+        destination: "/guides/do-you-need-a-website",
+        permanent: true,
+      },
     ];
   },
 

@@ -1,5 +1,9 @@
+'use client';
+
+import { useEffect } from "react";
 import Link from "next/link";
 import { GlassCard, GlassButton, GlassPill, AmbientGlow } from "@/components/ui/glass";
+import { usePageTracker, useCheckoutTracker } from "@/lib/analytics";
 
 function XCircleIcon({ className }: { className?: string }) {
   return (
@@ -34,6 +38,15 @@ function ArrowRightIcon({ className }: { className?: string }) {
 }
 
 export default function CancelPage() {
+  // Analytics tracking
+  usePageTracker('QuickLaunchWeb - Checkout Cancelled', 'checkout_cancel');
+  const { trackCheckoutCancelled } = useCheckoutTracker();
+
+  // Track checkout cancellation on mount
+  useEffect(() => {
+    trackCheckoutCancelled('unknown'); // Plan info not available from URL
+  }, [trackCheckoutCancelled]);
+
   return (
     <main className="flex min-h-screen items-center justify-center px-5 py-16 relative">
       {/* Ambient background */}

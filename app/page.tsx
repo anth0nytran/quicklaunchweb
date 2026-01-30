@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { SocialProofSection } from "@/components/social-proof";
@@ -25,6 +25,7 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ExperienceHeroBackground } from "@/components/ui/experience-hero";
 import { FAQSchema } from "@/components/FAQSchema";
 import { faqs, faqCategories } from "@/lib/faqData";
+import { usePageTracker, useCheckoutTracker, useEventTracker, useFormTracker } from "@/lib/analytics";
 
 type Plan = "starter" | "pro";
 
@@ -147,22 +148,22 @@ const featureIcons = {
 // Progress Ring Component
 // =============================================================================
 
-function ProgressRingCSS({ 
+function ProgressRingCSS({
   isActive = false,
   isPast = false,
   duration = 5000,
-  size = 48, 
+  size = 48,
   strokeWidth = 2,
-}: { 
+}: {
   isActive?: boolean;
   isPast?: boolean;
   duration?: number;
-  size?: number; 
+  size?: number;
   strokeWidth?: number;
 }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  
+
   return (
     <svg
       width={size}
@@ -207,26 +208,26 @@ function ProgressRingCSS({
 
 function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
   if (!isActive) return null;
-  
+
   return (
     <div className="absolute inset-0 animate-stageFloat">
       <div className="absolute inset-0 flex flex-col animate-fadeIn">
         {/* Gradient background */}
         <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0 animate-glowPulse" 
+          <div
+            className="absolute inset-0 animate-glowPulse"
             style={{
               background: 'radial-gradient(circle at 50% 30%, rgba(var(--color-accent-rgb), 0.08), transparent 60%)'
             }}
           />
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
           <p className="text-xs text-muted uppercase tracking-wider mb-4 animate-slideDown" style={{ animationDelay: '0.2s' }}>
             Choose Your Plan
           </p>
-          
+
           {/* Plan cards - both visible from start */}
           <div className="w-full max-w-[280px] animate-stackFloat">
             <div className="space-y-2.5 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
@@ -243,7 +244,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
                   </div>
                 </div>
               </div>
-              
+
               {/* Pro Plan - Gets selected */}
               <div className="animate-proBreath" style={{ animationDelay: '1.1s' }}>
                 <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 relative overflow-hidden pro-card animate-proSelect" style={{ animationDelay: '0.9s', animationFillMode: 'both' }}>
@@ -262,7 +263,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
                       <span className="text-muted text-xs">/mo</span>
                     </div>
                   </div>
-                  
+
                   {/* Checkmark */}
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-accent flex items-center justify-center opacity-0 scale-0 animate-checkPop" style={{ animationDelay: '1.2s', animationFillMode: 'both' }}>
                     <svg className="h-3 w-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -273,7 +274,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
               </div>
             </div>
           </div>
-          
+
           {/* Features */}
           <div className="mt-4 space-y-1.5 w-full max-w-[280px]">
             {['3-page website', 'Free build included', 'Cancel anytime'].map((item, i) => (
@@ -283,7 +284,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
               </div>
             ))}
           </div>
-          
+
           {/* CTA Button */}
           <div className="mt-5 w-full max-w-[280px] opacity-0 animate-slideUp" style={{ animationDelay: '2.25s', animationFillMode: 'both' }}>
             <div className="animate-ctaBreath" style={{ animationDelay: '2.6s' }}>
@@ -297,7 +298,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
               </div>
             </div>
           </div>
-          
+
           {/* Stripe badge */}
           <div className="mt-3 flex items-center justify-center gap-1.5 text-[10px] text-muted opacity-0 animate-fadeIn" style={{ animationDelay: '3.4s', animationFillMode: 'both' }}>
             <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
@@ -313,7 +314,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
 
 function FormVisualCSS({ isActive }: { isActive: boolean }) {
   if (!isActive) return null;
-  
+
   return (
     <div className="absolute inset-0 animate-stageFloat">
       <div className="absolute inset-0 flex flex-col animate-fadeIn">
@@ -321,7 +322,7 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(59,130,246,0.07),transparent_60%)] animate-glowPulse" />
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
           <div className="w-full max-w-[280px] animate-formFloat">
@@ -330,18 +331,18 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
               <span className="text-sm font-medium text-white">Business Details</span>
               <span className="text-xs text-muted bg-white/5 px-2 py-0.5 rounded-full">Step 2 of 3</span>
             </div>
-            
+
             {/* Progress bar - starts hidden, animates fill */}
             <div className="h-1.5 w-full rounded-full bg-white/[0.12] mb-5 overflow-hidden opacity-0 animate-fadeIn" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
               <div
                 className="h-full w-full rounded-full origin-left animate-progressFill"
-                style={{ 
+                style={{
                   animationDelay: '0.3s',
                   background: 'linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))'
                 }}
               />
             </div>
-            
+
             {/* Form fields */}
             <div className="space-y-3">
               {/* Field 1 */}
@@ -356,7 +357,7 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
                   </span>
                 </div>
               </div>
-              
+
               {/* Field 2 */}
               <div className="opacity-0 animate-slideRight" style={{ animationDelay: '1.25s', animationFillMode: 'both' }}>
                 <label className="text-[10px] text-muted mb-1 block uppercase tracking-wider">Services</label>
@@ -369,7 +370,7 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
                   </span>
                 </div>
               </div>
-              
+
               {/* Field 3 */}
               <div className="opacity-0 animate-slideRight" style={{ animationDelay: '2.05s', animationFillMode: 'both' }}>
                 <label className="text-[10px] text-muted mb-1 block uppercase tracking-wider">Phone</label>
@@ -382,7 +383,7 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
                   </span>
                 </div>
               </div>
-              
+
               {/* Photos */}
               <div className="opacity-0 animate-slideUp" style={{ animationDelay: '2.6s', animationFillMode: 'both' }}>
                 <label className="text-[10px] text-muted mb-1 block uppercase tracking-wider">Photos</label>
@@ -390,8 +391,8 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
                   <div className="h-full flex items-center justify-center gap-2 px-3">
                     <div className="flex -space-x-2">
                       {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-8 w-8 rounded-lg border border-white/20 opacity-0 scale-50 animate-photosPop photo-thumb" style={{ animationDelay: `${2.75 + i * 0.18}s`, animationFillMode: 'both' }} />
-                    ))}
+                        <div key={i} className="h-8 w-8 rounded-lg border border-white/20 opacity-0 scale-50 animate-photosPop photo-thumb" style={{ animationDelay: `${2.75 + i * 0.18}s`, animationFillMode: 'both' }} />
+                      ))}
                     </div>
                     <div className="flex items-center gap-1 text-green-400 text-xs opacity-0 animate-fadeIn" style={{ animationDelay: '3.55s', animationFillMode: 'both' }}>
                       <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -403,7 +404,7 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
                 </div>
               </div>
             </div>
-            
+
             {/* Submit Button */}
             <div className="mt-4 opacity-0 animate-slideUp" style={{ animationDelay: '3.15s', animationFillMode: 'both' }}>
               <div className="animate-press" style={{ animationDelay: '3.85s', animationFillMode: 'both' }}>
@@ -427,21 +428,21 @@ function FormVisualCSS({ isActive }: { isActive: boolean }) {
 
 function LaunchedVisualCSS({ isActive }: { isActive: boolean }) {
   if (!isActive) return null;
-  
+
   return (
     <div className="absolute inset-0 animate-stageFloat">
       <div className="absolute inset-0 flex flex-col overflow-hidden animate-fadeIn">
         {/* Gradient background */}
         <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0" 
+          <div
+            className="absolute inset-0"
             style={{
               background: 'radial-gradient(circle at 30% 20%, rgba(var(--color-accent-rgb), 0.07), transparent 50%)'
             }}
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.06),transparent_50%)] opacity-0 animate-greenGlow" style={{ animationDelay: '2s', animationFillMode: 'both' }} />
         </div>
-        
+
         {/* Browser */}
         <div className="absolute inset-x-4 top-4 bottom-28 animate-browserFloat" style={{ animationDelay: '0.6s' }}>
           <div className="absolute inset-0 rounded-t-lg bg-white/[0.03] border-t border-l border-r border-white/[0.08] overflow-hidden backdrop-blur-sm opacity-0 animate-browserSlide" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
@@ -455,7 +456,7 @@ function LaunchedVisualCSS({ isActive }: { isActive: boolean }) {
                 </div>
               </div>
             </div>
-            
+
             {/* Browser content - GPU accelerated with scaleX */}
             <div className="p-3 space-y-2">
               <div className="h-3 rounded bg-white/[0.08] w-2/3 origin-left animate-contentReveal1" style={{ animationDelay: '1.05s', animationFillMode: 'both' }} />
@@ -478,7 +479,7 @@ function LaunchedVisualCSS({ isActive }: { isActive: boolean }) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              
+
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white/50 animate-textBright" style={{ animationDelay: '3s', animationFillMode: 'both' }}>Website Launched</p>
                 <div className="flex items-center gap-1.5 mt-0.5">
@@ -486,12 +487,12 @@ function LaunchedVisualCSS({ isActive }: { isActive: boolean }) {
                   <p className="text-[10px] text-muted font-mono truncate">yourbusiness.com</p>
                 </div>
               </div>
-              
+
               <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-white/10 text-white/40 animate-liveBadge" style={{ animationDelay: '3.3s', animationFillMode: 'both' }}>
                 LIVE
               </span>
             </div>
-            
+
             {/* Scores */}
             <div className="mt-2.5 grid grid-cols-2 gap-2 opacity-0 animate-fadeIn" style={{ animationDelay: '3.1s', animationFillMode: 'both' }}>
               <div className="rounded-lg bg-white/[0.04] p-2 text-center animate-scoreGlow1" style={{ animationDelay: '3.3s', animationFillMode: 'both' }}>
@@ -518,16 +519,16 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
   const [activeStep, setActiveStep] = useState(0);
   const [animationKey, setAnimationKey] = useState(0); // Forces CSS animation restart
   const CYCLE_DURATION = 6000; // 6 seconds per step
-  
+
   useEffect(() => {
     const stepInterval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % 3);
       setAnimationKey((prev) => prev + 1); // Restart CSS animations
     }, CYCLE_DURATION);
-    
+
     return () => clearInterval(stepInterval);
   }, []);
-  
+
   const visuals = [
     <CheckoutVisualCSS key={`checkout-${animationKey}`} isActive={activeStep === 0} />,
     <FormVisualCSS key={`form-${animationKey}`} isActive={activeStep === 1} />,
@@ -538,7 +539,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
     <section id="how-it-works" className="relative px-6 py-24 md:py-32 allow-motion">
       <AmbientGlow color="accent" position="center" intensity="subtle" />
       <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
-      
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           {/* Left side - Steps */}
@@ -551,7 +552,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
               {steps.map((item, i) => {
                 const isActive = i === activeStep;
                 const isPast = i < activeStep;
-                
+
                 return (
                   <button
                     key={i}
@@ -559,39 +560,35 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
                       setActiveStep(i);
                       setAnimationKey((prev) => prev + 1);
                     }}
-                    className={`flex gap-5 w-full text-left transition-all duration-300 ${
-                      isActive ? "opacity-100" : "opacity-50 hover:opacity-75"
-                    }`}
+                    className={`flex gap-5 w-full text-left transition-all duration-300 ${isActive ? "opacity-100" : "opacity-50 hover:opacity-75"
+                      }`}
                   >
                     {/* Step indicator with progress ring */}
                     <div className="relative flex h-12 w-12 shrink-0 items-center justify-center">
-                      <ProgressRingCSS 
+                      <ProgressRingCSS
                         isActive={isActive}
                         isPast={isPast}
                         duration={CYCLE_DURATION}
                         key={`ring-${i}-${animationKey}`}
                       />
-                      <div className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold transition-all duration-300 ${
-                        isActive 
-                          ? "border-accent/50 bg-accent/10 text-accent" 
-                          : isPast
-                            ? "border-accent/30 bg-accent/5 text-accent/70"
-                            : "border-white/[0.15] bg-white/[0.03] text-white/60"
-                      }`}>
+                      <div className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold transition-all duration-300 ${isActive
+                        ? "border-accent/50 bg-accent/10 text-accent"
+                        : isPast
+                          ? "border-accent/30 bg-accent/5 text-accent/70"
+                          : "border-white/[0.15] bg-white/[0.03] text-white/60"
+                        }`}>
                         {item.step}
                       </div>
                     </div>
-                    
+
                     {/* Step content */}
                     <div className="flex-1 pt-1">
-                      <h3 className={`text-lg font-semibold transition-colors duration-300 ${
-                        isActive ? "text-white" : "text-white/70"
-                      }`}>
+                      <h3 className={`text-lg font-semibold transition-colors duration-300 ${isActive ? "text-white" : "text-white/70"
+                        }`}>
                         {item.title}
                       </h3>
-                      <p className={`mt-1 text-sm transition-colors duration-300 ${
-                        isActive ? "text-secondary" : "text-muted"
-                      }`}>
+                      <p className={`mt-1 text-sm transition-colors duration-300 ${isActive ? "text-secondary" : "text-muted"
+                        }`}>
                         {item.desc}
                       </p>
                     </div>
@@ -600,7 +597,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
               })}
             </div>
           </div>
-          
+
           {/* Right side - Visual showcase */}
           <GlassCard variant="elevated" className="p-3">
             <div className="aspect-[4/5] w-full rounded-xl bg-base overflow-hidden relative">
@@ -619,9 +616,15 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
 // =============================================================================
 
 export default function HomePage() {
+  // Analytics hooks
+  usePageTracker('QuickLaunchWeb - Homepage', 'homepage');
+  const { trackPlanSelected, trackAddonToggled, trackCheckoutInitiated } = useCheckoutTracker();
+  const { track } = useEventTracker();
+  const { trackFormStart: trackCustomFormStart, trackFormSubmit: trackCustomFormSubmit, trackFormError: trackCustomFormError } = useFormTracker('custom_quote', 'homepage_modal');
+
   const [loadingPlan, setLoadingPlan] = useState<Plan | null>(null);
   const [checkoutError, setCheckoutError] = useState("");
-  
+
   // Upsell Modal State
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
@@ -642,10 +645,40 @@ export default function HomePage() {
   const [faqSearch, setFaqSearch] = useState("");
   const [faqCategory, setFaqCategory] = useState("all");
 
+  // Scroll depth tracking
+  const scrollTrackedRef = useRef<Set<number>>(new Set());
+
   const year = useMemo(() => new Date().getFullYear(), []);
+
+  // Scroll depth tracking (25%, 50%, 75%, 90%)
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollPercentage = ((scrollTop + windowHeight) / documentHeight) * 100;
+
+      const thresholds = [25, 50, 75, 90];
+      thresholds.forEach((threshold) => {
+        if (scrollPercentage >= threshold && !scrollTrackedRef.current.has(threshold)) {
+          scrollTrackedRef.current.add(threshold);
+          track('scroll_depth', {
+            scroll_depth: threshold,
+            page_path: '/',
+            event_category: 'engagement',
+            event_label: `${threshold}%`,
+          });
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [track]);
 
   // Open upsell modal
   const openUpsellModal = (plan: Plan) => {
+    trackPlanSelected(plan, 'homepage_pricing');
     setSelectedPlan(plan);
     setCheckoutError("");
     setAddOns({
@@ -669,13 +702,13 @@ export default function HomePage() {
   const calculateTotal = () => {
     const basePrices = { starter: 99, pro: 149 };
     let monthly = selectedPlan ? basePrices[selectedPlan] : 0;
-    
+
     if (addOns.textAlerts) monthly += 29;
     if (addOns.unlimitedEdits) monthly += 49;
-    
+
     let oneTime = addOns.googleBoost ? 199 : 0;
     if (addOns.domainRouting === "us") oneTime += 99;
-    
+
     return { monthly, oneTime };
   };
 
@@ -726,7 +759,7 @@ export default function HomePage() {
 
   const handleUpsellContinue = useCallback(() => {
     setCheckoutError("");
-    
+
     if (addOns.hasDomain === null) {
       setCheckoutError("Please select whether you have a domain.");
       return;
@@ -736,10 +769,20 @@ export default function HomePage() {
       return;
     }
     if (selectedPlan) {
+      // Track checkout initiation with add-ons and total value
+      const { monthly, oneTime } = calculateTotal();
+      const selectedAddons = [];
+      if (addOns.textAlerts) selectedAddons.push('text_alerts');
+      if (addOns.unlimitedEdits) selectedAddons.push('unlimited_edits');
+      if (addOns.googleBoost) selectedAddons.push('google_boost');
+      if (addOns.domainRouting === 'us') selectedAddons.push('domain_routing');
+
+      trackCheckoutInitiated(selectedPlan, monthly + oneTime, selectedAddons);
+
       setShowUpsellModal(false);
       startCheckout(selectedPlan);
     }
-  }, [addOns.hasDomain, addOns.domainRouting, selectedPlan, startCheckout]);
+  }, [addOns, selectedPlan, startCheckout, calculateTotal, trackCheckoutInitiated]);
 
   const submitCustomRequest = useCallback(async () => {
     setCustomError("");
@@ -749,12 +792,16 @@ export default function HomePage() {
     const email = customForm.email.trim().toLowerCase();
 
     if (!name) {
-      setCustomError("Please enter your name.");
+      const errorMsg = "Please enter your name.";
+      setCustomError(errorMsg);
+      trackCustomFormError(errorMsg);
       return;
     }
 
     if (!isValidEmail(email)) {
-      setCustomError("Please enter a valid email address.");
+      const errorMsg = "Please enter a valid email address.";
+      setCustomError(errorMsg);
+      trackCustomFormError(errorMsg);
       return;
     }
 
@@ -795,23 +842,27 @@ export default function HomePage() {
         throw new Error(data?.message || `Server error (${res.status})`);
       }
 
+      // Track successful form submission
+      trackCustomFormSubmit();
+
       setCustomSuccess("Thanks! We'll reach out to book a call.");
       setCustomForm(createEmptyCustomForm());
     } catch (error) {
+      let errorMsg = "An unexpected error occurred. Please try again.";
       if (error instanceof Error) {
         if (error.name === "AbortError") {
-          setCustomError("Request timed out. Please try again.");
+          errorMsg = "Request timed out. Please try again.";
         } else {
-          setCustomError(error.message || "Failed to send request. Please try again.");
+          errorMsg = error.message || "Failed to send request. Please try again.";
         }
-      } else {
-        setCustomError("An unexpected error occurred. Please try again.");
       }
+      setCustomError(errorMsg);
+      trackCustomFormError(errorMsg);
       console.error("Custom request error:", error);
     } finally {
       setCustomLoading(false);
     }
-  }, [customForm]);
+  }, [customForm, trackCustomFormSubmit, trackCustomFormError]);
 
 
   // ==========================================================================
@@ -819,29 +870,29 @@ export default function HomePage() {
   // ==========================================================================
   const features = [
     {
-      title: "Mobile First Design",
+      title: "Customers Can Call You in One Tap",
       desc: "Built for customers on their phones: tap-to-call, quick quote requests, and clear next steps.",
       icon: featureIcons.mobile,
     },
     {
-      title: "Lightning Fast",
+      title: "Visitors Stay Instead of Bouncing",
       desc: "Fast load speeds so visitors don't bounce before contacting you.",
       icon: featureIcons.lightning,
     },
     {
-      title: "SEO Optimized",
+      title: "Show Up When People Search for You",
       desc: "Structured for local search so you show up when people look for your services in your city.",
       icon: featureIcons.search,
     },
   ];
 
   const deliverables = [
-    { label: "01", title: "Mobile-first design", detail: "Tap-to-call ready" },
-    { label: "02", title: "Quote form", detail: "Straight to your inbox" },
-    { label: "03", title: "Local SEO foundation", detail: "Built for local search" },
-    { label: "04", title: "Speed + SSL", detail: "Fast, secure delivery" },
-    { label: "05", title: "Launched in 48 hours", detail: "Live and ready to share" },
-    { label: "06", title: "Ongoing support", detail: "Edits, fixes, updates" },
+    { label: "01", title: "A site that works on every phone", detail: "Tap-to-call ready" },
+    { label: "02", title: "Leads sent straight to your inbox", detail: "Quote form included" },
+    { label: "03", title: "Get found when locals search", detail: "Local SEO foundation" },
+    { label: "04", title: "Fast, secure, no waiting", detail: "Speed + SSL included" },
+    { label: "05", title: "Live and ready to land clients", detail: "Launched in 48 hours" },
+    { label: "06", title: "We keep it working, you focus on customers", detail: "Ongoing support" },
   ];
 
   const customWebsiteFeatures = [
@@ -878,14 +929,14 @@ export default function HomePage() {
         <nav className="mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] px-5 py-3 shadow-glass">
           {/* Inner highlight */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-t-2xl" />
-          
+
           {/* Logo */}
           <Link href="/" className="flex items-center gap-1.5 font-bold tracking-tight">
             <span className="text-accent font-black text-lg">QL</span>
             <span className="text-white/20 font-light">|</span>
             <span className="text-white/90">QuickLaunchWeb</span>
           </Link>
-          
+
           {/* Nav links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
             <Link href="#features" className="hover:text-white transition-colors duration-200">Features</Link>
@@ -900,7 +951,15 @@ export default function HomePage() {
           <GlassButton
             variant="secondary"
             size="sm"
-            onClick={() => openUpsellModal("starter")}
+            onClick={() => {
+              track('cta_click', {
+                cta_text: 'Start My Free Website',
+                cta_location: 'header',
+                event_category: 'engagement',
+                event_label: 'header_cta',
+              });
+              openUpsellModal("starter");
+            }}
           >
             Start My Free Website
           </GlassButton>
@@ -916,29 +975,30 @@ export default function HomePage() {
           <div className="relative z-10 flex flex-col items-center">
             {/* Status pill */}
             <GlassPill variant="accent" pulse className="mb-10">
-            NO SETUP FEES & CANCEL ANYTIME
+              NO LOCK-IN. IF IT DOESN'T BRING YOU BUSINESS, WALK AWAY.
             </GlassPill>
 
             {/* Headline */}
+            {/* Headline */}
             <h1 className="mx-auto max-w-4xl text-center text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl text-balance">
-            Free Website. More Clients.{" "}
-              <span 
+              Stop Losing Customers.{" "}
+              <span
                 className="text-transparent bg-clip-text"
                 style={{
                   backgroundImage: 'linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))'
                 }}
               >
-                <br/>Live in 48 Hours<br/>
+                <br />Get a Website That Works.
               </span>
             </h1>
-            
+
             {/* Subhead - Centered bullet points */}
             <div className="mx-auto mt-8 w-full max-w-xl">
               <ul className="space-y-3 text-base text-secondary md:text-lg">
                 {[
-                  "$799-$1,499 build fee waived when you start a plan",
+                  "Live in 48 hours — built by hand, not templates",
                   "Mobile-first + lead capture (call + form) built in",
-                  "Try it 30 days - cancel anytime, no contract",
+                  "$99/mo. Cancel anytime if it's not paying for itself",
                 ].map((item) => (
                   <li key={item} className="flex items-center justify-center gap-3">
                     <CheckIcon className="h-5 w-5 text-accent shrink-0" />
@@ -953,7 +1013,15 @@ export default function HomePage() {
               <GlassButton
                 variant="primary"
                 size="lg"
-                onClick={() => openUpsellModal("starter")}
+                onClick={() => {
+                  track('cta_click', {
+                    cta_text: 'Start My Free Website',
+                    cta_location: 'hero',
+                    event_category: 'engagement',
+                    event_label: 'hero_primary_cta',
+                  });
+                  openUpsellModal("starter");
+                }}
                 loading={loadingPlan === "starter"}
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
                 className="group"
@@ -963,7 +1031,16 @@ export default function HomePage() {
               <GlassButton
                 variant="ghost"
                 size="lg"
-                onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => {
+                  track('cta_click', {
+                    cta_text: 'See Recent Launches',
+                    cta_location: 'hero',
+                    destination_url: '#work',
+                    event_category: 'engagement',
+                    event_label: 'hero_secondary_cta',
+                  });
+                  document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                }}
               >
                 See Recent Launches
               </GlassButton>
@@ -1004,7 +1081,7 @@ export default function HomePage() {
         <section id="features" className="relative px-6 py-24 md:py-32">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
           <GlassDivider className="absolute top-0 left-0 right-0" />
-          
+
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-16 md:text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
@@ -1114,7 +1191,7 @@ export default function HomePage() {
         <section id="pricing" className="relative px-6 py-24 md:py-32">
           <GlassDivider className="absolute top-0 left-0 right-0" />
           <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
-          
+
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-16 md:text-center">
               <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
@@ -1185,7 +1262,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                  Basic presence website built to turn visitors into leads. Hosting + support included. Cancel anytime.
+                    Basic presence website built to turn visitors into leads. Hosting + support included. Cancel anytime.
                   </p>
                 </div>
 
@@ -1232,7 +1309,7 @@ export default function HomePage() {
                     Best Value
                   </GlassPill>
                 </div>
-                
+
                 <div className="mb-6">
                   <p className="text-xs text-muted uppercase tracking-wider">3-Page Lead System</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Pro</h3>
@@ -1240,7 +1317,7 @@ export default function HomePage() {
                   <div className="mt-2 flex items-center gap-3">
                     <span className="text-2xl md:text-3xl font-semibold text-white/60 line-through">$1,499</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                    WAIVED
+                      WAIVED
                     </GlassPill>
                   </div>
                   <p className="mt-4 text-xs uppercase tracking-wider text-accent">BEST FOR GROWTH + LOCAL SEO</p>
@@ -1249,7 +1326,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                  More pages + stronger structure for multi-service businesses. Priority support and faster updates. Cancel anytime.
+                    More pages + stronger structure for multi-service businesses. Priority support and faster updates. Cancel anytime.
                   </p>
                 </div>
 
@@ -1308,7 +1385,7 @@ export default function HomePage() {
                     <span className="text-secondary">/project</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                  For ecommerce, integrations, booking systems, portals, and automation. One call, clear scope, fixed quote.
+                    For ecommerce, integrations, booking systems, portals, and automation. One call, clear scope, fixed quote.
                   </p>
                 </div>
 
@@ -1324,7 +1401,15 @@ export default function HomePage() {
                 <GlassButton
                   variant="secondary"
                   size="lg"
-                  onClick={openCustomModal}
+                  onClick={() => {
+                    track('cta_click', {
+                      cta_text: 'Book a Call',
+                      cta_location: 'pricing_custom',
+                      event_category: 'engagement',
+                      event_label: 'custom_quote_cta',
+                    });
+                    openCustomModal();
+                  }}
                   className="w-full"
                 >
                   Book a Call
@@ -1362,39 +1447,39 @@ export default function HomePage() {
             <div className="grid gap-6 md:grid-cols-3">
               <GlassCard hover className="p-6">
                 <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/subscription-web-design" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  Subscription Web Design
+                <Link href="/guides/why-website-not-getting-customers" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  Why Your Website Isn't Getting Customers
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  Understand pay monthly web design, pricing, inclusions, and how it compares to agencies.
+                  Learn the 5 conversion killers on most sites and how to fix them fast.
                 </p>
-                <Link href="/guides/subscription-web-design" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                <Link href="/guides/why-website-not-getting-customers" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
                 </Link>
               </GlassCard>
 
               <GlassCard hover className="p-6">
                 <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/done-for-you-websites" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  Done for You Websites
+                <Link href="/guides/how-to-get-more-customers-website" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  How to Get More Customers From Your Website
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  Learn what done for you websites include and who they are best for.
+                  The 3 things every high-converting site needs and free traffic strategies.
                 </p>
-                <Link href="/guides/done-for-you-websites" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                <Link href="/guides/how-to-get-more-customers-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
                 </Link>
               </GlassCard>
 
               <GlassCard hover className="p-6">
                 <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/website-in-48-hours" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  Website in 48 Hours
+                <Link href="/guides/do-you-need-a-website" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
+                  Do You Actually Need a Website?
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  See how a fast website launch works and what you need to get it live.
+                  The honest answer about when you need one and what it costs to not have one.
                 </p>
-                <Link href="/guides/website-in-48-hours" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
+                <Link href="/guides/do-you-need-a-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
                 </Link>
               </GlassCard>
@@ -1405,12 +1490,12 @@ export default function HomePage() {
         {/* ===== FAQ Section ===== */}
         <section id="faq" className="relative px-6 py-24 md:py-32">
           <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
-          
+
           <div className="relative z-10 mx-auto max-w-4xl">
             <h2 className="mb-8 text-center text-3xl font-bold text-white md:text-4xl">
               Frequently Asked Questions
             </h2>
-            
+
             {/* Search Bar - Sticky on scroll */}
             <div className="sticky top-4 z-20 mb-8">
               <div className="relative">
@@ -1448,15 +1533,13 @@ export default function HomePage() {
                   <button
                     key={cat.id}
                     onClick={() => setFaqCategory(cat.id)}
-                    className={`px-4 py-1.5 transition-all duration-200 relative whitespace-nowrap flex-shrink-0 ${
-                      faqCategory === cat.id
-                        ? "text-accent font-semibold"
-                        : "text-secondary hover:text-white"
-                    } ${
-                      index < faqCategories.length - 1 
-                        ? "border-r border-white/10" 
+                    className={`px-4 py-1.5 transition-all duration-200 relative whitespace-nowrap flex-shrink-0 ${faqCategory === cat.id
+                      ? "text-accent font-semibold"
+                      : "text-secondary hover:text-white"
+                      } ${index < faqCategories.length - 1
+                        ? "border-r border-white/10"
                         : ""
-                    }`}
+                      }`}
                   >
                     {cat.label}
                   </button>
@@ -1468,8 +1551,8 @@ export default function HomePage() {
             {(() => {
               const filteredFaqs = faqs.filter((item) => {
                 const matchesCategory = faqCategory === "all" || item.category === faqCategory;
-                const matchesSearch = 
-                  !faqSearch || 
+                const matchesSearch =
+                  !faqSearch ||
                   item.q.toLowerCase().includes(faqSearch.toLowerCase()) ||
                   item.a.toLowerCase().includes(faqSearch.toLowerCase());
                 return matchesCategory && matchesSearch;
@@ -1489,6 +1572,18 @@ export default function HomePage() {
                     <details
                       key={i}
                       className="group rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-200 open:bg-white/[0.05] hover:border-white/[0.12] hover:bg-white/[0.03]"
+                      onToggle={(e) => {
+                        const details = e.target as HTMLDetailsElement;
+                        if (details.open) {
+                          track('faq_expanded', {
+                            question: item.q,
+                            question_index: i,
+                            action: 'expanded',
+                            event_category: 'engagement',
+                            event_label: item.q.substring(0, 50),
+                          });
+                        }
+                      }}
                     >
                       <summary className="flex cursor-pointer items-center justify-between p-5 font-medium text-white text-sm list-none">
                         <span className="pr-4">{item.q}</span>
@@ -1523,7 +1618,7 @@ export default function HomePage() {
                 Built for speed. Focused on clients.
               </p>
             </div>
-            
+
             <div>
               <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Explore</h4>
               <ul className="mt-4 space-y-3">
@@ -1553,9 +1648,9 @@ export default function HomePage() {
               <p className="mt-3 text-[11px] text-muted">Use the email from your checkout.</p>
             </div>
           </div>
-          
+
           <GlassDivider className="my-10" />
-          
+
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row text-muted">
             <p className="text-xs">(c) {year} QuickLaunchWeb. All rights reserved.</p>
             <div className="flex items-center gap-4 text-xs">
@@ -1569,9 +1664,9 @@ export default function HomePage() {
 
       {/* ===== Upsell Modal (Radix Dialog) ===== */}
       <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
-      <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-4xl">
           <DialogCloseButton />
-          
+
           <DialogHeader>
             <DialogTitle>
               Customize Your {selectedPlan === "pro" ? "Pro" : "Starter"} Plan
@@ -1592,21 +1687,19 @@ export default function HomePage() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
-                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
-                      addOns.hasDomain === true
-                        ? "border-accent/50 bg-accent/10 text-accent"
-                        : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                    }`}
+                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === true
+                      ? "border-accent/50 bg-accent/10 text-accent"
+                      : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                      }`}
                   >
                     Yes, I have one
                   </button>
                   <button
                     onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
-                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${
-                      addOns.hasDomain === false
-                        ? "border-accent/50 bg-accent/10 text-accent"
-                        : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                    }`}
+                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === false
+                      ? "border-accent/50 bg-accent/10 text-accent"
+                      : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                      }`}
                   >
                     No, I need one
                   </button>
@@ -1655,25 +1748,58 @@ export default function HomePage() {
                 <div className="space-y-2">
                   <GlassSelect
                     selected={addOns.textAlerts}
-                    onClick={() => setAddOns({ ...addOns, textAlerts: !addOns.textAlerts })}
+                    onClick={() => {
+                      const newValue = !addOns.textAlerts;
+                      trackAddonToggled('Instant Lead Texts', 29, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                      setAddOns({ ...addOns, textAlerts: newValue });
+                    }}
                     label="Instant Lead Texts"
-                    description="Get texted instantly when a lead comes in."
+                    description="Automated text response system for new leads."
+                    details={
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Setup of automated SMS reply workflow.</li>
+                        <li>Notification routing to your phone and email.</li>
+                        <li>Custom message configuration for your brand.</li>
+                      </ul>
+                    }
                     price="+$29/mo"
                     priceColor="accent"
                   />
                   <GlassSelect
                     selected={addOns.unlimitedEdits}
-                    onClick={() => setAddOns({ ...addOns, unlimitedEdits: !addOns.unlimitedEdits })}
+                    onClick={() => {
+                      const newValue = !addOns.unlimitedEdits;
+                      trackAddonToggled('Monthly Conversion Boost', 49, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                      setAddOns({ ...addOns, unlimitedEdits: newValue });
+                    }}
                     label="Monthly Conversion Boost"
-                    description="Monthly upgrade focused on more leads."
+                    description="We use real data to turn more of your visitors into paying customers every month."
+                    details={
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Visitor heatmap & click tracking analysis.</li>
+                        <li>Data-backed design & copy adjustments.</li>
+                        <li>Monthly performance growth report.</li>
+                      </ul>
+                    }
                     price="+$49/mo"
                     priceColor="accent"
                   />
                   <GlassSelect
                     selected={addOns.googleBoost}
-                    onClick={() => setAddOns({ ...addOns, googleBoost: !addOns.googleBoost })}
+                    onClick={() => {
+                      const newValue = !addOns.googleBoost;
+                      trackAddonToggled('Google Business Boost', 199, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                      setAddOns({ ...addOns, googleBoost: newValue });
+                    }}
                     label="Google Business Boost"
-                    description="Optimize your Google profile for inbound clients."
+                    description="Complete setup and optimization of your Google Maps presence."
+                    details={
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Google Business Profile verification & setup.</li>
+                        <li>Optimization of business categories and description.</li>
+                        <li>Creation of direct 'Review Us' link & QR code.</li>
+                      </ul>
+                    }
                     price={
                       <span className="inline-flex items-center gap-2">
                         <span className="text-white/40 line-through decoration-2 decoration-white/40 text-xs">$499</span>
@@ -1802,6 +1928,7 @@ export default function HomePage() {
               onChange={(e) =>
                 setCustomForm((prev) => ({ ...prev, name: e.target.value }))
               }
+              onFocus={trackCustomFormStart}
               placeholder="Full Name *"
             />
             <GlassInput

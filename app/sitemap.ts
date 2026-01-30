@@ -1,105 +1,109 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Ensure HTTPS and correct domain
-  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://quicklaunchweb.us";
-  
-  // Force HTTPS if not already
-  if (siteUrl.startsWith("http://")) {
-    siteUrl = siteUrl.replace("http://", "https://");
-  }
-  
-  // Ensure we're using the correct domain
-  if (!siteUrl.includes("quicklaunchweb.us")) {
-    siteUrl = "https://quicklaunchweb.us";
-  }
+  // Use canonical domain (without www) - hardcoded to avoid env var issues
+  const siteUrl = 'https://quicklaunchweb.us';
 
-  const routes = [
+  // Current date for lastModified (can be customized per route)
+  const now = new Date();
+
+  // Core pages - highest priority
+  const corePages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 1,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 1.0,
     },
+    {
+      url: `${siteUrl}/support`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+  ];
+
+  // Guide hub and individual guides
+  const guidePages: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/guides`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    // High-priority guides (pillar content)
+    {
+      url: `${siteUrl}/guides/why-website-not-getting-customers`,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${siteUrl}/guides/subscription-web-design`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      url: `${siteUrl}/guides/how-to-get-more-customers-website`,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${siteUrl}/guides/done-for-you-websites`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      url: `${siteUrl}/guides/do-you-need-a-website`,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.9,
     },
-    {
-      url: `${siteUrl}/guides/website-in-48-hours`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
+    // Standard guides
     {
       url: `${siteUrl}/guides/monthly-website-plan-whats-included`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/guides/pay-monthly-web-design-vs-upfront`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/guides/wix-vs-hiring-someone-to-build-website`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/guides/what-pages-business-website-needs-to-convert`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/guides/can-a-website-really-be-built-in-48-hours`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/guides/launch-website-fast-checklist`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/support`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${siteUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
     },
   ];
 
-  return routes;
+  // Legal pages - lower priority but still important for trust
+  const legalPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/terms`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+  ];
+
+  return [...corePages, ...guidePages, ...legalPages];
 }

@@ -45,7 +45,7 @@ export default function BusinessWebsitePagesPage() {
           </ul>
           <p className="text-sm text-secondary leading-relaxed">
             If you want a team to build and structure these pages for you, see{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">
               done for you websites
             </Link>
             .
@@ -119,7 +119,7 @@ export default function BusinessWebsitePagesPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">
                 Done for You Websites
               </Link>
             </p>
@@ -129,3 +129,4 @@ export default function BusinessWebsitePagesPage() {
     </main>
   );
 }
+

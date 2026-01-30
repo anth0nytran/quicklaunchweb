@@ -96,7 +96,7 @@ export default function CanWebsiteBeBuiltIn48HoursPage() {
           </GlassCard>
           <p className="text-sm text-secondary leading-relaxed">
             For the full service overview, see{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
               website in 48 hours
             </Link>
             .
@@ -145,7 +145,7 @@ export default function CanWebsiteBeBuiltIn48HoursPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
                 Website in 48 Hours
               </Link>
             </p>
@@ -155,3 +155,4 @@ export default function CanWebsiteBeBuiltIn48HoursPage() {
     </main>
   );
 }
+

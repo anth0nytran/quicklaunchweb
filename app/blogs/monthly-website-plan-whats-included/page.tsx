@@ -44,7 +44,7 @@ export default function MonthlyWebsitePlanIncludedPage() {
           </ul>
           <p className="text-sm text-secondary leading-relaxed">
             If you want the full context, start with{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
               subscription web design
             </Link>{" "}
             and then compare providers using the checklist below.
@@ -167,7 +167,7 @@ export default function MonthlyWebsitePlanIncludedPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
                 Subscription Web Design
               </Link>
             </p>
@@ -177,3 +177,4 @@ export default function MonthlyWebsitePlanIncludedPage() {
     </main>
   );
 }
+

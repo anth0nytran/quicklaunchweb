@@ -1,6 +1,7 @@
 "use client";
 
 import { GlassCard, AmbientGlow } from "@/components/ui/glass";
+import { useEventTracker } from "@/lib/analytics";
 
 // =============================================================================
 // Simple Brand Link Component (Apple-style typography)
@@ -9,12 +10,26 @@ import { GlassCard, AmbientGlow } from "@/components/ui/glass";
 function BrandLink({
   name,
   url,
+  index,
 }: {
   name: string;
   url: string;
+  index: number;
 }) {
+  const { track } = useEventTracker();
+
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+
+    // Track social proof click
+    track('social_proof_clicked', {
+      item_name: name,
+      item_url: url,
+      item_index: index,
+      event_category: 'engagement',
+      event_label: name,
+    });
+
     window.open(`https://${url}`, "_blank", "noopener,noreferrer");
   };
 
@@ -127,7 +142,7 @@ export function SocialProofSection() {
 
                 <div className="px-5 pb-5">
                   <div className="relative aspect-[16/10] w-full rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.01] group-hover:shadow-2xl">
-                    <BrandLink name={project.name} url={project.url} />
+                    <BrandLink name={project.name} url={project.url} index={i} />
                   </div>
                 </div>
               </GlassCard>

@@ -3,15 +3,15 @@ import { notFound } from "next/navigation";
 import { GuidePage } from "@/components/guides/GuidePage";
 import { getGuideBySlug, getGuideMetadata } from "@/lib/guides";
 
-const slug = "website-in-48-hours";
+const slug = "why-website-not-getting-customers";
 const guide = getGuideBySlug(slug);
 
 export const metadata: Metadata = guide
   ? getGuideMetadata(guide)
   : {
-      title: "Guide | QuickLaunchWeb",
-      description: "QuickLaunchWeb guides for local businesses.",
-    };
+    title: "Guide | QuickLaunchWeb",
+    description: "QuickLaunchWeb guides for local businesses.",
+  };
 
 export default function Page() {
   if (!guide) {

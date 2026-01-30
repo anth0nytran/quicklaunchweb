@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { AmbientGlow, GlassButton, GlassPill } from "@/components/ui/glass";
 import { featuredGuide, pillarGuides, supportGuides } from "@/lib/guides";
+import { PageTracker } from "@/lib/analytics";
 
 export const metadata: Metadata = {
     title: "Growth Guides for Local Businesses | QuickLaunchWeb",
@@ -17,17 +18,17 @@ export const metadata: Metadata = {
 };
 
 const guideHighlights = [
-    "Know what a pay monthly plan actually includes.",
-    "Choose the right build model without guesswork.",
-    "Launch faster while keeping quality high.",
-    "Use clear page structure to earn more leads.",
+    "Learn why your website isn't getting you customers.",
+    "Discover the 3 things high-converting sites need.",
+    "Decide if you actually need a website for your business.",
+    "Get more leads without paying for ads.",
 ];
 
 const optimizationBenchmarks = [
-    "Mobile load time target: under 2 seconds.",
-    "One clear call to action above the fold.",
-    "Lead form completion target: 4-8 percent.",
-    "Local proof shown within the first scroll.",
+    "Phone number visible without scrolling.",
+    "Page loads in under 2 seconds on mobile.",
+    "One obvious next step on every page.",
+    "Trust signals (reviews, photos) in the first scroll.",
 ];
 
 const textStyle = { color: 'rgba(255, 255, 255, 0.9)' };
@@ -35,6 +36,7 @@ const textStyle = { color: 'rgba(255, 255, 255, 0.9)' };
 export default function GuidesPage() {
     return (
         <main className="relative min-h-screen px-6 py-24 text-white md:py-32">
+            <PageTracker title="QuickLaunchWeb - Guides" pageType="guides" />
             <BGPattern variant="grid" mask="fade-center" size={32} fill="rgba(255,255,255,0.035)" />
             <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
             <AmbientGlow color="white" position="bottom" intensity="subtle" className="opacity-60" />

@@ -64,7 +64,7 @@ export default function LaunchWebsiteFastChecklistPage() {
           </GlassCard>
           <p className="text-sm text-secondary leading-relaxed">
             If you want a structured launch process, see{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
               website in 48 hours
             </Link>
             .
@@ -113,7 +113,7 @@ export default function LaunchWebsiteFastChecklistPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
                 Website in 48 Hours
               </Link>
             </p>
@@ -123,3 +123,4 @@ export default function LaunchWebsiteFastChecklistPage() {
     </main>
   );
 }
+

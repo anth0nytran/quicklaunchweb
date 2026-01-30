@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useFormTracker, useDemoTracker } from '@/lib/analytics';
 
 interface LeadCaptureModalProps {
   open: boolean;
@@ -30,6 +31,8 @@ export function LeadCaptureModal({
   ctaLabel,
 }: LeadCaptureModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const { trackFormStart, trackFormSubmit } = useFormTracker('lead_capture', 'demo');
+  const { trackLeadCaptured } = useDemoTracker();
 
   useEffect(() => {
     if (!open) {
@@ -40,6 +43,10 @@ export function LeadCaptureModal({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
+
+    // Track form submission and lead capture
+    trackFormSubmit();
+    trackLeadCaptured();
   };
 
   return (
@@ -75,6 +82,7 @@ export function LeadCaptureModal({
               <input
                 type="text"
                 required
+                onFocus={trackFormStart}
                 className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900"
                 placeholder="Alex Carter"
               />

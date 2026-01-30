@@ -66,7 +66,7 @@ export default function DoneForYouWebsitesPage() {
           </p>
           <p className="text-sm text-secondary leading-relaxed">
             Many done for you providers offer a{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
               subscription web design
             </Link>{" "}
             model, which makes it easier to start without a large upfront cost. This makes it ideal for local
@@ -129,7 +129,7 @@ export default function DoneForYouWebsitesPage() {
             <li>Companies launching a new service or location quickly.</li>
             <li>Owners who want updates handled for them each month.</li>
             <li>Businesses that need a site live fast, like in{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
                 48 hours
               </Link>.
             </li>
@@ -151,7 +151,7 @@ export default function DoneForYouWebsitesPage() {
           </ol>
           <p className="text-sm text-secondary leading-relaxed">
             If you want to move fast, pair this with a{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
               48 hour launch timeline
             </Link>
             .
@@ -278,13 +278,13 @@ export default function DoneForYouWebsitesPage() {
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/subscription-web-design">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/why-website-not-getting-customers">
                 Subscription Web Design
               </Link>
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/website-in-48-hours">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/do-you-need-a-website">
                 Website in 48 Hours
               </Link>
             </GlassCard>
@@ -317,3 +317,4 @@ export default function DoneForYouWebsitesPage() {
     </main>
   );
 }
+

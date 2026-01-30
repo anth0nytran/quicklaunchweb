@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { logCheckoutEvent, logErrorEvent } from "@/lib/analytics/server";
 
 // =============================================================================
 // Configuration
@@ -211,7 +212,7 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       customer_email: email || undefined,
-      // Store add-on selections in metadata for reference
+      // Store add-on selections and analytics data in metadata
       metadata: {
         plan,
         hasDomain: String(addOns.hasDomain),
@@ -219,6 +220,8 @@ export async function POST(req: NextRequest) {
         textAlerts: String(addOns.textAlerts),
         unlimitedEdits: String(addOns.unlimitedEdits),
         googleBoost: String(addOns.googleBoost),
+        analytics_source: 'quicklaunchweb',
+        analytics_timestamp: new Date().toISOString(),
       },
     });
 
@@ -226,12 +229,33 @@ export async function POST(req: NextRequest) {
       throw new Error("Stripe did not return a checkout URL");
     }
 
+    // Log successful checkout session creation
+    const selectedAddons: string[] = [];
+    if (addOns.textAlerts) selectedAddons.push('text_alerts');
+    if (addOns.unlimitedEdits) selectedAddons.push('unlimited_edits');
+    if (addOns.googleBoost) selectedAddons.push('google_boost');
+    if (addOns.domainRouting === 'us') selectedAddons.push('domain_routing');
+
+    logCheckoutEvent(
+      session.id,
+      plan,
+      session.amount_total ? session.amount_total / 100 : 0,
+      selectedAddons
+    );
+
     return NextResponse.json({ url: session.url }, { headers });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+
     // Log error securely (don't expose to client)
     console.error("Stripe checkout error:", {
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: errorMessage,
       timestamp: new Date().toISOString(),
+    });
+
+    // Log error to analytics
+    logErrorEvent('checkout_error', errorMessage, {
+      endpoint: '/api/stripe/checkout',
     });
 
     return NextResponse.json(

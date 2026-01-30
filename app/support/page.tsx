@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { GlassCard, GlassButton, GlassDivider, GlassInput, AmbientGlow } from "@/components/ui/glass";
+import { usePageTracker, useFormTracker } from "@/lib/analytics";
 
 type SupportForm = {
   name: string;
@@ -23,6 +24,10 @@ function isValidEmail(email: string): boolean {
 }
 
 export default function SupportPage() {
+  // Analytics tracking
+  usePageTracker('QuickLaunchWeb - Support', 'support');
+  const { trackFormStart, trackFormSubmit, trackFormError } = useFormTracker('support', 'support_page');
+
   const [supportForm, setSupportForm] = useState<SupportForm>(createEmptySupportForm());
   const [supportLoading, setSupportLoading] = useState(false);
   const [supportError, setSupportError] = useState("");
@@ -38,12 +43,16 @@ export default function SupportPage() {
     const message = supportForm.message.trim();
 
     if (!name || !email || !message) {
-      setSupportError("Please include your name, email, and message.");
+      const errorMsg = "Please include your name, email, and message.";
+      setSupportError(errorMsg);
+      trackFormError(errorMsg);
       return;
     }
 
     if (!isValidEmail(email)) {
-      setSupportError("Please enter a valid email address.");
+      const errorMsg = "Please enter a valid email address.";
+      setSupportError(errorMsg);
+      trackFormError(errorMsg);
       return;
     }
 
@@ -81,18 +90,22 @@ export default function SupportPage() {
         throw new Error(data?.message || `Server error (${res.status})`);
       }
 
+      // Track successful form submission
+      trackFormSubmit();
+
       setSupportSuccess("Form Submitted Successfully");
       setSupportForm(createEmptySupportForm());
     } catch (error) {
+      let errorMsg = "An unexpected error occurred. Please try again.";
       if (error instanceof Error) {
         if (error.name === "AbortError") {
-          setSupportError("Request timed out. Please try again.");
+          errorMsg = "Request timed out. Please try again.";
         } else {
-          setSupportError(error.message || "Failed to send request. Please try again.");
+          errorMsg = error.message || "Failed to send request. Please try again.";
         }
-      } else {
-        setSupportError("An unexpected error occurred. Please try again.");
       }
+      setSupportError(errorMsg);
+      trackFormError(errorMsg);
       console.error("Support request error:", error);
     } finally {
       setSupportLoading(false);
@@ -143,6 +156,7 @@ export default function SupportPage() {
               onChange={(e) =>
                 setSupportForm((prev) => ({ ...prev, name: e.target.value }))
               }
+              onFocus={trackFormStart}
               placeholder="Name"
             />
             <GlassInput

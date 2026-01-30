@@ -86,215 +86,400 @@ export type Guide = {
 
 const guides: Guide[] = [
   {
-    slug: "subscription-web-design",
+    slug: "why-website-not-getting-customers",
     type: "pillar",
-    title: "Subscription Web Design",
+    title: "Why Your Website Isn't Getting You Customers (And How to Fix It)",
     description:
-      "Subscription web design is a pay monthly web design model that bundles the build, hosting, and ongoing updates into one predictable fee. It is built for local businesses that want a professional site without a large upfront invoice.",
-    metaTitle: "Subscription Web Design (Pay Monthly Web Design) | QuickLaunchWeb",
+      "Your website looks fine. You're getting some traffic. But the phone isn't ringing and the contact form is empty. Here's why — and exactly how to fix it.",
+    metaTitle: "Why Your Website Isn't Getting You Customers | QuickLaunchWeb",
     metaDescription:
-      "A complete guide to subscription web design and pay monthly web design: pricing, whats included, who it is for, comparisons, and FAQs.",
+      "Your website isn't broken — it's just not built to convert. Learn the 5 conversion killers on most small business sites and how to fix them fast.",
     kicker: "Pillar Guide",
-    category: "Subscription Web Design",
+    category: "Website Conversion",
+    updated: "Jan 2026",
+    readTime: "10 min read",
+    stats: [
+      { label: "Average conversion rate", value: "2-5%" },
+      { label: "Mobile traffic share", value: "60%+" },
+      { label: "Time to fix", value: "48 hours" },
+    ],
+    heroBullets: [
+      "The real reason your website isn't working (it's not traffic).",
+      "5 conversion killers hiding on most small business sites.",
+      "A simple audit you can do yourself in 10 minutes.",
+      "When to fix your current site vs. start fresh.",
+    ],
+    jumpLinks: [
+      { id: "the-real-problem", label: "The real problem" },
+      { id: "conversion-killers", label: "5 conversion killers" },
+      { id: "audit-checklist", label: "Audit checklist" },
+      { id: "fix-vs-replace", label: "Fix vs. replace" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Done diagnosing?",
+      description: "Get a site built to convert — $0 down, live in 48 hours.",
+      href: "/#pricing",
+      label: "See pricing",
+    },
+    ctaBottom: {
+      title: "Ready for a website that actually works?",
+      description: "We build sites that turn visitors into customers. No lock-in — cancel if it's not paying for itself.",
+      href: "/#pricing",
+      label: "Get started",
+    },
+    aside: {
+      takeaways: [
+        "Traffic without conversions is wasted traffic.",
+        "Most sites fail on clarity, not design.",
+        "One clear call-to-action beats five options.",
+      ],
+      benchmarks: [
+        "Phone number visible without scrolling.",
+        "Page loads in under 2 seconds on mobile.",
+        "One obvious next step on every page.",
+        "Trust signals (reviews, photos) in the first scroll.",
+      ],
+      benchmarkNote:
+        "These are minimum standards. Sites that hit all four typically convert 2-3x better than those that don't.",
+      roi: [
+        "If your average job is $500, one extra lead per month pays for your entire website.",
+        "A 1% conversion improvement on 1,000 visitors = 10 more leads.",
+        "Speed matters: every second of load time costs you 7% of conversions.",
+      ],
+      roiNote:
+        "Small improvements compound. Fixing even 2-3 issues can double your lead flow.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "the-real-problem",
+        title: "The real reason your website isn't working",
+        paragraphs: [
+          "Here's what most business owners get wrong: they think their website isn't working because they don't have enough traffic. So they pour money into ads, SEO, social media — anything to get more eyeballs on the site.",
+          "But traffic isn't the problem. Conversion is.",
+          "Think about it: if 1,000 people visit your site and zero of them call you, getting 2,000 visitors won't help. You'll just have twice as many people ignoring you. The issue isn't how many people see your site — it's what happens when they get there.",
+          "Most small business websites are built like digital brochures. They look nice. They list services. They have an 'About' page with a photo of the owner. But they don't actually convince anyone to take action. They don't answer the questions visitors have. They don't make the next step obvious. They don't build enough trust to overcome the fear of hiring someone new.",
+          "The result? Visitors leave. They hit the back button and call your competitor instead — the one whose site made them feel confident. That's money walking out the door every single day, and you don't even know it's happening.",
+        ],
+        list: [
+          "Traffic without conversion is just expensive vanity metrics.",
+          "Your website's job is to turn strangers into customers.",
+          "A site that 'looks nice' is worthless if it doesn't generate leads.",
+          "Every day without a converting website is leads going to competitors.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "conversion-killers",
+        title: "5 conversion killers on most small business sites",
+        items: [
+          {
+            title: "No clear call-to-action",
+            detail: "Visitors don't know what to do next. Your phone number is buried. The contact form is hidden on a separate page. There are seven different buttons but none of them stand out. When everything is important, nothing is important. Pick ONE action you want visitors to take and make it impossible to miss.",
+          },
+          {
+            title: "Slow load time",
+            detail: "If your site takes more than 3 seconds to load, 53% of mobile visitors leave before seeing anything. They'll never know how good your services are because they're already gone. Speed isn't just nice to have — it's the difference between getting the lead and losing it to someone faster.",
+          },
+          {
+            title: "Not mobile-friendly",
+            detail: "Over 60% of your traffic is on phones. If your site is hard to read, requires pinching and zooming, or has buttons too small to tap, you're turning away more than half your potential customers. And they're not coming back on desktop later — they're calling someone else.",
+          },
+          {
+            title: "No trust signals",
+            detail: "Would you hire a stranger who can't prove they're legit? Neither will your visitors. If you don't have reviews, photos of your work, years in business, licenses, or any proof that you're trustworthy, people won't take the risk. Trust is built in seconds and destroyed even faster.",
+          },
+          {
+            title: "Confusing navigation",
+            detail: "If visitors can't find what they're looking for in 5 seconds, they leave. Clever menu names, hidden contact info, and too many options create friction. Simple wins. Home, Services, About, Contact — that's usually all you need.",
+          },
+        ],
+        note: "Most sites have 2-3 of these issues. Fixing even one can measurably improve your lead flow.",
+      },
+      {
+        kind: "checklist",
+        id: "audit-checklist",
+        title: "10-minute website audit you can do right now",
+        items: [
+          {
+            title: "Open your site on your phone",
+            detail: "Not a tablet, not a desktop preview — your actual phone. Is the text readable without zooming? Can you tap the phone number? Does the main action stand out?",
+          },
+          {
+            title: "Time the page load",
+            detail: "Use Google PageSpeed Insights (free). If it takes more than 3 seconds on mobile, you're losing visitors before they even see your content.",
+          },
+          {
+            title: "Find your phone number",
+            detail: "Without scrolling, can you see how to contact you? If it's hidden in the footer or on a separate page, you're making it too hard.",
+          },
+          {
+            title: "Count your CTAs",
+            detail: "How many different actions are you asking visitors to take? If it's more than 2-3 on a single page, you're creating decision paralysis.",
+          },
+          {
+            title: "Look for trust signals",
+            detail: "In the first scroll, do you show reviews, years in business, photos of your work, or any proof? If not, visitors have no reason to trust you.",
+          },
+          {
+            title: "Read your headline out loud",
+            detail: "Does it speak to what the CUSTOMER wants, or does it just describe what you do? 'Professional Plumbing Services' vs. 'Pipes Fixed Today — Or It's Free' are very different.",
+          },
+          {
+            title: "Ask a friend to find your services",
+            detail: "Give them 10 seconds. If they can't identify what you offer and how to contact you, the site isn't clear enough.",
+          },
+          {
+            title: "Check your forms",
+            detail: "How many fields? If it's more than 5, you're asking too much. Name, phone, email, and a brief message is usually enough.",
+          },
+        ],
+        note: "Screenshot what you find. These are your priorities for fixing or replacing the site.",
+      },
+      {
+        kind: "text",
+        id: "fix-vs-replace",
+        title: "When to fix vs. when to start fresh",
+        paragraphs: [
+          "Not every website needs to be replaced. Sometimes a few targeted fixes can dramatically improve conversions. But sometimes the foundation is so broken that patching it is like putting lipstick on a pig.",
+          "Here's how to decide:",
+        ],
+        list: [
+          "FIX if: Your site is less than 2 years old, loads reasonably fast, and just needs clearer messaging and better CTAs.",
+          "FIX if: You have a good design but weak copy — rewriting your headlines and adding trust signals can work.",
+          "REPLACE if: Your site is more than 5 years old, built on outdated technology, or was made by a friend's nephew.",
+          "REPLACE if: You've tried fixing it multiple times and leads still aren't coming in.",
+          "REPLACE if: The site is slow, not mobile-friendly, and would cost more to fix than to rebuild properly.",
+        ],
+        links: [
+          {
+            context: "If you decide to start fresh, see",
+            label: "how we build sites that convert",
+            href: "/#features",
+            suffix: "in 48 hours with no upfront cost.",
+          },
+        ],
+      },
+      {
+        kind: "callout",
+        id: "bottom-line",
+        title: "The bottom line",
+        body: [
+          "Your website isn't broken. It's just not built to convert. The good news? This is fixable.",
+          "Most of these issues can be solved in a single day by someone who knows what they're doing. You don't need a $10,000 agency rebuild. You need a site that's fast, clear, mobile-friendly, and built around ONE goal: getting people to contact you.",
+          "Every day you wait is another day of leads going to your competitors. The phone calls that should be coming to you are going somewhere else.",
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "How do I know if my website is the problem vs. something else?",
+            a: "Check your analytics. If you're getting traffic but no leads, the site is the problem. If you're getting zero traffic, you have a visibility problem first. Most businesses have both, but conversion should be fixed before pouring money into traffic generation.",
+          },
+          {
+            q: "Can I fix these issues myself?",
+            a: "Some of them. You can probably add trust signals, improve your headline, and simplify navigation. But speed issues, mobile responsiveness, and structural problems usually require a developer. The audit above will help you identify what's DIY-friendly.",
+          },
+          {
+            q: "How long does it take to see results after fixing my site?",
+            a: "Conversion improvements show up immediately with your next visitors. You should notice more calls and form submissions within the first week if your traffic stays consistent. SEO improvements take longer — typically 4-8 weeks for Google to re-index and reward changes.",
+          },
+          {
+            q: "Is it worth paying someone to fix my site or should I just build a new one?",
+            a: "It depends on the scope of issues. If you need more than 3-4 major fixes, a rebuild is often faster and cheaper. If you just need better copy and some trust signals, a few hours of work can transform your results.",
+          },
+          {
+            q: "What's a 'good' conversion rate for a local business website?",
+            a: "Most local service websites convert between 2-5% of visitors into leads. Elite sites hit 8-10%. If you're below 2%, there's significant room for improvement. Even getting from 2% to 4% doubles your leads without any change in traffic.",
+          },
+          {
+            q: "Does my website need to look 'modern' or 'pretty' to convert?",
+            a: "Not really. Clean and clear beats modern and fancy every time. Some of the highest-converting sites look almost boring. What matters is speed, clarity, trust, and making it obvious what to do next. Pretty comes last.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          {
+            href: "/guides/how-to-get-more-customers-website",
+            label: "How to Get More Customers From Your Website",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/do-you-need-a-website",
+            label: "Do You Actually Need a Website to Get Clients?",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/what-pages-business-website-needs-to-convert",
+            label: "What Pages Does a Business Website Need?",
+            tag: "Support",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-get-more-customers-website",
+    type: "pillar",
+    title: "How to Get More Customers From Your Website (Without Paying for Ads)",
+    description:
+      "Your website should be your best salesperson — working 24/7 to turn strangers into paying customers. Here's how to make it actually do that.",
+    metaTitle: "How to Get More Customers From Your Website | QuickLaunchWeb",
+    metaDescription:
+      "Learn the 3 things every high-converting website needs and free ways to drive traffic. Turn your website into a customer-generating machine.",
+    kicker: "Pillar Guide",
+    category: "Website Conversion",
     updated: "Jan 2026",
     readTime: "12 min read",
     stats: [
-      { label: "Typical plan range", value: "$99-$249/mo" },
-      { label: "First version live", value: "2-10 business days" },
-      { label: "Best for", value: "Local service teams" },
+      { label: "High-converting sites", value: "5-10% rate" },
+      { label: "Free traffic source", value: "Google Business" },
+      { label: "Time to results", value: "Days, not months" },
     ],
     heroBullets: [
-      "One monthly fee replaces a large upfront build.",
-      "Launch fast with the pages that drive leads.",
-      "Ongoing edits keep offers current and visible.",
-      "Ideal for local businesses that need consistent updates.",
+      "Why most websites fail (they're brochures, not sales tools).",
+      "The 3 things every high-converting site needs.",
+      "Free ways to drive traffic without paying for ads.",
+      "What 'conversion-focused' actually means in practice.",
     ],
     jumpLinks: [
-      { id: "what-it-is", label: "What it is" },
-      { id: "pricing", label: "Pricing" },
-      { id: "whats-included", label: "Whats included" },
-      { id: "who-its-for", label: "Who its for" },
-      { id: "comparison", label: "Comparison" },
-      { id: "how-to-decide", label: "How to decide" },
+      { id: "why-sites-fail", label: "Why sites fail" },
+      { id: "three-essentials", label: "3 essentials" },
+      { id: "free-traffic", label: "Free traffic" },
+      { id: "conversion-focused", label: "Conversion-focused" },
       { id: "faqs", label: "FAQs" },
       { id: "related", label: "Related" },
     ],
     ctaTop: {
-      eyebrow: "Ready for predictable pricing?",
-      description: "See plans designed for local businesses and launch without a big upfront fee.",
+      eyebrow: "Want a site built this way?",
+      description: "We build websites that turn visitors into customers — $0 down, live in 48 hours.",
       href: "/#pricing",
-      label: "View pricing",
+      label: "Start free",
     },
     ctaBottom: {
-      title: "Want a pay monthly website that converts?",
-      description: "Start with a plan and we will handle the build, hosting, and ongoing updates.",
+      title: "Ready for a website that sells for you?",
+      description: "No lock-in. Cancel if it's not bringing you customers.",
       href: "/#pricing",
-      label: "See plans",
+      label: "Get started",
     },
     aside: {
       takeaways: [
-        "Subscription web design keeps costs predictable.",
-        "Best results come from steady monthly updates.",
-        "Local trust signals should show in the first scroll.",
+        "Websites should generate customers, not just exist.",
+        "Clear beats clever. Simple beats complex.",
+        "One strong CTA beats five weak ones.",
       ],
       benchmarks: [
-        "Mobile load time target: under 2 seconds on 4G.",
-        "Primary call to action visible above the fold.",
-        "Lead form completion target: 4-8 percent.",
-        "Local proof shown early: reviews, badges, service areas.",
+        "Headline answers 'Why should I hire you?'",
+        "Phone number clickable on mobile.",
+        "At least 3 reviews visible above the fold.",
+        "Form has 4 fields or fewer.",
       ],
       benchmarkNote:
-        "These are typical optimization targets for local service sites. Your market and seasonality will shift results.",
+        "These aren't 'nice to haves' — they're the baseline for sites that actually convert.",
       roi: [
-        "One closed job can cover several months of a subscription plan.",
-        "Fast updates let you capture seasonal demand without delays.",
-        "Clear messaging reduces wasted calls and improves lead quality.",
+        "Doubling conversion from 2% to 4% doubles leads with zero extra traffic.",
+        "One new customer per month can pay for your site multiple times over.",
+        "Free traffic from Google Business is worth $200-500/mo in ads.",
       ],
       roiNote:
-        "ROI depends on average job value and close rate, but clarity and speed usually improve conversion.",
+        "Most businesses underestimate the value of a website that converts. Do the math on your average job.",
     },
     sections: [
       {
         kind: "text",
-        id: "what-it-is",
-        title: "What is subscription web design?",
+        id: "why-sites-fail",
+        title: "Why most websites fail (they're brochures, not sales tools)",
         paragraphs: [
-          "Subscription web design is a pay monthly web design model where the website build, hosting, and ongoing updates are bundled into one monthly plan. It removes the large upfront fee and keeps your site improving as your business changes. Instead of paying thousands upfront for a website that may sit unchanged for years, you invest a manageable monthly amount that covers everything from initial design to ongoing maintenance.",
-          "For local businesses, that predictability matters. You can launch a clean, conversion focused site quickly, then keep it current with seasonal offers, updated services, and fresh proof. The subscription model treats your website as a living asset that evolves with your business rather than a one time project that slowly becomes outdated.",
-          "The model works best when you want a partner, not a one time build. You are paying for ongoing access to a team that keeps the site fast, clear, and lead focused. This relationship means you always have someone to call when you need changes, whether that is updating your phone number or adding an entirely new service page.",
-          "Unlike traditional agency builds where you pay once and then pay again for every small change, subscription web design aligns incentives. Your provider wants to keep you happy month after month, which means they are motivated to deliver results and stay responsive to your needs.",
+          "Here's the uncomfortable truth: most small business websites are expensive digital brochures. They list services. They have an 'About Us' page. They look reasonably professional. And they generate almost zero leads.",
+          "Why? Because they were built to 'have a website' — not to get customers. There's a massive difference.",
+          "A brochure website says: 'Here's who we are and what we do.' A sales-focused website says: 'Here's your problem, here's how we solve it, here's proof it works, and here's how to get started right now.' One describes. The other persuades.",
+          "Think about the last time you hired someone from their website. You didn't care about their history or their team photo. You wanted to know: Can they solve my problem? Are they trustworthy? How do I contact them? Every second of confusion or doubt pushed you closer to hitting the back button.",
+          "Your potential customers think the same way. If your website doesn't immediately answer those questions — clearly and confidently — they're gone. And they don't come back. They call the next result on Google, the competitor whose site made them feel certain.",
         ],
         list: [
-          "Monthly fee includes the build, hosting, security, and updates.",
-          "The first launch focuses on the pages that convert.",
-          "Edits and improvements happen continuously, not once a year.",
-          "No surprise invoices for routine changes or seasonal updates.",
-          "Provider handles technical maintenance so you can focus on customers.",
-        ],
-        links: [
-          {
-            context: "If you want a hands off build with a larger scope, compare it with",
-            label: "done for you websites",
-            href: "/guides/done-for-you-websites",
-            suffix: "to see what changes.",
-          },
-          {
-            context: "If speed is the priority, read",
-            label: "website in 48 hours",
-            href: "/guides/website-in-48-hours",
-            suffix: "to understand a fast launch.",
-          },
-        ],
-      },
-      {
-        kind: "text",
-        id: "pricing",
-        title: "Pricing: how pay monthly web design works",
-        paragraphs: [
-          "Most subscription web design plans for local service businesses land between $99 and $249 per month. The range depends on how many pages you need, how often you update content, and whether copywriting is included. Some premium plans with advanced features like booking integrations or ecommerce can run higher, but most local service businesses find what they need in this range.",
-          "Some providers include a small one time setup fee for intake, domain connection, or initial copy edits. Others include everything in the monthly fee and focus on a simple cancel anytime plan. When evaluating setup fees, consider whether they include extras like professional photography coordination, logo refinement, or extensive copywriting that would otherwise cost more.",
-          "When comparing pricing, look at total cost over 12 months. A $149 per month plan is $1,788 for the year, often less than a $3k to $6k upfront agency build plus hosting and maintenance. Factor in the value of included monthly updates, which would cost $50 to $150 per request with most agencies. If you make just a few changes per month, the subscription model often wins on pure cost.",
-          "If the plan includes ongoing edits, that value compounds. You are not paying again each time you change a service, add a promotion, or swap photos. Over three years, a subscription plan with regular updates often costs less than an agency build with paid maintenance, while keeping your site significantly more current and effective.",
-          "The hidden cost of upfront builds is stagnation. When every change costs money, businesses stop making changes. With subscription pricing, updates are already paid for, so you actually use them. That ongoing optimization is where the real ROI lives.",
+          "A website isn't a business card — it's a salesperson.",
+          "Your site should work when you're not working.",
+          "Every element should move visitors toward contacting you.",
+          "If your site isn't generating leads, it's costing you money.",
         ],
       },
       {
         kind: "checklist",
-        id: "whats-included",
-        title: "Whats included in a subscription plan",
+        id: "three-essentials",
+        title: "The 3 things every high-converting site needs",
         items: [
           {
-            title: "Strategy and structure",
-            detail: "Page plan built around your services, service areas, and top questions.",
+            title: "A headline that speaks to their problem",
+            detail: "Not 'Welcome to ABC Plumbing' — that's about you. Instead: 'Pipes Leaking? Fixed Today or It's Free.' That's about THEM. Your headline should make visitors think 'Yes, that's exactly what I need.' It should answer the question in their head, not introduce your company. You have 3 seconds to hook them or lose them.",
           },
           {
-            title: "Custom design and build",
-            detail: "Mobile first layout tailored to your brand and offer.",
+            title: "One obvious next step",
+            detail: "Call, form, or book — pick one and make it impossible to miss. Don't make visitors choose between 5 different buttons. Don't hide your phone number in the footer. Don't make them click through 3 pages to find the contact form. One clear action. Visible immediately. On every single page.",
           },
           {
-            title: "Core pages",
-            detail: "Home, Services, About, Contact, plus optional FAQs or service area pages.",
-          },
-          {
-            title: "Hosting, SSL, monitoring",
-            detail: "Fast hosting with security and uptime tracking.",
-          },
-          {
-            title: "On page SEO foundation",
-            detail: "Titles, headings, and local keyword placement.",
-          },
-          {
-            title: "Analytics and tracking",
-            detail: "Form tracking and basic conversion goals.",
-          },
-          {
-            title: "Monthly edits",
-            detail: "Text, images, offer updates, and seasonal changes.",
+            title: "Proof it works",
+            detail: "Reviews. Photos of your work. Years in business. Logos of companies you've worked with. Anything that answers the question 'Why should I trust you?' People don't trust strangers. Give them a reason to trust you before you ask them to call. Real photos beat stock photos. Specific testimonials beat vague ones.",
           },
         ],
-        note: "Always confirm edit limits and turnaround time before choosing a plan.",
+        note: "Sites that nail all three typically convert 2-3x better than sites that don't. This isn't theory — it's been tested across thousands of businesses.",
       },
       {
         kind: "text",
-        id: "who-its-for",
-        title: "Who subscription web design is for",
+        id: "free-traffic",
+        title: "Free ways to drive traffic (without paying for ads)",
         paragraphs: [
-          "This model fits businesses that want a professional site without a large upfront expense. It is especially helpful if you change pricing, services, or promotions throughout the year.",
-          "If you prefer to handle everything yourself and rarely update your site, a DIY builder can be enough. But if your time is valuable, the subscription model removes the maintenance burden.",
+          "You don't need to spend money on ads to get website traffic. Some of the most valuable traffic is completely free — if you know where to look.",
         ],
         list: [
-          "Local service businesses such as plumbing, HVAC, cleaning, and landscaping.",
-          "New or growing companies that want to protect cash flow.",
-          "Teams that need ongoing edits without hiring a designer each time.",
-          "Owners who want a single point of contact for web changes.",
+          "Google Business Profile: This is the single most valuable free traffic source for local businesses. Claim your profile, add photos weekly, respond to reviews, and post updates. Google rewards active profiles with better visibility in local search and Maps.",
+          "Local SEO basics: Make sure your website mentions your city and service area. 'Plumber in Austin' beats 'Professional Plumbing Services' for local search. Include your address if you have one. Add city names to your page titles and headings.",
+          "Review collection: Ask every happy customer for a Google review. More reviews = more trust = more clicks. A business with 50 reviews gets more calls than one with 5, even if the rating is the same.",
+          "Referral traffic: Every customer you delight can send you more customers. Make it easy — give them a card, send a follow-up text, offer a referral discount. Word of mouth is still the most powerful marketing.",
+          "Social proof loops: Post your best work on Facebook and Instagram. Link to your website. Neighbors see it, remember you when they have a problem, and search for you specifically.",
         ],
         links: [
           {
-            context: "For a detailed checklist of plan inclusions, read",
-            label: "Whats included in a monthly website plan",
-            href: "/guides/monthly-website-plan-whats-included",
-            suffix: "before you compare providers.",
-          },
-          {
-            context: "If you are debating monthly versus upfront pricing, see",
-            label: "pay monthly web design vs upfront agencies",
-            href: "/guides/pay-monthly-web-design-vs-upfront",
-            suffix: "for a side by side view.",
+            context: "If your site isn't converting the traffic you do have, start with",
+            label: "why your website isn't getting you customers",
+            href: "/guides/why-website-not-getting-customers",
+            suffix: "before worrying about more traffic.",
           },
         ],
-      },
-      {
-        kind: "table",
-        id: "comparison",
-        title: "Subscription vs agency vs DIY",
-        columns: ["Approach", "Upfront cost", "Monthly cost", "Timeline", "Best for"],
-        rows: [
-          ["Subscription web design", "$0-$299", "$99-$249", "2-10 days", "Speed, ongoing updates"],
-          ["Traditional agency", "$3k-$8k", "$25-$150", "4-10 weeks", "Complex brand projects"],
-          ["DIY website builder", "$0-$300", "$15-$40", "1-4 weeks", "Owners with time and simple needs"],
-        ],
-        note: "Ranges are typical for small business websites and can vary by scope.",
       },
       {
         kind: "text",
-        id: "how-to-decide",
-        title: "How to decide quickly",
+        id: "conversion-focused",
+        title: "What 'conversion-focused' actually means",
         paragraphs: [
-          "Pick the model that matches how often your website needs to change. If you want steady improvements and fast edits, subscription web design is usually the fastest path to consistent leads.",
-          "If you need a large brand project or advanced custom features, an agency build can make sense. If you enjoy DIY and have time, a builder can get you online, but it requires more effort to convert well.",
+          "You'll hear marketers throw around 'conversion-focused' like it's a magic word. But what does it actually mean in practice?",
+          "A conversion-focused website is designed around one goal: getting visitors to take action. Every design choice, every word, every button serves that purpose. Nothing is decorative. Nothing is there because 'that's how websites look.' Everything earns its place.",
         ],
         list: [
-          "Do you want a predictable monthly cost instead of a large upfront invoice?",
-          "Do you need edits every month, or only a few times per year?",
-          "Do you want the site live in days instead of weeks?",
+          "No distractions: Sidebars, animations, and fancy features that don't drive action get cut. Simplicity wins.",
+          "Clear hierarchy: The most important information comes first. Your main offer and phone number appear above the fold.",
+          "Friction removal: Every click, every form field, every second of load time is friction. Minimize all of it.",
+          "Trust-first design: Reviews, photos, and credentials appear early — before you ask anyone to do anything.",
+          "Mobile-first: Over 60% of your traffic is on phones. If your site doesn't work perfectly on mobile, you're losing the majority.",
+          "Speed obsession: Every second of load time costs you 7% of conversions. Fast isn't optional.",
         ],
-        links: [
-          {
-            context: "If a fast launch is the priority, read",
-            label: "website in 48 hours",
-            href: "/guides/website-in-48-hours",
-            suffix: "for a realistic timeline.",
-          },
+      },
+      {
+        kind: "callout",
+        id: "bottom-line",
+        title: "The bottom line",
+        body: [
+          "Your website should be your best salesperson — working 24/7, never taking a break, never having a bad day. If it's not bringing you customers, it's not doing its job.",
+          "The good news? A website built the right way doesn't cost tens of thousands of dollars. It doesn't take months to launch. It just takes someone who understands how to build for conversion, not just appearance.",
+          "Stop paying for digital brochures. Start paying for results.",
         ],
       },
       {
@@ -303,269 +488,232 @@ const guides: Guide[] = [
         title: "FAQs",
         items: [
           {
-            q: "Is pay monthly web design the same as a website builder?",
-            a: "No. A subscription plan is built and maintained by a professional team, while a builder like Wix or Squarespace is completely DIY. With subscription web design, you get a custom designed site that is optimized for conversions, and a team handles all the technical work. The result is typically more polished, loads faster, and converts better because it is built by professionals who understand what drives leads.",
+            q: "How do I know if my website is converting well?",
+            a: "Look at your leads-to-visitors ratio. If you get 1,000 visitors a month and less than 20 leads, you're below 2% — which means there's room to improve. Most local service websites should convert between 3-5%. The best hit 8-10%.",
           },
           {
-            q: "Can I cancel a subscription plan?",
-            a: "Most plans allow cancellation with 30 days notice, but always confirm the specific policy and any minimum commitment term. Some providers require a 3 to 6 month minimum to cover initial build costs, while others offer true month to month flexibility. Read the terms carefully and ask about what happens to your site if you cancel.",
+            q: "Do I need to completely rebuild my website?",
+            a: "Not always. Sometimes a few targeted changes — better headlines, clearer CTAs, adding reviews — can dramatically improve results. But if your site is slow, not mobile-friendly, or structurally broken, a rebuild is often faster and cheaper than patching.",
           },
           {
-            q: "Do I own the website?",
-            a: "You generally own the content, copy, images, and brand assets you provide. The design and code may belong to the provider depending on the agreement. Most reputable providers will export your content if you leave, but the site itself typically cannot be transferred as is. Always ask about data portability and what you walk away with before signing up.",
+            q: "How long before I see results from these changes?",
+            a: "Conversion improvements show up immediately with your next visitors. SEO improvements take longer — usually 4-8 weeks for Google to notice and reward changes. Consistency compounds, so stick with it.",
           },
           {
-            q: "How many updates are included each month?",
-            a: "Plans vary significantly. Some include unlimited small edits, others include a set number like 2 to 4 requests per month, and some use a time based model like 2 hours of work monthly. Ask about what counts as an edit, turnaround time for changes, and whether unused edits roll over. The best plans are transparent about limits and responsive when you need changes.",
+            q: "Is paid advertising worth it for a local business?",
+            a: "Only after your website converts. If your site doesn't turn visitors into leads, ads just accelerate the waste. Fix the conversion problem first, then consider ads to amplify what's already working.",
           },
           {
-            q: "Does subscription web design include SEO?",
-            a: "Most plans include foundational on page SEO such as proper title tags, meta descriptions, heading structure, image alt text, and local keyword placement. This gives you a solid starting point. However, ongoing SEO work like content creation, link building, and local citation management is typically a separate service. Ask what SEO elements are included in your plan.",
+            q: "What's the fastest way to get more leads from my website?",
+            a: "Add your phone number to the header of every page, make it clickable on mobile, and add 3-5 recent reviews to your homepage. These three changes take an hour and can increase leads noticeably within days.",
           },
           {
-            q: "How fast can a site launch?",
-            a: "With content ready and quick feedback, many subscription sites launch in one to two weeks. Some providers offer expedited timelines of 48 to 72 hours if scope is tight and you can provide same day approvals. The biggest delays come from waiting on content, photos, and feedback, so prepare those before starting.",
-          },
-          {
-            q: "What if I need more pages than the plan includes?",
-            a: "Most providers offer add on pages for a one time fee or a plan upgrade. Common add ons include additional service pages, location pages for multi area businesses, blog setup, or landing pages for specific campaigns. Ask about expansion pricing upfront so you know your options as you grow.",
-          },
-          {
-            q: "Is subscription web design worth it for a small business?",
-            a: "For most local service businesses, yes. If your website is a lead generation tool and you want it professionally managed without a large upfront investment, subscription pricing makes sense. The ongoing updates keep your site current, which helps both SEO and conversions. Do the math on your average job value, if one extra lead per month pays for the subscription, the ROI is clear.",
+            q: "How important is design vs. copy?",
+            a: "Copy wins. A beautifully designed site with weak copy will underperform a simple site with strong copy. Clarity beats cleverness. Specific beats vague. Benefits beat features. Get the words right first, then polish the design.",
           },
         ],
       },
       {
         kind: "related",
         id: "related",
-        title: "Related posts",
+        title: "Related guides",
         items: [
           {
-            href: "/guides/monthly-website-plan-whats-included",
-            label: "Whats Included in a Monthly Website Plan?",
-            tag: "Support",
-          },
-          {
-            href: "/guides/pay-monthly-web-design-vs-upfront",
-            label: "Pay Monthly Web Design vs Upfront Agencies",
-            tag: "Support",
-          },
-          {
-            href: "/guides/done-for-you-websites",
-            label: "Done for You Websites",
+            href: "/guides/why-website-not-getting-customers",
+            label: "Why Your Website Isn't Getting Customers",
             tag: "Pillar",
           },
           {
-            href: "/guides/website-in-48-hours",
-            label: "Website in 48 Hours",
+            href: "/guides/do-you-need-a-website",
+            label: "Do You Actually Need a Website to Get Clients?",
             tag: "Pillar",
+          },
+          {
+            href: "/guides/what-pages-business-website-needs-to-convert",
+            label: "What Pages Does a Business Website Need?",
+            tag: "Support",
           },
         ],
       },
     ],
   },
   {
-    slug: "done-for-you-websites",
+    slug: "do-you-need-a-website",
     type: "pillar",
-    title: "Done for You Websites",
+    title: "Do You Actually Need a Website to Get Clients? (Honest Answer)",
     description:
-      "Done for you websites are full service builds where a team handles strategy, copy, design, and launch for you. You provide the business details and approvals, and the site is delivered ready to generate leads.",
-    metaTitle: "Done for You Websites | QuickLaunchWeb",
+      "Everyone says you need a website. But do you really? Here's the honest truth about when you need one, when you don't, and what it should actually do for you.",
+    metaTitle: "Do You Actually Need a Website to Get Clients? | QuickLaunchWeb",
     metaDescription:
-      "Learn what done for you websites include, pricing, who they are for, and how they compare to agencies and DIY builders.",
+      "The honest answer about whether your business needs a website. Learn when you DON'T need one, when you definitely DO, and what it costs to not have one.",
     kicker: "Pillar Guide",
-    category: "Done for You Websites",
+    category: "Website Strategy",
     updated: "Jan 2026",
-    readTime: "11 min read",
+    readTime: "9 min read",
     stats: [
-      { label: "Typical build range", value: "$1.5k-$6k" },
-      { label: "Launch window", value: "2-4 weeks" },
-      { label: "Best for", value: "Busy owners" },
+      { label: "People who research online", value: "81%" },
+      { label: "Who check websites first", value: "70%" },
+      { label: "Time to launch", value: "48 hours" },
     ],
     heroBullets: [
-      "Strategy, copy, design, and launch handled for you.",
-      "Ideal for owners who want results without DIY.",
-      "Clear pages that build trust and drive calls.",
-      "Built to convert, not just look good.",
+      "The honest answer (it depends on your business).",
+      "When you DON'T need a website (rare, but real).",
+      "When you absolutely DO (most cases).",
+      "What a website should actually do for you.",
     ],
     jumpLinks: [
-      { id: "what-it-is", label: "What it is" },
-      { id: "pricing", label: "Pricing" },
-      { id: "whats-included", label: "Whats included" },
-      { id: "who-its-for", label: "Who its for" },
-      { id: "comparison", label: "Comparison" },
-      { id: "how-to-decide", label: "How to decide" },
+      { id: "honest-answer", label: "The honest answer" },
+      { id: "when-you-dont", label: "When you don't need one" },
+      { id: "when-you-do", label: "When you do" },
+      { id: "what-it-should-do", label: "What it should do" },
+      { id: "cost-of-not-having", label: "Cost of not having one" },
       { id: "faqs", label: "FAQs" },
       { id: "related", label: "Related" },
     ],
     ctaTop: {
-      eyebrow: "Want it handled for you?",
-      description: "We build, launch, and update your site so you can focus on clients.",
+      eyebrow: "Not sure?",
+      description: "Get a site in 48 hours — $0 down, cancel if it doesn't work for you.",
       href: "/#pricing",
-      label: "View pricing",
+      label: "Try it risk-free",
     },
     ctaBottom: {
-      title: "Ready for a done for you website?",
-      description: "See plans that include strategy, copy, design, and launch.",
+      title: "Ready to stop losing customers?",
+      description: "No lock-in. If the website isn't paying for itself, walk away.",
       href: "/#pricing",
-      label: "See plans",
+      label: "Get started",
     },
     aside: {
       takeaways: [
-        "Done for you websites remove the DIY workload.",
-        "Best results come from clear messaging and proof.",
-        "A tight page structure improves lead quality.",
+        "Most local businesses need a website. Full stop.",
+        "The question is whether it's WORKING, not whether you have one.",
+        "A bad website can be worse than no website.",
       ],
       benchmarks: [
-        "Above the fold call to action with service area.",
-        "Service pages focused on 1-2 core offers.",
-        "Contact options visible within the first scroll.",
-        "Mobile page speed target: under 2 seconds.",
+        "81% of people research online before buying locally.",
+        "70% check a business's website before visiting or calling.",
+        "46% of Google searches are for local information.",
+        "People trust businesses with websites more than those without.",
       ],
       benchmarkNote:
-        "These benchmarks are typical targets for local service sites and should be adjusted for your market.",
+        "These stats apply to most local service businesses. Your specific market may vary, but the trend is clear.",
       roi: [
-        "A single closed job can offset a large share of the build cost.",
-        "Clear offers reduce price shoppers and increase qualified calls.",
-        "Professional design builds trust fast in competitive markets.",
+        "If your average job is $500, one customer covers 5 months of a $99 website.",
+        "Lost leads from no website cost FAR more than any website plan.",
+        "A website works while you sleep — you can't answer the phone at 2am.",
       ],
-      roiNote: "ROI depends on job value and close rate, but clarity usually improves conversion.",
+      roiNote:
+        "The question isn't 'Can I afford a website?' — it's 'Can I afford NOT to have one?'",
     },
     sections: [
       {
         kind: "text",
-        id: "what-it-is",
-        title: "What are done for you websites?",
+        id: "honest-answer",
+        title: "The honest answer",
         paragraphs: [
-          "Done for you websites are fully managed builds where a team handles strategy, copy, design, development, and launch. You share your business details, approve the direction, and the rest is handled. This approach is the opposite of DIY website builders, it puts the work in expert hands so you get professional results without the learning curve.",
-          "This model is built for owners who want professional quality without spending nights learning a builder. It puts your time back into serving customers while the site is built to convert. Instead of wrestling with templates, fonts, and hosting settings, you focus on what you do best while someone else builds a site designed to win leads.",
-          "The best done for you providers keep the process simple with a clear intake, fast drafts, and focused pages. They guide you through what content is needed, ask the right questions about your business, and translate your answers into pages that build trust and drive action.",
-          "What separates a great done for you website from a generic template is the strategy layer. Good providers do not just make your site look nice, they structure it to answer buyer questions, overcome objections, and make the next step obvious. That is the difference between a brochure and a lead generation tool.",
-        ],
-        list: [
-          "You get a clear process with expert guidance at every step.",
-          "Copy and design are built around your specific offers and market.",
-          "Launch includes basic SEO setup and lead tracking configuration.",
-          "Professional quality without the DIY time investment.",
-          "Built to convert visitors into calls and form submissions.",
-        ],
-        links: [
-          {
-            context: "If you prefer a lower upfront cost, compare it with",
-            label: "subscription web design",
-            href: "/guides/subscription-web-design",
-            suffix: "to see the pay monthly option.",
-          },
-          {
-            context: "If you need a fast launch, read",
-            label: "website in 48 hours",
-            href: "/guides/website-in-48-hours",
-            suffix: "for a sprint timeline.",
-          },
-        ],
-      },
-      {
-        kind: "text",
-        id: "pricing",
-        title: "Pricing: what done for you websites cost",
-        paragraphs: [
-          "Done for you website pricing typically ranges from $1,500 to $6,000 for small business sites. The range depends on page count, copy depth, custom branding, and integrations. A simple 5 page site with provided content lands on the lower end, while a 10 to 15 page site with professional copywriting, custom photography coordination, and booking integrations runs higher.",
-          "Some providers offer a pay monthly option that spreads the cost. Others charge upfront with optional monthly maintenance for edits and hosting. If cash flow is a concern, look for providers that offer split payments or monthly plans that include the build cost over time.",
-          "When comparing pricing, look beyond the number. Clarify what is included in the first version, how many revisions you get, and what ongoing updates will cost. Some quotes include hosting for the first year while others bill it separately. Ask about copywriting, image sourcing, and any integrations you need.",
-          "A well built site can pay for itself quickly if it improves your close rate or increases call volume. If your average job is worth $500 and the site helps you close even one extra lead per month, you recover a $3,000 investment in six months. The real cost of a cheap or DIY site is the leads it fails to capture.",
-          "Consider the hidden costs of other options. An agency that quotes $3k but charges $100 per edit can get expensive fast. A DIY site that takes you 40 hours is not free if your time is worth $75 per hour. A done for you build often wins when you factor in the full picture.",
+          "Here's the truth that website companies don't want you to hear: not every business needs a website. There, I said it.",
+          "But here's the other truth: MOST businesses do. And if you're reading this guide, you're probably one of them.",
+          "The question isn't really 'Do I need a website?' — it's 'How are my customers finding me?' If people can discover you, trust you, and contact you without ever visiting a website, you might be fine without one. But for the vast majority of local service businesses, that's not reality.",
+          "Let's be specific. I'm going to tell you when you probably DON'T need a website, and then when you absolutely DO. Spoiler: the 'don't need' list is very short.",
         ],
       },
       {
         kind: "checklist",
-        id: "whats-included",
-        title: "Whats included in a done for you build",
+        id: "when-you-dont",
+        title: "When you DON'T need a website (rare, but real)",
         items: [
           {
-            title: "Discovery and messaging",
-            detail: "Clear positioning for your services and service area.",
+            title: "100% referral-based business",
+            detail: "If every single customer comes from word of mouth and you can't handle more work anyway, a website might not be urgent. This is rare. Most businesses that claim to be 'referral only' are actually leaving money on the table.",
           },
           {
-            title: "Copywriting or copy guidance",
-            detail: "Benefit led copy that answers buyer questions.",
+            title: "Hyperlocal, in-person only",
+            detail: "A food truck at the same farmers market every Saturday, a tailor in a small town where everyone knows you, a handyman who only works for his neighbors. If your entire business is face-to-face and geography-locked, you can survive on reputation alone.",
           },
           {
-            title: "Custom design and layout",
-            detail: "A clean, trustworthy look that fits your brand.",
-          },
-          {
-            title: "Mobile first build",
-            detail: "Fast pages that load and read well on phones.",
-          },
-          {
-            title: "Lead capture setup",
-            detail: "Forms, call buttons, and tracking.",
-          },
-          {
-            title: "Local SEO foundation",
-            detail: "Titles, headings, and structured service pages.",
-          },
-          {
-            title: "Launch and QA",
-            detail: "Testing, domain setup, and go live support.",
+            title: "Already maxed out",
+            detail: "If you genuinely cannot take on more work and have no plans to grow, hire, or raise prices, a website is unnecessary overhead. But be honest — is that really true, or are you just avoiding the decision?",
           },
         ],
-        note: "Ask about revision rounds, turn times, and what ongoing edits cost.",
+        note: "Notice how narrow these exceptions are? If you don't fit clearly into one of these, you probably need a website.",
+      },
+      {
+        kind: "checklist",
+        id: "when-you-do",
+        title: "When you absolutely need a website",
+        items: [
+          {
+            title: "People search for your services",
+            detail: "If anyone Googles 'plumber near me' or 'landscaper in Austin' and you want to show up, you need a website. Period. Google Business Profile helps, but a website gives you more control, more content, and more credibility.",
+          },
+          {
+            title: "Referrals check you out first",
+            detail: "Someone recommends you. What does the person do next? They Google your business name. If nothing comes up — or worse, a competitor does — you've lost credibility before you ever spoke to them. A website catches referrals who want to verify you're legit.",
+          },
+          {
+            title: "You compete on trust",
+            detail: "Letting strangers into your home? Working on expensive equipment? Handling someone's money or legal matters? These high-trust services require proof. Reviews, photos, credentials — all displayed on a website you control.",
+          },
+          {
+            title: "You want to grow",
+            detail: "If you ever want more customers, to hire employees, to raise your prices, or to sell the business someday, you need online presence. A website is the foundation of a real business, not just a side hustle.",
+          },
+          {
+            title: "Your competitors have one",
+            detail: "If the other plumbers, cleaners, or landscapers in your area have websites and you don't, you're handing them credibility for free. Customers compare. Make sure you're in the comparison.",
+          },
+        ],
+        note: "If you checked even ONE of these, a website isn't optional — it's costing you money every day you don't have one.",
       },
       {
         kind: "text",
-        id: "who-its-for",
-        title: "Who done for you websites are for",
+        id: "what-it-should-do",
+        title: "What a website should actually do for you",
         paragraphs: [
-          "Done for you websites are ideal for business owners who want professional results without the DIY workload. If your team is already busy, outsourcing the build saves weeks of time.",
-          "It is also a strong fit when you need your site to position you as premium, explain complex services, or win higher value jobs.",
+          "Here's where most business owners get it wrong: they think a website is a digital business card. Just a place to put your logo, hours, and phone number. That's the bare minimum, and it's not enough.",
+          "A real business website should be your best salesperson. It should work 24/7 to convince strangers to call you. It should answer questions, overcome objections, build trust, and make the next step obvious.",
         ],
         list: [
-          "Local service businesses that compete on trust and reviews.",
-          "Owners who value speed and do not want to learn a builder.",
-          "Teams that need copywriting and structure guidance.",
-          "Businesses rebranding or expanding into new services.",
+          "Show up when people search: SEO basics so you're findable on Google.",
+          "Build instant trust: Reviews, photos, credentials visible immediately.",
+          "Answer common questions: So people feel informed before they call.",
+          "Make contact easy: One tap to call, simple form, clear next step.",
+          "Work on mobile: Because that's where most people will see it.",
+          "Load fast: Slow sites lose visitors before they even see your offer.",
+          "Capture leads 24/7: Take messages when you can't answer the phone.",
         ],
         links: [
           {
-            context: "If you are debating DIY, read",
-            label: "Wix vs hiring someone",
-            href: "/guides/wix-vs-hiring-someone-to-build-website",
-            suffix: "for a simple comparison.",
-          },
-          {
-            context: "To nail the page structure, see",
-            label: "what pages a business website needs to convert",
-            href: "/guides/what-pages-business-website-needs-to-convert",
-            suffix: "before you build.",
+            context: "Want to know why your current site isn't doing this?",
+            label: "Why your website isn't getting you customers",
+            href: "/guides/why-website-not-getting-customers",
+            suffix: "breaks down the common problems.",
           },
         ],
-      },
-      {
-        kind: "table",
-        id: "comparison",
-        title: "Done for you vs agency vs DIY",
-        columns: ["Approach", "Upfront cost", "Ongoing cost", "Timeline", "Best for"],
-        rows: [
-          ["Done for you website", "$1.5k-$6k", "$0-$150", "2-4 weeks", "Fast, guided builds"],
-          ["Traditional agency", "$5k-$15k", "$50-$250", "6-12 weeks", "Large custom projects"],
-          ["DIY website builder", "$0-$300", "$15-$40", "1-4 weeks", "Owners with time and simple needs"],
-        ],
-        note: "Ranges are typical for small business websites and can vary by scope.",
       },
       {
         kind: "text",
-        id: "how-to-decide",
-        title: "How to decide quickly",
+        id: "cost-of-not-having",
+        title: "The cost of NOT having a website",
         paragraphs: [
-          "If you want professional results without a long agency timeline, done for you websites are a strong middle ground. You get expert help without the heavy process or cost of a large agency.",
-          "If you need a large brand overhaul or complex integrations, an agency may be worth the higher budget. If you want to keep costs minimal and have time to learn, a builder can work for a basic site.",
+          "Let's talk about what you're actually losing by not having a website — or by having a bad one that doesn't convert.",
         ],
         list: [
-          "Do you want guidance on copy and page structure?",
-          "Will the time saved be worth the higher upfront cost?",
-          "Do you need the site live in weeks instead of months?",
+          "Lost credibility: 'I Googled you and couldn't find anything' is an instant red flag for customers. They'll call someone else.",
+          "Missed referrals: People recommend you, but the referral can't find you or verify you're real. They call a competitor instead.",
+          "Invisible to searchers: Every 'plumber near me' search you don't show up for is a potential customer going elsewhere.",
+          "No 24/7 presence: When someone needs you at 11pm, they can't leave a message on a website you don't have. They'll call the guy who does.",
+          "Lower perceived value: Businesses with professional websites can charge more. No website signals 'small time' or 'unprofessional.'",
+          "Harder to grow: Try hiring someone or getting a loan without a business website. It's a legitimacy signal that matters.",
+        ],
+      },
+      {
+        kind: "callout",
+        id: "bottom-line",
+        title: "The bottom line",
+        body: [
+          "The question isn't whether you can afford a website. It's whether you can afford the customers you're losing without one.",
+          "For most local service businesses, a professional website pays for itself quickly — usually with a single new customer. And with options like $99/month subscription sites with no upfront cost, the barrier to entry has never been lower.",
+          "If you're still on the fence, try this: launch a simple site in 48 hours with a no-lock-in plan. If it doesn't bring you customers in 90 days, cancel. You've lost nothing but a few hundred dollars. But if it works — and for most businesses, it does — you've built a customer-generating machine that works while you sleep.",
         ],
       },
       {
@@ -574,326 +722,50 @@ const guides: Guide[] = [
         title: "FAQs",
         items: [
           {
-            q: "How long does a done for you website take?",
-            a: "Most projects launch in two to four weeks, depending on content readiness and revision rounds. If you have all your content, images, and branding ready at kickoff, some providers can move faster. The timeline usually stretches when waiting for client feedback, content revisions, or third party integrations.",
+            q: "Can't I just use Facebook or Instagram instead of a website?",
+            a: "Social media is great for engagement, but it's not a replacement. You don't own it — Facebook can change the rules or shut you down anytime. You can't rank in Google searches. You can't customize the experience. Use social media AND a website.",
           },
           {
-            q: "Do I need to write the copy?",
-            a: "Many providers include copywriting or provide guided questionnaires that pull the right information from you. You should always review for accuracy and make sure the messaging sounds like your business. Even with a copywriter, you will need to provide details about your services, process, and what makes you different.",
+            q: "What about Google Business Profile? Isn't that enough?",
+            a: "Google Business Profile is essential, but it's limited. You control the basics — hours, photos, reviews. But you can't write long-form content, answer complex questions, or build the kind of trust that closes high-value jobs. GBP is a supplement, not a replacement.",
           },
           {
-            q: "Can I update the site later?",
-            a: "Yes. Ask whether updates are included, billed hourly, or covered under a monthly maintenance plan. Some providers offer a set number of free edits per month, while others charge per request. Clarify turnaround times and what happens if you need an urgent change.",
+            q: "My nephew can build me a website. Is that good enough?",
+            a: "Maybe. Does your nephew understand conversion optimization? SEO? Mobile-first design? Loading speed? If the site looks nice but doesn't generate leads, it's not doing its job. A cheap site that doesn't convert is more expensive than a proper site that does.",
           },
           {
-            q: "Is SEO included?",
-            a: "Most done for you builds include foundational on page SEO such as title tags, meta descriptions, heading structure, image optimization, and proper internal linking. Ongoing SEO work like content creation, backlink building, and local citations is typically a separate service with different pricing.",
+            q: "How much should a small business website cost?",
+            a: "Traditional agencies charge $3,000 to $10,000 upfront. That's overkill for most local businesses. Subscription models like ours are $99/month with $0 down. Do the math: if your average job is $500 and the site brings you one extra customer per month, it pays for itself 5x over.",
           },
           {
-            q: "How many pages should I expect?",
-            a: "Most small business builds include a focused set of core pages like Home, Services, About, and Contact. Depending on the package, you might also get individual service pages, a gallery or portfolio page, FAQs, and service area pages. More pages typically means a higher price, so start focused and expand as needed.",
+            q: "How long does it take to get a website up?",
+            a: "With modern template-based approaches, a professional site can be live in 48 hours if you have your content ready. Complex custom sites take longer. For most local businesses, faster is better — every day without a site is potential customers lost.",
           },
           {
-            q: "Will it work well on mobile?",
-            a: "A professional done for you build should be mobile first by default. This means pages are designed for phone screens first and then adapted for desktop. Ask for mobile previews during the design phase and test the live site on your own phone before launch.",
-          },
-          {
-            q: "What do I need to provide to get started?",
-            a: "At minimum, you should have your logo, brand colors, contact information, and a clear idea of your services. Photos of your work, team, or location help a lot. The more you can provide upfront, the faster and smoother the project will go. Good providers will send you a detailed intake form that covers everything needed.",
-          },
-          {
-            q: "What if I do not like the design?",
-            a: "Most providers include revision rounds in their pricing, often 2 to 3 rounds of feedback. Be specific with your feedback, vague comments lead to wasted revisions. If the overall direction is wrong, say so early. Major design overhauls late in the project may incur additional fees.",
+            q: "What if I get a website and it doesn't work?",
+            a: "That's why no-lock-in plans exist. Try it for a few months. If you're not getting leads, either the site needs work or (rarely) you're in that small group that doesn't need one. Cancel and move on. But most businesses that get a proper conversion-focused site see results.",
           },
         ],
       },
       {
         kind: "related",
         id: "related",
-        title: "Related posts",
+        title: "Related guides",
         items: [
           {
-            href: "/guides/wix-vs-hiring-someone-to-build-website",
-            label: "Wix vs Hiring Someone",
-            tag: "Support",
+            href: "/guides/why-website-not-getting-customers",
+            label: "Why Your Website Isn't Getting Customers",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/how-to-get-more-customers-website",
+            label: "How to Get More Customers From Your Website",
+            tag: "Pillar",
           },
           {
             href: "/guides/what-pages-business-website-needs-to-convert",
-            label: "What Pages Does a Business Website Need to Convert?",
+            label: "What Pages Does a Business Website Need?",
             tag: "Support",
-          },
-          {
-            href: "/guides/subscription-web-design",
-            label: "Subscription Web Design",
-            tag: "Pillar",
-          },
-          {
-            href: "/guides/website-in-48-hours",
-            label: "Website in 48 Hours",
-            tag: "Pillar",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "website-in-48-hours",
-    type: "pillar",
-    title: "Website in 48 Hours",
-    description:
-      "A website in 48 hours is a focused, conversion first site built from a proven framework and launched fast. It works best when the scope is tight and the content is ready.",
-    metaTitle: "Website in 48 Hours (Fast Website Design) | QuickLaunchWeb",
-    metaDescription:
-      "Learn how a website in 48 hours works, pricing, whats included, who it is for, and how it compares to longer builds.",
-    kicker: "Pillar Guide",
-    category: "Fast Website Design",
-    updated: "Jan 2026",
-    readTime: "11 min read",
-    stats: [
-      { label: "Typical sprint range", value: "$299-$999" },
-      { label: "Launch window", value: "48 hours" },
-      { label: "Best for", value: "Urgent launches" },
-    ],
-    heroBullets: [
-      "A focused site built for speed and conversion.",
-      "Works best when content is ready on day one.",
-      "Great for launches, promos, and new service offers.",
-      "Scope is tight so you can move fast.",
-    ],
-    jumpLinks: [
-      { id: "what-it-is", label: "What it is" },
-      { id: "pricing", label: "Pricing" },
-      { id: "whats-included", label: "Whats included" },
-      { id: "who-its-for", label: "Who its for" },
-      { id: "comparison", label: "Comparison" },
-      { id: "timeline", label: "48 hour timeline" },
-      { id: "faqs", label: "FAQs" },
-      { id: "related", label: "Related" },
-    ],
-    ctaTop: {
-      eyebrow: "Need it live fast?",
-      description: "Launch a focused site in 48 hours with a clear plan and content ready.",
-      href: "/#pricing",
-      label: "View pricing",
-    },
-    ctaBottom: {
-      title: "Want a fast website that still converts?",
-      description: "We build fast without sacrificing clarity or lead flow.",
-      href: "/#pricing",
-      label: "See plans",
-    },
-    aside: {
-      takeaways: [
-        "Fast launches require tight scope and fast approvals.",
-        "A 48 hour site is focused, not feature heavy.",
-        "Conversion wins come from clarity and trust signals.",
-      ],
-      benchmarks: [
-        "First draft approved within 24 hours.",
-        "One clear offer and call to action on every page.",
-        "Mobile load time target: under 2 seconds.",
-        "Contact options visible within the first scroll.",
-      ],
-      benchmarkNote:
-        "These are typical targets for fast launches. Speed depends on content readiness and approvals.",
-      roi: [
-        "Launching even a week earlier can capture time sensitive demand.",
-        "A focused site can start paying back the build within the first month.",
-        "Speed plus clarity reduces missed leads during busy seasons.",
-      ],
-      roiNote: "ROI depends on demand timing and job value, but early visibility often pays off.",
-    },
-    sections: [
-      {
-        kind: "text",
-        id: "what-it-is",
-        title: "What is a website in 48 hours?",
-        paragraphs: [
-          "A website in 48 hours is a focused, conversion first site built from a proven framework and launched fast. It is not a 20 page custom site or a large portal with complex features. Instead, it is a streamlined approach that prioritizes getting you online and generating leads as quickly as possible.",
-          "The goal is speed and clarity. You launch a simple, professional site that highlights your core services, establishes trust, and captures leads quickly. Every element is chosen for impact, not decoration. The result is a lean site that does one thing well: turn visitors into calls and form submissions.",
-          "This approach works best when you keep the scope tight and provide content early so the build can move fast. The 48 hour timeline is achievable when both sides are prepared, you with content and quick approvals, and the builder with proven systems and templates.",
-          "Speed does not mean low quality. A well designed 48 hour site uses battle tested layouts that already convert. The builder focuses time on customizing messaging and visuals for your business, not reinventing the wheel on structure and functionality.",
-        ],
-        list: [
-          "Focused pages that drive calls and form fills without distractions.",
-          "Proven templates and systems that speed up production dramatically.",
-          "A clear launch checklist so nothing stalls the timeline.",
-          "Mobile first design that works perfectly on phones.",
-          "Professional quality that builds trust immediately.",
-        ],
-        links: [
-          {
-            context: "If you want a deeper build with ongoing updates, compare it with",
-            label: "subscription web design",
-            href: "/guides/subscription-web-design",
-            suffix: "to see the long term option.",
-          },
-          {
-            context: "If you want a larger custom project, see",
-            label: "done for you websites",
-            href: "/guides/done-for-you-websites",
-            suffix: "for a broader scope.",
-          },
-        ],
-      },
-      {
-        kind: "text",
-        id: "pricing",
-        title: "Pricing for fast website design",
-        paragraphs: [
-          "Fast website design pricing often ranges from $299 to $999 for a focused launch. Some teams include it as part of a monthly subscription plan instead of charging a separate rush fee. The exact price depends on page count, whether copywriting is included, and any special integrations you need.",
-          "The main pricing factor is scope. A one to three page site launches fast, while larger sites push the timeline beyond 48 hours. If you need five or more pages, a standard timeline usually makes more sense both for quality and for the builder's workflow.",
-          "You can save time and cost by preparing content early, limiting revision rounds, and keeping the first launch focused on a single offer. Every back and forth cycle adds hours to the project. If you can approve drafts within a few hours instead of a few days, you protect the 48 hour timeline.",
-          "Some providers charge a rush fee on top of their standard pricing, typically 25 to 50 percent more. Others build speed into their process and do not charge extra. Ask upfront so you know what the total will be.",
-          "The ROI calculation for a fast launch is simple. If you need to capture seasonal demand, launch a new service, or replace a broken site, every day without a working website is lost opportunity. A few hundred dollars to launch a week earlier can easily pay for itself with one or two new leads.",
-        ],
-      },
-      {
-        kind: "checklist",
-        id: "whats-included",
-        title: "Whats included in a 48 hour launch",
-        items: [
-          {
-            title: "Fast intake and structure",
-            detail: "A short kickoff to define services, location, and goals.",
-          },
-          {
-            title: "Focused page set",
-            detail: "Home, Services, and Contact, plus a simple About if needed.",
-          },
-          {
-            title: "Copy guidance",
-            detail: "Clear messaging and calls to action for conversions.",
-          },
-          {
-            title: "Mobile first build",
-            detail: "Fast loading pages that read well on phones.",
-          },
-          {
-            title: "Lead capture setup",
-            detail: "Form, call buttons, and tracking.",
-          },
-          {
-            title: "Basic SEO setup",
-            detail: "Titles, headings, and local service keywords.",
-          },
-        ],
-        note: "A 48 hour launch is about speed and clarity, not complex features.",
-      },
-      {
-        kind: "text",
-        id: "who-its-for",
-        title: "Who a 48 hour website is for",
-        paragraphs: [
-          "This option is best when you need to be live quickly. New businesses, seasonal service spikes, and urgent promotions are the most common reasons to choose a 48 hour build.",
-          "If you want a large custom brand, complex integrations, or a high page count, a longer timeline is a better fit.",
-        ],
-        list: [
-          "New businesses that need a professional presence immediately.",
-          "Seasonal services preparing for a short demand window.",
-          "Businesses running a new promotion or service launch.",
-          "Owners who can deliver content and approvals quickly.",
-        ],
-      },
-      {
-        kind: "table",
-        id: "comparison",
-        title: "48 hours vs standard build vs DIY",
-        columns: ["Approach", "Timeline", "Scope", "Cost range", "Best for"],
-        rows: [
-          ["Website in 48 hours", "2 days", "1-3 pages", "$299-$999", "Urgent launches"],
-          ["Standard build", "2-6 weeks", "5-10 pages", "$1.5k-$6k", "Broader scope"],
-          ["DIY builder", "1-4 weeks", "Varies", "$0-$300", "Owners with time"],
-        ],
-        note: "Faster timelines require tight scope and fast approvals.",
-      },
-      {
-        kind: "checklist",
-        id: "timeline",
-        title: "The 48 hour timeline",
-        items: [
-          {
-            title: "Hour 0-6: Intake and content",
-            detail: "Confirm services, service area, pricing ranges, and proof.",
-          },
-          {
-            title: "Hour 6-24: Layout and copy draft",
-            detail: "Build the page structure and approve the core messaging.",
-          },
-          {
-            title: "Hour 24-36: Build and polish",
-            detail: "Design, imagery, and mobile refinement.",
-          },
-          {
-            title: "Hour 36-48: QA and launch",
-            detail: "Test forms, connect domain, and go live.",
-          },
-        ],
-        note: "Fast launches depend on immediate feedback and clear approvals.",
-      },
-      {
-        kind: "faq",
-        id: "faqs",
-        title: "FAQs",
-        items: [
-          {
-            q: "Can a real business website be built in 48 hours?",
-            a: "Yes, if scope is tight and content is ready. The goal is a focused lead generation site, not a complex platform. Businesses launch 48 hour sites every day for new ventures, seasonal pushes, and urgent replacements. The key is having your content ready and being available for quick approvals throughout the build.",
-          },
-          {
-            q: "What if I do not have content ready?",
-            a: "Delays in content will push the timeline. Before you start, gather your core services list, service area, contact information, a few photos, and any reviews or proof you want to display. Missing content is the number one reason 48 hour builds turn into week long projects. Use the fast launch checklist to prepare.",
-          },
-          {
-            q: "Will a fast build still look professional?",
-            a: "Yes. Using proven layouts and clear copy keeps the site polished and conversion focused. The speed comes from using templates and systems, not from cutting corners on quality. A good 48 hour site looks just as professional as a site that took weeks, it just has a tighter scope.",
-          },
-          {
-            q: "Can I add more pages later?",
-            a: "Absolutely. Many fast launches are intentionally minimal, getting the core site live first and then expanding with additional service pages, galleries, or blog content over time. This approach lets you start generating leads immediately while building out the full site at a normal pace.",
-          },
-          {
-            q: "Is SEO included?",
-            a: "Basic on page SEO is usually included, meaning proper title tags, meta descriptions, heading structure, and image alt text. This gives Google what it needs to index your site. Ongoing SEO work like content creation, link building, and local optimization is typically a separate effort.",
-          },
-          {
-            q: "How do I prepare for a 48 hour build?",
-            a: "Use the fast launch checklist to gather everything you need: services, service area, contact info, logo, brand colors, photos, and reviews. Clear your schedule to be available for feedback. The more prepared you are at kickoff, the smoother the build will go.",
-          },
-          {
-            q: "What if something goes wrong during the build?",
-            a: "Issues happen, but most can be solved quickly with clear communication. Common problems include missing images, unclear service descriptions, or domain access delays. Good providers anticipate these and have backup plans. If something major comes up, the timeline may extend, but a focused scope minimizes risk.",
-          },
-          {
-            q: "Is 48 hours realistic for any business?",
-            a: "It is realistic for most local service businesses with straightforward offerings. If you need complex booking systems, ecommerce, member portals, or extensive custom functionality, a longer timeline is better. The 48 hour model works best for businesses that need a professional presence fast, not a complex web application.",
-          },
-        ],
-      },
-      {
-        kind: "related",
-        id: "related",
-        title: "Related posts",
-        items: [
-          {
-            href: "/guides/can-a-website-really-be-built-in-48-hours",
-            label: "Can a Website Really Be Built in 48 Hours?",
-            tag: "Support",
-          },
-          {
-            href: "/guides/launch-website-fast-checklist",
-            label: "Launch a Website Fast: The Exact Checklist You Need",
-            tag: "Support",
-          },
-          {
-            href: "/guides/subscription-web-design",
-            label: "Subscription Web Design",
-            tag: "Pillar",
-          },
-          {
-            href: "/guides/done-for-you-websites",
-            label: "Done for You Websites",
-            tag: "Pillar",
           },
         ],
       },
@@ -909,7 +781,7 @@ const guides: Guide[] = [
     metaDescription:
       "A clear breakdown of what is included in a monthly website plan, what is usually extra, and how to compare providers.",
     kicker: "Support Guide",
-    category: "Subscription Web Design",
+    category: "Website Conversion",
     updated: "Jan 2026",
     readTime: "6 min read",
     heroBullets: [
@@ -925,8 +797,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/subscription-web-design",
-      label: "Read: Subscription Web Design",
+      href: "/guides/why-website-not-getting-customers",
+      label: "Read: Why Your Website Isn't Getting Customers",
     },
     sections: [
       {
@@ -1026,9 +898,9 @@ const guides: Guide[] = [
         ],
         links: [
           {
-            context: "If you want the full model breakdown, start with",
-            label: "subscription web design",
-            href: "/guides/subscription-web-design",
+            context: "If you want to understand why some sites convert and others don't, start with",
+            label: "why your website isn't getting customers",
+            href: "/guides/why-website-not-getting-customers",
             suffix: "and then compare providers.",
           },
           {
@@ -1082,7 +954,7 @@ const guides: Guide[] = [
     metaDescription:
       "A simple comparison of pay monthly web design vs upfront agencies, plus a checklist to decide fast.",
     kicker: "Support Guide",
-    category: "Subscription Web Design",
+    category: "Website Conversion",
     updated: "Jan 2026",
     readTime: "6 min read",
     heroBullets: [
@@ -1098,8 +970,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/subscription-web-design",
-      label: "Read: Subscription Web Design",
+      href: "/guides/why-website-not-getting-customers",
+      label: "Read: Why Your Website Isn't Getting Customers",
     },
     sections: [
       {
@@ -1167,10 +1039,10 @@ const guides: Guide[] = [
         ],
         links: [
           {
-            context: "Start with the full model breakdown in",
-            label: "subscription web design",
-            href: "/guides/subscription-web-design",
-            suffix: "before choosing.",
+            context: "Start with",
+            label: "why your website isn't getting customers",
+            href: "/guides/why-website-not-getting-customers",
+            suffix: "to understand what matters most.",
           },
           {
             context: "If you want to compare inclusions, read",
@@ -1223,7 +1095,7 @@ const guides: Guide[] = [
     metaDescription:
       "A clear comparison of Wix vs hiring someone to build your website, plus a checklist to decide fast.",
     kicker: "Support Guide",
-    category: "Done for You Websites",
+    category: "Website Conversion",
     updated: "Jan 2026",
     readTime: "6 min read",
     heroBullets: [
@@ -1239,8 +1111,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/done-for-you-websites",
-      label: "Read: Done for You Websites",
+      href: "/guides/how-to-get-more-customers-website",
+      label: "Read: How to Get More Customers",
     },
     sections: [
       {
@@ -1310,10 +1182,10 @@ const guides: Guide[] = [
         ],
         links: [
           {
-            context: "For a full service option, read",
-            label: "done for you websites",
-            href: "/guides/done-for-you-websites",
-            suffix: "to see what is included.",
+            context: "Want more traffic without ads? Read",
+            label: "how to get more customers from your website",
+            href: "/guides/how-to-get-more-customers-website",
+            suffix: "for free strategies.",
           },
           {
             context: "To plan the page structure, see",
@@ -1366,7 +1238,7 @@ const guides: Guide[] = [
     metaDescription:
       "A practical guide to the essential pages every business website needs to convert visitors into leads.",
     kicker: "Support Guide",
-    category: "Done for You Websites",
+    category: "Website Conversion",
     updated: "Jan 2026",
     readTime: "7 min read",
     heroBullets: [
@@ -1382,8 +1254,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/done-for-you-websites",
-      label: "Read: Done for You Websites",
+      href: "/guides/how-to-get-more-customers-website",
+      label: "Read: How to Get More Customers",
     },
     sections: [
       {
@@ -1444,10 +1316,10 @@ const guides: Guide[] = [
             suffix: "before you build.",
           },
           {
-            context: "For a full service build, see",
-            label: "done for you websites",
-            href: "/guides/done-for-you-websites",
-            suffix: "and compare options.",
+            context: "For more traffic strategies, see",
+            label: "how to get more customers from your website",
+            href: "/guides/how-to-get-more-customers-website",
+            suffix: "for actionable tips.",
           },
         ],
       },
@@ -1509,7 +1381,7 @@ const guides: Guide[] = [
     metaDescription:
       "A realistic look at building a website in 48 hours, plus a checklist and timeline to see if you are ready.",
     kicker: "Support Guide",
-    category: "Website in 48 Hours",
+    category: "Website Strategy",
     updated: "Jan 2026",
     readTime: "6 min read",
     heroBullets: [
@@ -1525,8 +1397,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/website-in-48-hours",
-      label: "Read: Website in 48 Hours",
+      href: "/guides/do-you-need-a-website",
+      label: "Read: Do You Need a Website?",
     },
     sections: [
       {
@@ -1546,10 +1418,10 @@ const guides: Guide[] = [
         ],
         links: [
           {
-            context: "For the full sprint framework, see",
-            label: "website in 48 hours",
-            href: "/guides/website-in-48-hours",
-            suffix: "before you decide.",
+            context: "Not sure if you need a site? Read",
+            label: "do you actually need a website",
+            href: "/guides/do-you-need-a-website",
+            suffix: "for the honest answer.",
           },
           {
             context: "If you need to prepare, use",
@@ -1644,7 +1516,7 @@ const guides: Guide[] = [
     metaDescription:
       "A fast launch checklist with the exact assets and approvals you need to go live quickly.",
     kicker: "Support Guide",
-    category: "Website in 48 Hours",
+    category: "Website Strategy",
     updated: "Jan 2026",
     readTime: "9 min read",
     heroBullets: [
@@ -1663,8 +1535,8 @@ const guides: Guide[] = [
     ],
     supportCta: {
       title: "Want us to handle this for you?",
-      href: "/guides/website-in-48-hours",
-      label: "Read: Website in 48 Hours",
+      href: "/guides/do-you-need-a-website",
+      label: "Read: Do You Need a Website?",
     },
     sections: [
       {
@@ -1685,10 +1557,10 @@ const guides: Guide[] = [
         ],
         links: [
           {
-            context: "For the full sprint plan, read",
-            label: "website in 48 hours",
-            href: "/guides/website-in-48-hours",
-            suffix: "to understand the timeline.",
+            context: "Not sure you need one? Read",
+            label: "do you actually need a website",
+            href: "/guides/do-you-need-a-website",
+            suffix: "for the honest answer.",
           },
         ],
       },
@@ -1799,10 +1671,10 @@ const guides: Guide[] = [
             suffix: "to focus your scope.",
           },
           {
-            context: "If you want ongoing updates after launch, compare",
-            label: "subscription web design",
-            href: "/guides/subscription-web-design",
-            suffix: "to see how it works.",
+            context: "If you want to understand what makes a site convert, read",
+            label: "why your website isn't getting customers",
+            href: "/guides/why-website-not-getting-customers",
+            suffix: "to see what to fix.",
           },
         ],
       },

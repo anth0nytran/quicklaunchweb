@@ -6,13 +6,13 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 
-const montserrat = Montserrat({ 
+const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
 });
 
-const lato = Lato({ 
+const lato = Lato({
   subsets: ["latin"],
   weight: ["300", "400", "700"],
   variable: "--font-lato",
@@ -27,11 +27,13 @@ const siteUrl = (() => {
   return value || "http://localhost:3000";
 })();
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
+  title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
   description:
-    "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
+    "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
   keywords: [
     "free website builder",
     "professional website builder",
@@ -52,9 +54,9 @@ export const metadata: Metadata = {
     "service company website",
   ],
   openGraph: {
-    title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
+    title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
     description:
-      "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
+      "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
     url: siteUrl,
     siteName: "QuickLaunchWeb",
     type: "website",
@@ -69,9 +71,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QuickLaunchWeb | Done-For-You Websites in 48 Hours ($99/mo)",
+    title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
     description:
-      "Get a professional website built fast with $0 down. $99/mo includes hosting + support. Mobile-first, SEO-ready, built to convert.",
+      "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
     images: [`${siteUrl}/icon.jpg`],
   },
   alternates: {
@@ -109,18 +111,25 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased`}>
         {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-DQ1N327ENZ"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-DQ1N327ENZ');
-          `}
-        </Script>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}', {
+                  anonymize_ip: true,
+                  cookie_flags: 'SameSite=None;Secure'
+                });
+              `}
+            </Script>
+          </>
+        )}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

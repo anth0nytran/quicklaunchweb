@@ -85,7 +85,7 @@ export default function WixVsHiringPage() {
           </ul>
           <p className="text-sm text-secondary leading-relaxed">
             Learn more about the service model in{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">
               done for you websites
             </Link>
             .
@@ -141,7 +141,7 @@ export default function WixVsHiringPage() {
             <p className="text-sm text-white font-semibold">Want us to handle this for you?</p>
             <p className="mt-2 text-sm text-secondary">
               Read:{" "}
-              <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">
+              <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">
                 Done for You Websites
               </Link>
             </p>
@@ -151,3 +151,4 @@ export default function WixVsHiringPage() {
     </main>
   );
 }
+

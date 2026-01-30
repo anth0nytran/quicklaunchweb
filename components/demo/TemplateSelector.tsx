@@ -1,6 +1,7 @@
 'use client';
 
 import { CATEGORY_OPTIONS, BusinessCategory } from '@/lib/demoDefaults';
+import { useDemoTracker } from '@/lib/analytics';
 
 interface TemplateSelectorProps {
   active: BusinessCategory;
@@ -10,6 +11,14 @@ interface TemplateSelectorProps {
 
 export function TemplateSelector({ active, onChange, tone = 'light' }: TemplateSelectorProps) {
   const isDark = tone === 'dark';
+  const { trackTemplateSwitched } = useDemoTracker();
+
+  const handleTemplateChange = (newCategory: BusinessCategory) => {
+    if (newCategory !== active) {
+      trackTemplateSwitched(newCategory, active);
+    }
+    onChange(newCategory);
+  };
 
   return (
     <div
@@ -29,7 +38,7 @@ export function TemplateSelector({ active, onChange, tone = 'light' }: TemplateS
           <button
             key={option.id}
             type="button"
-            onClick={() => onChange(option.id)}
+            onClick={() => handleTemplateChange(option.id)}
             className={`rounded-2xl border px-4 py-3 text-left transition ${
               isDark ? 'text-white' : 'text-slate-900'
             }`}

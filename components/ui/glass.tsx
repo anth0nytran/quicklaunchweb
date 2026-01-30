@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* =============================================================================
@@ -255,10 +257,11 @@ GlassPill.displayName = "GlassPill";
 // GlassSelect - Option selection button (for modal choices)
 // -----------------------------------------------------------------------------
 
-interface GlassSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface GlassSelectProps extends React.HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
   label: string;
   description?: React.ReactNode;
+  details?: React.ReactNode;
   price?: React.ReactNode;
   priceColor?: "default" | "accent" | "success";
 }
@@ -269,15 +272,24 @@ const priceColors = {
   success: "text-green-400",
 };
 
-export const GlassSelect = React.forwardRef<HTMLButtonElement, GlassSelectProps>(
-  ({ className, selected, label, description, price, priceColor = "default", ...props }, ref) => {
+export const GlassSelect = React.forwardRef<HTMLDivElement, GlassSelectProps>(
+  ({ className, selected, label, description, details, price, priceColor = "default", ...props }, ref) => {
+    const [isExpanded, setIsExpanded] = React.useState(false);
+
     return (
-      <button
+      <div
         ref={ref}
-        type="button"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            props.onClick?.(e as any);
+          }
+        }}
         className={cn(
           // Base styles
-          "w-full rounded-xl border p-4 text-left",
+          "w-full rounded-xl border p-4 text-left cursor-pointer",
           "transition-all duration-200 ease-smooth",
           // Default state
           "bg-white/[0.03] border-white/[0.08]",
@@ -293,7 +305,7 @@ export const GlassSelect = React.forwardRef<HTMLButtonElement, GlassSelectProps>
         )}
         {...props}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pointer-events-none">
           <span className="font-medium text-white">{label}</span>
           {price && (
             <span className={cn("font-semibold", priceColors[priceColor])}>{price}</span>
@@ -302,7 +314,41 @@ export const GlassSelect = React.forwardRef<HTMLButtonElement, GlassSelectProps>
         {description && (
           <div className="mt-1 text-xs text-white/50">{description}</div>
         )}
-      </button>
+
+        {details && (
+          <div className="mt-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
+              className="flex items-center gap-1 text-xs font-medium text-accent hover:text-accent-hover transition-colors"
+            >
+              {isExpanded ? "Hide details" : "See details"}
+              <ChevronDown className={cn("h-3 w-3 transition-transform", isExpanded && "rotate-180")} />
+            </button>
+          </div>
+        )}
+
+        <AnimatePresence>
+          {isExpanded && details && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div
+                className="pt-3 mt-3 border-t border-white/10 text-xs text-white/70 space-y-2 cursor-default"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {details}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     );
   }
 );
@@ -374,19 +420,19 @@ export const AmbientGlow = React.forwardRef<HTMLDivElement, AmbientGlowProps>(
       accent: "from-accent/10",
       white: "from-white/5",
     };
-    
+
     const positionStyles = {
       top: "top-0 left-1/2 -translate-x-1/2",
       center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
       bottom: "bottom-0 left-1/2 -translate-x-1/2",
     };
-    
+
     const intensityStyles = {
       subtle: "opacity-50",
       medium: "opacity-75",
       strong: "opacity-100",
     };
-    
+
     return (
       <div
         ref={ref}
@@ -399,9 +445,8 @@ export const AmbientGlow = React.forwardRef<HTMLDivElement, AmbientGlowProps>(
           className
         )}
         style={{
-          background: `radial-gradient(ellipse 50% 50% at center, ${
-            color === "accent" ? "rgba(var(--color-accent-rgb), 0.12)" : "rgba(255, 255, 255, 0.05)"
-          }, transparent 70%)`,
+          background: `radial-gradient(ellipse 50% 50% at center, ${color === "accent" ? "rgba(var(--color-accent-rgb), 0.12)" : "rgba(255, 255, 255, 0.05)"
+            }, transparent 70%)`,
         }}
         {...props}
       />

@@ -69,7 +69,7 @@ export default function SubscriptionWebDesignPage() {
           <p className="text-sm text-secondary leading-relaxed">
             The biggest difference is that the relationship does not end after launch. You get ongoing support
             for edits, hosting, and performance updates. If you want a hands off website experience, it is
-            similar to a <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">done for you website</Link>, but structured as a simple subscription.
+            similar to a <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">done for you website</Link>, but structured as a simple subscription.
           </p>
           <ul className="list-disc space-y-2 pl-5 text-sm text-secondary marker:text-white/30">
             <li>Low upfront cost so you can start without a large build fee.</li>
@@ -132,7 +132,7 @@ export default function SubscriptionWebDesignPage() {
           </ul>
           <p className="text-sm text-secondary leading-relaxed">
             If you also need a rapid turnaround, explore our{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
               website in 48 hours guide
             </Link>{" "}
             to see how fast launch timelines work.
@@ -218,7 +218,7 @@ export default function SubscriptionWebDesignPage() {
           </ol>
           <p className="text-sm text-secondary leading-relaxed">
             If speed is your top priority, combine this model with a{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/website-in-48-hours">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/do-you-need-a-website">
               48 hour website launch
             </Link>{" "}
             so you can start marketing quickly.
@@ -285,13 +285,13 @@ export default function SubscriptionWebDesignPage() {
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/done-for-you-websites">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/how-to-get-more-customers-website">
                 Done for You Websites
               </Link>
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/website-in-48-hours">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/do-you-need-a-website">
                 Website in 48 Hours
               </Link>
             </GlassCard>
@@ -324,3 +324,4 @@ export default function SubscriptionWebDesignPage() {
     </main>
   );
 }
+

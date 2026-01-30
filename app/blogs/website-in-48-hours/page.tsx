@@ -63,7 +63,7 @@ export default function WebsiteIn48HoursPage() {
             A 48 hour launch means the core website is built and published within two business days after you
             submit your content. The focus is on a clean, mobile first site with clear calls to action. This is
             especially common in{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/done-for-you-websites">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/how-to-get-more-customers-website">
               done for you website
             </Link>{" "}
             models where the process is already proven.
@@ -79,7 +79,7 @@ export default function WebsiteIn48HoursPage() {
           <p className="text-sm text-secondary leading-relaxed">
             Fast website design is usually priced like a standard build or a monthly plan. Some agencies
             charge a rush fee, while others include fast timelines as part of a{" "}
-            <Link className="text-accent hover:text-accent-hover" href="/guides/subscription-web-design">
+            <Link className="text-accent hover:text-accent-hover" href="/guides/why-website-not-getting-customers">
               subscription web design
             </Link>{" "}
             package. For most local service businesses, monthly plans range from $99 to $299 depending on
@@ -249,13 +249,13 @@ export default function WebsiteIn48HoursPage() {
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/subscription-web-design">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/why-website-not-getting-customers">
                 Subscription Web Design
               </Link>
             </GlassCard>
             <GlassCard hover className="p-5">
               <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-              <Link className="mt-2 block text-white hover:text-accent" href="/guides/done-for-you-websites">
+              <Link className="mt-2 block text-white hover:text-accent" href="/guides/how-to-get-more-customers-website">
                 Done for You Websites
               </Link>
             </GlassCard>
@@ -288,3 +288,4 @@ export default function WebsiteIn48HoursPage() {
     </main>
   );
 }
+
