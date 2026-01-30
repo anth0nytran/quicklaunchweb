@@ -31,10 +31,11 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
+  title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
   description:
-    "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
+    "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
   keywords: [
+    "QuickLaunchWeb",
     "free website builder",
     "professional website builder",
     "affordable website",
@@ -54,9 +55,9 @@ export const metadata: Metadata = {
     "service company website",
   ],
   openGraph: {
-    title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
+    title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
     description:
-      "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
+      "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
     url: siteUrl,
     siteName: "QuickLaunchWeb",
     type: "website",
@@ -71,9 +72,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Websites That Get You Customers | Live in 48 Hours, $99/mo",
+    title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
     description:
-      "Professional websites for local businesses. Live in 48 hours, $99/mo. No setup fees, no lock-in. Cancel if it's not working for you.",
+      "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
     images: [`${siteUrl}/icon.jpg`],
   },
   alternates: {
