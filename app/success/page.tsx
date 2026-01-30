@@ -38,11 +38,10 @@ function ArrowLeftIcon({ className }: { className?: string }) {
   );
 }
 
-export default function SuccessPage() {
-  const searchParams = useSearchParams();
+import { Suspense } from "react";
 
-  // Analytics tracking
-  usePageTracker('QuickLaunchWeb - Success', 'checkout_success');
+function SuccessContent() {
+  const searchParams = useSearchParams();
   const { trackPurchase } = useCheckoutTracker();
 
   // Track purchase completion on mount
@@ -58,33 +57,45 @@ export default function SuccessPage() {
   }, [searchParams, trackPurchase]);
 
   return (
+    <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />
+  );
+}
+
+export default function SuccessPage() {
+  // Analytics tracking
+  usePageTracker('QuickLaunchWeb - Success', 'checkout_success');
+
+  return (
     <main className="flex min-h-screen items-center justify-center px-5 py-16 relative">
       {/* Ambient background */}
       <AmbientGlow color="accent" position="center" intensity="medium" />
-      <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />
-      
+
+      <Suspense fallback={<div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />}>
+        <SuccessContent />
+      </Suspense>
+
       <GlassCard variant="elevated" className="w-full max-w-lg p-10 text-center relative overflow-hidden">
         {/* Inner glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent pointer-events-none" />
-        
+
         <div className="relative z-10">
           {/* Success icon */}
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 ring-1 ring-green-500/30">
             <CheckCircleIcon className="h-8 w-8 text-green-400" />
           </div>
-          
+
           <GlassPill variant="success" className="mb-4">
             Payment complete
           </GlassPill>
-          
+
           <h1 className="text-3xl font-bold text-white">You&apos;re in!</h1>
-          
+
           <p className="mt-4 text-secondary leading-relaxed">
             Thanks for starting your plan. We&apos;ll email you a quick intake
             form to get your business details and launch your site in{" "}
             <span className="text-white font-medium">48 hours</span>.
           </p>
-          
+
           <div className="mt-8 flex flex-col gap-3">
             <Link href="/">
               <GlassButton variant="primary" size="lg" className="w-full group">
@@ -93,7 +104,7 @@ export default function SuccessPage() {
               </GlassButton>
             </Link>
           </div>
-          
+
           {/* Next steps */}
           <div className="mt-8 pt-6 border-t border-white/[0.08]">
             <p className="text-xs text-muted uppercase tracking-wider mb-3">What happens next</p>
