@@ -31,7 +31,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
+  title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
   description:
     "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
   keywords: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     "service company website",
   ],
   openGraph: {
-    title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
+    title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
     description:
       "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
     url: siteUrl,
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QuickLaunchWeb | Websites That Get You Customers | Live in 48 Hours",
+    title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
     description:
       "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
     images: [`${siteUrl}/icon.jpg`],

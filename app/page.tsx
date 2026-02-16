@@ -26,6 +26,7 @@ import { ExperienceHeroBackground } from "@/components/ui/experience-hero";
 import { FAQSchema } from "@/components/FAQSchema";
 import { faqs, faqCategories } from "@/lib/faqData";
 import { usePageTracker, useCheckoutTracker, useEventTracker, useFormTracker } from "@/lib/analytics";
+import { Navigation } from "@/components/Navigation";
 
 type Plan = "starter" | "pro";
 
@@ -925,46 +926,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col font-sans relative">
       <FAQSchema />
       {/* ===== Navbar ===== */}
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-6">
-        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] px-5 py-3 shadow-glass">
-          {/* Inner highlight */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-t-2xl" />
-
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5 font-bold tracking-tight">
-            <span className="text-accent font-black text-lg">QL</span>
-            <span className="text-white/20 font-light">|</span>
-            <span className="text-white/90">QuickLaunchWeb</span>
-          </Link>
-
-          {/* Nav links */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
-            <Link href="#features" className="hover:text-white transition-colors duration-200">Features</Link>
-            <Link href="#work" className="hover:text-white transition-colors duration-200">Work</Link>
-            <Link href="#how-it-works" className="hover:text-white transition-colors duration-200">How it Works</Link>
-            <Link href="#pricing" className="hover:text-white transition-colors duration-200">Pricing</Link>
-            <Link href="/guides" className="hover:text-white transition-colors duration-200">Guides</Link>
-            <Link href="#faq" className="hover:text-white transition-colors duration-200">FAQ</Link>
-          </div>
-
-          {/* CTA */}
-          <GlassButton
-            variant="secondary"
-            size="sm"
-            onClick={() => {
-              track('cta_click', {
-                cta_text: 'Start My Free Website',
-                cta_location: 'header',
-                event_category: 'engagement',
-                event_label: 'header_cta',
-              });
-              openUpsellModal("starter");
-            }}
-          >
-            Start My Free Website
-          </GlassButton>
-        </nav>
-      </header>
+      <Navigation onOpenUpsellModal={openUpsellModal} />
 
       <main className="flex-1">
         {/* ===== Hero Section ===== */}
@@ -1078,7 +1040,7 @@ export default function HomePage() {
 
 
         {/* ===== Features Section ===== */}
-        <section id="features" className="relative px-6 py-24 md:py-32">
+        <section id="features" className="relative px-6 py-24 md:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
           <GlassDivider className="absolute top-0 left-0 right-0" />
 
@@ -1129,7 +1091,7 @@ export default function HomePage() {
         </section>
 
         {/* ===== 48 Hours Section ===== */}
-        <section id="deliverables" className="relative px-6 pb-20 pt-10 md:pb-24 md:pt-12">
+        <section id="deliverables" className="relative px-6 pb-20 pt-10 md:pb-24 md:pt-12 overflow-hidden">
           <AmbientGlow color="accent" position="center" intensity="subtle" className="opacity-40" />
 
           <div className="relative z-10 mx-auto max-w-7xl">
@@ -1188,7 +1150,7 @@ export default function HomePage() {
         <HowItWorksSection steps={steps} />
 
         {/* ===== Pricing Section ===== */}
-        <section id="pricing" className="relative px-6 py-24 md:py-32">
+        <section id="pricing" className="relative px-6 py-24 md:py-32 overflow-hidden">
           <GlassDivider className="absolute top-0 left-0 right-0" />
           <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
 
@@ -1429,7 +1391,7 @@ export default function HomePage() {
         </section>
 
         {/* ===== Guides Section ===== */}
-        <section id="guides" className="relative px-6 py-24 md:py-32">
+        <section id="guides" className="relative px-6 py-24 md:py-32 overflow-hidden">
           <BGPattern variant="grid" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
           <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-16" />
 
@@ -1488,7 +1450,7 @@ export default function HomePage() {
         </section>
 
         {/* ===== FAQ Section ===== */}
-        <section id="faq" className="relative px-6 py-24 md:py-32">
+        <section id="faq" className="relative px-6 py-24 md:py-32 overflow-hidden">
           <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
 
           <div className="relative z-10 mx-auto max-w-4xl">
