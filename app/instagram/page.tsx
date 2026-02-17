@@ -5,6 +5,16 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { GlassCard, GlassButton, GlassInput, GlassPill } from '@/components/ui/glass';
 import { Check, ChevronDown, Star, Clock, Shield, ArrowRight, Phone, Mail, Building2, User } from 'lucide-react';
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '';
+const META_PAGE_ID = process.env.NEXT_PUBLIC_META_PAGE_ID || '';
+const META_PIXEL_ENABLED = Boolean(META_PIXEL_ID);
+
 /* ─────────────────────────────────────────────
    META PIXEL — paste your pixel script in layout
    or add it here inside a <Script> tag:
@@ -101,10 +111,157 @@ function validateField(field: FormFieldKey, value: string, mode: ValidationMode 
   return '';
 }
 
-function trackEvent(event: string, data?: Record<string, string>) {
-  console.log(`[IG Landing] ${event}`, data);
-  // Meta Pixel: if (typeof fbq !== 'undefined') fbq('track', event, data);
-  // GA4: if (typeof gtag !== 'undefined') gtag('event', event, data);
+type TrackingPayload = Record<string, string>;
+
+type MetaContext = {
+  eventSourceUrl: string;
+  fbp?: string;
+  fbc?: string;
+  fbclid?: string;
+  externalId?: string;
+  pageId?: string;
+  messagingChannel: string;
+};
+
+type LeadEventIds = {
+  leadEventId: string;
+  completeRegistrationEventId: string;
+  leadSubmittedEventId: string;
+};
+
+function compactPayload(payload: Record<string, unknown>) {
+  return Object.fromEntries(
+    Object.entries(payload).filter(
+      ([, value]) => value !== undefined && value !== null && value !== ''
+    )
+  );
+}
+
+function getCookieValue(name: string): string {
+  if (typeof document === 'undefined') return '';
+  const pattern = new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}=([^;]*)`);
+  const match = document.cookie.match(pattern);
+  return match ? decodeURIComponent(match[1]) : '';
+}
+
+function buildFbcFromFbclid(fbclid?: string): string | undefined {
+  if (!fbclid) return undefined;
+  const cleanValue = fbclid.trim();
+  if (!cleanValue) return undefined;
+  return `fb.1.${Date.now()}.${cleanValue}`;
+}
+
+function createEventId(prefix: string): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return `${prefix}_${crypto.randomUUID()}`;
+  }
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function getMetaContext(form?: FormState): MetaContext {
+  if (typeof window === 'undefined') {
+    return {
+      eventSourceUrl: '',
+      messagingChannel: 'instagram',
+    };
+  }
+
+  const query = new URLSearchParams(window.location.search);
+  const fbclid = query.get('fbclid') || undefined;
+  const emailPart = form?.email?.trim().toLowerCase() || '';
+  const phonePart = form?.phone?.replace(/\D/g, '') || '';
+
+  return {
+    eventSourceUrl: window.location.href,
+    fbp: getCookieValue('_fbp') || undefined,
+    fbc: getCookieValue('_fbc') || buildFbcFromFbclid(fbclid),
+    fbclid,
+    externalId:
+      emailPart || phonePart
+        ? `${emailPart || 'no_email'}|${phonePart || 'no_phone'}|instagram`
+        : undefined,
+    pageId: META_PAGE_ID || undefined,
+    messagingChannel: 'instagram',
+  };
+}
+
+async function sendMetaServerEvent(event: {
+  eventName: 'ViewContent' | 'Lead' | 'CompleteRegistration' | 'LeadSubmitted';
+  eventId: string;
+  customData?: Record<string, unknown>;
+  context: MetaContext;
+}) {
+  try {
+    await fetch('/api/instagram/meta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName: event.eventName,
+        eventId: event.eventId,
+        eventSourceUrl: event.context.eventSourceUrl,
+        fbp: event.context.fbp,
+        fbc: event.context.fbc,
+        fbclid: event.context.fbclid,
+        customData: event.customData,
+      }),
+    });
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('[IG Landing] Meta server event failed', error);
+    }
+  }
+}
+
+function trackMetaViewContent(eventId: string, context: MetaContext) {
+  if (typeof window.fbq === 'function') {
+    window.fbq(
+      'track',
+      'ViewContent',
+      compactPayload({
+        content_name: 'instagram_landing',
+        content_type: 'landing_page',
+        page_id: context.pageId,
+        messaging_channel: context.messagingChannel,
+      }),
+      { eventID: eventId }
+    );
+  }
+}
+
+function trackMetaLeadEvents(eventIds: LeadEventIds, context: MetaContext, businessType: string) {
+  if (typeof window.fbq !== 'function') return;
+
+  const payload = compactPayload({
+    content_name: 'instagram_lead_form',
+    content_type: 'lead_form',
+    business_type: businessType || 'Not specified',
+    page_id: context.pageId,
+    messaging_channel: context.messagingChannel,
+  });
+
+  window.fbq('track', 'Lead', payload, { eventID: eventIds.leadEventId });
+  window.fbq(
+    'track',
+    'CompleteRegistration',
+    payload,
+    { eventID: eventIds.completeRegistrationEventId }
+  );
+  window.fbq(
+    'trackCustom',
+    'LeadSubmitted',
+    payload,
+    { eventID: eventIds.leadSubmittedEventId }
+  );
+}
+
+function trackEvent(event: string, data?: TrackingPayload) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[IG Landing] ${event}`, data);
+  }
+
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', event, data || {});
+  }
 }
 
 // ─── UTM capture ────────────────────────────
@@ -139,8 +296,28 @@ export default function InstagramLanding() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
-    setUtmParams(getUtmParams());
+    const capturedUtms = getUtmParams();
+    setUtmParams(capturedUtms);
     trackEvent('page_view', { source: 'instagram' });
+
+    if (!META_PIXEL_ENABLED) return;
+
+    const context = getMetaContext();
+    const eventId = createEventId('ig_view_content');
+    trackMetaViewContent(eventId, context);
+
+    void sendMetaServerEvent({
+      eventName: 'ViewContent',
+      eventId,
+      context,
+      customData: {
+        content_name: 'instagram_landing',
+        content_type: 'landing_page',
+        page_id: context.pageId,
+        messaging_channel: context.messagingChannel,
+        ...capturedUtms,
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -221,15 +398,26 @@ export default function InstagramLanding() {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 30000);
+      const businessTypeValue = form.type || 'Not specified';
+      const metaContext = getMetaContext(form);
+      const leadEventIds: LeadEventIds = {
+        leadEventId: createEventId('ig_lead'),
+        completeRegistrationEventId: createEventId('ig_complete_registration'),
+        leadSubmittedEventId: createEventId('ig_lead_submitted'),
+      };
 
       const payload = {
         name: form.name,
         email: form.email,
         phone: form.phone,
         business_name: form.business,
-        business_type: form.type,
+        business_type: businessTypeValue,
         source: 'instagram_landing',
         _ts: formStartTime.current?.toString() || '',
+        meta: {
+          ...metaContext,
+          ...leadEventIds,
+        },
         ...utmParams,
       };
 
@@ -244,8 +432,10 @@ export default function InstagramLanding() {
 
       if (res.ok) {
         setSubmitted(true);
-        trackEvent('form_submit_success', { business_type: form.type });
-        // if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+        trackEvent('form_submit_success', { business_type: businessTypeValue });
+        if (META_PIXEL_ENABLED) {
+          trackMetaLeadEvents(leadEventIds, metaContext, businessTypeValue);
+        }
       } else {
         throw new Error('Submission failed');
       }

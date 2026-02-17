@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { google, sheets_v4 } from 'googleapis';
+import {
+  buildFbcFromFbclid,
+  sendMetaConversionsEvents,
+  type MetaEventInput,
+} from '@/lib/meta/conversions';
 
 export const runtime = 'nodejs';
 
@@ -18,6 +23,56 @@ const escapeHtml = (value: string) =>
 
 const normalize = (value: unknown) =>
   typeof value === 'string' ? value.replace(/\r\n/g, '\n').trim() : '';
+
+const compactObject = (value: Record<string, unknown>) =>
+  Object.fromEntries(
+    Object.entries(value).filter(
+      ([, item]) => item !== undefined && item !== null && item !== ''
+    )
+  );
+
+type InstagramMetaPayload = {
+  leadEventId?: string;
+  completeRegistrationEventId?: string;
+  leadSubmittedEventId?: string;
+  eventSourceUrl?: string;
+  fbp?: string;
+  fbc?: string;
+  fbclid?: string;
+  externalId?: string;
+  pageId?: string;
+  messagingChannel?: string;
+};
+
+const parseMetaPayload = (value: unknown): InstagramMetaPayload => {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+
+  const meta = value as Record<string, unknown>;
+  return {
+    leadEventId: normalize(meta.leadEventId),
+    completeRegistrationEventId: normalize(meta.completeRegistrationEventId),
+    leadSubmittedEventId: normalize(meta.leadSubmittedEventId),
+    eventSourceUrl: normalize(meta.eventSourceUrl),
+    fbp: normalize(meta.fbp),
+    fbc: normalize(meta.fbc),
+    fbclid: normalize(meta.fbclid),
+    externalId: normalize(meta.externalId),
+    pageId: normalize(meta.pageId),
+    messagingChannel: normalize(meta.messagingChannel),
+  };
+};
+
+const getClientIpAddress = (req: Request) => {
+  const forwardedFor = req.headers.get('x-forwarded-for');
+  if (!forwardedFor) return undefined;
+  const first = forwardedFor.split(',')[0]?.trim();
+  return first || undefined;
+};
+
+const createFallbackEventId = (prefix: string) =>
+  `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 
 const SHEET_ID =
   process.env.GOOGLE_SHEET_ID ||
@@ -527,6 +582,7 @@ export async function POST(req: Request) {
   const utmCampaign = normalize(data.utm_campaign);
   const utmContent = normalize(data.utm_content);
   const utmTerm = normalize(data.utm_term);
+  const meta = parseMetaPayload(data.meta);
 
   // ── Validation ──
   if (!name || !phone || !email || !business) {
@@ -792,8 +848,105 @@ export async function POST(req: Request) {
       console.error('[IG Lead API] Google Sheet error:', err);
     }
 
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const splitName = name.split(/\s+/).filter(Boolean);
+    const firstName = splitName[0];
+    const lastName = splitName.slice(1).join(' ');
+    const siteBaseUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+    const eventSourceUrl =
+      meta.eventSourceUrl || (siteBaseUrl ? `${siteBaseUrl}/instagram` : undefined);
+    const fbcValue = meta.fbc || buildFbcFromFbclid(meta.fbclid);
+    const phoneForExternalId = phone.replace(/\D/g, '');
+    const externalId =
+      meta.externalId ||
+      `${email.toLowerCase()}|${phoneForExternalId || 'no_phone'}|instagram`;
+    const ipAddress = getClientIpAddress(req);
+    const userAgent = req.headers.get('user-agent') || undefined;
+    const pageId = meta.pageId || process.env.META_PAGE_ID || process.env.NEXT_PUBLIC_META_PAGE_ID;
+    const messagingChannel = meta.messagingChannel || 'instagram';
+
+    const baseUserData = {
+      email,
+      phone,
+      firstName: firstName || undefined,
+      lastName: lastName || undefined,
+      externalId,
+      fbp: meta.fbp || undefined,
+      fbc: fbcValue || undefined,
+      clientIpAddress: ipAddress,
+      clientUserAgent: userAgent,
+    };
+
+    const baseCustomData = compactObject({
+      content_type: 'lead_form',
+      description: 'Instagram landing lead submission',
+      source,
+      business_type: businessType,
+      page_id: pageId,
+      messaging_channel: messagingChannel,
+      utm_source: utmSource || undefined,
+      utm_medium: utmMedium || undefined,
+      utm_campaign: utmCampaign || undefined,
+      utm_content: utmContent || undefined,
+      utm_term: utmTerm || undefined,
+      value: 1,
+      currency: 'USD',
+    });
+
+    const metaEvents: MetaEventInput[] = [
+      {
+        eventName: 'Lead',
+        eventId: meta.leadEventId || createFallbackEventId('ig_lead'),
+        eventTime: nowInSeconds,
+        actionSource: 'website',
+        eventSourceUrl,
+        userData: baseUserData,
+        customData: baseCustomData,
+      },
+      {
+        eventName: 'CompleteRegistration',
+        eventId:
+          meta.completeRegistrationEventId ||
+          createFallbackEventId('ig_complete_registration'),
+        eventTime: nowInSeconds,
+        actionSource: 'website',
+        eventSourceUrl,
+        userData: baseUserData,
+        customData: baseCustomData,
+      },
+      {
+        eventName: 'LeadSubmitted',
+        eventId:
+          meta.leadSubmittedEventId || createFallbackEventId('ig_lead_submitted'),
+        eventTime: nowInSeconds,
+        actionSource: 'website',
+        eventSourceUrl,
+        userData: baseUserData,
+        customData: baseCustomData,
+        originalEventData: {
+          event_name: 'LeadSubmitted',
+          event_time: nowInSeconds,
+        },
+      },
+    ];
+
+    const metaResult = await sendMetaConversionsEvents(metaEvents);
+    if (!metaResult.ok && !metaResult.skipped) {
+      console.warn(
+        '[IG Lead API] Meta CAPI error:',
+        metaResult.error || metaResult.body || 'Unknown error'
+      );
+    }
+
     return NextResponse.json(
-      { ok: true, sheetSynced, sheetTab: sheetTab || null, sheetRange: sheetRange || null },
+      {
+        ok: true,
+        sheetSynced,
+        sheetTab: sheetTab || null,
+        sheetRange: sheetRange || null,
+        metaSent: metaResult.ok,
+        metaSkipped: metaResult.skipped || false,
+      },
       { status: 200 }
     );
   } catch (err) {
