@@ -16,10 +16,10 @@ const csp = [
   "img-src 'self' data: blob: https://images.unsplash.com https://www.facebook.com",
   "font-src 'self' data:",
   "connect-src 'self' https://api.web3forms.com https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vitals.vercel-analytics.com https://www.facebook.com https://graph.facebook.com https://connect.facebook.net",
-  "frame-src https://checkout.stripe.com https://billing.stripe.com https://js.stripe.com https://hooks.stripe.com",
+  "frame-src https://checkout.stripe.com https://billing.stripe.com https://js.stripe.com https://hooks.stripe.com https://facebook.com https://www.facebook.com https://*.facebook.com",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self' https://api.web3forms.com https://checkout.stripe.com https://billing.stripe.com",
+  "form-action 'self' https://api.web3forms.com https://checkout.stripe.com https://billing.stripe.com https://facebook.com https://www.facebook.com https://*.facebook.com",
   "frame-ancestors 'none'",
 ].join("; ");
 
