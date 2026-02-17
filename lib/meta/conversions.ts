@@ -131,7 +131,9 @@ const getMetaConfig = () => ({
   pixelId: normalize(
     process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID
   ),
-  accessToken: normalize(process.env.META_CONVERSIONS_API_TOKEN),
+  accessToken: normalize(
+    process.env.META_ACCESS_TOKEN || process.env.META_CONVERSIONS_API_TOKEN
+  ),
   graphVersion: normalize(process.env.META_GRAPH_API_VERSION) || DEFAULT_GRAPH_VERSION,
   testEventCode: normalize(process.env.META_TEST_EVENT_CODE),
 });
