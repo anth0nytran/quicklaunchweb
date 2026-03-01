@@ -733,25 +733,32 @@ export default function InstagramLanding() {
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500/20 via-yellow-400/30 to-amber-500/20 blur-[1px]" />
                 <div className="relative bg-[#0a0a0f] rounded-xl p-6 m-[1px]">
                   {/* Founders badge */}
-                  <div className="flex justify-center mb-2">
-                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-amber-500/15 to-yellow-400/15 border border-amber-400/30 text-amber-400 rounded-full text-[11px] font-bold uppercase tracking-[0.15em]">
+                  <div className="flex justify-center mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-amber-500/15 to-yellow-400/15 border border-amber-400/30 text-amber-400 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] shadow-[0_0_15px_rgba(251,191,36,0.1)]">
                       <Zap className="w-3 h-3 fill-amber-400" />
                       Founders Rate
                     </div>
                   </div>
-                  <p className="text-center text-[12px] text-amber-400/60 italic mb-5 tracking-wide">Limited spots &mdash; locked in at this price forever</p>
 
-                  <div className="flex items-baseline justify-center gap-3 mb-1">
-                    <span className="text-[3.5rem] font-black text-white leading-none font-[family-name:var(--font-montserrat)] tracking-tighter" style={{ textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>$29</span>
-                    <span className="text-white/25 text-[24px] font-bold font-[family-name:var(--font-montserrat)] line-through decoration-white/30 decoration-2">$99</span>
+                  <div className="text-center mb-5 border-b border-white/5 pb-4">
+                    <p className="text-[14px] sm:text-[15px] text-white/90 font-medium leading-relaxed">
+                      See the live demo on our 15-min call. If you love it and want to go forward, it&apos;s just:
+                    </p>
                   </div>
-                  <p className="text-white/40 text-[13px] text-center mb-5">
-                    first month &middot; then $99/mo &middot; cancel anytime
-                  </p>
 
-                  <div className="bg-amber-400/5 border border-amber-400/10 rounded-lg px-4 py-3 text-center">
-                    <p className="text-[13px] text-white/60 leading-relaxed">
-                      Less than <span className="text-amber-400 font-semibold">one Google ad click</span> &mdash; for an entire website that generates calls every month.
+                  <div className="flex items-baseline justify-center mb-1">
+                    <span className="text-[4rem] sm:text-[4.5rem] font-black text-white leading-none font-[family-name:var(--font-montserrat)] tracking-tighter" style={{ textShadow: '0 0 40px rgba(255,255,255,0.15)' }}>$29</span>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center gap-1.5 mb-6">
+                    <p className="text-white/80 text-[15px] font-bold">for your first month</p>
+                    <p className="text-white/40 text-[13px] font-medium tracking-wide uppercase">then $99/mo <span className="px-1.5">·</span> cancel anytime</p>
+                  </div>
+
+                  <div className="relative bg-gradient-to-b from-amber-400/10 to-transparent border border-amber-400/20 rounded-xl px-5 py-4 text-center overflow-hidden">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+                    <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-white/80">
+                      Less than the cost of <span className="text-amber-400 font-bold drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]">one shared lead on Angi</span> &mdash; for an entire website system that generates exclusive calls for you.
                     </p>
                   </div>
                 </div>
