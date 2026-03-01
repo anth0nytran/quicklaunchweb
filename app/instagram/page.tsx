@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { GlassCard, GlassButton, GlassInput, GlassPill } from '@/components/ui/glass';
-import { Check, ChevronDown, Star, Clock, Shield, ArrowRight, Phone, Mail, Building2, User } from 'lucide-react';
+import { GlassCard, GlassButton, GlassPill } from '@/components/ui/glass';
+import { Check, ChevronDown, Star, Clock, Shield, ArrowRight, Zap, Eye, Wrench, Rocket } from 'lucide-react';
+import { InlineWidget } from 'react-calendly';
 
 declare global {
   interface Window {
@@ -15,101 +16,16 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '';
 const META_PAGE_ID = process.env.NEXT_PUBLIC_META_PAGE_ID || '';
 const META_PIXEL_ENABLED = Boolean(META_PIXEL_ID);
 
-/* ─────────────────────────────────────────────
-   META PIXEL — paste your pixel script in layout
-   or add it here inside a <Script> tag:
-
-   import Script from 'next/script';
-   <Script id="fb-pixel" strategy="afterInteractive">
-     {`!function(f,b,e,v,n,t,s)...`}
-   </Script>
-   ───────────────────────────────────────────── */
-
-const BUSINESS_TYPES = [
-  'Home Services',
-  'Restaurant / Bar',
-  'Retail',
-  'Beauty / Salon',
-  'Auto / Mechanic',
-  'Real Estate',
-  'Medical / Dental',
-  'Fitness / Gym',
-  'Other',
-] as const;
-
 const FAQS = [
-  { q: 'What does $99/mo actually include?', a: 'A custom-built website (not a template), hosting, SSL, mobile optimization, local SEO foundation, a lead capture form, tap-to-call, and ongoing support. The build fee is waived — you only pay hosting + support.' },
-  { q: 'What if I don\'t like the mockup?', a: 'Then you walk away. The mockup is 100% free. If it\'s not what you want, you owe nothing. No credit card is taken upfront.' },
-  { q: 'How is this so cheap compared to agencies?', a: 'Agencies charge $3-5k upfront because they\'re slow. We\'ve built systems that let us move fast without cutting corners. No bloated overhead, no endless revisions meetings. Just good work, fast.' },
-  { q: 'Can I make changes after my site goes live?', a: 'Starter includes 1 content update/month, Pro includes 3. You can also add unlimited edits for $49/mo. We handle everything — you never touch code.' },
+  { q: 'Is the demo call really free?', a: 'Yes. You book a 15-minute call, we show you a live demo built around your business. If you don\'t like it, you walk away. There\'s nothing to pay unless you decide to move forward.' },
+  { q: 'I already have a website. Why would I switch?', a: 'If your current site isn\'t generating calls or showing up on Google, it\'s costing you money every day. We build sites specifically to rank locally and convert visitors into calls and quote requests — not just look pretty.' },
+  { q: 'Am I locked into a contract?', a: 'No. There\'s no contract, no commitment, and no cancellation fees. You stay because it\'s working, not because you\'re stuck.' },
+  { q: 'What\'s included in the $99/mo?', a: 'Everything — hosting, SSL, mobile optimization, tap-to-call, quote request forms, local SEO, ongoing support, and content updates to keep the site fresh. The build fee is waived entirely.' },
+  { q: 'What do I need to provide to launch?', a: 'Your logo (or just your business name), a list of your services, your service area, and any photos you have. If you don\'t have photos, we can pull from your socials. That\'s it.' },
+  { q: 'How fast can you actually launch?', a: 'Once you send us the intake info (logo, photos, services), we launch within 48 hours. If we don\'t, your first month is free.' },
+  { q: 'Do I own the website?', a: 'We host and manage it for you so you never have to worry about updates, security, or technical issues. If you ever cancel, we can help you transition.' },
+  { q: 'What\'s the catch? Why is it so cheap?', a: 'No catch. We keep costs low because we\'ve built the process to be fast and repeatable. We\'d rather earn your business at $99/mo for years than charge $3,000 upfront and never hear from you again.' },
 ];
-
-// ─── Analytics helpers ──────────────────────
-const INITIAL_FORM_STATE = {
-  name: '',
-  business: '',
-  phone: '',
-  email: '',
-  type: '',
-};
-
-type FormState = typeof INITIAL_FORM_STATE;
-type FormFieldKey = keyof FormState;
-type ValidationMode = 'live' | 'submit';
-
-const REQUIRED_FIELDS = ['name', 'business', 'phone', 'email'] as const;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_ALLOWED_PATTERN = /^[\d\s\-\(\)\+]*$/;
-
-function formatPhoneInput(value: string): string {
-  const digits = value.replace(/\D/g, '').slice(0, 10);
-  if (!digits) return '';
-  if (digits.length <= 3) return `(${digits}`;
-  if (digits.length <= 6) return `(${digits.slice(0, 3)})-${digits.slice(3)}`;
-  return `(${digits.slice(0, 3)})-${digits.slice(3, 6)}-${digits.slice(6)}`;
-}
-
-function validateField(field: FormFieldKey, value: string, mode: ValidationMode = 'live'): string {
-  const trimmed = value.trim();
-
-  if (field === 'type') return '';
-
-  if (!trimmed) {
-    if (mode === 'submit') {
-      if (field === 'name') return 'Please enter your name.';
-      if (field === 'business') return 'Please enter your business name.';
-      if (field === 'phone') return 'Please enter your phone number.';
-      if (field === 'email') return 'Please enter your email.';
-    }
-    return '';
-  }
-
-  if (field === 'name' && trimmed.length < 2) {
-    return mode === 'submit' ? 'Name looks too short.' : '';
-  }
-
-  if (field === 'business' && trimmed.length < 2) {
-    return mode === 'submit' ? 'Business name looks too short.' : '';
-  }
-
-  if (field === 'phone') {
-    if (!PHONE_ALLOWED_PATTERN.test(trimmed)) {
-      return 'Use numbers and symbols like + ( ) - only.';
-    }
-
-    const digits = trimmed.replace(/\D/g, '');
-    if (digits.length < 10) {
-      return mode === 'submit' ? 'Please enter a complete 10-digit phone number.' : '';
-    }
-    if (digits.length > 10) return 'Use a 10-digit phone number.';
-  }
-
-  if (field === 'email' && !EMAIL_PATTERN.test(trimmed)) {
-    return mode === 'submit' ? 'Enter a valid email address.' : '';
-  }
-
-  return '';
-}
 
 type TrackingPayload = Record<string, string>;
 
@@ -118,15 +34,8 @@ type MetaContext = {
   fbp?: string;
   fbc?: string;
   fbclid?: string;
-  externalId?: string;
   pageId?: string;
   messagingChannel: string;
-};
-
-type LeadEventIds = {
-  leadEventId: string;
-  completeRegistrationEventId: string;
-  leadSubmittedEventId: string;
 };
 
 function compactPayload(payload: Record<string, unknown>) {
@@ -158,7 +67,7 @@ function createEventId(prefix: string): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function getMetaContext(form?: FormState): MetaContext {
+function getMetaContext(): MetaContext {
   if (typeof window === 'undefined') {
     return {
       eventSourceUrl: '',
@@ -168,18 +77,12 @@ function getMetaContext(form?: FormState): MetaContext {
 
   const query = new URLSearchParams(window.location.search);
   const fbclid = query.get('fbclid') || undefined;
-  const emailPart = form?.email?.trim().toLowerCase() || '';
-  const phonePart = form?.phone?.replace(/\D/g, '') || '';
 
   return {
     eventSourceUrl: window.location.href,
     fbp: getCookieValue('_fbp') || undefined,
     fbc: getCookieValue('_fbc') || buildFbcFromFbclid(fbclid),
     fbclid,
-    externalId:
-      emailPart || phonePart
-        ? `${emailPart || 'no_email'}|${phonePart || 'no_phone'}|instagram`
-        : undefined,
     pageId: META_PAGE_ID || undefined,
     messagingChannel: 'instagram',
   };
@@ -228,32 +131,6 @@ function trackMetaViewContent(eventId: string, context: MetaContext) {
   }
 }
 
-function trackMetaLeadEvents(eventIds: LeadEventIds, context: MetaContext, businessType: string) {
-  if (typeof window.fbq !== 'function') return;
-
-  const payload = compactPayload({
-    content_name: 'instagram_lead_form',
-    content_type: 'lead_form',
-    business_type: businessType || 'Not specified',
-    page_id: context.pageId,
-    messaging_channel: context.messagingChannel,
-  });
-
-  window.fbq('track', 'Lead', payload, { eventID: eventIds.leadEventId });
-  window.fbq(
-    'track',
-    'CompleteRegistration',
-    payload,
-    { eventID: eventIds.completeRegistrationEventId }
-  );
-  window.fbq(
-    'trackCustom',
-    'LeadSubmitted',
-    payload,
-    { eventID: eventIds.leadSubmittedEventId }
-  );
-}
-
 function trackEvent(event: string, data?: TrackingPayload) {
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[IG Landing] ${event}`, data);
@@ -264,7 +141,6 @@ function trackEvent(event: string, data?: TrackingPayload) {
   }
 }
 
-// ─── UTM capture ────────────────────────────
 function getUtmParams(): Record<string, string> {
   if (typeof window === 'undefined') return {};
   const params = new URLSearchParams(window.location.search);
@@ -277,27 +153,139 @@ function getUtmParams(): Record<string, string> {
 }
 
 // ═══════════════════════════════════════════════
+// ROI CALCULATOR
+// ═══════════════════════════════════════════════
+
+function ROICalculator() {
+  const [avgTicket, setAvgTicket] = useState(2500);
+  const [extraJobs, setExtraJobs] = useState(2);
+
+  const monthlyCost = 99;
+  const monthlyRevenue = avgTicket * extraJobs;
+  const annualRevenue = monthlyRevenue * 12;
+  const annualCost = monthlyCost * 12;
+  const roi = Math.round(annualRevenue / annualCost);
+
+  return (
+    <div>
+      <div className="text-center mb-8">
+        <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold font-[family-name:var(--font-montserrat)] tracking-tight text-white leading-snug">
+          Do The Math.{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">It&apos;s Not Even Close.</span>
+        </h2>
+        <p className="text-[14px] text-white/50 mt-2">Slide to match your business.</p>
+      </div>
+
+      <GlassCard variant="elevated" className="p-6 sm:p-8 relative overflow-hidden bg-white/[0.04]">
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-accent/15 blur-[50px] rounded-full" />
+
+        <div className="relative space-y-6">
+          {/* Avg Ticket Slider */}
+          <div>
+            <div className="flex justify-between items-baseline mb-3">
+              <label className="text-[13px] text-white/60 font-medium">Your average job ticket</label>
+              <span className="text-[20px] font-bold text-white font-[family-name:var(--font-montserrat)]">
+                ${avgTicket.toLocaleString()}
+              </span>
+            </div>
+            <input
+              type="range"
+              min={500}
+              max={10000}
+              step={250}
+              value={avgTicket}
+              onChange={(e) => setAvgTicket(Number(e.target.value))}
+              className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent
+                [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(20,184,166,0.4)]
+                [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white/20"
+            />
+            <div className="flex justify-between text-[10px] text-white/30 mt-1">
+              <span>$500</span>
+              <span>$10,000</span>
+            </div>
+          </div>
+
+          {/* Extra Jobs Slider */}
+          <div>
+            <div className="flex justify-between items-baseline mb-3">
+              <label className="text-[13px] text-white/60 font-medium">Extra jobs per month from website</label>
+              <span className="text-[20px] font-bold text-white font-[family-name:var(--font-montserrat)]">
+                {extraJobs}
+              </span>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={10}
+              step={1}
+              value={extraJobs}
+              onChange={(e) => setExtraJobs(Number(e.target.value))}
+              className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent
+                [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(20,184,166,0.4)]
+                [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white/20"
+            />
+            <div className="flex justify-between text-[10px] text-white/30 mt-1">
+              <span>1 job</span>
+              <span>10 jobs</span>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-white/10" />
+
+          {/* Results */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-white/60">Extra monthly revenue</span>
+              <span className="text-[16px] font-bold text-emerald-400 font-[family-name:var(--font-montserrat)]">
+                +${monthlyRevenue.toLocaleString()}
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-white/60">Extra annual revenue</span>
+              <span className="text-[16px] font-bold text-emerald-400 font-[family-name:var(--font-montserrat)]">
+                +${annualRevenue.toLocaleString()}
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-white/60">Website cost</span>
+              <span className="text-[14px] text-white/40 font-[family-name:var(--font-montserrat)]">
+                −${annualCost.toLocaleString()}/yr
+              </span>
+            </div>
+          </div>
+
+          {/* ROI Callout */}
+          <div className="bg-accent/5 border border-accent/20 rounded-xl p-4 text-center">
+            <p className="text-[13px] text-white/50 mb-1">Your website pays for itself</p>
+            <p className="text-[2rem] font-black text-accent font-[family-name:var(--font-montserrat)] leading-none" style={{ textShadow: '0 0 20px rgba(20,184,166,0.3)' }}>
+              {roi}x over
+            </p>
+            <p className="text-[12px] text-white/40 mt-2">
+              Even <span className="text-white/70 font-semibold">1 extra job</span> covers {Math.ceil(avgTicket / monthlyCost)} months of your website.
+            </p>
+          </div>
+        </div>
+      </GlassCard>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════
 // MAIN PAGE
 // ═══════════════════════════════════════════════
 
 export default function InstagramLanding() {
-  const formRef = useRef<HTMLFormElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const formStartTime = useRef<number>(Date.now());
-  const [utmParams, setUtmParams] = useState<Record<string, string>>({});
   const [showSticky, setShowSticky] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const [form, setForm] = useState<FormState>(INITIAL_FORM_STATE);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [touched, setTouched] = useState<Partial<Record<FormFieldKey, boolean>>>({});
-  const [hasSubmittedOnce, setHasSubmittedOnce] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
-    const capturedUtms = getUtmParams();
-    setUtmParams(capturedUtms);
+    getUtmParams();
     trackEvent('page_view', { source: 'instagram' });
 
     if (!META_PIXEL_ENABLED) return;
@@ -315,486 +303,195 @@ export default function InstagramLanding() {
         content_type: 'landing_page',
         page_id: context.pageId,
         messaging_channel: context.messagingChannel,
-        ...capturedUtms,
       },
     });
   }, []);
 
   useEffect(() => {
-    if (!heroRef.current || submitted) return;
+    if (!heroRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => setShowSticky(!entry.isIntersecting),
       { threshold: 0.1 }
     );
     observer.observe(heroRef.current);
     return () => observer.disconnect();
-  }, [submitted]);
+  }, []);
 
-  useEffect(() => {
-    if (!dropdownOpen) return;
-    const close = () => setDropdownOpen(false);
-    window.addEventListener('click', close);
-    return () => window.removeEventListener('click', close);
-  }, [dropdownOpen]);
-
-  const updateField = useCallback((field: FormFieldKey, value: string) => {
-    const sanitizedValue =
-      field === 'phone' ? formatPhoneInput(value) : value;
-
-    setForm((prev) => ({ ...prev, [field]: sanitizedValue }));
-    setErrors((prev) => {
-      const shouldValidate = hasSubmittedOnce || !!touched[field];
-      return {
-        ...prev,
-        form: '',
-        [field]: shouldValidate ? validateField(field, sanitizedValue, 'live') : '',
-      };
-    });
-  }, [hasSubmittedOnce, touched]);
-
-  const handleFieldBlur = useCallback((field: FormFieldKey) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
-    const mode: ValidationMode = hasSubmittedOnce ? 'submit' : 'live';
-    setErrors((prev) => ({
-      ...prev,
-      [field]: validateField(field, form[field], mode),
-    }));
-  }, [form, hasSubmittedOnce]);
-
-  const validate = () => {
-    const nextErrors: Record<string, string> = {};
-
-    for (const field of REQUIRED_FIELDS) {
-      const message = validateField(field, form[field], 'submit');
-      if (message) nextErrors[field] = message;
-    }
-
-    setTouched((prev) => ({
-      ...prev,
-      name: true,
-      business: true,
-      phone: true,
-      email: true,
-    }));
-    setErrors(nextErrors);
-
-    return {
-      isValid: Object.keys(nextErrors).length === 0,
-      nextErrors,
-    };
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasSubmittedOnce(true);
-    const { isValid, nextErrors } = validate();
-    if (!isValid) {
-      trackEvent('form_validation_error', nextErrors);
-      return;
-    }
-    setLoading(true);
-    trackEvent('form_submit_attempt');
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 30000);
-      const businessTypeValue = form.type || 'Not specified';
-      const metaContext = getMetaContext(form);
-      const leadEventIds: LeadEventIds = {
-        leadEventId: createEventId('ig_lead'),
-        completeRegistrationEventId: createEventId('ig_complete_registration'),
-        leadSubmittedEventId: createEventId('ig_lead_submitted'),
-      };
-
-      const payload = {
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        business_name: form.business,
-        business_type: businessTypeValue,
-        source: 'instagram_landing',
-        _ts: formStartTime.current?.toString() || '',
-        meta: {
-          ...metaContext,
-          ...leadEventIds,
-        },
-        ...utmParams,
-      };
-
-      const res = await fetch('/api/instagram', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeout);
-
-      if (res.ok) {
-        setSubmitted(true);
-        trackEvent('form_submit_success', { business_type: businessTypeValue });
-        if (META_PIXEL_ENABLED) {
-          trackMetaLeadEvents(leadEventIds, metaContext, businessTypeValue);
-        }
-      } else {
-        throw new Error('Submission failed');
-      }
-    } catch {
-      setErrors((prev) => ({ ...prev, form: 'Something went wrong. Try again.' }));
-      trackEvent('form_submit_error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    trackEvent('sticky_cta_click');
+  const scrollToCalendar = () => {
+    calendarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    trackEvent('cta_click', { location: 'page' });
   };
 
   return (
-    <main className="min-h-screen bg-[#050507] overflow-x-hidden">
-      {/* Ambient background */}
+    <main className="min-h-screen bg-[#050507] overflow-x-hidden font-sans pb-10">
+      {/* Ambient background glow — dialed down, slightly cooler blue/teal */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[500px] opacity-50"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(20,184,166,0.15), transparent 70%)' }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-40 mix-blend-screen"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(14,165,233,0.12), transparent 60%)' }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-20 mix-blend-screen"
+          style={{ background: 'radial-gradient(circle at center, rgba(16,185,129,0.08), transparent 50%)' }}
         />
       </div>
+
+      {/* Subtle noise texture overlay for depth */}
+      <div className="fixed inset-0 pointer-events-none z-[1] opacity-[0.018]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")', mixBlendMode: 'overlay' }} />
 
       <div className="relative z-10">
 
         {/* ════════════════════════════════════
-            HERO — FORM FIRST
+            SECTION 1 — HERO
            ════════════════════════════════════ */}
-        <section ref={heroRef} className="relative z-30 px-5 pt-10 pb-6 sm:pt-14 sm:pb-10 max-w-md mx-auto">
+        <section ref={heroRef} className="px-5 pt-10 pb-12 sm:pt-16 sm:pb-16 max-w-[500px] mx-auto flex flex-col items-center">
 
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-5"
+            className="text-center mb-8"
           >
-            <span className="text-lg font-bold tracking-tight font-[family-name:var(--font-montserrat)]">
+            <span className="text-[15px] sm:text-[16px] font-bold tracking-widest uppercase font-[family-name:var(--font-montserrat)] opacity-90">
               <span className="text-white">Quick</span>
               <span className="text-accent">Launch</span>
               <span className="text-white">Web</span>
             </span>
           </motion.div>
 
-          {/* Urgency */}
+          {/* Live indicator pill */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1, duration: 0.3 }}
-            className="flex justify-center mb-4"
+            className="flex justify-center mb-6"
           >
-            <GlassPill variant="warning" pulse>
-              Only taking 5 more clients this month
-            </GlassPill>
+            <div className="px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 backdrop-blur-md flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent/60 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+              </span>
+              <span className="text-accent text-[12px] font-semibold tracking-wide uppercase">Free 15-Min Demo</span>
+            </div>
           </motion.div>
 
-          {/* Headline — pain point driven */}
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.4 }}
-            className="text-[1.65rem] sm:text-[1.85rem] font-bold text-center leading-[1.2] mb-2.5 font-[family-name:var(--font-montserrat)] text-white"
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="text-[2.25rem] sm:text-[2.75rem] font-bold text-center leading-[1.15] mb-4 font-[family-name:var(--font-montserrat)] tracking-tight text-white drop-shadow-sm"
           >
-            You&apos;re losing customers right now
-            <span className="text-accent"> because your website sucks.</span>
+            We Built Your Website Already.{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">Come See It.</span>
           </motion.h1>
 
-          {/* Sub copy — direct, not fluffy */}
+          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.25, duration: 0.4 }}
-            className="text-white/70 text-center text-[15px] mb-5 max-w-xs mx-auto leading-relaxed"
+            transition={{ delay: 0.25, duration: 0.5 }}
+            className="text-white/70 text-center text-[15px] sm:text-[16px] mb-8 leading-relaxed max-w-sm"
           >
-            We&apos;ll build you a free custom mockup in 24 hours. If you like it, we will move forward to the next steps. If not, walk away.
+            We already have a <strong className="text-white font-semibold">working demo</strong> for your type of business. See it live on a 15-minute call. Like it? We customize it to your brand and <strong className="text-white font-semibold">publish it in 48 hours</strong>. $0 upfront.
           </motion.p>
 
-          {/* Trust bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
-            className="flex items-center justify-center gap-3 mb-6 text-[13px]"
+            transition={{ delay: 0.35, duration: 0.4 }}
+            className="w-full"
           >
-            <span className="flex items-center gap-1 text-white/60">
-              <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-              <span className="text-white/90 font-semibold">5.0</span>
-              rated by local businesses
-            </span>
-            <span className="w-px h-3.5 bg-white/15" />
-            <span className="flex items-center gap-1 text-white/60">
-              <Clock className="w-3.5 h-3.5 text-accent" />
-              48hr launch
-            </span>
+            <GlassButton
+              variant="primary"
+              size="lg"
+              onClick={scrollToCalendar}
+              className="w-full text-[16px] font-bold py-[18px] shadow-[0_0_30px_rgba(20,184,166,0.2)] transition-shadow hover:shadow-[0_0_40px_rgba(20,184,166,0.3)]"
+              icon={<ArrowRight className="w-5 h-5" />}
+            >
+              See My Free Demo
+            </GlassButton>
+            <div className="flex justify-center items-center mt-4 gap-3 text-[12px] text-white/50 font-medium">
+              <span className="flex items-center gap-1"><Zap className="w-3 h-3 text-accent" />Free demo call</span>
+              <span className="text-white/20">·</span>
+              <span className="flex items-center gap-1"><Clock className="w-3 h-3 text-accent" />48hr or free</span>
+              <span className="text-white/20">·</span>
+              <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-accent" />No contracts</span>
+            </div>
           </motion.div>
 
-          {/* ── THE FORM ── */}
-          <AnimatePresence mode="wait">
-            {!submitted ? (
-              <motion.div
-                key="form"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="relative z-40 overflow-visible"
-              >
-                <GlassCard variant="elevated" className="relative overflow-visible p-5 sm:p-6">
-                  <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-3">
-
-                    <FormField icon={User} error={errors.name}>
-                      <GlassInput
-                        type="text"
-                        placeholder="Your name *"
-                        value={form.name}
-                        onChange={(e) => updateField('name', e.target.value)}
-                        onBlur={() => handleFieldBlur('name')}
-                        onFocus={() => trackEvent('field_focus', { field: 'name' })}
-                        error={!!errors.name}
-                        className="pl-10 py-3.5 text-[16px]"
-                        autoComplete="name"
-                        required
-                      />
-                    </FormField>
-
-                    <FormField icon={Building2} error={errors.business}>
-                      <GlassInput
-                        type="text"
-                        placeholder="Business name *"
-                        value={form.business}
-                        onChange={(e) => updateField('business', e.target.value)}
-                        onBlur={() => handleFieldBlur('business')}
-                        onFocus={() => trackEvent('field_focus', { field: 'business' })}
-                        error={!!errors.business}
-                        className="pl-10 py-3.5 text-[16px]"
-                        autoComplete="organization"
-                        required
-                      />
-                    </FormField>
-
-                    <FormField icon={Phone} error={errors.phone}>
-                      <GlassInput
-                        type="tel"
-                        placeholder="(555)-123-4567 *"
-                        value={form.phone}
-                        onChange={(e) => updateField('phone', e.target.value)}
-                        onBlur={() => handleFieldBlur('phone')}
-                        onFocus={() => trackEvent('field_focus', { field: 'phone' })}
-                        error={!!errors.phone}
-                        className="pl-10 py-3.5 text-[16px]"
-                        autoComplete="tel"
-                        inputMode="tel"
-                        maxLength={14}
-                        required
-                      />
-                    </FormField>
-
-                    <FormField icon={Mail} error={errors.email}>
-                      <GlassInput
-                        type="email"
-                        placeholder="Email *"
-                        value={form.email}
-                        onChange={(e) => updateField('email', e.target.value)}
-                        onBlur={() => handleFieldBlur('email')}
-                        onFocus={() => trackEvent('field_focus', { field: 'email' })}
-                        error={!!errors.email}
-                        className="pl-10 py-3.5 text-[16px]"
-                        autoComplete="email"
-                        required
-                      />
-                    </FormField>
-
-                    {/* Business Type dropdown */}
-                    <div>
-                      <div className="relative z-[70]" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          type="button"
-                          onClick={() => { setDropdownOpen(!dropdownOpen); trackEvent('field_focus', { field: 'type' }); }}
-                          className={`
-                            w-full rounded-xl border bg-white/[0.03] backdrop-blur-sm
-                            px-4 py-3.5 text-[16px] text-left flex items-center justify-between
-                            transition-all duration-200
-                            border-white/[0.08] hover:border-white/[0.15]
-                            ${dropdownOpen ? 'border-accent/50 bg-white/[0.05] ring-2 ring-accent/20' : ''}
-                            ${form.type ? 'text-white' : 'text-white/40'}
-                          `}
-                        >
-                          <span>{form.type || 'Type of business (optional)'}</span>
-                          <ChevronDown className={`w-4 h-4 text-white/40 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        <AnimatePresence>
-                          {dropdownOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, y: -4, scale: 0.98 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                              transition={{ duration: 0.15 }}
-                              className="absolute z-[90] top-full mt-1.5 left-0 right-0 rounded-xl border border-white/[0.12] bg-[rgba(12,12,16,0.98)] backdrop-blur-xl shadow-2xl overflow-hidden max-h-[280px] overflow-y-auto"
-                            >
-                              {BUSINESS_TYPES.map((type) => (
-                                <button
-                                  key={type}
-                                  type="button"
-                                  onClick={() => { updateField('type', type); setDropdownOpen(false); }}
-                                  className={`
-                                    w-full px-4 py-3 text-left text-[15px] transition-colors
-                                    ${form.type === type ? 'text-accent bg-accent/10' : 'text-white/80 hover:bg-white/[0.06] hover:text-white'}
-                                  `}
-                                >
-                                  {type}
-                                </button>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </div>
-
-                    <p className="text-white/50 text-xs ml-1">* Required fields</p>
-
-                    {errors.form && (
-                      <p className="text-red-400 text-sm text-center py-1">{errors.form}</p>
-                    )}
-
-                    <GlassButton
-                      type="submit"
-                      variant="primary"
-                      size="lg"
-                      loading={loading}
-                      className="w-full text-base font-bold py-4 mt-1"
-                      icon={!loading ? <ArrowRight className="w-5 h-5" /> : undefined}
-                    >
-                      {loading ? 'Sending...' : 'Get My Free Mockup'}
-                    </GlassButton>
-
-                    <div className="flex items-center justify-center gap-4 pt-1 text-[11px] text-white/45">
-                      <span className="flex items-center gap-1">
-                        <Shield className="w-3 h-3" /> No credit card needed
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" /> Ready in 24hrs
-                      </span>
-                    </div>
-
-                    {/* UTM params sent via JSON payload */}
-                  </form>
-                </GlassCard>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <GlassCard variant="elevated" className="p-8 text-center">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                    className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center mx-auto mb-5"
-                  >
-                    <Check className="w-8 h-8 text-green-400" />
-                  </motion.div>
-                  <h2 className="text-xl font-bold mb-2 text-white font-[family-name:var(--font-montserrat)]">You&apos;re in.</h2>
-                  <p className="text-white/70 text-[15px] leading-relaxed">
-                    Anthony from QuickLaunchWeb will be personally reaching out to you shortly to discuss your custom demo. Please keep your phone nearby so we can get started immediately.
-                  </p>
-                </GlassCard>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </section>
 
-        {/* ════════════════════════════════════
-            THE PROBLEM — agitate the pain
-           ════════════════════════════════════ */}
-        <FadeInSection className="px-5 py-14 max-w-md mx-auto">
-          <h2 className="text-[1.35rem] sm:text-2xl font-bold text-center mb-3 font-[family-name:var(--font-montserrat)] text-white">
-            Here&apos;s what&apos;s happening right now.
-          </h2>
-          <p className="text-[15px] text-white/65 text-center mb-8 max-w-sm mx-auto leading-relaxed">
-            Someone in your area just Googled the exact service you offer. They found your competitor because their site showed up first — and yours didn&apos;t.
-          </p>
+        {/* Gradient divider */}
+        <div className="mx-auto max-w-[200px] h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
 
-          <div className="space-y-2.5">
-            {[
-              { pain: 'Your site takes forever to load', result: 'visitors leave before they even see what you do' },
-              { pain: 'There\'s no way to call you in one tap', result: 'they call the next guy who made it easy' },
-              { pain: 'It looks like it was built in 2016', result: 'people don\'t trust you before you even get a chance' },
-              { pain: 'You\'re invisible on Google Maps', result: 'you\'re paying for a site that nobody finds' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ delay: i * 0.08, duration: 0.3 }}
-                className="flex gap-3 items-start"
-              >
-                <span className="text-red-400 text-lg leading-none mt-0.5 shrink-0">&times;</span>
-                <p className="text-[14px] text-white/75 leading-relaxed">
-                  <span className="text-white font-medium">{item.pain}</span> — {item.result}
-                </p>
-              </motion.div>
-            ))}
+        {/* ════════════════════════════════════
+            SECTION 2 — PAIN CALLOUT (Hormozi-style)
+           ════════════════════════════════════ */}
+        <FadeInSection className="px-5 py-20 max-w-[500px] mx-auto relative">
+          {/* Ambient section glow */}
+          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[300px] h-[200px] pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(20,184,166,0.06), transparent 70%)' }} />
+          <div className="text-center mb-8">
+            <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold font-[family-name:var(--font-montserrat)] tracking-tight text-white leading-snug">
+              Someone Googled your trade in your city today.{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">They called your competitor.</span>
+            </h2>
           </div>
-        </FadeInSection>
-
-        {/* ════════════════════════════════════
-            THE FIX — how it works
-           ════════════════════════════════════ */}
-        <FadeInSection className="px-5 py-14 max-w-md mx-auto">
-          <h2 className="text-[1.35rem] sm:text-2xl font-bold text-center mb-2 font-[family-name:var(--font-montserrat)] text-white">
-            We fix that in 48 hours.
-          </h2>
-          <p className="text-[15px] text-white/60 text-center mb-8 max-w-xs mx-auto leading-relaxed">
-            No $5k agency deposit. No 6-week timeline. No DIY drag-and-drop nightmare.
-          </p>
 
           <div className="space-y-3">
             {[
-              { num: '01', title: 'Fill out this form', desc: 'Takes 30 seconds. Name, business, how to reach you. That\'s it.' },
-              { num: '02', title: 'We design your site by hand', desc: 'Not a template. A real, custom site with tap-to-call, a lead form, and local SEO baked in.' },
-              { num: '03', title: 'You\'re live in 48 hours', desc: 'Approve it, we launch. Hosting, SSL, domain setup — all included. You don\'t touch a thing.' },
-            ].map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.1, duration: 0.35 }}
-              >
-                <GlassCard className="p-4 flex gap-4 items-start">
-                  <span className="text-accent font-bold text-lg font-[family-name:var(--font-montserrat)] leading-none mt-0.5 shrink-0 w-7">{step.num}</span>
-                  <div>
-                    <h3 className="font-semibold text-[15px] text-white font-[family-name:var(--font-montserrat)]">{step.title}</h3>
-                    <p className="text-[13px] text-white/55 mt-1 leading-relaxed">{step.desc}</p>
-                  </div>
-                </GlassCard>
-              </motion.div>
+              'You Google your own business and can\'t find yourself.',
+              'Customers ask for your website and you send them a Facebook page.',
+              'You\'ve paid someone $2K+ for a site that\'s never brought in a single call.',
+              'You\'re losing bids to guys whose work is half as good — because they look more professional online.',
+            ].map((pain, i) => (
+              <div key={i} className="flex items-start gap-3 px-1">
+                <span className="text-accent/70 mt-[3px] text-[18px] leading-none select-none shrink-0">→</span>
+                <p className="text-[14px] sm:text-[15px] text-white/75 leading-relaxed">{pain}</p>
+              </div>
             ))}
+          </div>
+
+          <div className="mt-10 text-center space-y-5">
+            <p className="text-[16px] sm:text-[17px] font-bold text-white leading-snug">
+              That&apos;s not a branding problem.{' '}
+              <span className="text-accent">That&apos;s a revenue problem.</span>{' '}
+              And it&apos;s fixable in 48 hours.
+            </p>
+            <GlassButton
+              variant="primary"
+              size="lg"
+              onClick={scrollToCalendar}
+              className="w-full text-[15px] font-bold py-4"
+              icon={<ArrowRight className="w-5 h-5" />}
+            >
+              See My Free Demo
+            </GlassButton>
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════════
-            REVIEWS — real businesses, pain points
-           ════════════════════════════════════ */}
-        <FadeInSection className="px-5 py-14 max-w-md mx-auto">
-          <h2 className="text-[1.35rem] sm:text-2xl font-bold text-center mb-2 font-[family-name:var(--font-montserrat)] text-white">
-            They were in your shoes.
-          </h2>
-          <p className="text-[15px] text-white/55 text-center mb-8">Same problems. Now they&apos;re booked out.</p>
+        {/* Gradient divider */}
+        <div className="mx-auto max-w-[200px] h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
 
-          <div className="space-y-3">
+        {/* ════════════════════════════════════
+            SECTION 5 — PROOF / TESTIMONIALS (SCROLLABLE)
+           ════════════════════════════════════ */}
+        <FadeInSection className="pb-20">
+          <div className="text-center mb-10 px-5">
+            <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold mb-2 font-[family-name:var(--font-montserrat)] tracking-tight text-white">
+              They Had The Same Problem You Have Right Now
+            </h2>
+            <p className="text-[15px] text-white/60 max-w-sm mx-auto leading-relaxed">
+              Here&apos;s what happened after they booked the demo. Swipe &rarr;
+            </p>
+          </div>
+
+          {/* Horizontal scroll container */}
+          <div
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pl-5 pr-5 pb-4 no-scrollbar"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             {[
               {
                 text: 'We were spending $400/mo on a site that didn\'t even have a click-to-call button. Leads were going to our competitors because they couldn\'t reach us fast enough. QuickLaunchWeb rebuilt our whole site in 2 days — calls went up 40% the first week. Should\'ve done this a year ago.',
@@ -803,6 +500,61 @@ export default function InstagramLanding() {
                 role: 'Fencing & Fabrication · Houston, TX',
                 url: 'https://jnornamentaldesign.com',
                 stat: '40% more calls in week one',
+                logo: '/logos/jnornamentaldesign.svg',
+              },
+              {
+                text: 'People would Google "pressure washing near me" and we\'d never show up. We were relying 100% on word of mouth and it was limiting our growth. QuickLaunchWeb built us a site that actually ranks — now we get quote requests from Google every week without spending a dollar on ads.',
+                name: 'Blake',
+                company: 'Made New Pressure Washing',
+                role: 'Pressure Washing · Houston, TX',
+                url: 'https://madenewpressurewashing.com',
+                stat: 'Ranking on Google in weeks',
+                logo: '/logos/madenewpressure.svg',
+              },
+              {
+                text: 'We were losing bids to competitors who had better-looking websites — even though our work was better. Homeowners judge you by your site before they ever call you. QuickLaunchWeb gave us a site that finally matches the quality of our fencing work. Leads started coming in within the first week.',
+                name: 'David',
+                company: '3D Fencing',
+                role: 'Fencing Contractor · Houston, TX',
+                url: 'https://3dfencing.com',
+                stat: 'Leads within the first week',
+                logo: '/logos/3dfencing.png',
+              },
+              {
+                text: 'I was paying a "marketing guy" $250/mo to maintain a site that looked like it was made on Microsoft Word. Customers literally told me they almost didn\'t call because the site looked sketchy. Got my new site from QuickLaunchWeb and within a month I had 3 jobs just from Google alone. Night and day.',
+                name: 'Jose',
+                company: 'Elite Home Repairs',
+                role: 'Home Remodeling · Houston, TX',
+                url: 'https://elitehomerepairs.us',
+                stat: '3 new jobs from Google in 30 days',
+                logo: '/logos/elitehomerepairs.png',
+              },
+              {
+                text: 'We had a decent amount of work from referrals, but the phone would go quiet for weeks at a time. We needed a way for people to find us online when they searched for electricians in Houston. QuickLaunchWeb built us a clean site with tap-to-call and a quote form — now we get steady leads from Google without chasing anyone.',
+                name: 'Juan',
+                company: 'Landeros Electrical',
+                role: 'Electrical Contractor · Houston, TX',
+                url: 'https://landeroselectrical.com',
+                stat: 'Steady leads from Google',
+                logo: '/logos/landeroselectrical.png',
+              },
+              {
+                text: 'We tried building our own site on Wix and it looked terrible. Homeowners would ask for our website and we were embarrassed to send it. QuickLaunchWeb turned it around in 2 days — now when clients check us out online, they see exactly the quality we deliver. We\'ve booked 4 painting jobs just from the site.',
+                name: 'Jamie',
+                company: 'AN Painting Renovations',
+                role: 'Painting & Renovation · Houston, TX',
+                url: 'https://anpaintingrenovations.com',
+                stat: '4 jobs booked from website',
+                logo: '/logos/anpaintingrenovations.png',
+              },
+              {
+                text: 'We run two businesses — tree service and junk removal — and had zero online presence for either one. Just Facebook pages and word of mouth. QuickLaunchWeb built us sites for both that actually show up when people search in Baytown. We went from invisible to getting calls every week.',
+                name: 'Cristian',
+                company: 'Jimenez Tree Pro',
+                role: 'Tree & Junk Removal · Baytown, TX',
+                url: 'https://jimeneztreepro.com',
+                stat: 'Calls every week from Google',
+                logo: '/logos/jimenezjunkremoval.png',
               },
               {
                 text: 'In real estate, credibility is everything. We needed a digital presence that matched our track record in San Dimas. QuickLaunchWeb built us a high-performance site that captures leads instantly. We stopped losing traffic to Zillow and started getting direct calls from sellers who found us on Google.',
@@ -811,114 +563,276 @@ export default function InstagramLanding() {
                 role: 'Real Estate Team · San Dimas, CA',
                 url: 'https://soldbytoro.com',
                 stat: '3 new listings from website',
+                logo: '/logos/jacksoldbytoro.png',
               },
               {
-                text: 'I was paying a "marketing guy" $250/mo to maintain a site that looked like it was made on Microsoft Word. Customers literally told me they almost didn\'t call because the site looked sketchy. Got my new site from QuickLaunchWeb and within a month I had 3 jobs just from Google alone. Night and day.',
-                name: 'Jose',
-                company: 'Elite Home Repairs',
-                role: 'Home Repair Contractor · Houston, TX',
-                url: 'https://elitehomerepairs.us',
-                stat: '3 new jobs from Google in 30 days',
+                text: 'We\'re a jewelry store and our old site didn\'t reflect the quality of our pieces at all. Customers would walk into the store and say "your website doesn\'t do your jewelry justice." QuickLaunchWeb redesigned our entire online presence — now our site matches the in-store experience and drives foot traffic from Google.',
+                name: 'Tomi',
+                company: 'Tomi Jewelry',
+                role: 'Jewelry Store · Houston, TX',
+                url: 'https://tomijewelry.com',
+                stat: 'More foot traffic from Google',
+                logo: '/logos/tomi.png',
               },
               {
                 text: 'We had no online presence at all. Just an Instagram page and word of mouth. We were leaving money on the table every single day. QuickLaunchWeb set us up with a site that actually shows up when people search for branding in our area. We\'ve gotten 12 new client inquiries since launching and it\'s only been 6 weeks.',
                 name: 'Brian',
                 company: 'Becreativesco',
-                role: 'Marketing & Branding Agency · Boston, MA',
+                role: 'Marketing & Branding · Boston, MA',
                 url: 'https://becreativesco.com',
                 stat: '12 new inquiries in 6 weeks',
+                logo: '/logos/becreativesco.jpg',
               },
             ].map((t, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ delay: i * 0.08, duration: 0.35 }}
+                className="flex-none w-[85vw] max-w-[340px] snap-start"
               >
-                <GlassCard className="p-4">
+                <GlassCard className="p-5 h-full flex flex-col transition-all duration-300 active:scale-[0.98]">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="bg-white rounded-full p-0.5 shrink-0">
-                        <GoogleLogo className="w-3.5 h-3.5" />
-                      </div>
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, j) => (
-                          <Star key={j} className="w-3 h-3 text-[#Fbbc04] fill-[#Fbbc04]" />
-                        ))}
-                      </div>
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="w-3.5 h-3.5 text-[#Fbbc04] fill-[#Fbbc04]" />
+                      ))}
                     </div>
-                    <span className="text-[10px] font-bold text-white/90 bg-white/10 px-1.5 py-0.5 rounded ml-2 whitespace-nowrap">{t.stat}</span>
+                    <span className="text-[9px] font-bold text-accent bg-accent/10 border border-accent/20 px-1.5 py-0.5 rounded-sm uppercase tracking-wider leading-tight">{t.stat}</span>
                   </div>
-                  <div className="mb-3.5">
-                    <p className="text-[13.5px] text-white/80 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                  </div>
-                  <div className="flex items-center gap-2.5 pt-3 border-t border-white/[0.06]">
-                    <div className="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center text-xs font-bold text-accent">
-                      {t.name[0]}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-[13px] font-semibold text-white">{t.name} <span className="font-normal text-white/40">·</span> <span className="text-white/80 font-medium">{t.company}</span></p>
-                          <p className="text-[11px] text-white/45">{t.role}</p>
+
+                  <p className="text-[13px] sm:text-[14px] text-white/80 leading-relaxed italic mb-auto pb-4 flex-1">"{t.text}"</p>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                    <div className="flex items-center gap-3">
+                      {t.logo ? (
+                        <div className="h-8 w-auto max-w-[90px] flex items-center justify-start shrink-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={t.logo} alt={t.company} className="max-h-full max-w-full object-contain drop-shadow-sm" />
                         </div>
-                        <a href={t.url} target="_blank" rel="noopener noreferrer" className="text-[11px] text-accent font-medium hover:underline shrink-0 ml-2">View website &rarr;</a>
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[12px] font-bold text-white shrink-0">
+                          {t.name[0]}
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-bold text-white text-[12px]">{t.name}</p>
+                        <p className="text-[10px] text-white/45">{t.role}</p>
                       </div>
                     </div>
+                    <a href={`https://${t.url.replace('https://', '')}`} target="_blank" rel="noopener noreferrer" className="text-[11px] text-accent font-medium flex items-center gap-1 hover:underline shrink-0">
+                      View <ArrowRight className="w-3 h-3 -rotate-45" />
+                    </a>
                   </div>
                 </GlassCard>
-              </motion.div>
+              </div>
             ))}
           </div>
         </FadeInSection>
 
+        {/* Gradient divider */}
+        <div className="mx-auto max-w-[200px] h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent" />
+
         {/* ════════════════════════════════════
-            WHAT'S INCLUDED — no fluff
+            SECTION 3 — WHAT HAPPENS ON THE CALL
            ════════════════════════════════════ */}
-        <FadeInSection className="px-5 py-14 max-w-md mx-auto">
-          <GlassCard variant="elevated" className="p-5">
-            <div className="flex items-baseline justify-between mb-1">
-              <h2 className="text-[1.1rem] font-bold font-[family-name:var(--font-montserrat)] text-white">
-                $99/mo. Build fee waived.
-              </h2>
-              <span className="text-[11px] text-white/40 line-through">$799 build</span>
-            </div>
-            <p className="text-[13px] text-white/55 mb-4">No contracts. Cancel anytime. Seriously.</p>
-            <div className="space-y-2.5">
-              {[
-                'Custom site built by hand (not a template)',
-                'Mobile-first with tap-to-call',
-                'Lead capture form — leads go straight to your inbox',
-                'Local SEO foundation so Google can find you',
-                'Hosting, SSL, speed optimization — all included',
-                'Live in 48 hours',
-                '1 content update/month + ongoing support',
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-2.5">
-                  <div className="w-4 h-4 rounded-full bg-accent/15 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-2.5 h-2.5 text-accent" />
-                  </div>
-                  <span className="text-[14px] text-white/80 leading-snug">{item}</span>
+        <FadeInSection className="px-5 py-20 max-w-[500px] mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold mb-3 font-[family-name:var(--font-montserrat)] tracking-tight text-white">
+              Here&apos;s What Happens In 15 Minutes
+            </h2>
+            <p className="text-[15px] text-white/60 max-w-sm mx-auto leading-relaxed">
+              No pitch deck. No slideshow. You see a real website — built for your business — live on the call.
+            </p>
+          </div>
+
+          <div className="relative pl-14">
+            {/* Vertical timeline line with glow */}
+            <div className="absolute left-[19px] top-2 bottom-8 w-[2px] bg-gradient-to-b from-accent/50 via-accent/20 to-transparent shadow-[0_0_8px_rgba(20,184,166,0.3)]" />
+
+            {[
+              {
+                icon: Eye,
+                title: 'You See Your Business On A Real Site',
+                desc: 'Not a template. A working site with your services, your area, and a tap-to-call button that actually rings your phone.',
+              },
+              {
+                icon: Wrench,
+                title: 'We Dial It In Together',
+                desc: "Don't like the headline? We change it live. Want to add a service? Done. You walk away with a site that sounds like you wrote it.",
+              },
+              {
+                icon: Rocket,
+                title: 'Say Yes → Live in 48 Hours',
+                desc: 'Send us your logo and photos. We handle everything else. If it takes longer than 48 hours, your first month is free.',
+              },
+            ].map((step, i) => (
+              <div key={i} className="relative pb-10 last:pb-0">
+                <div className="absolute -left-14 top-0 z-10 w-[40px] h-[40px] rounded-full bg-[#0a0a0f] border border-accent/30 flex items-center justify-center shadow-[0_0_15px_rgba(20,184,166,0.15)]">
+                  <step.icon className="w-4 h-4 text-accent" />
                 </div>
-              ))}
-            </div>
-            <div className="mt-5 pt-4 border-t border-white/[0.08]">
-              <p className="text-[12px] text-white/45 leading-relaxed">
-                <span className="text-white/60 font-medium">Want more?</span> Pro plan at $149/mo gets you 3 pages, enhanced SEO, call tracking, Google Analytics, and priority support with 3 content updates/month.
-              </p>
+                <div className="pl-4">
+                  <p className="text-[11px] text-accent font-bold uppercase tracking-widest mb-1 font-[family-name:var(--font-montserrat)]">Step {i + 1}</p>
+                  <h3 className="font-bold text-[16px] text-white font-[family-name:var(--font-montserrat)] mb-1.5">{step.title}</h3>
+                  <p className="text-[13px] text-white/50 leading-relaxed">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FadeInSection>
+
+        {/* Gradient divider */}
+        <div className="mx-auto max-w-[200px] h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+
+        {/* ════════════════════════════════════
+            SECTION 4 — PRICING + BONUS + GUARANTEE
+           ════════════════════════════════════ */}
+        <FadeInSection className="px-5 py-20 max-w-[500px] mx-auto relative">
+          {/* Ambient pricing glow */}
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[250px] h-[150px] pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(251,191,36,0.04), transparent 70%)' }} />
+          <div className="relative text-center mb-8">
+            <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold font-[family-name:var(--font-montserrat)] tracking-tight text-white">
+              Here&apos;s What You&apos;re Getting
+            </h2>
+            <p className="text-[14px] text-white/50 mt-2">And what you&apos;d pay for it anywhere else.</p>
+          </div>
+
+          {/* Pricing Box */}
+          <GlassCard variant="elevated" className="p-6 sm:p-8 mb-4 relative overflow-hidden bg-white/[0.04]">
+            {/* Subtle light burst in background */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent/20 blur-[50px] rounded-full"></div>
+
+            <div className="relative">
+              {/* Value Stack */}
+              <p className="text-[12px] text-white/40 uppercase tracking-widest font-bold mb-5">What this costs everywhere else</p>
+              <div className="space-y-3 mb-6">
+                {[
+                  { item: 'Custom-coded website (not a template)', value: '$3,000–5,000' },
+                  { item: 'Mobile optimization + tap-to-call', value: '$500' },
+                  { item: 'Local SEO so Google finds you', value: '$1,500' },
+                  { item: 'Hosting, SSL \u0026 security (yearly)', value: '$300' },
+                  { item: 'Ongoing updates \u0026 support (monthly)', value: '$200' },
+                  { item: 'Quote request forms + lead capture', value: '$500' },
+                ].map((row, i) => (
+                  <div key={i} className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-5 h-5 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 text-accent" />
+                      </div>
+                      <span className="text-[13px] sm:text-[14px] text-white/80">{row.item}</span>
+                    </div>
+                    <span className="text-[12px] text-white/30 line-through whitespace-nowrap shrink-0">{row.value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between border-t border-white/10 pt-4 mb-6">
+                <span className="text-[12px] text-white/50 uppercase tracking-widest font-bold">Total value</span>
+                <span className="text-[16px] text-white/40 line-through font-bold font-[family-name:var(--font-montserrat)]">$5,800+</span>
+              </div>
+
+              <div className="relative rounded-xl overflow-hidden">
+                {/* Animated gold border glow */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500/20 via-yellow-400/30 to-amber-500/20 blur-[1px]" />
+                <div className="relative bg-[#0a0a0f] rounded-xl p-6 m-[1px]">
+                  {/* Founders badge */}
+                  <div className="flex justify-center mb-2">
+                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-amber-500/15 to-yellow-400/15 border border-amber-400/30 text-amber-400 rounded-full text-[11px] font-bold uppercase tracking-[0.15em]">
+                      <Zap className="w-3 h-3 fill-amber-400" />
+                      Founders Rate
+                    </div>
+                  </div>
+                  <p className="text-center text-[12px] text-amber-400/60 italic mb-5 tracking-wide">Limited spots &mdash; locked in at this price forever</p>
+
+                  <div className="flex items-baseline justify-center gap-3 mb-1">
+                    <span className="text-[3.5rem] font-black text-white leading-none font-[family-name:var(--font-montserrat)] tracking-tighter" style={{ textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>$29</span>
+                    <span className="text-white/25 text-[24px] font-bold font-[family-name:var(--font-montserrat)] line-through decoration-white/30 decoration-2">$99</span>
+                  </div>
+                  <p className="text-white/40 text-[13px] text-center mb-5">
+                    first month &middot; then $99/mo &middot; cancel anytime
+                  </p>
+
+                  <div className="bg-amber-400/5 border border-amber-400/10 rounded-lg px-4 py-3 text-center">
+                    <p className="text-[13px] text-white/60 leading-relaxed">
+                      Less than <span className="text-amber-400 font-semibold">one Google ad click</span> &mdash; for an entire website that generates calls every month.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </GlassCard>
+
+          <div className="mt-6 space-y-4">
+            <div className="flex gap-3 items-start">
+              <Shield className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[14px] text-white font-semibold">No Contracts. Cancel Anytime.</p>
+                <p className="text-[13px] text-white/45 leading-relaxed">No cancellation fees, no hoops. Walk away whenever you want.</p>
+              </div>
+            </div>
+            <div className="w-full h-px bg-white/5" />
+            <div className="flex gap-3 items-start">
+              <Clock className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[14px] text-white font-semibold">48-Hour Launch — Or Your First Month Is Free</p>
+                <p className="text-[13px] text-white/45 leading-relaxed">Send us your logo and photos. If we don&apos;t have your site live in 48 hours, you don&apos;t pay.</p>
+              </div>
+            </div>
+          </div>
+        </FadeInSection>
+
+        {/* Gradient divider */}
+        <div className="mx-auto max-w-[200px] h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent" />
+
+        {/* ════════════════════════════════════
+            SECTION — ROI CALCULATOR
+           ════════════════════════════════════ */}
+        <FadeInSection className="px-5 py-20 max-w-[500px] mx-auto">
+          <ROICalculator />
         </FadeInSection>
 
         {/* ════════════════════════════════════
-            FAQ
+            SECTION 6 — CALENDAR PLACEHOLDER
            ════════════════════════════════════ */}
-        <FadeInSection className="px-5 py-14 max-w-md mx-auto">
-          <h2 className="text-[1.35rem] sm:text-2xl font-bold text-center mb-6 font-[family-name:var(--font-montserrat)] text-white">
-            Common questions
+        <div ref={calendarRef} className="px-5 pb-20 max-w-[500px] mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold mb-3 font-[family-name:var(--font-montserrat)] tracking-tight text-white">
+              Book Your Demo Call
+            </h2>
+            <p className="text-[15px] text-white/60 leading-relaxed max-w-sm mx-auto">
+              Pick a time below. We&apos;ll show the demo live, and you decide.
+            </p>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-white/10">
+            <div style={{ overflow: 'hidden', position: 'relative' }}>
+              <div style={{ marginRight: '-20px', paddingRight: '20px', overflow: 'hidden' }}>
+                <InlineWidget
+                  url="https://calendly.com/quicklaunchweb/15min"
+                  styles={{ height: '750px', minWidth: '280px' }}
+                  pageSettings={{
+                    backgroundColor: '0a0a0f',
+                    textColor: 'ffffff',
+                    primaryColor: '14b8a6',
+                    hideGdprBanner: true,
+                    hideEventTypeDetails: false,
+                    hideLandingPageDetails: false,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-[11px] text-white/30 mt-5 leading-relaxed max-w-sm mx-auto">
+            By booking, you agree to receive SMS confirmations and follow-ups from QuickLaunchWeb. Msg &amp; data rates may apply. Reply STOP to opt out anytime.
+          </p>
+        </div>
+
+        {/* ════════════════════════════════════
+            SECTION 7 — FAQ
+           ════════════════════════════════════ */}
+        <FadeInSection className="px-5 pb-20 max-w-[500px] mx-auto">
+          <h2 className="text-[1.5rem] sm:text-[1.75rem] font-bold text-center mb-8 font-[family-name:var(--font-montserrat)] tracking-tight text-white">
+            Still Not Sure?
           </h2>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {FAQS.map((faq, i) => (
               <FAQItem key={i} q={faq.q} a={faq.a} />
             ))}
@@ -926,54 +840,53 @@ export default function InstagramLanding() {
         </FadeInSection>
 
         {/* ════════════════════════════════════
-            FINAL CTA — urgency close
+            SECTION 8 — FINAL CTA
            ════════════════════════════════════ */}
-        <FadeInSection className="px-5 pt-4 pb-16 sm:pb-20 max-w-md mx-auto">
-          <div className="text-center">
-            <h2 className="text-[1.35rem] sm:text-2xl font-bold mb-2 font-[family-name:var(--font-montserrat)] text-white">
-              Every day without a real site is money left on the table.
-            </h2>
-            <p className="text-[15px] text-white/55 mb-5">
-              Free mockup. 24 hours. You risk literally nothing.
-            </p>
-            <GlassButton
-              variant="primary"
-              size="lg"
-              onClick={scrollToForm}
-              className="w-full font-bold"
-              icon={<ArrowRight className="w-5 h-5" />}
-            >
-              Get My Free Mockup
-            </GlassButton>
-          </div>
-        </FadeInSection>
+        <div className="px-5 pt-4 pb-24 sm:pb-32 max-w-[500px] mx-auto text-center">
+          <h2 className="text-[1.75rem] sm:text-[2rem] font-bold mb-4 font-[family-name:var(--font-montserrat)] tracking-tight text-white leading-[1.2]">
+            Every Day Without A Real Website Is Money Left On The Table.
+          </h2>
+          <p className="text-[15px] text-white/60 mb-8 leading-relaxed max-w-sm mx-auto">
+            The demo is free. The call is 15 minutes. And if you don&apos;t like what you see, you walk away. Zero risk.
+          </p>
+          <GlassButton
+            variant="primary"
+            size="lg"
+            onClick={scrollToCalendar}
+            className="w-full text-[16px] font-bold py-[18px] shadow-[0_0_20px_rgba(20,184,166,0.15)]"
+            icon={<ArrowRight className="w-5 h-5" />}
+          >
+            See My Free Demo
+          </GlassButton>
+        </div>
 
-        <footer className="text-center px-5 pb-8 text-[11px] text-white/30">
-          &copy; {new Date().getFullYear()} QuickLaunchWeb
-        </footer>
       </div>
+
+      <footer className="relative z-10 text-center px-5 pb-8 text-[11px] text-white/30 uppercase tracking-widest font-medium">
+        &copy; {new Date().getFullYear()} QuickLaunchWeb
+      </footer>
 
       {/* ════════════════════════════════════
           STICKY CTA BAR
          ════════════════════════════════════ */}
       <AnimatePresence>
-        {showSticky && !submitted && (
+        {showSticky && (
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-[env(safe-area-inset-bottom,8px)] pt-3 bg-[rgba(5,5,7,0.95)] backdrop-blur-xl border-t border-white/[0.08]"
+            className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-[env(safe-area-inset-bottom,12px)] pt-3 bg-black/80 backdrop-blur-xl border-t border-white/10"
           >
-            <div className="max-w-md mx-auto">
+            <div className="max-w-[500px] mx-auto">
               <GlassButton
                 variant="primary"
                 size="lg"
-                onClick={scrollToForm}
-                className="w-full font-bold py-3.5"
+                onClick={scrollToCalendar}
+                className="w-full text-[15px] font-bold py-4"
                 icon={<ArrowRight className="w-5 h-5" />}
               >
-                Get My Free Mockup
+                See My Free Demo
               </GlassButton>
             </div>
           </motion.div>
@@ -985,43 +898,20 @@ export default function InstagramLanding() {
 
 // ─── Helper Components ──────────────────────
 
-function FormField({
-  icon: Icon,
-  error,
-  hint,
-  children,
-}: {
-  icon: React.ElementType;
-  error?: string;
-  hint?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="relative">
-        <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35 pointer-events-none" />
-        {children}
-      </div>
-      {error && <p className="text-red-400 text-xs mt-1 ml-1">{error}</p>}
-      {!error && hint && <p className="text-white/45 text-xs mt-1 ml-1">{hint}</p>}
-    </div>
-  );
-}
-
 function FadeInSection({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <motion.section
+    <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.45 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={className}
     >
       {children}
-    </motion.section>
+    </motion.div>
   );
 }
 
@@ -1029,13 +919,13 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <GlassCard className="overflow-hidden">
+    <GlassCard className="overflow-hidden transition-all duration-200 active:scale-[0.98] hover:border-white/15">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full px-4 py-3.5 flex items-center justify-between text-left"
+        className="w-full px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between text-left"
       >
-        <span className="text-[14px] font-medium text-white/90 pr-4">{q}</span>
+        <span className="text-[14px] sm:text-[15px] font-bold text-white/90 pr-4">{q}</span>
         <ChevronDown className={`w-4 h-4 text-white/40 shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence>
@@ -1047,35 +937,12 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 text-[14px] text-white/60 leading-relaxed border-t border-white/[0.06] pt-3">
+            <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-[13px] sm:text-[14px] text-white/60 leading-relaxed pt-1">
               {a}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </GlassCard>
-  );
-}
-
-function GoogleLogo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className}>
-      <path
-        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-        fill="#4285F4"
-      />
-      <path
-        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-        fill="#34A853"
-      />
-      <path
-        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-        fill="#FBBC05"
-      />
-      <path
-        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-        fill="#EA4335"
-      />
-    </svg>
   );
 }

@@ -97,7 +97,7 @@ const buttonVariants: Record<GlassButtonVariant, string> = {
 const buttonSizes: Record<GlassButtonSize, string> = {
   sm: "px-4 py-2 text-sm rounded-lg gap-1.5",
   md: "px-6 py-3 text-sm rounded-xl gap-2",
-  lg: "px-8 py-4 text-base rounded-full gap-2",
+  lg: "px-8 py-4 text-base rounded-xl gap-2",
 };
 
 export const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(

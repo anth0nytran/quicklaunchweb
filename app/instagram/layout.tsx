@@ -5,13 +5,13 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").re
 const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || "";
 
 export const metadata: Metadata = {
-  title: "Get a Free Website Mockup in 24 Hours | QuickLaunchWeb",
+  title: "See Your Website Demo Live in 15 Minutes | QuickLaunchWeb",
   description:
-    "We build professional websites for local businesses — live in 48 hours for $99/mo. Get your free custom mockup today. No credit card required.",
+    "Book a free 15-minute demo call. We'll show you a live website demo built for your services + area. Approve on the call, launch in 48 hours. No contracts.",
   openGraph: {
-    title: "Get a Free Website Mockup in 24 Hours | QuickLaunchWeb",
+    title: "See Your Website Demo Live in 15 Minutes | QuickLaunchWeb",
     description:
-      "We build professional websites for local businesses — live in 48 hours for $99/mo. Get your free custom mockup today.",
+      "Book a free 15-minute demo call. We show you a live demo, you approve on the call, we launch in 48 hours. No contracts, cancel anytime.",
     url: `${siteUrl}/instagram`,
     siteName: "QuickLaunchWeb",
     type: "website",
@@ -20,12 +20,12 @@ export const metadata: Metadata = {
         url: `${siteUrl}/icon.jpg`,
         width: 1200,
         height: 630,
-        alt: "QuickLaunchWeb - Free Website Mockup",
+        alt: "QuickLaunchWeb - 15-Minute Live Demo Call",
       },
     ],
   },
   robots: {
-    index: false, // Don't index ad landing pages
+    index: false,
     follow: false,
   },
 };
