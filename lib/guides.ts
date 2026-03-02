@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 export type GuideType = "pillar" | "support";
 
@@ -1724,19 +1725,17 @@ const guides: Guide[] = [
 export const pillarGuides = guides.filter((guide) => guide.type === "pillar");
 export const supportGuides = guides.filter((guide) => guide.type === "support");
 export const featuredGuide = pillarGuides[0];
+export const allGuides = guides;
 
 export function getGuideBySlug(slug: string) {
   return guides.find((guide) => guide.slug === slug);
 }
 
 export function getGuideMetadata(guide: Guide): Metadata {
-  return {
+  return buildPageMetadata({
     title: guide.metaTitle,
     description: guide.metaDescription,
-    openGraph: {
-      title: guide.metaTitle,
-      description: guide.metaDescription,
-      type: "article",
-    },
-  };
+    path: `/guides/${guide.slug}`,
+    type: "article",
+  });
 }

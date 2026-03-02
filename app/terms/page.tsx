@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { GlassCard, GlassButton, GlassDivider, AmbientGlow } from "@/components/ui/glass";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Terms of Service | QuickLaunchWeb",
+  description:
+    "Read the QuickLaunchWeb terms of service for subscriptions, website delivery, billing, and support.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

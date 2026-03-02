@@ -14,11 +14,6 @@ export default function robots(): MetadataRoute.Robots {
           '/success',
           '/cancel',
           '/demo',
-          // Block static assets that shouldn't be indexed
-          '/_next/static/',
-          '/*.woff2',
-          '/*.woff',
-          '/*.ttf',
         ],
       },
     ],

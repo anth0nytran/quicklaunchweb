@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { AmbientGlow, GlassButton, GlassCard, GlassDivider, GlassPill } from "@/components/ui/glass";
+import { GuideStructuredData } from "@/components/seo/GuideStructuredData";
 import type { Guide, GuideSection } from "@/lib/guides";
 
 // Typography styles with proper hierarchy
@@ -214,6 +215,7 @@ export function GuidePage({ guide }: { guide: Guide }) {
 
   return (
     <main className="relative min-h-screen px-6 py-24 text-white md:py-32">
+      <GuideStructuredData guide={guide} />
       <BGPattern variant="grid" mask="fade-center" size={30} fill="rgba(255,255,255,0.025)" />
       <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-24" />
       <AmbientGlow color="white" position="bottom" intensity="subtle" className="opacity-40" />

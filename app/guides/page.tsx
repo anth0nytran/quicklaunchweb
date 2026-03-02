@@ -4,18 +4,14 @@ import { BGPattern } from "@/components/ui/bg-pattern";
 import { AmbientGlow, GlassButton, GlassPill } from "@/components/ui/glass";
 import { featuredGuide, pillarGuides, supportGuides } from "@/lib/guides";
 import { PageTracker } from "@/lib/analytics";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: "Growth Guides for Local Businesses | QuickLaunchWeb",
     description:
         "Straightforward guides on pricing, timelines, and website decisions that help local businesses launch faster and convert more leads.",
-    openGraph: {
-        title: "Growth Guides for Local Businesses | QuickLaunchWeb",
-        description:
-            "Straightforward guides on pricing, timelines, and website decisions that help local businesses launch faster and convert more leads.",
-        type: "article",
-    },
-};
+    path: "/guides",
+});
 
 const guideHighlights = [
     "Learn why your website isn't getting you customers.",

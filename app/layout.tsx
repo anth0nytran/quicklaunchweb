@@ -5,6 +5,8 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
+import { SiteStructuredData } from "@/components/seo/SiteStructuredData";
+import { buildPageMetadata, siteUrl } from "@/lib/seo";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -19,21 +21,17 @@ const lato = Lato({
   display: "swap",
 });
 
-const siteUrl = (() => {
-  const value = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (!value && process.env.NODE_ENV === "production") {
-    throw new Error("Missing NEXT_PUBLIC_SITE_URL in production.");
-  }
-  return value || "http://localhost:3000";
-})();
-
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
+const homeMetadata = buildPageMetadata({
+  title: "QuickLaunchWeb | Stop Losing Customers to Competitors With Better Websites",
+  description:
+    "Every day without a website, your competitors get the call instead. QuickLaunchWeb builds websites for local businesses that get you customers - live in 48 hours. $0 upfront. $99/mo. Cancel anytime.",
+  path: "/",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
-  description:
-    "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
+  ...homeMetadata,
   keywords: [
     "QuickLaunchWeb",
     "free website builder",
@@ -54,32 +52,6 @@ export const metadata: Metadata = {
     "online business website",
     "service company website",
   ],
-  openGraph: {
-    title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
-    description:
-      "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
-    url: siteUrl,
-    siteName: "QuickLaunchWeb",
-    type: "website",
-    images: [
-      {
-        url: `${siteUrl}/icon.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "QuickLaunchWeb - Done-For-You Websites in 48 Hours",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "QuickLaunchWeb | Websites That Get You Customers, Live in 48 Hours",
-    description:
-      "QuickLaunchWeb builds professional websites for local businesses that actually get customers. Live in 48 hours for $99/mo. No setup fees, no lock-in.",
-    images: [`${siteUrl}/icon.jpg`],
-  },
-  alternates: {
-    canonical: siteUrl,
-  },
   robots: {
     index: true,
     follow: true,
@@ -110,8 +82,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased`}>
-        {/* Google tag (gtag.js) */}
+      <body
+        className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased overflow-x-hidden`}
+      >
         {GA_MEASUREMENT_ID && (
           <>
             <Script
@@ -139,6 +112,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <SiteStructuredData />
         <Analytics />
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { SocialProofSection } from "@/components/social-proof";
 import {
@@ -23,10 +24,12 @@ import {
 } from "@/components/ui/dialog";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ExperienceHeroBackground } from "@/components/ui/experience-hero";
+import { GlobeBackground } from "@/components/ui/globe-background";
 import { FAQSchema } from "@/components/FAQSchema";
 import { faqs, faqCategories } from "@/lib/faqData";
 import { usePageTracker, useCheckoutTracker, useEventTracker, useFormTracker } from "@/lib/analytics";
 import { Navigation } from "@/components/Navigation";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 
 type Plan = "starter" | "pro";
 
@@ -143,6 +146,218 @@ const featureIcons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
     </svg>
   ),
+};
+
+const defaultPageCopy = {
+  analyticsTitle: "QuickLaunchWeb - Homepage",
+  pageType: "homepage",
+  scrollPath: "/",
+  heroPill: "DOESN'T BRING YOU CUSTOMERS? CANCEL. NO CONTRACTS. NO GUILT.",
+  heroHeading: (
+    <>
+      Every Day Without a Website,{" "}
+      <span
+        className="text-transparent bg-clip-text"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))",
+        }}
+      >
+        <br />
+        You're Paying Your Competitors.
+      </span>
+    </>
+  ),
+  heroBullets: [
+    "Hand-built & live in 48 hours (not a template with your logo slapped on)",
+    "Tap-to-call + quote forms so customers reach you, not your voicemail",
+    "$99/mo - costs less than one job pays you. Cancel if it's not worth it",
+  ],
+  features: [
+    {
+      title: "One Tap to Call You. Zero Friction.",
+      desc: "Most people leave a site if they can't call or message you in 3 seconds. Your site has tap-to-call, quick quote forms, and no dead ends.",
+      icon: featureIcons.mobile,
+    },
+    {
+      title: "Loads Fast. Doesn't Lose You Money.",
+      desc: "Slow sites lose customers. For every extra second it takes to load, you lose 7 out of 100 people. Your site loads in under 2 seconds.",
+      icon: featureIcons.lightning,
+    },
+    {
+      title: "Show Up First When Locals Search",
+      desc: "When someone searches \"plumber near me\" or \"contractor in [your city]\" - you show up. Not your competitor who paid $3,000 for a worse site.",
+      icon: featureIcons.search,
+    },
+  ],
+  featureHeading: (
+    <>
+      A pretty website is <span className="text-accent">worthless</span>.
+      <br />A website that books jobs <span className="text-accent">isn't</span>.
+    </>
+  ),
+  featureDescription:
+    "Most web designers build you something pretty to look at. We build you something that makes your phone ring, fills your inbox, and books your calendar.",
+  bestFor: [
+    "Service businesses & local brands",
+    "Creators & startups",
+    "Anyone who wants done-for-you",
+  ],
+  deliverables: [
+    { label: "01", title: "Works on every phone (because that's where your customers are)", detail: "Tap-to-call ready" },
+    { label: "02", title: "Customer messages go straight to your inbox", detail: "Quote form included" },
+    { label: "03", title: "Google finds you before your competition", detail: "Local SEO foundation" },
+    { label: "04", title: "Opens fast - no waiting, no spinning wheel", detail: "Speed + SSL included" },
+    { label: "05", title: "Live and getting you customers while you sleep", detail: "Launched in 48 hours" },
+    { label: "06", title: "We maintain it. You focus on doing the actual work.", detail: "Ongoing support" },
+  ],
+  deliverablesHeading: (
+    <>
+      In <span className="text-accent">48 Hours</span>, You're Taking Calls
+    </>
+  ),
+  deliverablesDescription:
+    "Not \"we'll have mockups in 2 weeks.\" A live, working site collecting leads while your competitors are still picking fonts.",
+  steps: [
+    { step: "01", title: "Pick a Plan (60 seconds)", desc: "No proposals. No \"discovery calls.\" Pick your plan, pay, we start building the same day." },
+    { step: "02", title: "Send Us the Basics", desc: "Your services, area, photos, contact info. Takes 5 minutes. That's the last thing you do." },
+    { step: "03", title: "We Launch. You Get Customers.", desc: "48 hours later your site is live and showing up on Google. We handle updates, speed, and search rankings - you just answer the phone." },
+  ],
+  stats: [
+    { value: "FREE", label: "Website Build" },
+    { value: "48h", label: "Launch Time" },
+    { value: "$99", label: "/mo Hosting" },
+    { value: "Unlimited", label: "Cancel Anytime" },
+  ],
+  pricingEyebrow:
+    "You wouldn't pay $2,000 for a sign that doesn't bring in foot traffic",
+  pricingHeading: "$0 to build. $99/mo to keep it printing money.",
+  pricingDescription:
+    "Other agencies charge $1,500+ upfront for a site that sits there doing nothing. We build yours free - you only pay monthly if it's working. Cancel the second it's not.",
+  proHelperHeading: "Go Pro if you want to win more jobs:",
+  proHelperItems: [
+    "You offer multiple services (rank for all of them)",
+    "You want to outrank competitors on Google",
+    "You want to know exactly where leads come from",
+  ],
+  starterHelperHeading: "Starter works if:",
+  starterHelperItems: [
+    "You just need something live that gets calls",
+    "You want the lowest monthly investment",
+  ],
+  guidesHeading: "Free Playbooks That Actually Work",
+  guidesDescription:
+    "No fluff. No \"subscribe to read.\" Simple guides that show you exactly how to get more customers online.",
+  faqHeading: "Frequently Asked Questions",
+  footerDescription:
+    "Websites that make local businesses money. Built in 48 hours. No upfront cost.",
+  footerTagline: "Your next customer is Googling you right now.",
+};
+
+const houstonPageCopy = {
+  analyticsTitle: "QuickLaunchWeb - Houston Web Design for Contractors",
+  pageType: "local_landing",
+  scrollPath: "/houston-web-design-for-contractors",
+  heroPill: "HOUSTON WEB DESIGN FOR CONTRACTORS THAT GETS CALLS.",
+  heroHeading: (
+    <>
+      Houston Web Design for Contractors
+      <span
+        className="text-transparent bg-clip-text"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))",
+        }}
+      >
+        <br />
+        That Gets You More Calls.
+      </span>
+    </>
+  ),
+  heroBullets: [
+    "Built for Houston contractors and home service businesses",
+    "Tap-to-call and fast quote forms help people reach you fast",
+    "$99/mo. If it does not help, cancel",
+  ],
+  features: [
+    {
+      title: "Easy to call",
+      desc: "If people cannot call fast, they leave. We make calls and quote forms easy to find.",
+      icon: featureIcons.mobile,
+    },
+    {
+      title: "Fast on phones",
+      desc: "Most people search on a phone. A slow site can cost you the job.",
+      icon: featureIcons.lightning,
+    },
+    {
+      title: "Made for Houston search",
+      desc: "A good Houston contractor website shows what you do, where you work, and why people should trust you.",
+      icon: featureIcons.search,
+    },
+  ],
+  featureHeading: (
+    <>
+      Houston web design should <span className="text-accent">get calls</span>.
+      <br />It should not just <span className="text-accent">look nice</span>.
+    </>
+  ),
+  featureDescription:
+    "We build websites for Houston contractors and home service businesses. The goal is simple: help more people call you.",
+  bestFor: [
+    "Houston contractors",
+    "Home service businesses",
+    "Owners who want a site fast",
+  ],
+  deliverables: [
+    { label: "01", title: "Easy to use on every phone", detail: "Tap-to-call ready" },
+    { label: "02", title: "Quote requests go right to you", detail: "Quote form included" },
+    { label: "03", title: "Built for Houston search", detail: "Local SEO foundation" },
+    { label: "04", title: "Loads fast", detail: "Speed + SSL included" },
+    { label: "05", title: "Live in 48 hours", detail: "Launched in 48 hours" },
+    { label: "06", title: "We keep it updated", detail: "Ongoing support" },
+  ],
+  deliverablesHeading: (
+    <>
+      In <span className="text-accent">48 Hours</span>, People Can Start Calling
+    </>
+  ),
+  deliverablesDescription:
+    "You do not wait weeks. We build your Houston contractor website fast so people can call you.",
+  steps: [
+    { step: "01", title: "Pick a plan", desc: "Choose the plan that fits. We start the same day." },
+    { step: "02", title: "Send your details", desc: "Send your services, photos, service area, and contact info." },
+    { step: "03", title: "Go live fast", desc: "Your site goes live in 48 hours so people can call you." },
+  ],
+  stats: [
+    { value: "FREE", label: "Build" },
+    { value: "48h", label: "Launch" },
+    { value: "Houston", label: "City" },
+    { value: "Cancel", label: "Anytime" },
+  ],
+  pricingEyebrow:
+    "A Houston contractor website should help you get jobs.",
+  pricingHeading: "$0 down. $99/mo. Get a site that helps you win more jobs.",
+  pricingDescription:
+    "Most agencies ask for a big payment first. We build your site first. Then you pay monthly.",
+  proHelperHeading: "Go Pro if:",
+  proHelperItems: [
+    "You want more than one page",
+    "You offer more than one service",
+    "You want call and form tracking",
+  ],
+  starterHelperHeading: "Starter works if:",
+  starterHelperItems: [
+    "You need a simple site fast",
+    "You want the lowest monthly cost",
+  ],
+  guidesHeading: "Simple Guides for More Local Jobs",
+  guidesDescription:
+    "Short guides that show what helps a Houston contractor website get more calls.",
+  faqHeading: "Questions Houston Contractors Ask",
+  footerDescription:
+    "Houston web design for contractors and home service businesses. Built fast. No upfront cost.",
+  footerTagline: "Your next Houston customer may be searching right now.",
 };
 
 // =============================================================================
@@ -546,8 +761,8 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
           {/* Left side - Steps */}
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-              From zero to live in<br />
-              <span className="text-muted">three simple steps.</span>
+              3 steps. 48 hours.<br />
+              <span className="text-muted">You&apos;re live.</span>
             </h2>
             <div className="mt-12 space-y-8">
               {steps.map((item, i) => {
@@ -617,8 +832,12 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
 // =============================================================================
 
 export default function HomePage() {
+  const pathname = usePathname();
+  const isHoustonLanding = pathname === "/houston-web-design-for-contractors";
+  const pageCopy = isHoustonLanding ? houstonPageCopy : defaultPageCopy;
+
   // Analytics hooks
-  usePageTracker('QuickLaunchWeb - Homepage', 'homepage');
+  usePageTracker(pageCopy.analyticsTitle, pageCopy.pageType);
   const { trackPlanSelected, trackAddonToggled, trackCheckoutInitiated } = useCheckoutTracker();
   const { track } = useEventTracker();
   const { trackFormStart: trackCustomFormStart, trackFormSubmit: trackCustomFormSubmit, trackFormError: trackCustomFormError } = useFormTracker('custom_quote', 'homepage_modal');
@@ -646,6 +865,9 @@ export default function HomePage() {
   const [faqSearch, setFaqSearch] = useState("");
   const [faqCategory, setFaqCategory] = useState("all");
 
+  // Mobile sticky CTA state
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
+
   // Scroll depth tracking
   const scrollTrackedRef = useRef<Set<number>>(new Set());
 
@@ -665,7 +887,7 @@ export default function HomePage() {
           scrollTrackedRef.current.add(threshold);
           track('scroll_depth', {
             scroll_depth: threshold,
-            page_path: '/',
+            page_path: pageCopy.scrollPath,
             event_category: 'engagement',
             event_label: `${threshold}%`,
           });
@@ -675,7 +897,29 @@ export default function HomePage() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [track]);
+  }, [pageCopy.scrollPath, track]);
+
+  // Mobile Sticky CTA scroll direction tracking
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Show when scrolling down past the hero section (e.g., 300px)
+      if (currentScrollY > 300 && currentScrollY > lastScrollY) {
+        setShowMobileCTA(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Hide when scrolling back up
+        setShowMobileCTA(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Open upsell modal
   const openUpsellModal = (plan: Plan) => {
@@ -869,32 +1113,38 @@ export default function HomePage() {
   // ==========================================================================
   // Feature data
   // ==========================================================================
-  const features = [
+  const features = pageCopy.features;
+  /*
     {
-      title: "Customers Can Call You in One Tap",
-      desc: "Built for customers on their phones: tap-to-call, quick quote requests, and clear next steps.",
+      title: "One Tap to Call You. Zero Friction.",
+      desc: "Most people leave a site if they can't call or message you in 3 seconds. Your site has tap-to-call, quick quote forms, and no dead ends.",
       icon: featureIcons.mobile,
     },
     {
-      title: "Visitors Stay Instead of Bouncing",
-      desc: "Fast load speeds so visitors don't bounce before contacting you.",
+      title: "Loads Fast. Doesn't Lose You Money.",
+      desc: "Slow sites lose customers. For every extra second it takes to load, you lose 7 out of 100 people. Your site loads in under 2 seconds.",
       icon: featureIcons.lightning,
     },
     {
-      title: "Show Up When People Search for You",
-      desc: "Structured for local search so you show up when people look for your services in your city.",
+      title: "Show Up First When Locals Search",
+      desc: "When someone searches \"plumber near me\" or \"contractor in [your city]\" — you show up. Not your competitor who paid $3,000 for a worse site.",
       icon: featureIcons.search,
     },
   ];
 
-  const deliverables = [
-    { label: "01", title: "A site that works on every phone", detail: "Tap-to-call ready" },
-    { label: "02", title: "Leads sent straight to your inbox", detail: "Quote form included" },
-    { label: "03", title: "Get found when locals search", detail: "Local SEO foundation" },
-    { label: "04", title: "Fast, secure, no waiting", detail: "Speed + SSL included" },
-    { label: "05", title: "Live and ready to land clients", detail: "Launched in 48 hours" },
-    { label: "06", title: "We keep it working, you focus on customers", detail: "Ongoing support" },
+  */
+
+  const deliverables = pageCopy.deliverables;
+  /*
+    { label: "01", title: "Works on every phone (because that's where your customers are)", detail: "Tap-to-call ready" },
+    { label: "02", title: "Customer messages go straight to your inbox", detail: "Quote form included" },
+    { label: "03", title: "Google finds you before your competition", detail: "Local SEO foundation" },
+    { label: "04", title: "Opens fast — no waiting, no spinning wheel", detail: "Speed + SSL included" },
+    { label: "05", title: "Live and getting you customers while you sleep", detail: "Launched in 48 hours" },
+    { label: "06", title: "We maintain it. You focus on doing the actual work.", detail: "Ongoing support" },
   ];
+
+  */
 
   const customWebsiteFeatures = [
     "Full multi-page websites",
@@ -906,18 +1156,24 @@ export default function HomePage() {
     "Advanced SEO + analytics",
   ];
 
-  const steps = [
-    { step: "01", title: "Subscribe & Start", desc: "Choose your plan in under a minute. We start immediately - no back-and-forth needed." },
-    { step: "02", title: "Fill Out The Form", desc: "Send your services, service area, photos, and contact info. Simple and quick." },
-    { step: "03", title: "We Build, Launch & Support", desc: "Your site goes live in 48 hours. We keep it updated, fast, and converting." },
+  const steps = pageCopy.steps;
+  /*
+    { step: "01", title: "Pick a Plan (60 seconds)", desc: "No proposals. No \"discovery calls.\" Pick your plan, pay, we start building the same day." },
+    { step: "02", title: "Send Us the Basics", desc: "Your services, area, photos, contact info. Takes 5 minutes. That's the last thing you do." },
+    { step: "03", title: "We Launch. You Get Customers.", desc: "48 hours later your site is live and showing up on Google. We handle updates, speed, and search rankings — you just answer the phone." },
   ];
 
-  const stats = [
+  */
+
+  const stats = pageCopy.stats;
+  /*
     { value: "FREE", label: "Website Build" },
     { value: "48h", label: "Launch Time" },
     { value: "$99", label: "/mo Hosting" },
     { value: "Unlimited", label: "Cancel Anytime" },
   ];
+
+  */
 
   // ==========================================================================
   // Render
@@ -930,37 +1186,28 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* ===== Hero Section ===== */}
-        <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-32 md:pb-40 md:pt-52 min-h-screen bg-[#020202]">
+        <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-32 md:pb-28 md:pt-52 min-h-screen bg-[#020202]">
           {/* Experience Hero Background */}
-          <ExperienceHeroBackground />
+          {isHoustonLanding ? <GlobeBackground /> : <ExperienceHeroBackground />}
 
           <div className="relative z-10 flex flex-col items-center">
             {/* Status pill */}
             <GlassPill variant="accent" pulse className="mb-10">
-              NO LOCK-IN. IF IT DOESN'T BRING YOU BUSINESS, WALK AWAY.
+              {pageCopy.heroPill}
             </GlassPill>
 
             {/* Headline */}
-            {/* Headline */}
-            <h1 className="mx-auto max-w-4xl text-center text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl text-balance">
-              Stop Losing Customers.{" "}
-              <span
-                className="text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: 'linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))'
-                }}
-              >
-                <br />Get a Website That Works.
-              </span>
+            <h1 className="mx-auto max-w-4xl text-center text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl text-balance">
+              {pageCopy.heroHeading}
             </h1>
 
             {/* Subhead - Centered bullet points */}
             <div className="mx-auto mt-8 w-full max-w-xl">
               <ul className="space-y-3 text-base text-secondary md:text-lg">
                 {[
-                  "Live in 48 hours — built by hand, not templates",
-                  "Mobile-first + lead capture (call + form) built in",
-                  "$99/mo. Cancel anytime if it's not paying for itself",
+                  pageCopy.heroBullets[0],
+                  pageCopy.heroBullets[1],
+                  "$99/mo — costs less than one job pays you. Cancel if it's not worth it",
                 ].map((item) => (
                   <li key={item} className="flex items-center justify-center gap-3">
                     <CheckIcon className="h-5 w-5 text-accent shrink-0" />
@@ -1008,30 +1255,42 @@ export default function HomePage() {
               </GlassButton>
             </div>
             <p className="mt-4 text-center text-sm text-muted">
-              Takes 60 seconds to start. No calls needed.
+              60 seconds to start. No sales calls. No &quot;let&apos;s schedule a discovery session.&quot;
             </p>
 
-            {/* Social proof stats - consolidated */}
-            <div className="mt-16 pt-12 border-t border-white/[0.06] w-full max-w-4xl">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted text-center mb-8">
-                Client Results
+            {/* Client logo marquee - Static Layout */}
+            <div className="mt-14 pt-8 border-t border-white/[0.06] w-full relative">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted text-center mb-6">
+                Recent Launches
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-accent">FREE</p>
-                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Website Build</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-white">48h</p>
-                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Launch Time</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-white">312%</p>
-                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">Avg. ROI</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-white">$99</p>
-                  <p className="text-[10px] text-muted uppercase tracking-widest mt-2">/mo Hosting</p>
+
+              {/* Fade masks for horizontal scrolling on mobile */}
+              <div className="absolute left-0 top-[60px] bottom-0 w-8 bg-gradient-to-r from-[#020202] to-transparent z-10 pointer-events-none md:hidden" />
+              <div className="absolute right-0 top-[60px] bottom-0 w-8 bg-gradient-to-l from-[#020202] to-transparent z-10 pointer-events-none md:hidden" />
+
+              <div className="w-full">
+                <div className="flex flex-nowrap w-full items-center md:justify-between gap-6 md:gap-8 overflow-x-auto scrollbar-hide px-4 py-2 md:px-0 md:py-0">
+                  {[
+                    { src: "/logos/elitehomerepairs.png", alt: "Elite Home Repairs", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/madenewpressure.svg", alt: "Made New Pressure Washing", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/jnornamentaldesign.svg", alt: "JN Ornamental Design", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/3dfencing.png", alt: "3D Fencing", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/anpaintingrenovations.png", alt: "AN Painting Renovations", hasBg: true, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/jimenezjunkremoval.png", alt: "Jimenez Junk Removal", hasBg: false, h: "h-6 md:h-8", mw: "max-w-[90px] md:max-w-[120px]" },
+                    { src: "/logos/JimenezTreePro.png", alt: "Jimenez Tree Pro", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/landeroselectrical.png", alt: "Landeros Electrical", hasBg: false, h: "h-8 md:h-11", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/tomi.png", alt: "Tomi Jewelry", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/becreativesco.jpg", alt: "Becreativesco", hasBg: true, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[100px]" },
+                  ].map((logo) => (
+                    <div key={logo.alt} className="flex items-center justify-center shrink-0 w-auto">
+                      <img
+                        src={logo.src}
+                        alt={logo.alt}
+                        className={`${logo.h} ${logo.mw} w-auto object-contain opacity-70 ${logo.hasBg ? "rounded" : ""}`}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1047,27 +1306,20 @@ export default function HomePage() {
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-16 md:text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-                Built to convert <span className="text-accent">clicks into clients</span>.
+                {pageCopy.featureHeading}
               </h2>
               <p className="mt-4 text-lg text-secondary md:mx-auto md:max-w-2xl">
-                Built to get you calls, form leads, and booked inquiries - not just look pretty.
-                Every site is optimized for speed, SEO, and lead generation.
+                {pageCopy.featureDescription}
               </p>
               <div className="mt-6 md:mx-auto md:max-w-4xl">
                 <p className="text-xs uppercase tracking-widest text-muted mb-4">Best for</p>
                 <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-secondary">
-                  <span className="flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-accent" />
-                    Service businesses & local brands
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-accent" />
-                    Creators & startups
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-accent" />
-                    Anyone who wants done-for-you
-                  </span>
+                  {pageCopy.bestFor.map((item) => (
+                    <span key={item} className="flex items-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-accent" />
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1102,10 +1354,10 @@ export default function HomePage() {
                     Launch timeline
                   </p>
                   <h2 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">
-                    What You Get in <span className="text-accent">48 Hours</span>
+                    {pageCopy.deliverablesHeading}
                   </h2>
                   <p className="mt-4 text-lg text-secondary">
-                    A live website built to win clients.
+                    {pageCopy.deliverablesDescription}
                   </p>
                   <p className="mt-2 text-xs text-muted">
                     Delivery starts after your details are submitted.
@@ -1157,49 +1409,41 @@ export default function HomePage() {
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-16 md:text-center">
               <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
-                Stop paying $1,000+ upfront
+                {pageCopy.pricingEyebrow}
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-                Free website. Just pay hosting.
+                {pageCopy.pricingHeading}
               </h2>
               <p className="mt-4 text-lg text-secondary max-w-2xl mx-auto">
-                Most designers charge $500-$2,000 upfront. We don&apos;t. Monthly fee covers hosting,
-                maintenance, and keeping your site converting.
-              </p>
+                {pageCopy.pricingDescription}{/*
+                We build yours free — you only pay monthly if it&apos;s working. Cancel the second it&apos;s not.
+              */}</p>
             </div>
 
             {/* Plan comparison helper - centered */}
             <div className="mx-auto mb-16 max-w-4xl">
               <div className="flex flex-col md:flex-row md:justify-center gap-12 md:gap-20 text-sm text-secondary">
                 <div className="text-center">
-                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4 font-medium">Most businesses choose Pro if:</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4 font-medium">{pageCopy.proHelperHeading}</p>
                   <ul className="space-y-2">
-                    <li className="flex items-center justify-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
-                      <span>You offer multiple services</span>
-                    </li>
-                    <li className="flex items-center justify-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
-                      <span>You want stronger Google structure</span>
-                    </li>
-                    <li className="flex items-center justify-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
-                      <span>You want faster edits + tracking</span>
-                    </li>
+                    {pageCopy.proHelperItems.map((item) => (
+                      <li key={item} className="flex items-center justify-center gap-2">
+                        <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="hidden md:block w-px bg-white/[0.08]" />
                 <div className="text-center">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted mb-4 font-medium">Choose Starter if:</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted mb-4 font-medium">{pageCopy.starterHelperHeading}</p>
                   <ul className="space-y-2">
-                    <li className="flex items-center justify-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
-                      <span>You only need a clean 1-page presence</span>
-                    </li>
-                    <li className="flex items-center justify-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
-                      <span>You want the lowest monthly cost</span>
-                    </li>
+                    {pageCopy.starterHelperItems.map((item) => (
+                      <li key={item} className="flex items-center justify-center gap-2">
+                        <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -1224,7 +1468,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Basic presence website built to turn visitors into leads. Hosting + support included. Cancel anytime.
+                    One page. One goal: make your phone ring. Hosting, support, and updates included. Cancel anytime.
                   </p>
                 </div>
 
@@ -1288,7 +1532,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    More pages + stronger structure for multi-service businesses. Priority support and faster updates. Cancel anytime.
+                    3 pages. Multiple services. Higher on Google. Built for businesses that want to own their area — not just &quot;be online.&quot;
                   </p>
                 </div>
 
@@ -1347,7 +1591,7 @@ export default function HomePage() {
                     <span className="text-secondary">/project</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    For ecommerce, integrations, booking systems, portals, and automation. One call, clear scope, fixed quote.
+                    Ecommerce, booking systems, portals, automations — the works. One call. Fixed quote. No surprise invoices.
                   </p>
                 </div>
 
@@ -1381,10 +1625,10 @@ export default function HomePage() {
 
             <div className="mt-10 text-center">
               <p className="text-xs text-muted">
-                No setup fees. No long-term commitments. Just results-driven websites you can keep or cancel.
+                No setup fees. No contracts. No &quot;minimum 6-month commitment.&quot; Just results — or you walk.
               </p>
               <p className="mt-3 text-sm text-secondary">
-                <span className="font-semibold text-white">Love-It-Or-Cancel Guarantee:</span> Try it for 30 days. If you don&apos;t love it, cancel anytime. No contracts. No pressure.
+                <span className="font-semibold text-white">The &quot;It Pays For Itself&quot; Promise:</span> If your site doesn&apos;t bring in more than it costs within 30 days, cancel. One click. No phone call. No questions. We cover the cost of building it — not you.
               </p>
             </div>
           </div>
@@ -1399,10 +1643,10 @@ export default function HomePage() {
             <div className="mb-10 md:text-center">
               <p className="text-xs uppercase tracking-wider text-muted">Guides</p>
               <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
-                Growth Guides for Local Businesses
+                {pageCopy.guidesHeading}
               </h2>
               <p className="mt-3 text-sm text-secondary">
-                Straightforward, professional guides to help you launch faster and convert more leads.
+                {pageCopy.guidesDescription}
               </p>
             </div>
 
@@ -1413,7 +1657,7 @@ export default function HomePage() {
                   Why Your Website Isn't Getting Customers
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  Learn the 5 conversion killers on most sites and how to fix them fast.
+                  5 things on your site scaring away customers right now — and the 10-minute fix for each one.
                 </p>
                 <Link href="/guides/why-website-not-getting-customers" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
@@ -1426,7 +1670,7 @@ export default function HomePage() {
                   How to Get More Customers From Your Website
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  The 3 things every high-converting site needs and free traffic strategies.
+                  The 3 things every site that gets customers has — and how to get visitors without paying for ads.
                 </p>
                 <Link href="/guides/how-to-get-more-customers-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
@@ -1439,7 +1683,7 @@ export default function HomePage() {
                   Do You Actually Need a Website?
                 </Link>
                 <p className="mt-3 text-sm text-secondary">
-                  The honest answer about when you need one and what it costs to not have one.
+                  The real cost of not having a website — broken down month by month. The number is bigger than you think.
                 </p>
                 <Link href="/guides/do-you-need-a-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
                   Read guide
@@ -1455,7 +1699,7 @@ export default function HomePage() {
 
           <div className="relative z-10 mx-auto max-w-4xl">
             <h2 className="mb-8 text-center text-3xl font-bold text-white md:text-4xl">
-              Frequently Asked Questions
+              {pageCopy.faqHeading}
             </h2>
 
             {/* Search Bar - Sticky on scroll */}
@@ -1574,10 +1818,10 @@ export default function HomePage() {
                 <span className="text-white/90 text-lg">QuickLaunchWeb</span>
               </Link>
               <p className="mt-4 max-w-sm text-sm text-secondary leading-relaxed">
-                High-converting, mobile-first websites built fast for local businesses.
+                {pageCopy.footerDescription}
               </p>
               <p className="mt-3 text-xs text-muted">
-                Built for speed. Focused on clients.
+                {pageCopy.footerTagline}
               </p>
             </div>
 
@@ -1623,6 +1867,39 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* ===== Mobile Sticky CTA ===== */}
+      <AnimatePresence>
+        {showMobileCTA && (
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 50, opacity: 0 }}
+            transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
+            className="fixed bottom-6 inset-x-0 z-50 flex justify-center md:hidden pointer-events-none"
+          >
+            <div className="pointer-events-auto">
+              <button
+                onClick={() => {
+                  track('cta_click', {
+                    cta_text: 'Start My Free Website',
+                    cta_location: 'mobile_sticky',
+                    event_category: 'engagement',
+                    event_label: 'mobile_sticky_cta',
+                  });
+                  openUpsellModal("starter");
+                }}
+                className="group flex items-center gap-2 rounded-full border border-white/[0.15] bg-black/60 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_-5px_var(--color-accent)] backdrop-blur-md transition-all ease-smooth active:scale-95"
+              >
+                Start My Free Website
+                <svg className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ===== Upsell Modal (Radix Dialog) ===== */}
       <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
@@ -1854,10 +2131,10 @@ export default function HomePage() {
             </div>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog >
 
       {/* ===== Custom Website Modal ===== */}
-      <Dialog
+      < Dialog
         open={showCustomModal}
         onOpenChange={(open) => {
           setShowCustomModal(open);
@@ -1865,7 +2142,8 @@ export default function HomePage() {
             setCustomError("");
             setCustomSuccess("");
           }
-        }}
+        }
+        }
       >
         <DialogContent>
           <DialogCloseButton />
@@ -1961,7 +2239,7 @@ export default function HomePage() {
             We will reply within 1 business day.
           </p>
         </DialogContent>
-      </Dialog>
-    </div>
+      </Dialog >
+    </div >
   );
 }

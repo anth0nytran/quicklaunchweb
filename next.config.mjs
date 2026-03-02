@@ -25,9 +25,6 @@ const csp = [
 ].join("; ");
 
 const nextConfig = {
-  // ==========================================================================
-  // Image Optimization
-  // ==========================================================================
   images: {
     remotePatterns: [
       {
@@ -35,45 +32,35 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
     ],
-    // Optimize for faster loading
     formats: ["image/avif", "image/webp"],
   },
 
-  // ==========================================================================
-  // Security Headers (Production)
-  // ==========================================================================
   async headers() {
     return [
       {
         source: "/:path*",
         headers: [
-          // Prevent MIME type sniffing
           {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
-          // Prevent clickjacking
           {
             key: "X-Frame-Options",
             value: "DENY",
           },
-          // XSS Protection (legacy browsers)
           {
             key: "X-XSS-Protection",
             value: "1; mode=block",
           },
-          // Referrer Policy
           {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
-          // Permissions Policy (disable unused features)
           {
             key: "Permissions-Policy",
             value:
               "camera=(), microphone=(), geolocation=(), interest-cohort=()",
           },
-          // Strict Transport Security (HTTPS only)
           {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains",
@@ -84,7 +71,6 @@ const nextConfig = {
           },
         ],
       },
-      // Additional security for API routes
       {
         source: "/api/:path*",
         headers: [
@@ -100,56 +86,57 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/blog",
+        destination: "/guides",
+        permanent: true,
+      },
+      {
+        source: "/blogs/subscription-web-design",
+        destination: "/guides/pay-monthly-web-design-vs-upfront",
+        permanent: true,
+      },
+      {
+        source: "/blogs/done-for-you-websites",
+        destination: "/guides/monthly-website-plan-whats-included",
+        permanent: true,
+      },
+      {
+        source: "/blogs/website-in-48-hours",
+        destination: "/guides/can-a-website-really-be-built-in-48-hours",
+        permanent: true,
+      },
+      {
         source: "/blogs/:path*",
         destination: "/guides/:path*",
         permanent: true,
       },
-      // Old pillar guide URLs → New SEO-optimized URLs
       {
         source: "/guides/subscription-web-design",
-        destination: "/guides/why-website-not-getting-customers",
+        destination: "/guides/pay-monthly-web-design-vs-upfront",
         permanent: true,
       },
       {
         source: "/guides/done-for-you-websites",
-        destination: "/guides/how-to-get-more-customers-website",
+        destination: "/guides/monthly-website-plan-whats-included",
         permanent: true,
       },
       {
         source: "/guides/website-in-48-hours",
-        destination: "/guides/do-you-need-a-website",
+        destination: "/guides/can-a-website-really-be-built-in-48-hours",
         permanent: true,
       },
     ];
   },
 
-  // ==========================================================================
-  // Production Optimizations
-  // ==========================================================================
-
-  // Enable React strict mode for better error detection
   reactStrictMode: true,
-
-  // Compress responses
   compress: true,
-
-  // Generate ETags for caching
   generateEtags: true,
+  poweredByHeader: false,
 
-  // Power usage optimization
-  poweredByHeader: false, // Remove X-Powered-By header
-
-  // ==========================================================================
-  // Build Optimizations
-  // ==========================================================================
-
-  // Enable experimental features for better performance
   experimental: {
-    // Optimize package imports
     optimizePackageImports: ["clsx", "tailwind-merge", "lucide-react"],
   },
 
-  // Ignore build errors for specific paths (remove for stricter builds)
   typescript: {
     ignoreBuildErrors: true,
   },

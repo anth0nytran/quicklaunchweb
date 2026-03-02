@@ -1,166 +1,321 @@
 "use client";
 
-import { GlassCard, AmbientGlow } from "@/components/ui/glass";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { GlassCard, AmbientGlow, GlassDivider } from "@/components/ui/glass";
 import { useEventTracker } from "@/lib/analytics";
 
 // =============================================================================
-// Simple Brand Link Component (Apple-style typography)
+// Icons
 // =============================================================================
 
-function BrandLink({
-  name,
-  url,
-  index,
-}: {
-  name: string;
-  url: string;
-  index: number;
-}) {
-  const { track } = useEventTracker();
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    // Track social proof click
-    track('social_proof_clicked', {
-      item_name: name,
-      item_url: url,
-      item_index: index,
-      event_category: 'engagement',
-      event_label: name,
-    });
-
-    window.open(`https://${url}`, "_blank", "noopener,noreferrer");
-  };
-
+function StarIcon({ className }: { className?: string }) {
   return (
-    <a
-      href={`https://${url}`}
-      onClick={handleClick}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex flex-col items-center justify-center h-full w-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-xl"
-    >
-      <div className="text-center space-y-2">
-        <h3 className="text-2xl font-semibold text-white tracking-tight">
-          {name}
-        </h3>
-        <p className="text-sm text-muted font-mono">
-          {url}
-        </p>
-      </div>
-      
-      {/* Subtle hover indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <svg
-          className="h-4 w-4 text-muted"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-        </svg>
-      </div>
-    </a>
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    </svg>
   );
 }
 
-type Project = {
+function ArrowIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  );
+}
+
+// =============================================================================
+// Testimonial Data
+// =============================================================================
+
+type Testimonial = {
+  text: string;
   name: string;
-  type: string;
+  company: string;
+  role: string;
   url: string;
-  tags: string[];
-  proofLabel: string;
-  proofStat: string;
-  proofDetail: string;
+  stat: string;
 };
 
-const projects: Project[] = [
+const testimonials: Testimonial[] = [
   {
-    name: "Tomi Jewelry",
-    type: "Shopify Store Launch",
+    text: "was paying some seo guy 250 a month for a website that looked honestly like crap. zero calls from it. decided to go with Anthony because hes local and it was the best choice. he actually cared and worked with us 1:1 to get exactly what we wanted. dude was available 24/7 to answer questions. got 3 real jobs from google in the first month. highly recommend",
+    name: "Jose",
+    company: "Elite Home Repairs",
+    role: "Home Remodeling · Houston, TX",
+    url: "elitehomerepairs.us",
+    stat: "3 new jobs from Google in 30 days",
+  },
+  {
+    text: "really glad i found them. we were just doing word of mouth and facebook groups before. Anthony met with us 1 on 1 to figure out what we needed. now when people search pressure washing near me we actually show up. getting quote requests straight to my email every few days now without doing anything.",
+    name: "Blake",
+    company: "Made New Pressure Washing",
+    role: "Pressure Washing · Houston, TX",
+    url: "madenewpressurewashing.com",
+    stat: "Ranking on Google in weeks",
+  },
+  {
+    text: "we had a site but it didnt even have a way for people to call us from their phone easily... Anthony built us a whole new site in like 2 days. loved that hes local and actually cared about my business. phone definitely rings more now. should have just done this a year ago tbh.",
+    name: "Juan",
+    company: "JN Ornamental Design",
+    role: "Fencing & Fabrication · Houston, TX",
+    url: "jnornamentaldesign.com",
+    stat: "40% more calls in week one",
+  },
+  {
+    text: "man we were losing bids to guys doing worse work than us just cause their website looked better. customers judge u before they even call. Anthony worked with me 1:1 and was literally replying to me 24/7 to get the design exactly how I wanted. quicklaunch gave us a site that actually looks professional. closing way more people now",
+    name: "David",
+    company: "3D Fencing",
+    role: "Fencing Contractor · Houston, TX",
+    url: "3dfencing.com",
+    stat: "Leads within the first week",
+  },
+  {
+    text: "Tried making my own wix site and it was a mess. was honestly embarrassed to send it to homeowners. went with anthony cause hes local and u can tell he actually cares. turned it around in 2 days and it looks super clean. booked 4 solid painting jobs just from people finding the site so far",
+    name: "Jamie",
+    company: "AN Painting Renovations",
+    role: "Painting & Renovation · Houston, TX",
+    url: "anpaintingrenovations.com",
+    stat: "4 jobs booked from website",
+  },
+  {
+    text: "had absolutely nothing for my tree service just a facebook page. Anthony is the man, completely hands on 1:1 process and answered my texts 24/7. they built me a site that actually shows up when people search in baytown... went from basically invisible online to getting a few calls a week. best investment ive made for the business",
+    name: "Cristian",
+    company: "Jimenez Tree Pro",
+    role: "Tree & Junk Removal · Baytown, TX",
+    url: "jimeneztreepro.com",
+    stat: "Calls every week from Google",
+  },
+  {
+    text: "business was too up and down. good weeks then dead weeks. needed people to find us when they needed an electrician fast. Loved working with Anthony since he's local. he really took the time to understand what we needed 1:1. they set up the site with tap to call buttons and its been steady leads from google since",
+    name: "Juan",
+    company: "Landeros Electrical",
+    role: "Electrical Contractor · Houston, TX",
+    url: "landeroselectrical.com",
+    stat: "Steady leads from Google",
+  },
+  {
+    text: "In real estate everyone looks the same. needed something that made us look like top producers in our area. even though hes out of state, anthony felt like he was right down the street. incredible communication and super responsive 24/7. the site he built captures leads instantly instead of losing them to zillow. got 3 new listings directly from the site!",
+    name: "Jack",
+    company: "The Toro Group Corp",
+    role: "Real Estate Team · San Dimas, CA",
+    url: "soldbytoro.com",
+    stat: "3 new listings from website",
+  },
+  {
+    text: "our old site looked super cheap compared to the actual jewelry we sell... people literally told us that. Anthony worked with us 1:1 and he was so patient and actually cared about getting it perfect. definitely seeing more foot traffic from people finding us online first.",
+    name: "Tomi",
+    company: "Tomi Jewelry",
+    role: "Jewelry Store · Houston, TX",
     url: "tomijewelry.com",
-    tags: ["Accounts + Cart Setup", "Analytics Tracking"],
-    proofLabel: "30-Day Results",
-    proofStat: "1,750+ visitors",
-    proofDetail: "8,800+ page views in the first month.",
+    stat: "More foot traffic from Google",
   },
   {
-    name: "Diamond Street Realty",
-    type: "Seller Lead Machine",
-    url: "diamondstreetrealty.com",
-    tags: ["Home Valuation Funnel", "CRM + Automation"],
-    proofLabel: "Lead Flow",
-    proofStat: "4-8 listing appointments / month",
-    proofDetail: "Conversion-focused seller funnel + CRM automation.",
-  },
-  {
-    name: "Becreativesco",
-    type: "Agency Site Built To Book",
+    text: "was running my whole business out of instagram DMs which was getting annoying. quick launch got me set up fast. was worried about hiring someone out of state but anthony was awesome. crazy communicative and basically available 24/7 whenever I had a question. we show up for local searches now and had 12 inquiries come in last month. process was super easy too",
+    name: "Brian",
+    company: "Becreativesco",
+    role: "Marketing & Branding · Boston, MA",
     url: "becreativesco.com",
-    tags: ["Portfolio + Video Showcase", "Automated Lead Capture"],
-    proofLabel: "First 30 Days",
-    proofStat: "2 high-value inbound leads",
-    proofDetail: "Booked from the new portfolio + capture flow.",
+    stat: "12 new inquiries in 6 weeks",
   },
 ];
 
+// =============================================================================
+// Social Proof Section
+// =============================================================================
+
 export function SocialProofSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { track } = useEventTracker();
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activePage, setActivePage] = useState(0);
+  const [totalPages, setTotalPages] = useState(3);
+
+  const checkScroll = useCallback(() => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const atEnd = scrollLeft >= scrollWidth - clientWidth - 10;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(!atEnd);
+
+    // Calculate pages based on how many cards fit in view
+    const cardWidth = scrollRef.current.firstElementChild
+      ? (scrollRef.current.firstElementChild as HTMLElement).offsetWidth + 20
+      : 390;
+    const visibleCards = Math.floor(clientWidth / cardWidth);
+    const pages = Math.ceil(testimonials.length / Math.max(visibleCards, 1));
+    setTotalPages(pages);
+
+    // Calculate active page
+    if (atEnd) {
+      setActivePage(pages - 1);
+    } else {
+      const currentCard = Math.round(scrollLeft / cardWidth);
+      const page = Math.floor(currentCard / Math.max(visibleCards, 1));
+      setActivePage(Math.min(page, pages - 1));
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    return () => el.removeEventListener("scroll", checkScroll);
+  }, [checkScroll]);
+
+  const getCardWidth = () => {
+    if (!scrollRef.current?.firstElementChild) return 390;
+    return (scrollRef.current.firstElementChild as HTMLElement).offsetWidth + 20;
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    if (direction === "right" && activePage < totalPages - 1) {
+      scrollToPage(activePage + 1);
+    } else if (direction === "left" && activePage > 0) {
+      scrollToPage(activePage - 1);
+    }
+  };
+
+  const scrollToPage = (page: number) => {
+    if (!scrollRef.current) return;
+    const { clientWidth, scrollWidth } = scrollRef.current;
+    const cardWidth = getCardWidth();
+    const visibleCards = Math.floor(clientWidth / cardWidth);
+    if (page >= totalPages - 1) {
+      // Last page — scroll to end
+      scrollRef.current.scrollTo({ left: scrollWidth, behavior: "smooth" });
+    } else {
+      scrollRef.current.scrollTo({ left: page * visibleCards * cardWidth, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section id="work" className="relative px-6 py-24 md:py-32 overflow-hidden">
+    <section id="work" className="relative py-24 md:py-32 overflow-hidden">
       <AmbientGlow color="white" position="center" intensity="subtle" className="opacity-30" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="mb-12 md:text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
-            Recently <span className="text-accent">Shipped</span>
-          </h2>
-          <p className="mt-3 text-secondary">
-          Real businesses. Real launches. Built fast — engineered to convert.
-          </p>
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="mb-14 md:text-center px-6">
+          <div className="mx-auto max-w-7xl">
+            <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
+              Don&apos;t Take Our Word For It. <span className="text-accent">See the Results.</span>
+            </h2>
+            <p className="mt-3 text-secondary">
+              Real businesses. Real results. All built and launched in under 48 hours.
+            </p>
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {projects.map((project, i) => (
-            <div key={i} className="group">
-              <GlassCard className="overflow-hidden p-0" hover>
-                <div className="p-5 pb-0">
-                  <div className="mb-1 flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-wider text-accent border border-accent/20 bg-accent/5 px-2 py-0.5 rounded-full">
-                      {project.type}
+        {/* Scroll container */}
+        <div className="relative">
+          <div
+            ref={scrollRef}
+            className="flex gap-5 overflow-x-auto scroll-smooth pb-2 pl-6 pr-6 scrollbar-hide snap-x snap-mandatory scroll-pl-6"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {testimonials.map((t, i) => (
+              <div key={i} className="flex-none w-[320px] md:w-[370px] snap-start">
+                <GlassCard className="p-6 h-full flex flex-col" hover>
+                  {/* Stars + Stat */}
+                  <div className="flex items-start justify-between mb-4 gap-3">
+                    <div className="flex gap-0.5 shrink-0">
+                      {[...Array(5)].map((_, j) => (
+                        <StarIcon key={j} className="h-3.5 w-3.5 text-[#FBBC04]" />
+                      ))}
+                    </div>
+                    <span className="text-[9px] font-semibold text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full uppercase tracking-wider leading-tight whitespace-nowrap">
+                      {t.stat}
                     </span>
                   </div>
-                  <div className="flex gap-2 mb-4 mt-2">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="text-[10px] text-muted">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
 
-                <div className="px-5 pb-5">
-                  <div className="relative aspect-[16/10] w-full rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.01] group-hover:shadow-2xl">
-                    <BrandLink name={project.name} url={project.url} index={i} />
-                  </div>
-                </div>
-              </GlassCard>
+                  {/* Quote */}
+                  <p className="text-sm text-secondary leading-relaxed italic mb-auto pb-5 flex-1">
+                    &ldquo;{t.text}&rdquo;
+                  </p>
 
-              {/* Proof highlight */}
-              <div className="mt-4 px-1 text-left">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-accent/80">
-                  {project.proofLabel}
-                </p>
-                <p className="mt-2 text-lg font-semibold text-white md:text-xl">
-                  {project.proofStat}
-                </p>
-                <p className="mt-1 text-xs text-secondary leading-relaxed">
-                  {project.proofDetail}
-                </p>
+                  {/* Attribution */}
+                  <GlassDivider className="mb-4" />
+                  <div className="flex items-center justify-between gap-3 min-w-0">
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{t.name}</p>
+                      <p className="text-xs text-muted mt-0.5 truncate">{t.role}</p>
+                    </div>
+                    <a
+                      href={`https://${t.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        track("social_proof_clicked", {
+                          item_name: t.company,
+                          item_url: t.url,
+                          item_index: i,
+                          event_category: "engagement",
+                          event_label: t.company,
+                        });
+                      }}
+                      className="flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors shrink-0 max-w-[45%]"
+                    >
+                      <span className="truncate">{t.company}</span>
+                      <ArrowIcon className="h-3 w-3 shrink-0" />
+                    </a>
+                  </div>
+                </GlassCard>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Navigation — centered below cards */}
+        <div className="flex items-center justify-center gap-3 mt-8 px-6">
+          <button
+            onClick={() => scroll("left")}
+            disabled={!canScrollLeft}
+            className="h-10 w-10 rounded-full border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-muted hover:text-white hover:border-white/[0.15] hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-default disabled:hover:text-muted disabled:hover:border-white/[0.08] disabled:hover:bg-white/[0.03] transition-all duration-200"
+            aria-label="Scroll left"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Scroll position dots */}
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToPage(i)}
+                style={{
+                  width: i === activePage ? 24 : 8,
+                  height: 8,
+                  borderRadius: 9999,
+                  backgroundColor: i === activePage ? "rgb(20, 184, 166)" : "rgba(255,255,255,0.2)",
+                  transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => {
+                  if (i !== activePage) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  if (i !== activePage) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.2)";
+                }}
+                aria-label={`Go to page ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => scroll("right")}
+            disabled={!canScrollRight}
+            className="h-10 w-10 rounded-full border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-muted hover:text-white hover:border-white/[0.15] hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-default disabled:hover:text-muted disabled:hover:border-white/[0.08] disabled:hover:bg-white/[0.03] transition-all duration-200"
+            aria-label="Scroll right"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
