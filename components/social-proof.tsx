@@ -193,7 +193,7 @@ export function SocialProofSection() {
   };
 
   return (
-    <section id="work" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="work" className="relative pt-16 pb-20 md:pt-20 md:pb-24 overflow-hidden">
       <AmbientGlow color="white" position="center" intensity="subtle" className="opacity-30" />
 
       <div className="relative z-10">

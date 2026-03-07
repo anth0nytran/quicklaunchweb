@@ -89,7 +89,7 @@ function getMetaContext(): MetaContext {
 }
 
 async function sendMetaServerEvent(event: {
-  eventName: 'ViewContent' | 'Lead' | 'CompleteRegistration' | 'LeadSubmitted';
+  eventName: 'ViewContent' | 'Lead' | 'CompleteRegistration' | 'LeadSubmitted' | 'Schedule';
   eventId: string;
   customData?: Record<string, unknown>;
   context: MetaContext;
@@ -276,6 +276,214 @@ function ROICalculator() {
 }
 
 // ═══════════════════════════════════════════════
+// QUICK LEAD FORM (alternative to Calendly)
+// ═══════════════════════════════════════════════
+
+const BUSINESS_TYPES = [
+  'Plumbing',
+  'Electrical',
+  'HVAC',
+  'Roofing',
+  'Fencing',
+  'Painting',
+  'Landscaping',
+  'Pressure Washing',
+  'Tree Service',
+  'General Contractor',
+  'Remodeling',
+  'Pool Service',
+  'Pest Control',
+  'Cleaning',
+  'Real Estate',
+  'Other',
+] as const;
+
+function QuickLeadForm({ onSubmitSuccess }: { onSubmitSuccess?: () => void }) {
+  const [form, setForm] = useState({ name: '', phone: '', business_name: '', business_type: '', email: '' });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const formStartedRef = useRef(false);
+  const formTimestampRef = useRef(Date.now());
+
+  const handleChange = (field: string, value: string) => {
+    if (!formStartedRef.current) {
+      formStartedRef.current = true;
+      trackEvent('form_start', { form: 'quick_lead', source: 'instagram' });
+    }
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!form.name.trim() || !form.phone.trim() || !form.business_name.trim() || !form.email.trim()) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    setLoading(true);
+
+    const context = getMetaContext();
+    const leadEventId = createEventId('ig_quick_lead');
+    const completeRegEventId = createEventId('ig_quick_complete_reg');
+    const leadSubmittedEventId = createEventId('ig_quick_lead_submitted');
+    const utms = getUtmParams();
+
+    try {
+      const res = await fetch('/api/instagram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
+          business_name: form.business_name.trim(),
+          business_type: form.business_type || 'Not specified',
+          source: 'instagram_landing_form',
+          _ts: String(formTimestampRef.current),
+          ...utms,
+          meta: {
+            leadEventId,
+            completeRegistrationEventId: completeRegEventId,
+            leadSubmittedEventId,
+            eventSourceUrl: context.eventSourceUrl,
+            fbp: context.fbp,
+            fbc: context.fbc,
+            fbclid: context.fbclid,
+            pageId: context.pageId,
+            messagingChannel: context.messagingChannel,
+          },
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || 'Something went wrong.');
+
+      // Fire client-side pixel events
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'instagram_quick_form', content_type: 'lead_form' }, { eventID: leadEventId });
+        window.fbq('track', 'CompleteRegistration', { content_name: 'instagram_quick_form', content_type: 'lead_form' }, { eventID: completeRegEventId });
+      }
+
+      trackEvent('form_submit', { form: 'quick_lead', source: 'instagram' });
+      setSubmitted(true);
+      onSubmitSuccess?.();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <GlassCard variant="elevated" className="p-6 sm:p-8 text-center bg-white/[0.04]">
+        <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center mx-auto mb-4">
+          <Check className="w-6 h-6 text-accent" />
+        </div>
+        <h3 className="text-[18px] font-bold text-white font-[family-name:var(--font-montserrat)] mb-2">
+          We Got You.
+        </h3>
+        <p className="text-[14px] text-white/60 leading-relaxed">
+          We&apos;ll text you a preview of your demo site within 24 hours. Keep an eye on your phone.
+        </p>
+      </GlassCard>
+    );
+  }
+
+  return (
+    <GlassCard variant="elevated" className="p-6 sm:p-8 relative overflow-hidden bg-white/[0.04]">
+      <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 blur-[50px] rounded-full pointer-events-none" />
+
+      <div className="relative">
+        <div className="text-center mb-6">
+          <p className="text-[13px] text-accent font-bold uppercase tracking-widest mb-2">Skip the call</p>
+          <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-[family-name:var(--font-montserrat)] leading-snug">
+            Not ready to hop on a call?
+          </h3>
+          <p className="text-[13px] text-white/50 mt-1.5">
+            Drop your info — we&apos;ll text you a preview of your demo site.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <input
+              type="text"
+              placeholder="Your name"
+              value={form.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              className="w-full h-11 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 text-[14px] text-white placeholder:text-white/30 focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+            />
+          </div>
+          <div>
+            <input
+              type="tel"
+              placeholder="Phone number"
+              value={form.phone}
+              onChange={(e) => handleChange('phone', e.target.value)}
+              className="w-full h-11 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 text-[14px] text-white placeholder:text-white/30 focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email address"
+              value={form.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+              className="w-full h-11 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 text-[14px] text-white placeholder:text-white/30 focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Business name"
+              value={form.business_name}
+              onChange={(e) => handleChange('business_name', e.target.value)}
+              className="w-full h-11 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 text-[14px] text-white placeholder:text-white/30 focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+            />
+          </div>
+          <div className="relative">
+            <select
+              value={form.business_type}
+              onChange={(e) => handleChange('business_type', e.target.value)}
+              className="w-full h-11 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 text-[14px] text-white appearance-none focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+            >
+              <option value="" className="bg-[#0a0a0f] text-white/50">What type of business?</option>
+              {BUSINESS_TYPES.map((type) => (
+                <option key={type} value={type} className="bg-[#0a0a0f] text-white">{type}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+          </div>
+
+          {error && (
+            <p className="text-[13px] text-red-400 text-center">{error}</p>
+          )}
+
+          <GlassButton
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={loading}
+            className="w-full text-[15px] font-bold py-4 mt-1"
+            icon={!loading ? <ArrowRight className="w-4 h-4" /> : undefined}
+          >
+            {loading ? 'Sending...' : 'Text Me My Preview'}
+          </GlassButton>
+
+          <p className="text-center text-[10px] text-white/25 leading-relaxed">
+            We&apos;ll text you a link to your demo. No spam. Unsubscribe anytime.
+          </p>
+        </form>
+      </div>
+    </GlassCard>
+  );
+}
+
+// ═══════════════════════════════════════════════
 // MAIN PAGE
 // ═══════════════════════════════════════════════
 
@@ -315,6 +523,49 @@ export default function InstagramLanding() {
     );
     observer.observe(heroRef.current);
     return () => observer.disconnect();
+  }, []);
+
+  // Calendly booking event → Meta "Schedule" tracking
+  useEffect(() => {
+    const handleCalendlyEvent = (e: MessageEvent) => {
+      if (e.data?.event !== 'calendly.event_scheduled') return;
+
+      const context = getMetaContext();
+      const eventId = createEventId('ig_schedule');
+
+      trackEvent('calendly_booked', { source: 'instagram' });
+
+      // Client-side pixel
+      if (typeof window.fbq === 'function') {
+        window.fbq(
+          'track',
+          'Schedule',
+          compactPayload({
+            content_name: 'instagram_demo_call',
+            content_type: 'appointment',
+            page_id: context.pageId,
+            messaging_channel: context.messagingChannel,
+          }),
+          { eventID: eventId }
+        );
+      }
+
+      // Server-side CAPI
+      void sendMetaServerEvent({
+        eventName: 'Schedule' as 'ViewContent',
+        eventId,
+        context,
+        customData: {
+          content_name: 'instagram_demo_call',
+          content_type: 'appointment',
+          page_id: context.pageId,
+          messaging_channel: context.messagingChannel,
+        },
+      });
+    };
+
+    window.addEventListener('message', handleCalendlyEvent);
+    return () => window.removeEventListener('message', handleCalendlyEvent);
   }, []);
 
   const scrollToCalendar = () => {
@@ -794,6 +1045,21 @@ export default function InstagramLanding() {
         <FadeInSection className="px-5 py-20 max-w-[500px] mx-auto">
           <ROICalculator />
         </FadeInSection>
+
+        {/* ════════════════════════════════════
+            SECTION 5.5 — QUICK LEAD FORM
+           ════════════════════════════════════ */}
+        <FadeInSection className="px-5 pb-16 max-w-[500px] mx-auto">
+          <QuickLeadForm />
+        </FadeInSection>
+
+        {/* Gradient divider + "or" label */}
+        <div className="relative max-w-[300px] mx-auto mb-16">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#050507] px-4 text-[11px] text-white/30 uppercase tracking-[0.2em] font-medium">
+            or book live
+          </span>
+        </div>
 
         {/* ════════════════════════════════════
             SECTION 6 — CALENDAR PLACEHOLDER

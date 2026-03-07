@@ -12,6 +12,7 @@ const ALLOWED_EVENT_NAMES = new Set([
   'Lead',
   'CompleteRegistration',
   'LeadSubmitted',
+  'Schedule',
 ]);
 
 const normalize = (value: unknown) =>

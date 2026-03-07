@@ -152,7 +152,7 @@ const defaultPageCopy = {
   analyticsTitle: "QuickLaunchWeb - Homepage",
   pageType: "homepage",
   scrollPath: "/",
-  heroPill: "DOESN'T BRING YOU CUSTOMERS? CANCEL. NO CONTRACTS. NO GUILT.",
+  heroPill: "48-HOUR WEBSITES FOR CONTRACTORS. $0 TO BUILD.",
   heroHeading: (
     <>
       Every Day Without a Website,{" "}
@@ -163,53 +163,53 @@ const defaultPageCopy = {
             "linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))",
         }}
       >
-        <br />
+        <br className="hidden md:block" />
         You're Paying Your Competitors.
       </span>
     </>
   ),
   heroBullets: [
-    "Hand-built & live in 48 hours (not a template with your logo slapped on)",
-    "Tap-to-call + quote forms so customers reach you, not your voicemail",
-    "$99/mo - costs less than one job pays you. Cancel if it's not worth it",
+    "Built by hand. Live in 48 hours. Not a template.",
+    "Tap-to-call + quote forms that ring your phone.",
+    "$99/mo. One job covers the whole year. Cancel anytime.",
   ],
   features: [
     {
-      title: "One Tap to Call You. Zero Friction.",
-      desc: "Most people leave a site if they can't call or message you in 3 seconds. Your site has tap-to-call, quick quote forms, and no dead ends.",
+      title: "One Tap to Call You.",
+      desc: "If people can't call you in 3 seconds, they leave. Your site has tap-to-call, quote forms, and zero dead ends.",
       icon: featureIcons.mobile,
     },
     {
-      title: "Loads Fast. Doesn't Lose You Money.",
-      desc: "Slow sites lose customers. For every extra second it takes to load, you lose 7 out of 100 people. Your site loads in under 2 seconds.",
+      title: "Loads Fast. Keeps Customers.",
+      desc: "Slow sites lose money. Every extra second costs you 7 out of 100 visitors. Your site loads in under 2 seconds.",
       icon: featureIcons.lightning,
     },
     {
-      title: "Show Up First When Locals Search",
-      desc: "When someone searches \"plumber near me\" or \"contractor in [your city]\" - you show up. Not your competitor who paid $3,000 for a worse site.",
+      title: "Show Up When People Search",
+      desc: "When someone Googles \"contractor near me\" — you show up. Not the guy who paid $3,000 for a worse site.",
       icon: featureIcons.search,
     },
   ],
   featureHeading: (
     <>
       A pretty website is <span className="text-accent">worthless</span>.
-      <br />A website that books jobs <span className="text-accent">isn't</span>.
+      <br />One that books jobs <span className="text-accent">isn't</span>.
     </>
   ),
   featureDescription:
-    "Most web designers build you something pretty to look at. We build you something that makes your phone ring, fills your inbox, and books your calendar.",
+    "Most designers build something nice to look at. We build something that makes your phone ring.",
   bestFor: [
-    "Service businesses & local brands",
-    "Creators & startups",
-    "Anyone who wants done-for-you",
+    "Contractors & home service pros",
+    "Local businesses that want more calls",
+    "Anyone tired of a site that does nothing",
   ],
   deliverables: [
-    { label: "01", title: "Works on every phone (because that's where your customers are)", detail: "Tap-to-call ready" },
-    { label: "02", title: "Customer messages go straight to your inbox", detail: "Quote form included" },
-    { label: "03", title: "Google finds you before your competition", detail: "Local SEO foundation" },
-    { label: "04", title: "Opens fast - no waiting, no spinning wheel", detail: "Speed + SSL included" },
-    { label: "05", title: "Live and getting you customers while you sleep", detail: "Launched in 48 hours" },
-    { label: "06", title: "We maintain it. You focus on doing the actual work.", detail: "Ongoing support" },
+    { label: "01", title: "Works on every phone — that's where your customers are", detail: "Tap-to-call ready" },
+    { label: "02", title: "Messages go right to your inbox", detail: "Quote form included" },
+    { label: "03", title: "Google finds you before the other guy", detail: "Local SEO built in" },
+    { label: "04", title: "Opens fast — no waiting, no spinning wheel", detail: "Speed + SSL included" },
+    { label: "05", title: "Live and landing you jobs while you sleep", detail: "Launched in 48 hours" },
+    { label: "06", title: "We keep it running. You do the work.", detail: "Ongoing support" },
   ],
   deliverablesHeading: (
     <>
@@ -217,11 +217,11 @@ const defaultPageCopy = {
     </>
   ),
   deliverablesDescription:
-    "Not \"we'll have mockups in 2 weeks.\" A live, working site collecting leads while your competitors are still picking fonts.",
+    "No \"we'll have mockups in 2 weeks.\" Your site is live and getting leads while your competitors are still picking fonts.",
   steps: [
-    { step: "01", title: "Pick a Plan (60 seconds)", desc: "No proposals. No \"discovery calls.\" Pick your plan, pay, we start building the same day." },
-    { step: "02", title: "Send Us the Basics", desc: "Your services, area, photos, contact info. Takes 5 minutes. That's the last thing you do." },
-    { step: "03", title: "We Launch. You Get Customers.", desc: "48 hours later your site is live and showing up on Google. We handle updates, speed, and search rankings - you just answer the phone." },
+    { step: "01", title: "Pick a Plan (60 seconds)", desc: "No pitches. No \"discovery calls.\" Pick your plan, pay, and we start building that day." },
+    { step: "02", title: "Send Us the Basics", desc: "Your services, area, photos, and contact info. Takes 5 minutes. That's the last thing you do." },
+    { step: "03", title: "We Launch. You Get Customers.", desc: "48 hours later your site is live on Google. We handle the rest — you just answer the phone." },
   ],
   stats: [
     { value: "FREE", label: "Website Build" },
@@ -231,9 +231,9 @@ const defaultPageCopy = {
   ],
   pricingEyebrow:
     "You wouldn't pay $2,000 for a sign that doesn't bring in foot traffic",
-  pricingHeading: "$0 to build. $99/mo to keep it printing money.",
+  pricingHeading: "$0 to build. $99/mo to keep it making you money.",
   pricingDescription:
-    "Other agencies charge $1,500+ upfront for a site that sits there doing nothing. We build yours free - you only pay monthly if it's working. Cancel the second it's not.",
+    "Most agencies charge $1,500+ upfront for a site that just sits there. We build yours free. You only pay if it's working. Cancel the second it's not.",
   proHelperHeading: "Go Pro if you want to win more jobs:",
   proHelperItems: [
     "You offer multiple services (rank for all of them)",
@@ -247,7 +247,7 @@ const defaultPageCopy = {
   ],
   guidesHeading: "Free Playbooks That Actually Work",
   guidesDescription:
-    "No fluff. No \"subscribe to read.\" Simple guides that show you exactly how to get more customers online.",
+    "No fluff. No sign-up walls. Short guides that show you how to get more customers.",
   faqHeading: "Frequently Asked Questions",
   footerDescription:
     "Websites that make local businesses money. Built in 48 hours. No upfront cost.",
@@ -269,7 +269,7 @@ const houstonPageCopy = {
             "linear-gradient(to right, rgb(var(--color-accent-rgb)), rgb(var(--color-accent-gradient-to)))",
         }}
       >
-        <br />
+        <br className="hidden md:block" />
         That Gets You More Calls.
       </span>
     </>
@@ -752,7 +752,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
   ];
 
   return (
-    <section id="how-it-works" className="relative px-6 py-24 md:py-32 allow-motion">
+    <section id="how-it-works" className="relative px-6 pt-16 pb-20 md:pt-20 md:pb-24 allow-motion">
       <AmbientGlow color="accent" position="center" intensity="subtle" />
       <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
 
@@ -1147,13 +1147,13 @@ export default function HomePage() {
   */
 
   const customWebsiteFeatures = [
-    "Full multi-page websites",
-    "Custom design system + branding",
-    "API integrations + automations",
-    "Ecommerce + payments",
-    "Dashboards or client portals",
-    "CRM + Booking setup",
-    "Advanced SEO + analytics",
+    "Full multi-page website",
+    "Custom design + your branding",
+    "Tools that talk to each other",
+    "Online store + payments",
+    "Client logins or dashboards",
+    "Booking + CRM setup",
+    "SEO + tracking built in",
   ];
 
   const steps = pageCopy.steps;
@@ -1186,39 +1186,41 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* ===== Hero Section ===== */}
-        <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-32 md:pb-28 md:pt-52 min-h-screen bg-[#020202]">
+        <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 pb-16 pt-24 md:px-6 md:pb-28 md:pt-52">
           {/* Experience Hero Background */}
           {isHoustonLanding ? <GlobeBackground /> : <ExperienceHeroBackground />}
 
-          <div className="relative z-10 flex flex-col items-center">
+          <div className="relative z-10 flex w-full max-w-full flex-col items-center">
             {/* Status pill */}
-            <GlassPill variant="accent" pulse className="mb-10">
-              {pageCopy.heroPill}
+            <GlassPill
+              variant="accent"
+              pulse
+              className="mb-8 inline-flex max-w-[calc(100%-1rem)] sm:max-w-full items-center rounded-2xl px-3 py-2 text-center text-[10px] font-semibold tracking-wide leading-relaxed whitespace-normal md:mb-10 md:rounded-full md:px-5 md:py-2 md:text-sm md:leading-normal"
+            >
+              <span className="flex-1 text-balance">
+                {pageCopy.heroPill}
+              </span>
             </GlassPill>
 
             {/* Headline */}
-            <h1 className="mx-auto max-w-4xl text-center text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl text-balance">
+            <h1 className="mx-auto max-w-5xl px-0 text-center text-4xl/tight font-extrabold tracking-tight text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl">
               {pageCopy.heroHeading}
             </h1>
 
             {/* Subhead - Centered bullet points */}
-            <div className="mx-auto mt-8 w-full max-w-xl">
-              <ul className="space-y-3 text-base text-secondary md:text-lg">
-                {[
-                  pageCopy.heroBullets[0],
-                  pageCopy.heroBullets[1],
-                  "$99/mo — costs less than one job pays you. Cancel if it's not worth it",
-                ].map((item) => (
-                  <li key={item} className="flex items-center justify-center gap-3">
-                    <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                    <span>{item}</span>
+            <div className="mx-auto mt-6 w-full max-w-2xl px-2 md:mt-8 md:px-0">
+              <ul className="space-y-4 text-sm font-medium text-white/80 md:text-base lg:text-lg">
+                {pageCopy.heroBullets.map((item, idx) => (
+                  <li key={idx} className="flex items-start justify-start gap-3 md:items-center md:justify-center text-left md:text-center">
+                    <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-accent md:mt-0" />
+                    <span className="text-balance">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* CTAs */}
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+            <div className="mt-10 flex w-full max-w-[calc(100%-2rem)] flex-col items-stretch gap-4 sm:max-w-none sm:flex-row sm:justify-center">
               <GlassButton
                 variant="primary"
                 size="lg"
@@ -1233,7 +1235,7 @@ export default function HomePage() {
                 }}
                 loading={loadingPlan === "starter"}
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
-                className="group"
+                className="group w-full sm:w-auto text-base py-4 md:py-4 md:px-8"
               >
                 Start My Free Website
               </GlassButton>
@@ -1250,12 +1252,13 @@ export default function HomePage() {
                   });
                   document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
                 }}
+                className="w-full sm:w-auto text-base py-4 md:py-4 md:px-8"
               >
                 See Recent Launches
               </GlassButton>
             </div>
-            <p className="mt-4 text-center text-sm text-muted">
-              60 seconds to start. No sales calls. No &quot;let&apos;s schedule a discovery session.&quot;
+            <p className="mt-6 max-w-xs text-balance text-center text-[13px] text-muted sm:max-w-none sm:text-sm">
+              60 seconds to start. No sales calls. No hoops.
             </p>
 
             {/* Client logo marquee - Static Layout */}
@@ -1269,19 +1272,21 @@ export default function HomePage() {
               <div className="absolute right-0 top-[60px] bottom-0 w-8 bg-gradient-to-l from-[#020202] to-transparent z-10 pointer-events-none md:hidden" />
 
               <div className="w-full">
-                <div className="flex flex-nowrap w-full items-center md:justify-between gap-6 md:gap-8 overflow-x-auto scrollbar-hide px-4 py-2 md:px-0 md:py-0">
+                <div className="flex flex-nowrap w-full items-center md:justify-between gap-5 md:gap-5 overflow-x-auto scrollbar-hide px-4 py-2 md:px-0 md:py-0">
                   {[
-                    { src: "/logos/elitehomerepairs.png", alt: "Elite Home Repairs", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/madenewpressure.svg", alt: "Made New Pressure Washing", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/jnornamentaldesign.svg", alt: "JN Ornamental Design", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/3dfencing.png", alt: "3D Fencing", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/anpaintingrenovations.png", alt: "AN Painting Renovations", hasBg: true, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/jimenezjunkremoval.png", alt: "Jimenez Junk Removal", hasBg: false, h: "h-6 md:h-8", mw: "max-w-[90px] md:max-w-[120px]" },
-                    { src: "/logos/JimenezTreePro.png", alt: "Jimenez Tree Pro", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/landeroselectrical.png", alt: "Landeros Electrical", hasBg: false, h: "h-8 md:h-11", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/tomi.png", alt: "Tomi Jewelry", hasBg: false, h: "h-10 md:h-14", mw: "max-w-[70px] md:max-w-[100px]" },
-                    { src: "/logos/becreativesco.jpg", alt: "Becreativesco", hasBg: true, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[100px]" },
+                    { src: "/logos/elitehomerepairs.png", alt: "Elite Home Repairs", hasBg: false, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/madenewpressure.svg", alt: "Made New Pressure Washing", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/jnornamentaldesign.svg", alt: "JN Ornamental Design", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/3dfencing.png", alt: "3D Fencing", hasBg: false, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/anpaintingrenovations.png", alt: "AN Painting Renovations", hasBg: true, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/alvarez_pool_logo_transparent.png", alt: "Alvarez Pool Service", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/jimenezjunkremoval.png", alt: "Jimenez Junk Removal", hasBg: false, h: "h-6 md:h-7", mw: "max-w-[90px] md:max-w-[100px]" },
+                    { src: "/logos/JimenezTreePro.png", alt: "Jimenez Tree Pro", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/mcmillianjunkremoval.png", alt: "McMillian Junk Removal", hasBg: true, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/landeroselectrical.png", alt: "Landeros Electrical", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/tomi.png", alt: "Tomi Jewelry", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/becreativesco.jpg", alt: "Becreativesco", hasBg: true, h: "h-10 md:h-10", mw: "max-w-[70px] md:max-w-[85px]" },
                   ].map((logo) => (
                     <div key={logo.alt} className="flex items-center justify-center shrink-0 w-auto">
                       <img
@@ -1298,8 +1303,19 @@ export default function HomePage() {
         </section>
 
 
+        {/* ===== Social Proof Section (moved up — proof first) ===== */}
+        <SocialProofSection />
+
+        {/* Divider */}
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        </div>
+
+        {/* ===== How It Works Section ===== */}
+        <HowItWorksSection steps={steps} />
+
         {/* ===== Features Section ===== */}
-        <section id="features" className="relative px-6 py-24 md:py-32 overflow-hidden">
+        <section id="features" className="relative px-6 pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
           <GlassDivider className="absolute top-0 left-0 right-0" />
 
@@ -1342,8 +1358,13 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Divider */}
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        </div>
+
         {/* ===== 48 Hours Section ===== */}
-        <section id="deliverables" className="relative px-6 pb-20 pt-10 md:pb-24 md:pt-12 overflow-hidden">
+        <section id="deliverables" className="relative px-6 pb-16 pt-16 md:pb-20 md:pt-20 overflow-hidden">
           <AmbientGlow color="accent" position="center" intensity="subtle" className="opacity-40" />
 
           <div className="relative z-10 mx-auto max-w-7xl">
@@ -1395,101 +1416,92 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ===== Social Proof Section ===== */}
-        <SocialProofSection />
-
-        {/* ===== How It Works Section ===== */}
-        <HowItWorksSection steps={steps} />
-
         {/* ===== Pricing Section ===== */}
-        <section id="pricing" className="relative px-6 py-24 md:py-32 overflow-hidden">
+        <section id="pricing" className="relative px-6 pt-20 pb-24 md:pt-24 md:pb-32 overflow-hidden">
           <GlassDivider className="absolute top-0 left-0 right-0" />
           <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
 
           <div className="relative z-10 mx-auto max-w-7xl">
-            <div className="mb-16 md:text-center">
-              <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
-                {pageCopy.pricingEyebrow}
-              </p>
+            {/* Heading */}
+            <div className="mb-12 md:text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
                 {pageCopy.pricingHeading}
               </h2>
               <p className="mt-4 text-lg text-secondary max-w-2xl mx-auto">
-                {pageCopy.pricingDescription}{/*
-                We build yours free — you only pay monthly if it&apos;s working. Cancel the second it&apos;s not.
-              */}</p>
+                {pageCopy.pricingDescription}
+              </p>
             </div>
 
-            {/* Plan comparison helper - centered */}
-            <div className="mx-auto mb-16 max-w-4xl">
-              <div className="flex flex-col md:flex-row md:justify-center gap-12 md:gap-20 text-sm text-secondary">
-                <div className="text-center">
-                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4 font-medium">{pageCopy.proHelperHeading}</p>
-                  <ul className="space-y-2">
-                    {pageCopy.proHelperItems.map((item) => (
-                      <li key={item} className="flex items-center justify-center gap-2">
-                        <CheckIcon className="h-4 w-4 text-accent shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="hidden md:block w-px bg-white/[0.08]" />
-                <div className="text-center">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted mb-4 font-medium">{pageCopy.starterHelperHeading}</p>
-                  <ul className="space-y-2">
-                    {pageCopy.starterHelperItems.map((item) => (
-                      <li key={item} className="flex items-center justify-center gap-2">
-                        <CheckIcon className="h-4 w-4 text-white/40 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            {/* Value Stack — full-width moment, no card box */}
+            <div className="mb-16 max-w-2xl mx-auto">
+              <p className="text-[11px] text-white/30 uppercase tracking-[0.25em] font-bold text-center mb-6">What this would cost you anywhere else</p>
+
+              {/* Value items — single column, each line carries weight */}
+              <div className="space-y-2.5 mb-6">
+                {[
+                  { item: 'Custom website (not a template)', value: '$3,000–5,000' },
+                  { item: 'Works on phones + tap-to-call', value: '$500' },
+                  { item: 'Shows up on Google', value: '$1,500' },
+                  { item: 'Hosting + security', value: '$300/yr' },
+                  { item: 'Updates + support', value: '$200/mo' },
+                  { item: 'Quote forms that send you leads', value: '$500' },
+                ].map((row, i) => (
+                  <div key={i} className="flex items-center justify-between gap-4 group">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-5 h-5 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                        <CheckIcon className="h-3 w-3 text-accent" />
+                      </div>
+                      <span className="text-[13px] sm:text-[14px] text-white/70">{row.item}</span>
+                    </div>
+                    <div className="h-px flex-1 bg-white/[0.04] min-w-[20px]" />
+                    <span className="text-[13px] text-white/30 line-through whitespace-nowrap shrink-0 font-medium">{row.value}</span>
+                  </div>
+                ))}
               </div>
+
+              {/* Total line */}
+              <div className="flex items-center justify-between border-t border-white/[0.06] pt-4 mb-8">
+                <span className="text-[11px] text-white/40 uppercase tracking-[0.2em] font-bold">Total value</span>
+                <span className="text-lg text-white/30 line-through font-bold">$5,800+</span>
+              </div>
+
             </div>
 
+            {/* Plan Cards */}
             <div className="grid gap-8 lg:grid-cols-3 lg:gap-10 max-w-6xl mx-auto">
               {/* Starter Plan */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
                   <p className="text-xs text-muted uppercase tracking-wider">Basic Presence</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Starter</h3>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-muted">TYPICAL BUILD FEE</p>
-                  <div className="mt-2 flex items-center gap-3">
-                    <span className="text-2xl md:text-3xl font-semibold text-white/60 line-through">$799</span>
+                  <div className="mt-3 flex items-center gap-3">
+                    <span className="text-xl text-white/50 line-through">$799</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                      WAIVED
+                      BUILD WAIVED
                     </GlassPill>
                   </div>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-accent">Only pay hosting + support</p>
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">$99</span>
+                  <div className="mt-3 flex items-baseline gap-1">
+                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">$99</span>
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    One page. One goal: make your phone ring. Hosting, support, and updates included. Cancel anytime.
+                    One page. Makes your phone ring. Cancel anytime.
                   </p>
                 </div>
 
-                <ul className="mb-8 flex-1 space-y-3 text-sm text-secondary">
+                <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {[
                     "Free build (waived)",
                     "Hosting + site care included",
-                    "Mobile-first conversion layout",
-                    "Speed optimization",
-                    "Local SEO foundation",
-                    "1 Content Update / month",
-                    "6-month audit + optimization",
-                    "Cancel anytime. No contracts.",
+                    "Built for phones first",
+                    "Fast load speed",
+                    "Shows up on Google",
+                    "1 content change / month",
+                    "6-month site checkup",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "1 Content Update / month" || item === "6-month audit + optimization" ? (
-                        <span className="font-bold">{item}</span>
-                      ) : (
-                        item
-                      )}
+                    <li key={i} className="flex items-center gap-2.5">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                      {item}
                     </li>
                   ))}
                 </ul>
@@ -1503,9 +1515,6 @@ export default function HomePage() {
                 >
                   Start My Free Website
                 </GlassButton>
-                <p className="mt-2 text-center text-xs text-muted">
-                  Takes 60 seconds to start. No calls needed.
-                </p>
               </GlassCard>
 
               {/* Pro Plan */}
@@ -1519,42 +1528,35 @@ export default function HomePage() {
                 <div className="mb-6">
                   <p className="text-xs text-muted uppercase tracking-wider">3-Page Lead System</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Pro</h3>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-muted">TYPICAL BUILD FEE</p>
-                  <div className="mt-2 flex items-center gap-3">
-                    <span className="text-2xl md:text-3xl font-semibold text-white/60 line-through">$1,499</span>
+                  <div className="mt-3 flex items-center gap-3">
+                    <span className="text-xl text-white/50 line-through">$1,499</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                      WAIVED
+                      BUILD WAIVED
                     </GlassPill>
                   </div>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-accent">BEST FOR GROWTH + LOCAL SEO</p>
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">$149</span>
+                  <div className="mt-3 flex items-baseline gap-1">
+                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">$149</span>
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    3 pages. Multiple services. Higher on Google. Built for businesses that want to own their area — not just &quot;be online.&quot;
+                    3 pages. More services. Rank higher. Cancel anytime.
                   </p>
                 </div>
 
-                <ul className="mb-8 flex-1 space-y-3 text-sm text-secondary">
+                <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {[
                     "Everything in Starter",
                     "3 pages (Home + Services + Contact)",
-                    "Enhanced local SEO structure",
-                    "Call + form tracking installed",
-                    "Google Analytics / Umami included",
-                    "Priority build queue (24-48h edits)",
-                    "3 Content Updates / month",
-                    "Quarterly audit + advanced optimization",
-                    "Cancel anytime. No contracts.",
+                    "Stronger Google rankings",
+                    "Call + form tracking set up",
+                    "See where your leads come from",
+                    "Faster edits (24-48h turnaround)",
+                    "3 content changes / month",
+                    "Site checkup every quarter",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <CheckIcon className="h-5 w-5 text-accent shrink-0" />
-                      {item === "3 Content Updates / month" || item === "Priority build queue (24-48h edits)" || item === "Quarterly audit + advanced optimization" ? (
-                        <span className="font-bold">{item}</span>
-                      ) : (
-                        item
-                      )}
+                    <li key={i} className="flex items-center gap-2.5">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
+                      {item}
                     </li>
                   ))}
                 </ul>
@@ -1568,9 +1570,6 @@ export default function HomePage() {
                 >
                   Start My Free Website
                 </GlassButton>
-                <p className="mt-2 text-center text-xs text-muted">
-                  Takes 60 seconds to start. No calls needed.
-                </p>
               </GlassCard>
 
               {/* Custom Website */}
@@ -1578,27 +1577,25 @@ export default function HomePage() {
                 <div className="mb-6">
                   <p className="text-xs text-muted uppercase tracking-wider">Full-Service</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Project Website</h3>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-muted">TYPICAL BUILD FEE</p>
-                  <div className="mt-2 flex items-center gap-3">
-                    <span className="text-2xl md:text-3xl font-semibold text-white/60">Scope</span>
+                  <div className="mt-3 flex items-center gap-3">
+                    <span className="text-xl text-white/50">Scope-based</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
                       Call Required
                     </GlassPill>
                   </div>
-                  <p className="mt-4 text-xs uppercase tracking-wider text-accent">Project pricing</p>
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">Quote</span>
+                  <div className="mt-3 flex items-baseline gap-1">
+                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">Quote</span>
                     <span className="text-secondary">/project</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Ecommerce, booking systems, portals, automations — the works. One call. Fixed quote. No surprise invoices.
+                    Online stores, portals, custom tools. One call. Fixed price.
                   </p>
                 </div>
 
-                <ul className="mb-8 flex-1 space-y-3 text-sm text-secondary">
+                <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {customWebsiteFeatures.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <CheckIcon className="h-5 w-5 text-accent shrink-0" />
+                    <li key={i} className="flex items-center gap-2.5">
+                      <CheckIcon className="h-4 w-4 text-accent shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -1623,78 +1620,57 @@ export default function HomePage() {
               </GlassCard>
             </div>
 
-            <div className="mt-10 text-center">
-              <p className="text-xs text-muted">
-                No setup fees. No contracts. No &quot;minimum 6-month commitment.&quot; Just results — or you walk.
+            {/* Bottom strip — ROI + Guarantee + Call CTA — all compact */}
+            <div className="mt-12 max-w-3xl mx-auto text-center space-y-6">
+              <p className="text-base md:text-lg font-bold text-white leading-snug">
+                Your average job is $2,500. <span className="text-accent">One extra job</span> from your website covers the entire year.
               </p>
-              <p className="mt-3 text-sm text-secondary">
-                <span className="font-semibold text-white">The &quot;It Pays For Itself&quot; Promise:</span> If your site doesn&apos;t bring in more than it costs within 30 days, cancel. One click. No phone call. No questions. We cover the cost of building it — not you.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== Guides Section ===== */}
-        <section id="guides" className="relative px-6 py-24 md:py-32 overflow-hidden">
-          <BGPattern variant="grid" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
-          <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-16" />
-
-          <div className="relative z-10 mx-auto max-w-7xl">
-            <div className="mb-10 md:text-center">
-              <p className="text-xs uppercase tracking-wider text-muted">Guides</p>
-              <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
-                {pageCopy.guidesHeading}
-              </h2>
-              <p className="mt-3 text-sm text-secondary">
-                {pageCopy.guidesDescription}
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              <GlassCard hover className="p-6">
-                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/why-website-not-getting-customers" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  Why Your Website Isn't Getting Customers
-                </Link>
-                <p className="mt-3 text-sm text-secondary">
-                  5 things on your site scaring away customers right now — and the 10-minute fix for each one.
-                </p>
-                <Link href="/guides/why-website-not-getting-customers" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
-                  Read guide
-                </Link>
-              </GlassCard>
-
-              <GlassCard hover className="p-6">
-                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/how-to-get-more-customers-website" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  How to Get More Customers From Your Website
-                </Link>
-                <p className="mt-3 text-sm text-secondary">
-                  The 3 things every site that gets customers has — and how to get visitors without paying for ads.
-                </p>
-                <Link href="/guides/how-to-get-more-customers-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
-                  Read guide
-                </Link>
-              </GlassCard>
-
-              <GlassCard hover className="p-6">
-                <p className="text-xs uppercase tracking-wider text-muted">Pillar</p>
-                <Link href="/guides/do-you-need-a-website" className="mt-3 block text-xl font-semibold text-white hover:text-accent">
-                  Do You Actually Need a Website?
-                </Link>
-                <p className="mt-3 text-sm text-secondary">
-                  The real cost of not having a website — broken down month by month. The number is bigger than you think.
-                </p>
-                <Link href="/guides/do-you-need-a-website" className="mt-4 inline-flex text-sm text-accent hover:text-accent-hover">
-                  Read guide
-                </Link>
-              </GlassCard>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-secondary">
+                <span className="flex items-center gap-1.5">
+                  <CheckIcon className="h-4 w-4 text-accent" />
+                  48h launch or first month free
+                </span>
+                <span className="hidden sm:block text-white/20">·</span>
+                <span className="flex items-center gap-1.5">
+                  <CheckIcon className="h-4 w-4 text-accent" />
+                  No contracts
+                </span>
+                <span className="hidden sm:block text-white/20">·</span>
+                <span className="flex items-center gap-1.5">
+                  <CheckIcon className="h-4 w-4 text-accent" />
+                  Cancel anytime
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-2 pt-2">
+                <p className="text-sm text-white/40">Want us to walk you through it?</p>
+                <a
+                  href="https://calendly.com/quicklaunchweb/15min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    track('cta_click', {
+                      cta_text: 'Book a quick call',
+                      cta_location: 'pricing_bottom',
+                      event_category: 'engagement',
+                      event_label: 'pricing_book_call_cta',
+                    });
+                  }}
+                >
+                  <GlassButton
+                    variant="ghost"
+                    size="md"
+                    icon={<ArrowRightIcon className="h-4 w-4" />}
+                  >
+                    Book a Quick Call
+                  </GlassButton>
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
         {/* ===== FAQ Section ===== */}
-        <section id="faq" className="relative px-6 py-24 md:py-32 overflow-hidden">
+        <section id="faq" className="relative px-6 pt-16 pb-24 md:pt-20 md:pb-32 overflow-hidden">
           <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
 
           <div className="relative z-10 mx-auto max-w-4xl">

@@ -8,10 +8,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Base backgrounds
-        base: "#0a0a0c",
-        elevated: "#111113",
-
         // Accent system
         accent: {
           DEFAULT: "rgb(var(--color-accent) / <alpha-value>)",
@@ -37,6 +33,11 @@ const config: Config = {
         secondary: "rgba(255, 255, 255, 0.70)",
         muted: "rgba(255, 255, 255, 0.50)",
         faint: "rgba(255, 255, 255, 0.30)",
+      },
+      backgroundColor: {
+        // Base backgrounds
+        base: "#0a0a0c",
+        elevated: "#111113",
       },
 
       borderRadius: {
