@@ -16,7 +16,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1, // Prevent zoom on iOS input focus
   userScalable: false,
-  themeColor: "#050507",
+  themeColor: "#171717",
 };
 
 export default function InstagramLayout({

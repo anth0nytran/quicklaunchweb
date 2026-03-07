@@ -117,6 +117,21 @@ export function LeadCaptureModal({
               />
             </label>
 
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                name="sms_consent"
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 shrink-0"
+              />
+              <span className="text-[11px] text-slate-500 leading-relaxed">
+                I agree to receive SMS notifications about my request. Msg frequency varies. Msg &amp; data rates may apply.
+                Reply STOP to opt out, HELP for help.{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a>
+                {' '}&amp;{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline">Terms</a>.
+              </span>
+            </label>
+
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-500">
               Demo only. No information is sent or stored.
             </div>

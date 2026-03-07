@@ -198,7 +198,51 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">9. Acceptable Use Policy</h2>
+              <h2 className="text-base font-semibold text-white">9. SMS/Text Messaging Terms</h2>
+              <p className="mt-3">
+                QuickLaunchWeb offers SMS (text message) services as part of its lead notification system. By opting
+                in to receive text messages — either as a consumer submitting a lead form or as a business
+                owner/staff member enabling lead alert notifications — you agree to the following:
+              </p>
+              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  <span className="font-medium text-white">Consent:</span> You consent to receive transactional and
+                  informational SMS messages related to lead submissions. No marketing messages will be sent via SMS.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
+                  lead volume. Typically 1–2 messages per form submission event.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Opt-out:</span> You may opt out at any time by replying STOP
+                  to any message. You will receive a confirmation and no further messages will be sent from that number.
+                  Reply START to re-subscribe.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Help:</span> Reply HELP to any message for assistance, or
+                  contact anthotranllc@gmail.com.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Message and data rates:</span> Standard message and data rates
+                  from your mobile carrier may apply. QuickLaunchWeb is not responsible for carrier charges.
+                </li>
+                <li>
+                  <span className="font-medium text-white">No sharing:</span> We do not sell, rent, or share your mobile
+                  phone number or SMS consent data with any third parties for their marketing purposes.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Supported carriers:</span> Major US carriers are supported
+                  including AT&amp;T, T-Mobile, Verizon, and Sprint. Service availability may vary by carrier.
+                </li>
+              </ul>
+              <p className="mt-3">
+                For more details on how we handle your data, see our{" "}
+                <a href="/privacy" className="text-accent underline">Privacy Policy</a>.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-base font-semibold text-white">10. Acceptable Use Policy</h2>
               <p className="mt-3">
                 You agree not to use our services for illegal activity, fraud, or misleading business practices; to
                 distribute malware or phishing attacks; to send spam; or to harass or threaten others. We reserve the right
@@ -209,7 +253,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">10. Modifications, Suspension, and Force Majeure</h2>
+              <h2 className="text-base font-semibold text-white">11. Modifications, Suspension, and Force Majeure</h2>
               <p className="mt-3">
                 We may update, modify, or discontinue any part of the services at any time to improve quality or maintain
                 operations. We may suspend service for nonpayment, chargebacks, abuse, or policy violations. We are not
@@ -220,7 +264,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">11. No Guarantees; Disclaimer</h2>
+              <h2 className="text-base font-semibold text-white">12. No Guarantees; Disclaimer</h2>
               <p className="mt-3">
                 The services are provided "as is" without warranties of any kind. QuickLaunchWeb does not guarantee
                 specific results, leads, revenue, or ROI. To the fullest extent permitted by law, we expressly disclaim all
@@ -230,7 +274,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">12. Limitation of Liability</h2>
+              <h2 className="text-base font-semibold text-white">13. Limitation of Liability</h2>
               <p className="mt-3">
                 To the maximum extent permitted by law, QuickLaunchWeb shall not be liable for any indirect, incidental,
                 special, consequential, or punitive damages, or for any loss of profits or revenue, arising out of or in
@@ -240,7 +284,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">13. Indemnification</h2>
+              <h2 className="text-base font-semibold text-white">14. Indemnification</h2>
               <p className="mt-3">
                 You agree to defend, indemnify, and hold harmless QuickLaunchWeb and its affiliates, officers, and employees
                 from any claims, losses, damages, liabilities, and expenses (including reasonable attorneys' fees) arising
@@ -250,7 +294,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">14. Accessibility</h2>
+              <h2 className="text-base font-semibold text-white">15. Accessibility</h2>
               <p className="mt-3">
                 QuickLaunchWeb strives to build websites that are easy to use, but we cannot guarantee full compliance with
                 the Americans with Disabilities Act (ADA) or other accessibility regulations. Clients are responsible for
@@ -261,7 +305,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">15. Dispute Resolution and Governing Law</h2>
+              <h2 className="text-base font-semibold text-white">16. Dispute Resolution and Governing Law</h2>
               <h3 className="mt-3 text-sm font-semibold text-white">15.1 Informal Resolution</h3>
               <p className="mt-2">
                 Before filing a claim, you agree to contact us by email and allow 30 days for us to try to resolve the
@@ -285,7 +329,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">16. Changes to Terms</h2>
+              <h2 className="text-base font-semibold text-white">17. Changes to Terms</h2>
               <p className="mt-3">
                 We may update these Terms from time to time. If we make material changes, we will notify you by email or
                 through our website and indicate the new effective date. Your continued use of the services after the
@@ -294,7 +338,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">17. Contact</h2>
+              <h2 className="text-base font-semibold text-white">18. Contact</h2>
               <p className="mt-3">
                 If you have any questions about these Terms, please contact Anthony Tran at anthotranllc@gmail.com or through
                 the support form on our website.

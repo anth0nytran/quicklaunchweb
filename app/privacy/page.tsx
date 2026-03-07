@@ -194,7 +194,49 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">7. Data Retention</h2>
+              <h2 className="text-base font-semibold text-white">7. SMS/Text Messaging</h2>
+              <p className="mt-3">
+                QuickLaunchWeb and websites we build for our clients may send SMS (text) messages in connection with
+                lead notification and confirmation services. By providing your mobile phone number and opting in to
+                receive text messages, you consent to receive SMS messages from us or from the business whose form you
+                submitted. These messages are transactional and informational only — we do not send marketing texts.
+              </p>
+              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  <span className="font-medium text-white">What messages you may receive:</span> Lead submission
+                  confirmations (e.g., &ldquo;We received your request. Someone will contact you shortly.&rdquo;) and lead
+                  alert notifications sent to business owners/staff.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
+                  lead volume. Typically 1–2 messages per form submission.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Opt-out:</span> You can opt out at any time by replying STOP
+                  to any message. After opting out, you will not receive further SMS messages from that number. Reply
+                  START to re-subscribe.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Help:</span> Reply HELP to any message for assistance, or
+                  contact us at anthotranllc@gmail.com.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Costs:</span> Message and data rates may apply depending on
+                  your mobile carrier and plan. QuickLaunchWeb is not responsible for carrier charges.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Carriers:</span> Supported carriers include but are not limited
+                  to AT&amp;T, T-Mobile, Verizon, and Sprint. Service may not be available on all carriers.
+                </li>
+                <li>
+                  <span className="font-medium text-white">No SMS data sharing:</span> We do not sell, rent, or share
+                  mobile phone numbers or SMS opt-in data with third parties for marketing purposes.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-base font-semibold text-white">8. Data Retention</h2>
               <p className="mt-3">
                 We retain personal information for as long as necessary to fulfill the purposes described in this policy and
                 to comply with legal obligations. Because we maintain only a small database, we may store data until the
@@ -206,7 +248,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">8. Your Rights and Choices</h2>
+              <h2 className="text-base font-semibold text-white">9. Your Rights and Choices</h2>
               <p className="mt-3">Depending on your location, you may have the following rights:</p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
@@ -221,6 +263,10 @@ export default function PrivacyPage() {
                 </li>
                 <li>
                   <span className="font-medium text-white">Opt-out of marketing:</span> Unsubscribe from marketing emails.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Opt-out of SMS:</span> Reply STOP to any text message to
+                  unsubscribe from SMS communications.
                 </li>
                 <li>
                   <span className="font-medium text-white">Opt-out of cookies:</span> Decline non-essential cookies where
@@ -243,7 +289,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">9. Children&#39;s Privacy</h2>
+              <h2 className="text-base font-semibold text-white">10. Children&#39;s Privacy</h2>
               <p className="mt-3">
                 Our services are intended for adults and businesses, not for children under 13. We do not knowingly collect
                 personal information from children under 13. If we become aware that a child has provided us with personal
@@ -253,7 +299,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">10. International Data Transfers</h2>
+              <h2 className="text-base font-semibold text-white">11. International Data Transfers</h2>
               <p className="mt-3">
                 QuickLaunchWeb is based in the United States and serves customers globally. By using our services, you
                 understand that your information may be transferred to, stored in, and processed in the U.S. or other
@@ -264,7 +310,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">11. Data Security</h2>
+              <h2 className="text-base font-semibold text-white">12. Data Security</h2>
               <p className="mt-3">
                 We implement reasonable technical and organizational measures to protect personal information, including
                 encryption in transit, restricted access, regular backups, and secure hosting. However, no method of
@@ -273,7 +319,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">12. Changes to This Policy</h2>
+              <h2 className="text-base font-semibold text-white">13. Changes to This Policy</h2>
               <p className="mt-3">
                 We may update this Privacy Policy from time to time. We will notify you of material changes by posting the
                 new policy on our website and updating the "Last updated" date. In some cases, we may also send an email
@@ -283,7 +329,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">13. Contact Us</h2>
+              <h2 className="text-base font-semibold text-white">14. Contact Us</h2>
               <p className="mt-3">
                 If you have questions about this Privacy Policy or wish to exercise your rights, please contact Anthony Tran
                 at anthotranllc@gmail.com or via our support form.
