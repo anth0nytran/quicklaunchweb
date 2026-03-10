@@ -1611,7 +1611,7 @@ export default function HomePage() {
                       event_category: 'engagement',
                       event_label: 'custom_quote_cta',
                     });
-                    openCustomModal();
+                    window.open('https://calendly.com/quicklaunchweb/30-minute-discovery-call', '_blank', 'noopener');
                   }}
                   className="w-full"
                 >
