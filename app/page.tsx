@@ -1838,6 +1838,7 @@ export default function HomePage() {
             <div className="flex items-center gap-4 text-xs">
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/sms-consent" className="hover:text-white transition-colors">SMS</Link>
               <Link href="/support" className="hover:text-white transition-colors">Support</Link>
             </div>
           </div>

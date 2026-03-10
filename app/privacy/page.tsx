@@ -196,10 +196,17 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-base font-semibold text-white">7. SMS/Text Messaging</h2>
               <p className="mt-3">
+                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb Lead Notifications
+              </p>
+              <p className="mt-3">
                 QuickLaunchWeb and websites we build for our clients may send SMS (text) messages in connection with
                 lead notification and confirmation services. By providing your mobile phone number and opting in to
                 receive text messages, you consent to receive SMS messages from us or from the business whose form you
                 submitted. These messages are transactional and informational only — we do not send marketing texts.
+              </p>
+              <p className="mt-3">
+                Consent to receive SMS messages is not a condition of any purchase or service. You may opt in or
+                decline SMS at your discretion without affecting your ability to use our services or submit a lead form.
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
@@ -233,6 +240,10 @@ export default function PrivacyPage() {
                   mobile phone numbers or SMS opt-in data with third parties for marketing purposes.
                 </li>
               </ul>
+              <p className="mt-3">
+                For complete SMS disclosures and opt-in details, visit our{" "}
+                <a href="/sms-consent" className="text-accent underline">SMS Consent &amp; Disclosures</a> page.
+              </p>
             </section>
 
             <section>

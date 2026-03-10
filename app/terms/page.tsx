@@ -200,6 +200,9 @@ export default function TermsPage() {
             <section>
               <h2 className="text-base font-semibold text-white">9. SMS/Text Messaging Terms</h2>
               <p className="mt-3">
+                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb Lead Notifications
+              </p>
+              <p className="mt-3">
                 QuickLaunchWeb offers SMS (text message) services as part of its lead notification system. By opting
                 in to receive text messages — either as a consumer submitting a lead form or as a business
                 owner/staff member enabling lead alert notifications — you agree to the following:
@@ -236,8 +239,13 @@ export default function TermsPage() {
                 </li>
               </ul>
               <p className="mt-3">
-                For more details on how we handle your data, see our{" "}
-                <a href="/privacy" className="text-accent underline">Privacy Policy</a>.
+                Consent to receive SMS messages is not a condition of any purchase or service. You may use our
+                services and submit lead forms without opting in to SMS.
+              </p>
+              <p className="mt-3">
+                For full details on how we handle your data, see our{" "}
+                <a href="/privacy" className="text-accent underline">Privacy Policy</a> and our{" "}
+                <a href="/sms-consent" className="text-accent underline">SMS Consent &amp; Disclosures</a> page.
               </p>
             </section>
 
