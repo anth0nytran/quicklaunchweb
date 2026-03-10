@@ -1839,7 +1839,7 @@ export default function HomePage() {
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
               <Link href="/sms-consent" className="hover:text-white transition-colors">SMS</Link>
-              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
+              <a href="https://calendly.com/quicklaunchweb/15-minute-support-call" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Support</a>
             </div>
           </div>
         </div>
