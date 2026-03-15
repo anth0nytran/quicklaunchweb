@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronDown, ArrowRight, Phone } from 'lucide-react';
-import { PopupModal, InlineWidget } from 'react-calendly';
+import { InlineWidget } from 'react-calendly';
 
 declare global {
   interface Window {
@@ -73,7 +74,7 @@ function getMetaContext(): MetaContext {
 }
 
 async function sendMetaServerEvent(event: {
-  eventName: 'ViewContent' | 'Lead' | 'CompleteRegistration' | 'LeadSubmitted' | 'Schedule';
+  eventName: 'ViewContent' | 'Lead' | 'Schedule';
   eventId: string;
   customData?: Record<string, unknown>;
   context: MetaContext;
@@ -138,10 +139,9 @@ function getUtmParams(): Record<string, string> {
 // ─── Main Page ───────────────────────────────
 
 export default function InstagramLanding() {
-  const calendarRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
 
   useEffect(() => {
     getUtmParams();
@@ -193,7 +193,7 @@ export default function InstagramLanding() {
         );
       }
       void sendMetaServerEvent({
-        eventName: 'Schedule' as 'ViewContent',
+        eventName: 'Schedule',
         eventId,
         context,
         customData: {
@@ -203,32 +203,26 @@ export default function InstagramLanding() {
           messaging_channel: context.messagingChannel,
         },
       });
+
+      // Redirect to next-steps confirmation page
+      router.push('/instagram/booked');
     };
     window.addEventListener('message', handleCalendlyEvent);
     return () => window.removeEventListener('message', handleCalendlyEvent);
-  }, []);
+  }, [router]);
 
-  const openCalendly = () => {
-    setShowCalendly(true);
-    trackEvent('cta_click', { location: 'page' });
+  const scrollToProof = () => {
+    const el = document.getElementById('proof');
+    el?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-neutral-100 font-[family-name:var(--font-lato)]">
 
-      {showCalendly && (
-        <PopupModal
-          url={CALENDLY_URL}
-          onModalClose={() => setShowCalendly(false)}
-          open={showCalendly}
-          rootElement={document.body}
-        />
-      )}
-
       {/* ══════════════════════════════════
-          HERO
+          HERO — HEADLINE + CALENDAR
          ══════════════════════════════════ */}
-      <section ref={heroRef} className="bg-neutral-900 px-6 pt-10 pb-12 sm:pt-14 sm:pb-14">
+      <section ref={heroRef} className="bg-neutral-900 px-6 pt-10 pb-8 sm:pt-14 sm:pb-10">
         <div className="max-w-lg mx-auto">
 
           <p className="text-center text-[12px] font-bold tracking-[0.2em] uppercase text-neutral-500 mb-8 font-[family-name:var(--font-montserrat)]">
@@ -241,37 +235,49 @@ export default function InstagramLanding() {
             Want to see it?
           </h1>
 
-          <div className="text-center space-y-1 mb-8">
+          <div className="text-center space-y-1 mb-6">
             <p className="text-neutral-400 text-[15px]">15-minute call. We show you the site live.</p>
             <p className="text-neutral-400 text-[15px]">You like it? We launch it in 48 hours.</p>
             <p className="text-white text-[15px] font-semibold">$29 first month. No contracts. Cancel anytime.</p>
           </div>
+        </div>
+      </section>
 
-          <button
-            onClick={openCalendly}
-            className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-[15px] font-bold font-[family-name:var(--font-montserrat)] py-4 rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
-          >
-            Book my free demo <ArrowRight className="w-4 h-4" />
-          </button>
+      {/* Calendar — right below headline, no searching */}
+      <section className="bg-neutral-900 px-6 pb-6 sm:pb-8">
+        <div className="max-w-lg mx-auto">
+          <div className="rounded-lg overflow-hidden border border-neutral-700 bg-white">
+            <InlineWidget
+              url={CALENDLY_URL}
+              styles={{ height: '660px', minWidth: '280px' }}
+            />
+          </div>
 
-          <p className="text-center text-[11px] text-neutral-500 mt-3">
-            Free call · No credit card · Takes 2 min to book
+          <p className="text-center text-[11px] text-neutral-500 mt-4 max-w-sm mx-auto">
+            Free call · No credit card · By booking you agree to receive SMS confirmations. Reply STOP to opt out.
           </p>
 
-          <div className="mt-8 pt-6 border-t border-neutral-800">
+          <div className="mt-6 pt-5 border-t border-neutral-800">
             <p className="text-center text-[13px] text-neutral-500">
               <span className="text-neutral-300">&ldquo;6 jobs from Google in the first month. Steady leads ever since.&rdquo;</span>
               <br className="sm:hidden" />
               <span className="sm:ml-1">&mdash; Juan, Landeros Electrical, Houston TX</span>
             </p>
           </div>
+
+          <button
+            onClick={scrollToProof}
+            className="w-full mt-5 text-neutral-500 hover:text-neutral-300 text-[13px] font-medium transition-colors flex items-center justify-center gap-1"
+          >
+            See more results from our clients <ArrowRight className="w-3 h-3" />
+          </button>
         </div>
       </section>
 
       {/* ══════════════════════════════════
           PROOF
          ══════════════════════════════════ */}
-      <section className="px-6 py-12 sm:py-14">
+      <section id="proof" className="px-6 py-12 sm:py-14">
         <div className="max-w-lg mx-auto">
           <p className="text-[12px] font-semibold tracking-[0.15em] uppercase text-neutral-400 mb-6">
             From contractors who were in your shoes
@@ -309,12 +315,6 @@ export default function InstagramLanding() {
             ))}
           </div>
 
-          <button
-            onClick={openCalendly}
-            className="w-full mt-8 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-[15px] font-bold font-[family-name:var(--font-montserrat)] py-4 rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
-          >
-            Book my free demo <ArrowRight className="w-4 h-4" />
-          </button>
         </div>
       </section>
 
@@ -413,12 +413,6 @@ export default function InstagramLanding() {
               <p className="text-[13px] font-semibold text-neutral-600 mt-1">first month</p>
               <p className="text-[12px] text-neutral-400 mt-0.5">then $99/mo · cancel anytime</p>
 
-              <button
-                onClick={openCalendly}
-                className="w-full mt-5 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-[15px] font-bold font-[family-name:var(--font-montserrat)] py-4 rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
-              >
-                Book my free demo <ArrowRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
 
@@ -479,32 +473,7 @@ export default function InstagramLanding() {
       <div className="max-w-lg mx-auto px-6"><div className="h-px bg-neutral-200" /></div>
 
       {/* ══════════════════════════════════
-          INLINE CALENDAR
-         ══════════════════════════════════ */}
-      <section ref={calendarRef} className="px-6 py-12 sm:py-14">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-lg sm:text-xl font-extrabold font-[family-name:var(--font-montserrat)] text-neutral-800 mb-1 tracking-tight">
-            Pick a time
-          </h2>
-          <p className="text-[13px] text-neutral-400 mb-6">
-            15 minutes. See the site. You decide.
-          </p>
-
-          <div className="rounded-lg overflow-hidden border border-neutral-200 bg-white">
-            <InlineWidget
-              url={CALENDLY_URL}
-              styles={{ height: '700px', minWidth: '280px' }}
-            />
-          </div>
-
-          <p className="text-center text-[11px] text-neutral-400 mt-4 max-w-sm mx-auto">
-            By booking you agree to receive SMS confirmations from QuickLaunchWeb. Reply STOP to opt out.
-          </p>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════
-          FINAL CTA
+          FINAL CTA — scroll to calendar
          ══════════════════════════════════ */}
       <section className="bg-neutral-900 px-6 py-12 sm:py-16">
         <div className="max-w-lg mx-auto text-center">
@@ -515,11 +484,31 @@ export default function InstagramLanding() {
             The demo is free. The call is 15 minutes. Don&apos;t like it? Walk away.
           </p>
           <button
-            onClick={openCalendly}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="w-full max-w-sm mx-auto bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-[15px] font-bold font-[family-name:var(--font-montserrat)] py-4 rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
           >
             Book my free demo <ArrowRight className="w-4 h-4" />
           </button>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════
+          LEGAL / DISCLOSURES
+         ══════════════════════════════════ */}
+      <section className="bg-neutral-900 px-6 pt-6 pb-4">
+        <div className="max-w-lg mx-auto">
+          <div className="border-t border-neutral-800 pt-6">
+            <p className="text-[11px] text-neutral-600 leading-[1.7]">
+              By booking a call, you consent to receive SMS and email communications from QuickLaunchWeb regarding your appointment and our services. Message frequency varies. Message and data rates may apply. Reply STOP to opt out of SMS at any time. Reply HELP for assistance. Your information is never sold to third parties. Carrier conditions may apply. By using this site, you agree to our{' '}
+              <a href="/terms" className="underline hover:text-neutral-400 transition-colors">Terms of Service</a>,{' '}
+              <a href="/privacy" className="underline hover:text-neutral-400 transition-colors">Privacy Policy</a>, and{' '}
+              <a href="/sms-consent" className="underline hover:text-neutral-400 transition-colors">SMS Consent &amp; Disclosures</a>.
+              QuickLaunchWeb is not affiliated with or endorsed by Calendly, Google, Meta, or any third-party platform referenced on this page. Results mentioned in testimonials are based on individual experiences and are not guaranteed. Individual results may vary depending on business type, location, and market conditions.
+            </p>
+            <p className="text-[11px] text-neutral-600 mt-3">
+              QuickLaunchWeb · Houston, TX · (832) 552-3458 · support@quicklaunchweb.com
+            </p>
+          </div>
         </div>
       </section>
 
@@ -541,7 +530,7 @@ export default function InstagramLanding() {
           >
             <div className="max-w-lg mx-auto">
               <button
-                onClick={openCalendly}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-[14px] font-bold font-[family-name:var(--font-montserrat)] py-3.5 rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
               >
                 Book my free demo <Phone className="w-3.5 h-3.5" />

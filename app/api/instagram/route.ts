@@ -893,50 +893,10 @@ export async function POST(req: Request) {
       currency: 'USD',
     });
 
-    const metaEvents: MetaEventInput[] = [
-      {
-        eventName: 'Lead',
-        eventId: meta.leadEventId || createFallbackEventId('ig_lead'),
-        eventTime: nowInSeconds,
-        actionSource: 'website',
-        eventSourceUrl,
-        userData: baseUserData,
-        customData: baseCustomData,
-      },
-      {
-        eventName: 'CompleteRegistration',
-        eventId:
-          meta.completeRegistrationEventId ||
-          createFallbackEventId('ig_complete_registration'),
-        eventTime: nowInSeconds,
-        actionSource: 'website',
-        eventSourceUrl,
-        userData: baseUserData,
-        customData: baseCustomData,
-      },
-      {
-        eventName: 'LeadSubmitted',
-        eventId:
-          meta.leadSubmittedEventId || createFallbackEventId('ig_lead_submitted'),
-        eventTime: nowInSeconds,
-        actionSource: 'website',
-        eventSourceUrl,
-        userData: baseUserData,
-        customData: baseCustomData,
-        originalEventData: {
-          event_name: 'LeadSubmitted',
-          event_time: nowInSeconds,
-        },
-      },
-    ];
-
-    const metaResult = await sendMetaConversionsEvents(metaEvents);
-    if (!metaResult.ok && !metaResult.skipped) {
-      console.warn(
-        '[IG Lead API] Meta CAPI error:',
-        metaResult.error || metaResult.body || 'Unknown error'
-      );
-    }
+    // NOTE: Lead pixel event is now fired ONLY from /instagram/booked page load
+    // (browser fbq + server CAPI with shared eventId for dedup).
+    // This form API no longer sends Meta pixel events to avoid misfires.
+    // Old events (Lead, CompleteRegistration, LeadSubmitted) removed 2026-03-14.
 
     return NextResponse.json(
       {
