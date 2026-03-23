@@ -276,7 +276,9 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const clientName = session.customer_details?.name || 'Unknown';
   const amount = formatAmount(session.amount_total);
   const metadata = session.metadata;
-  const plan = metadata?.plan || 'Unknown';
+  const planLabel = metadata?.planLabel || metadata?.plan || 'Unknown';
+  const billingSuffix = metadata?.billingCycle === 'upfront' ? ' (Upfront Offer)' : '';
+  const plan = `${planLabel}${billingSuffix}`;
   const addOns = formatAddOns(metadata);
   const sessionId = session.id || 'test_session';
 

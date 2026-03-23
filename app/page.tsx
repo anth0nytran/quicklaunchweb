@@ -31,9 +31,12 @@ import { usePageTracker, useCheckoutTracker, useEventTracker, useFormTracker } f
 import { Navigation } from "@/components/Navigation";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 
-type Plan = "starter" | "pro";
+type Plan = "starter" | "growth" | "city_dominator";
+
+type BillingCycle = "monthly" | "upfront";
 
 type AddOns = {
+  billingCycle: BillingCycle;
   hasDomain: boolean | null;
   domainRouting: "us" | "self" | null;
   textAlerts: boolean;
@@ -58,6 +61,31 @@ const createEmptyCustomForm = (): CustomForm => ({
   website: "",
   details: "",
 });
+
+const PLAN_DETAILS = {
+  starter: {
+    label: "Starter",
+    monthlyPrice: 99,
+    upfrontPrice: 297,
+  },
+  growth: {
+    label: "Growth Engine",
+    monthlyPrice: 199,
+    upfrontPrice: 597,
+  },
+  city_dominator: {
+    label: "City Dominator",
+    monthlyPrice: 399,
+    upfrontPrice: 1197,
+  },
+} as const satisfies Record<
+  Plan,
+  {
+    label: string;
+    monthlyPrice: number;
+    upfrontPrice: number;
+  }
+>;
 
 // =============================================================================
 // Validation Helpers
@@ -171,7 +199,7 @@ const defaultPageCopy = {
   heroBullets: [
     "Built by hand. Live in 48 hours. Not a template.",
     "Tap-to-call + quote forms that ring your phone.",
-    "$99/mo. One job covers the whole year. Cancel anytime.",
+    "Starting at $99/mo. Cancel anytime.",
   ],
   features: [
     {
@@ -226,19 +254,19 @@ const defaultPageCopy = {
   stats: [
     { value: "FREE", label: "Website Build" },
     { value: "48h", label: "Launch Time" },
-    { value: "$99", label: "/mo Hosting" },
+    { value: "$99", label: "/mo Starting" },
     { value: "Unlimited", label: "Cancel Anytime" },
   ],
   pricingEyebrow:
     "You wouldn't pay $2,000 for a sign that doesn't bring in foot traffic",
-  pricingHeading: "$0 to build. $99/mo to keep it making you money.",
+  pricingHeading: "$0 to build. Plans starting at $99/mo.",
   pricingDescription:
-    "Most agencies charge $1,500+ upfront for a site that just sits there. We build yours free. You only pay if it's working. Cancel the second it's not.",
-  proHelperHeading: "Go Pro if you want to win more jobs:",
-  proHelperItems: [
-    "You offer multiple services (rank for all of them)",
+    "Most agencies charge $1,500+ upfront for a site that just sits there. We build yours free — and make Google send you customers. Cancel the second it's not working.",
+  growthHelperHeading: "Go Growth if you want Google sending you leads:",
+  growthHelperItems: [
+    "You want SEO, reviews automation, and blog content",
     "You want to outrank competitors on Google",
-    "You want to know exactly where leads come from",
+    "You want a full 5-page site with lead tracking",
   ],
   starterHelperHeading: "Starter works if:",
   starterHelperItems: [
@@ -277,7 +305,7 @@ const houstonPageCopy = {
   heroBullets: [
     "Built for Houston contractors and home service businesses",
     "Tap-to-call and fast quote forms help people reach you fast",
-    "$99/mo. If it does not help, cancel",
+    "Starting at $99/mo. Cancel anytime.",
   ],
   features: [
     {
@@ -337,14 +365,14 @@ const houstonPageCopy = {
   ],
   pricingEyebrow:
     "A Houston contractor website should help you get jobs.",
-  pricingHeading: "$0 down. $99/mo. Get a site that helps you win more jobs.",
+  pricingHeading: "$0 down. Plans starting at $99/mo.",
   pricingDescription:
-    "Most agencies ask for a big payment first. We build your site first. Then you pay monthly.",
-  proHelperHeading: "Go Pro if:",
-  proHelperItems: [
-    "You want more than one page",
+    "Most agencies ask for a big payment first. We build your site first — and make Google send you customers. Cancel anytime.",
+  growthHelperHeading: "Go Growth if:",
+  growthHelperItems: [
+    "You want SEO, reviews automation, and blog content",
     "You offer more than one service",
-    "You want call and form tracking",
+    "You want a full 5-page site with lead tracking",
   ],
   starterHelperHeading: "Starter works if:",
   starterHelperItems: [
@@ -461,21 +489,21 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
                 </div>
               </div>
 
-              {/* Pro Plan - Gets selected */}
+              {/* Growth Engine - Gets selected */}
               <div className="animate-proBreath" style={{ animationDelay: '1.1s' }}>
                 <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 relative overflow-hidden pro-card animate-proSelect" style={{ animationDelay: '0.9s', animationFillMode: 'both' }}>
                   <div className="relative flex items-center justify-between pr-6">
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-white">Pro</p>
+                        <p className="text-sm font-medium text-white">Growth</p>
                         <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-accent text-black">
                           POPULAR
                         </span>
                       </div>
-                      <p className="text-xs text-muted">3-page site</p>
+                      <p className="text-xs text-muted">5-page + SEO system</p>
                     </div>
                     <div className="text-right">
-                      <span className="text-xl font-bold text-accent">$149</span>
+                      <span className="text-xl font-bold text-accent">$199</span>
                       <span className="text-muted text-xs">/mo</span>
                     </div>
                   </div>
@@ -493,7 +521,7 @@ function CheckoutVisualCSS({ isActive }: { isActive: boolean }) {
 
           {/* Features */}
           <div className="mt-4 space-y-1.5 w-full max-w-[280px]">
-            {['3-page website', 'Free build included', 'Cancel anytime'].map((item, i) => (
+            {['5-page website + SEO', 'Reviews automation', 'Cancel anytime'].map((item, i) => (
               <div key={item} className="flex items-center gap-2 text-xs text-secondary opacity-0 animate-slideRight" style={{ animationDelay: `${1.5 + i * 0.25}s`, animationFillMode: 'both' }}>
                 <div className="h-1 w-1 rounded-full bg-accent" />
                 {item}
@@ -849,12 +877,14 @@ export default function HomePage() {
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [addOns, setAddOns] = useState<AddOns>({
+    billingCycle: "monthly",
     hasDomain: null,
     domainRouting: null,
     textAlerts: false,
     unlimitedEdits: false,
     googleBoost: false,
   });
+  const [upsellStep, setUpsellStep] = useState(1);
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [customForm, setCustomForm] = useState<CustomForm>(createEmptyCustomForm());
   const [customLoading, setCustomLoading] = useState(false);
@@ -864,6 +894,8 @@ export default function HomePage() {
   // FAQ search and filter state
   const [faqSearch, setFaqSearch] = useState("");
   const [faqCategory, setFaqCategory] = useState("all");
+
+  const selectedPlanDetails = selectedPlan ? PLAN_DETAILS[selectedPlan] : null;
 
   // Mobile sticky CTA state
   const [showMobileCTA, setShowMobileCTA] = useState(false);
@@ -926,7 +958,9 @@ export default function HomePage() {
     trackPlanSelected(plan, 'homepage_pricing');
     setSelectedPlan(plan);
     setCheckoutError("");
+    setUpsellStep(1);
     setAddOns({
+      billingCycle: "monthly",
       hasDomain: null,
       domainRouting: null,
       textAlerts: false,
@@ -945,8 +979,7 @@ export default function HomePage() {
 
   // Calculate monthly total based on selections
   const calculateTotal = () => {
-    const basePrices = { starter: 99, pro: 149 };
-    let monthly = selectedPlan ? basePrices[selectedPlan] : 0;
+    let monthly = selectedPlanDetails ? selectedPlanDetails.monthlyPrice : 0;
 
     if (addOns.textAlerts) monthly += 29;
     if (addOns.unlimitedEdits) monthly += 49;
@@ -954,7 +987,11 @@ export default function HomePage() {
     let oneTime = addOns.googleBoost ? 199 : 0;
     if (addOns.domainRouting === "us") oneTime += 99;
 
-    return { monthly, oneTime };
+    const isUpfront = addOns.billingCycle === "upfront";
+    const upfrontTotal = isUpfront ? monthly * 3 : 0;
+    const upfrontSavings = isUpfront ? monthly : 0;
+
+    return { monthly, oneTime, isUpfront, upfrontTotal, upfrontSavings };
   };
 
   // Proceed to Stripe checkout with add-ons
@@ -1005,18 +1042,10 @@ export default function HomePage() {
   const handleUpsellContinue = useCallback(() => {
     setCheckoutError("");
 
-    if (addOns.hasDomain === null) {
-      setCheckoutError("Please select whether you have a domain.");
-      return;
-    }
-    if (addOns.hasDomain && addOns.domainRouting === null) {
-      setCheckoutError("Please select who will handle domain routing.");
-      return;
-    }
     if (selectedPlan) {
-      // Track checkout initiation with add-ons and total value
       const { monthly, oneTime } = calculateTotal();
       const selectedAddons = [];
+      if (addOns.billingCycle === 'upfront') selectedAddons.push('upfront_billing');
       if (addOns.textAlerts) selectedAddons.push('text_alerts');
       if (addOns.unlimitedEdits) selectedAddons.push('unlimited_edits');
       if (addOns.googleBoost) selectedAddons.push('google_boost');
@@ -1146,14 +1175,15 @@ export default function HomePage() {
 
   */
 
-  const customWebsiteFeatures = [
-    "Full multi-page website",
-    "Custom design + your branding",
-    "Tools that talk to each other",
-    "Online store + payments",
-    "Client logins or dashboards",
-    "Booking + CRM setup",
-    "SEO + tracking built in",
+  const cityDominatorFeatures = [
+    "10+ page website",
+    "Everything in Growth Engine",
+    "Individual page for every service you offer",
+    "2 city landing pages added / month",
+    "2 SEO blog posts / month",
+    "12-month city page SEO roadmap",
+    "Priority edits (24h turnaround)",
+    "4 content edits / month",
   ];
 
   const steps = pageCopy.steps;
@@ -1440,11 +1470,11 @@ export default function HomePage() {
               <div className="space-y-2.5 mb-6">
                 {[
                   { item: 'Custom website (not a template)', value: '$3,000–5,000' },
-                  { item: 'Works on phones + tap-to-call', value: '$500' },
-                  { item: 'Shows up on Google', value: '$1,500' },
-                  { item: 'Hosting + security', value: '$300/yr' },
-                  { item: 'Updates + support', value: '$200/mo' },
-                  { item: 'Quote forms that send you leads', value: '$500' },
+                  { item: 'Google Business Profile setup', value: '$500' },
+                  { item: 'Google Reviews automation', value: '$300/mo' },
+                  { item: 'On-page SEO optimization', value: '$1,500' },
+                  { item: 'Monthly blog content', value: '$200/mo' },
+                  { item: 'Hosting + security + support', value: '$300/yr' },
                 ].map((row, i) => (
                   <div key={i} className="flex items-center justify-between gap-4 group">
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -1462,7 +1492,7 @@ export default function HomePage() {
               {/* Total line */}
               <div className="flex items-center justify-between border-t border-white/[0.06] pt-4 mb-8">
                 <span className="text-[11px] text-white/40 uppercase tracking-[0.2em] font-bold">Total value</span>
-                <span className="text-lg text-white/30 line-through font-bold">$5,800+</span>
+                <span className="text-lg text-white/30 line-through font-bold">$9,800+</span>
               </div>
 
             </div>
@@ -1517,7 +1547,7 @@ export default function HomePage() {
                 </GlassButton>
               </GlassCard>
 
-              {/* Pro Plan */}
+              {/* Growth Engine Plan */}
               <GlassCard variant="elevated" glow className="relative flex flex-col p-8 border-accent/30">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                   <GlassPill variant="accent" className="bg-accent text-black border-accent shadow-glow">
@@ -1526,33 +1556,33 @@ export default function HomePage() {
                 </div>
 
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">3-Page Lead System</p>
-                  <h3 className="text-xl font-semibold text-white mt-1">Pro</h3>
+                  <p className="text-xs text-muted uppercase tracking-wider">The Google Lead System</p>
+                  <h3 className="text-xl font-semibold text-white mt-1">Growth Engine</h3>
                   <div className="mt-3 flex items-center gap-3">
-                    <span className="text-xl text-white/50 line-through">$1,499</span>
+                    <span className="text-xl text-white/50 line-through">$1,999</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
                       BUILD WAIVED
                     </GlassPill>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1">
-                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">$149</span>
+                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">$199</span>
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    3 pages. More services. Rank higher. Cancel anytime.
+                    Your website + the SEO system that makes Google send you customers every month. Cancel anytime.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {[
-                    "Everything in Starter",
-                    "3 pages (Home + Services + Contact)",
-                    "Stronger Google rankings",
-                    "Call + form tracking set up",
-                    "See where your leads come from",
-                    "Faster edits (24-48h turnaround)",
-                    "3 content changes / month",
-                    "Site checkup every quarter",
+                    "5-page website (Home, About, Services, Gallery, Contact)",
+                    "Tap-to-call + quote forms that ring your phone",
+                    "Full on-page SEO (meta tags, schema, alt text, internal links)",
+                    "Google Business Profile setup + optimization",
+                    "Google Reviews automation — reviews stack on autopilot",
+                    "1 SEO blog post / month",
+                    "Monthly ranking + traffic snapshot",
+                    "2 content edits / month",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <CheckIcon className="h-4 w-4 text-accent shrink-0" />
@@ -1564,36 +1594,45 @@ export default function HomePage() {
                 <GlassButton
                   variant="primary"
                   size="lg"
-                  onClick={() => openUpsellModal("pro")}
-                  loading={loadingPlan === "pro"}
+                  onClick={() => openUpsellModal("growth")}
+                  loading={loadingPlan === "growth"}
                   className="w-full"
                 >
                   Start My Free Website
                 </GlassButton>
               </GlassCard>
 
-              {/* Custom Website */}
+              {/* City Dominator */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">Full-Service</p>
-                  <h3 className="text-xl font-semibold text-white mt-1">Project Website</h3>
+                  <p className="text-xs text-muted uppercase tracking-wider">Own Every Search in Your Area</p>
+                  <h3 className="text-xl font-semibold text-white mt-1">City Dominator</h3>
                   <div className="mt-3 flex items-center gap-3">
-                    <span className="text-xl text-white/50">Scope-based</span>
+                    <span className="text-xl text-white/50 line-through">$3,999</span>
                     <GlassPill variant="accent" className="text-[11px] py-0.5 px-2 uppercase tracking-wider">
-                      Call Required
+                      BUILD WAIVED
                     </GlassPill>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1">
-                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">Quote</span>
-                    <span className="text-secondary">/project</span>
+                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">$399</span>
+                    <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Online stores, portals, custom tools. One call. Fixed price.
+                    Show up first in every city you serve — not just one. Cancel anytime.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
-                  {customWebsiteFeatures.map((item, i) => (
+                  {[
+                    "10+ page website",
+                    "Everything in Growth Engine",
+                    "Individual page for every service you offer",
+                    "2 city landing pages added / month",
+                    "2 SEO blog posts / month",
+                    "12-month city page SEO roadmap",
+                    "Priority edits (24h turnaround)",
+                    "4 content edits / month",
+                  ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <CheckIcon className="h-4 w-4 text-accent shrink-0" />
                       {item}
@@ -1606,16 +1645,17 @@ export default function HomePage() {
                   size="lg"
                   onClick={() => {
                     track('cta_click', {
-                      cta_text: 'Book a Call',
-                      cta_location: 'pricing_custom',
+                      cta_text: 'Start City Dominator',
+                      cta_location: 'pricing_dominator',
                       event_category: 'engagement',
-                      event_label: 'custom_quote_cta',
+                      event_label: 'dominator_checkout',
                     });
-                    window.open('https://calendly.com/quicklaunchweb/30-minute-discovery-call', '_blank', 'noopener');
+                    openUpsellModal("city_dominator");
                   }}
+                  loading={loadingPlan === "city_dominator"}
                   className="w-full"
                 >
-                  Book a Call
+                  Start City Dominator
                 </GlassButton>
               </GlassCard>
             </div>
@@ -1878,237 +1918,368 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-      {/* ===== Upsell Modal (Radix Dialog) ===== */}
+      {/* ===== Upsell Modal — Quiz Flow ===== */}
       <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-lg p-4 sm:p-6">
           <DialogCloseButton />
 
-          <DialogHeader>
-            <DialogTitle>
-              Customize Your {selectedPlan === "pro" ? "Pro" : "Starter"} Plan
-            </DialogTitle>
-            <DialogDescription>
-              Quick choices, optional upgrades. You can change later.
-            </DialogDescription>
-          </DialogHeader>
+          {/* Progress dots */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            {[1, 2, 3, 4].map((step) => (
+              <div
+                key={step}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  step === upsellStep
+                    ? "w-6 bg-accent"
+                    : step < upsellStep
+                    ? "w-1.5 bg-accent/40"
+                    : "w-1.5 bg-white/10"
+                }`}
+              />
+            ))}
+          </div>
 
-
-          <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
-            <div className="space-y-4 md:pr-2">
-              {/* Domain Question */}
-              <div>
-                <p className="text-sm font-medium text-white mb-3">
-                  Do you already own a domain? <span className="text-accent">*</span>
-                </p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
-                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === true
-                      ? "border-accent/50 bg-accent/10 text-accent"
-                      : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                      }`}
-                  >
-                    Yes, I have one
-                  </button>
-                  <button
-                    onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
-                    className={`flex-1 rounded-xl border py-3 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === false
-                      ? "border-accent/50 bg-accent/10 text-accent"
-                      : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
-                      }`}
-                  >
-                    No, I need one
-                  </button>
-                </div>
+          {/* Step 1: Domain */}
+          {upsellStep === 1 && (
+            <div className="space-y-4 sm:space-y-5">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-white">Do you have a domain?</h3>
+                <p className="mt-1 text-sm text-muted">e.g. <span className="text-white/60">yourbusiness.com</span></p>
               </div>
 
-              {/* Domain Routing */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
+                  className={`flex-1 rounded-xl border py-3.5 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === true
+                    ? "border-accent/50 bg-accent/10 text-accent"
+                    : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                    }`}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
+                  className={`flex-1 rounded-xl border py-3.5 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === false
+                    ? "border-accent/50 bg-accent/10 text-accent"
+                    : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
+                    }`}
+                >
+                  No
+                </button>
+              </div>
+
+              {/* Domain routing sub-question */}
               {addOns.hasDomain === true && (
-                <GlassCard className="p-4">
-                  <p className="text-sm font-medium text-white mb-3">
-                    Who should connect your domain? <span className="text-accent">*</span>
-                  </p>
-                  <div className="space-y-2">
-                    <GlassSelect
-                      selected={addOns.domainRouting === "us"}
-                      onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
-                      label="We handle it"
-                      description="We connect it and verify it works. Normally $99."
-                      price="$99 one-time"
-                      priceColor="accent"
-                    />
-                    <GlassSelect
-                      selected={addOns.domainRouting === "self"}
-                      onClick={() => setAddOns({ ...addOns, domainRouting: "self" })}
-                      label="I'll do it"
-                      description="Simple step-by-step instructions."
-                      price="Free"
-                      priceColor="success"
-                    />
-                  </div>
-                </GlassCard>
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-white">Who connects it?</p>
+                  <GlassSelect
+                    selected={addOns.domainRouting === "us"}
+                    onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
+                    label="You guys"
+                    description="We connect and verify everything."
+                    price="$99 one-time"
+                    priceColor="accent"
+                  />
+                  <GlassSelect
+                    selected={addOns.domainRouting === "self"}
+                    onClick={() => setAddOns({ ...addOns, domainRouting: "self" })}
+                    label="I got it"
+                    description="We send simple instructions."
+                    price="Free"
+                    priceColor="success"
+                  />
+                </div>
               )}
 
               {addOns.hasDomain === false && (
-                <div className="rounded-xl border border-accent/30 bg-accent/10 p-4">
+                <div className="rounded-xl border border-accent/30 bg-accent/10 p-3 sm:p-4">
                   <p className="text-sm text-accent">
-                    We&apos;ll send a quick guide to buy a domain (2 minutes).
-                    After you buy it, we can connect it for <span className="text-white font-semibold">$99</span> or you can do it yourself free.
+                    No worries — we&apos;ll send you a 2-minute guide to grab one.
                   </p>
                 </div>
               )}
 
-              {/* Add-ons */}
-              <div>
-                <p className="text-sm font-medium text-white mb-3">Optional Add-ons</p>
-                <div className="space-y-2">
-                  <GlassSelect
-                    selected={addOns.textAlerts}
-                    onClick={() => {
-                      const newValue = !addOns.textAlerts;
-                      trackAddonToggled('Instant Lead Texts', 29, newValue ? 'added' : 'removed', selectedPlan || 'starter');
-                      setAddOns({ ...addOns, textAlerts: newValue });
-                    }}
-                    label="Instant Lead Texts"
-                    description="Automated text response system for new leads."
-                    details={
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Setup of automated SMS reply workflow.</li>
-                        <li>Notification routing to your phone and email.</li>
-                        <li>Custom message configuration for your brand.</li>
-                      </ul>
-                    }
-                    price="+$29/mo"
-                    priceColor="accent"
-                  />
-                  <GlassSelect
-                    selected={addOns.unlimitedEdits}
-                    onClick={() => {
-                      const newValue = !addOns.unlimitedEdits;
-                      trackAddonToggled('Monthly Conversion Boost', 49, newValue ? 'added' : 'removed', selectedPlan || 'starter');
-                      setAddOns({ ...addOns, unlimitedEdits: newValue });
-                    }}
-                    label="Monthly Conversion Boost"
-                    description="We use real data to turn more of your visitors into paying customers every month."
-                    details={
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Visitor heatmap & click tracking analysis.</li>
-                        <li>Data-backed design & copy adjustments.</li>
-                        <li>Monthly performance growth report.</li>
-                      </ul>
-                    }
-                    price="+$49/mo"
-                    priceColor="accent"
-                  />
-                  <GlassSelect
-                    selected={addOns.googleBoost}
-                    onClick={() => {
-                      const newValue = !addOns.googleBoost;
-                      trackAddonToggled('Google Business Boost', 199, newValue ? 'added' : 'removed', selectedPlan || 'starter');
-                      setAddOns({ ...addOns, googleBoost: newValue });
-                    }}
-                    label="Google Business Boost"
-                    description="Complete setup and optimization of your Google Maps presence."
-                    details={
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Google Business Profile verification & setup.</li>
-                        <li>Optimization of business categories and description.</li>
-                        <li>Creation of direct 'Review Us' link & QR code.</li>
-                      </ul>
-                    }
-                    price={
-                      <span className="inline-flex items-center gap-2">
-                        <span className="text-white/40 line-through decoration-2 decoration-white/40 text-xs">$499</span>
-                        <span className="text-accent font-bold">$199 one-time</span>
-                      </span>
-                    }
-                    priceColor="default"
-                  />
+              {checkoutError && (
+                <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 sm:px-4 py-3 text-sm text-red-400">
+                  {checkoutError}
                 </div>
-              </div>
-            </div>
+              )}
 
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
-                <p className="text-xs uppercase tracking-wider text-white/50">Your total</p>
-
-                <div className="mt-4 space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-secondary">{selectedPlan === "pro" ? "Pro" : "Starter"} plan</span>
-                    <span className="text-white">${selectedPlan === "pro" ? 149 : 99}/mo</span>
-                  </div>
-                  {addOns.textAlerts && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-secondary">Instant Lead Texts</span>
-                      <span className="text-white">+$29/mo</span>
-                    </div>
-                  )}
-                  {addOns.unlimitedEdits && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-secondary">Monthly Conversion Boost</span>
-                      <span className="text-white">+$49/mo</span>
-                    </div>
-                  )}
-                </div>
-
-                <GlassDivider className="my-4" />
-
-                {addOns.domainRouting === "us" || addOns.googleBoost ? (
-                  <div className="space-y-2">
-                    <p className="text-[10px] uppercase tracking-wider text-white/40">One-time</p>
-                    {addOns.domainRouting === "us" && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-secondary">Domain connection</span>
-                        <span className="text-white">+$99</span>
-                      </div>
-                    )}
-                    {addOns.googleBoost && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-secondary">Google Business Boost</span>
-                        <span className="text-white">+$199</span>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-xs text-muted">No one-time add-ons selected.</p>
-                )}
-
-                <GlassDivider className="my-4" />
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-secondary">Monthly total</span>
-                  <span className="text-2xl font-semibold text-white">${calculateTotal().monthly}/mo</span>
-                </div>
-                {calculateTotal().oneTime > 0 && (
-                  <div className="mt-2 flex items-center justify-between text-sm">
-                    <span className="text-muted">One-time total</span>
-                    <span className="text-secondary">${calculateTotal().oneTime}</span>
-                  </div>
-                )}
-
-                {checkoutError && (
-                  <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                    {checkoutError}
-                  </div>
-                )}
-
+              <div className="pt-1">
                 <GlassButton
                   variant="primary"
                   size="lg"
-                  onClick={handleUpsellContinue}
-                  loading={loadingPlan !== null}
-                  className="mt-4 w-full"
+                  className="w-full"
+                  onClick={() => {
+                    setCheckoutError("");
+                    if (addOns.hasDomain === null) {
+                      setCheckoutError("Select an option to continue.");
+                      return;
+                    }
+                    if (addOns.hasDomain && addOns.domainRouting === null) {
+                      setCheckoutError("Select who connects your domain.");
+                      return;
+                    }
+                    setUpsellStep(2);
+                  }}
                 >
-                  Continue to Checkout
+                  Continue
                 </GlassButton>
-                <p className="mt-3 text-xs text-muted text-center">
-                  Secure Stripe checkout.
-                </p>
               </div>
             </div>
-          </div>
+          )}
+
+          {/* Step 2: Add-ons */}
+          {upsellStep === 2 && (
+            <div className="space-y-4 sm:space-y-5">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-white">Power up your site</h3>
+                <p className="mt-1 text-sm text-muted">Optional add-ons — skip if you don&apos;t need them.</p>
+              </div>
+
+              <div className="space-y-2">
+                <GlassSelect
+                  selected={addOns.textAlerts}
+                  onClick={() => {
+                    const newValue = !addOns.textAlerts;
+                    trackAddonToggled('Instant Lead Texts', 29, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                    setAddOns({ ...addOns, textAlerts: newValue });
+                  }}
+                  label="Instant Lead Texts"
+                  description="Auto-reply to new leads via SMS. You get notified instantly."
+                  price="+$29/mo"
+                  priceColor="accent"
+                />
+                <GlassSelect
+                  selected={addOns.unlimitedEdits}
+                  onClick={() => {
+                    const newValue = !addOns.unlimitedEdits;
+                    trackAddonToggled('Monthly Conversion Boost', 49, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                    setAddOns({ ...addOns, unlimitedEdits: newValue });
+                  }}
+                  label="Monthly Conversion Boost"
+                  description="We optimize your site monthly using real visitor data."
+                  price="+$49/mo"
+                  priceColor="accent"
+                />
+                <GlassSelect
+                  selected={addOns.googleBoost}
+                  onClick={() => {
+                    const newValue = !addOns.googleBoost;
+                    trackAddonToggled('Google Business Boost', 199, newValue ? 'added' : 'removed', selectedPlan || 'starter');
+                    setAddOns({ ...addOns, googleBoost: newValue });
+                  }}
+                  label="Google Business Boost"
+                  description="Full Google Business Profile setup + Maps optimization."
+                  price={
+                    <span className="inline-flex items-center gap-1.5 sm:gap-2">
+                      <span className="text-white/40 line-through decoration-2 decoration-white/40 text-xs">$499</span>
+                      <span className="text-accent font-bold">$199 one-time</span>
+                    </span>
+                  }
+                  priceColor="default"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-1">
+                <button
+                  onClick={() => setUpsellStep(1)}
+                  className="rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 px-4 sm:px-5 text-sm font-medium text-secondary transition-all duration-200 hover:bg-white/[0.06]"
+                >
+                  Back
+                </button>
+                <GlassButton
+                  variant="primary"
+                  size="lg"
+                  className="flex-1"
+                  onClick={() => setUpsellStep(3)}
+                >
+                  {addOns.textAlerts || addOns.unlimitedEdits || addOns.googleBoost ? "Continue" : "Skip"}
+                </GlassButton>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Billing — Limited offer with urgency */}
+          {upsellStep === 3 && (
+            <div className="space-y-5 sm:space-y-6 text-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">Limited offer</p>
+                <h3 className="text-lg font-semibold text-white">
+                  Pay 3 months, get your 4th month free
+                </h3>
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-sm">
+                  <span className="text-white/40 line-through decoration-2">
+                    ${selectedPlanDetails ? selectedPlanDetails.monthlyPrice * 4 : 0}
+                  </span>
+                  <span className="text-xl font-bold text-accent">
+                    ${selectedPlanDetails ? selectedPlanDetails.upfrontPrice : 0}
+                  </span>
+                  <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-semibold text-emerald-400">
+                    Save ${selectedPlanDetails ? selectedPlanDetails.monthlyPrice : 0}
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    setAddOns({ ...addOns, billingCycle: "upfront" });
+                    setUpsellStep(4);
+                  }}
+                  className="w-full rounded-xl border border-accent/50 bg-accent/10 py-4 px-4 font-medium text-accent transition-all duration-200 hover:bg-accent/20"
+                >
+                  I want the free month
+                </button>
+                <button
+                  onClick={() => {
+                    setAddOns({ ...addOns, billingCycle: "monthly" });
+                    setUpsellStep(4);
+                  }}
+                  className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 px-4 text-sm text-secondary transition-all duration-200 hover:bg-white/[0.06] hover:border-white/[0.15]"
+                >
+                  No thanks, keep it at ${selectedPlanDetails ? selectedPlanDetails.monthlyPrice : 0}/mo
+                </button>
+              </div>
+
+              <button
+                onClick={() => setUpsellStep(2)}
+                className="text-xs text-muted hover:text-secondary transition-colors"
+              >
+                &larr; Back
+              </button>
+            </div>
+          )}
+
+          {/* Step 4: Summary + Checkout */}
+          {upsellStep === 4 && (
+            <div className="space-y-4 sm:space-y-5">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-white">Order summary</h3>
+              </div>
+
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 space-y-3">
+                {/* Plan */}
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-white font-medium">{selectedPlanDetails ? selectedPlanDetails.label : "Starter"} plan</span>
+                  <span className="text-white font-semibold">${selectedPlanDetails ? selectedPlanDetails.monthlyPrice : 0}/mo</span>
+                </div>
+
+                {/* Billing */}
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-secondary">Billing</span>
+                  {addOns.billingCycle === "upfront" ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="text-white">Upfront prepay</span>
+                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">1 mo free</span>
+                    </span>
+                  ) : (
+                    <span className="text-white">Monthly</span>
+                  )}
+                </div>
+
+                {/* Domain */}
+                {addOns.domainRouting === "us" && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-secondary">Domain connection</span>
+                    <span className="text-accent/80">$99 one-time</span>
+                  </div>
+                )}
+
+                {/* Add-ons */}
+                {addOns.textAlerts && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-secondary">Instant Lead Texts</span>
+                    <span className="text-white">+$29/mo</span>
+                  </div>
+                )}
+                {addOns.unlimitedEdits && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-secondary">Monthly Conversion Boost</span>
+                    <span className="text-white">+$49/mo</span>
+                  </div>
+                )}
+                {addOns.googleBoost && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-secondary">Google Business Boost</span>
+                    <span className="text-accent/80">$199 one-time</span>
+                  </div>
+                )}
+
+                <GlassDivider className="my-3" />
+
+                {/* Totals */}
+                {calculateTotal().isUpfront ? (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-accent">Due today</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-white/40 line-through decoration-2">${calculateTotal().upfrontTotal + calculateTotal().upfrontSavings}</span>
+                        <span className="text-xl sm:text-2xl font-bold text-accent">${calculateTotal().upfrontTotal + calculateTotal().oneTime}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted">You save</span>
+                      <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-semibold text-emerald-400">
+                        -${calculateTotal().upfrontSavings} (1 month free)
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted text-center pt-1">Then ${calculateTotal().monthly}/mo starting month 5</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-accent">Due today</span>
+                      <span className="text-xl sm:text-2xl font-bold text-accent">
+                        ${calculateTotal().monthly + calculateTotal().oneTime}
+                      </span>
+                    </div>
+                    {calculateTotal().oneTime > 0 && (
+                      <p className="text-[11px] text-muted text-center pt-1">
+                        ${calculateTotal().monthly}/mo recurring + ${calculateTotal().oneTime} one-time
+                      </p>
+                    )}
+                    {calculateTotal().oneTime === 0 && (
+                      <p className="text-[11px] text-muted text-center pt-1">Billed monthly. Cancel anytime.</p>
+                    )}
+                  </>
+                )}
+              </div>
+
+              {checkoutError && (
+                <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 sm:px-4 py-3 text-sm text-red-400">
+                  {checkoutError}
+                </div>
+              )}
+
+              {/* Navigation */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setUpsellStep(3)}
+                  className="rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 px-4 sm:px-5 text-sm font-medium text-secondary transition-all duration-200 hover:bg-white/[0.06]"
+                >
+                  Back
+                </button>
+                <GlassButton
+                  variant="primary"
+                  size="lg"
+                  className="flex-1"
+                  onClick={handleUpsellContinue}
+                  loading={loadingPlan !== null}
+                >
+                  Checkout
+                </GlassButton>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 text-xs text-muted">
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Secured by Stripe
+              </div>
+            </div>
+          )}
         </DialogContent>
-      </Dialog >
+      </Dialog>
 
       {/* ===== Custom Website Modal ===== */}
       < Dialog

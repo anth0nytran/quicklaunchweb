@@ -21,7 +21,7 @@ Set these in Vercel Dashboard → Settings → Environment Variables:
 | `NEXT_PUBLIC_SITE_URL` | Your production URL (no trailing slash) | `https://quicklaunchweb.com` |
 | `STRIPE_SECRET_KEY` | Stripe secret key (starts with `sk_live_`) | `sk_live_xxx` |
 | `STRIPE_PRICE_STARTER_MONTHLY` | Starter plan price ID ($99/mo) | `price_xxx` |
-| `STRIPE_PRICE_PRO_MONTHLY` | Pro plan price ID ($149/mo) | `price_xxx` |
+| `STRIPE_PRICE_GROWTH_MONTHLY` | Growth Engine plan price ID ($199/mo) | `price_xxx` |
 | `STRIPE_PRICE_TEXT_ALERTS` | Text alerts add-on ($29/mo) | `price_xxx` |
 | `STRIPE_PRICE_UNLIMITED_EDITS` | Unlimited edits add-on ($99/mo) | `price_xxx` |
 | `STRIPE_PRICE_DOMAIN_ROUTING` | Domain connection ($99 one-time) | `price_xxx` |
@@ -37,7 +37,7 @@ Set these in Vercel Dashboard → Settings → Environment Variables:
 
 **Recurring (Monthly) Products:**
 - Starter Plan: $99/month
-- Pro Plan: $149/month
+- Growth Engine Plan: $199/month
 - Text Alerts: $29/month
 - Unlimited Edits: $99/month
 

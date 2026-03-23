@@ -43,12 +43,12 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         // Positioning
-        "fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
+        "fixed left-1/2 top-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
         // Glass styling
         "rounded-2xl border border-white/[0.10] bg-[rgba(15,15,18,0.97)]",
         "backdrop-blur-xl shadow-glass-lg",
         // Layout
-        "p-6 max-h-[90vh] overflow-y-auto",
+        "p-4 sm:p-6 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto",
         // Animations
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",

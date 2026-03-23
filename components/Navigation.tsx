@@ -9,7 +9,7 @@ import { GlassButton } from "@/components/ui/glass";
 import { useEventTracker } from "@/lib/analytics";
 
 interface NavigationProps {
-    onOpenUpsellModal: (plan: "starter" | "pro") => void;
+    onOpenUpsellModal: (plan: "starter" | "growth" | "city_dominator") => void;
 }
 
 export function Navigation({ onOpenUpsellModal }: NavigationProps) {

@@ -25,7 +25,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const homeMetadata = buildPageMetadata({
   title: "QuickLaunchWeb | Stop Losing Customers to Competitors With Better Websites",
   description:
-    "Every day without a website, your competitors get the call instead. QuickLaunchWeb builds websites for local businesses that get you customers - live in 48 hours. $0 upfront. $99/mo. Cancel anytime.",
+    "Every day without a website, your competitors get the call instead. QuickLaunchWeb builds websites for local businesses that get you customers - live in 48 hours. $0 upfront. Starting at $99/mo. Cancel anytime.",
   path: "/",
 });
 

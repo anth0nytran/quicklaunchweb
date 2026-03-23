@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { logCheckoutEvent, logErrorEvent } from "@/lib/analytics/server";
@@ -12,19 +13,102 @@ const siteUrl = (() => {
   if (!value && process.env.NODE_ENV === "production") {
     throw new Error("Missing NEXT_PUBLIC_SITE_URL in production.");
   }
-  return value || "http://localhost:3000";
+
+  const fallbackUrl = "http://localhost:3000";
+  const resolved = value || fallbackUrl;
+
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const parsed = new URL(resolved);
+      if (
+        parsed.protocol === "https:" &&
+        ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname)
+      ) {
+        parsed.protocol = "http:";
+        return parsed.toString().replace(/\/$/, "");
+      }
+    } catch {
+      return fallbackUrl;
+    }
+  }
+
+  return resolved;
 })();
 
-const VALID_PLANS = ["starter", "pro"] as const;
+const VALID_PLANS = ["starter", "growth", "city_dominator"] as const;
 type ValidPlan = (typeof VALID_PLANS)[number];
 
+type BillingCycle = "monthly" | "upfront";
+
 type AddOns = {
+  billingCycle: BillingCycle;
   hasDomain: boolean | null;
   domainRouting: "us" | "self" | null;
   textAlerts: boolean;
   unlimitedEdits: boolean;
   googleBoost: boolean;
 };
+
+const PLAN_CONFIG: Record<
+  ValidPlan,
+  {
+    label: string;
+    upfrontLabel: string;
+    recurringLabel: string;
+    monthlyPriceEnv: string;
+    upfrontPriceEnv: string;
+  }
+> = {
+  starter: {
+    label: "Starter",
+    upfrontLabel: "Starter - 3 Month Prepay",
+    recurringLabel: "Starter - Monthly Subscription",
+    monthlyPriceEnv: "STRIPE_PRICE_STARTER_MONTHLY",
+    upfrontPriceEnv: "STRIPE_PRICE_STARTER_UPFRONT",
+  },
+  growth: {
+    label: "Growth Engine",
+    upfrontLabel: "Growth Engine - 3 Month Prepay",
+    recurringLabel: "Growth Engine - Monthly Subscription",
+    monthlyPriceEnv: "STRIPE_PRICE_GROWTH_MONTHLY",
+    upfrontPriceEnv: "STRIPE_PRICE_GROWTH_UPFRONT",
+  },
+  city_dominator: {
+    label: "City Dominator",
+    upfrontLabel: "City Dominator - 3 Month Prepay",
+    recurringLabel: "City Dominator - Monthly Subscription",
+    monthlyPriceEnv: "STRIPE_PRICE_CITY_DOMINATOR_MONTHLY",
+    upfrontPriceEnv: "STRIPE_PRICE_CITY_DOMINATOR_UPFRONT",
+  },
+};
+
+const RECURRING_ADDON_CONFIG = {
+  textAlerts: {
+    label: "Instant Lead Texts",
+    monthlyAmountCents: 2900,
+    envName: "STRIPE_PRICE_TEXT_ALERTS",
+    monthlyDescription: "Monthly lead text notifications.",
+  },
+  unlimitedEdits: {
+    label: "Monthly Conversion Boost",
+    monthlyAmountCents: 4900,
+    envName: "STRIPE_PRICE_UNLIMITED_EDITS",
+    monthlyDescription: "Monthly site optimization and updates.",
+  },
+} as const;
+
+const ONE_TIME_ADDON_CONFIG = {
+  domainRouting: {
+    label: "Domain Connection Service",
+    description: "One-time setup fee for domain connection and verification.",
+    envName: "STRIPE_PRICE_DOMAIN_ROUTING",
+  },
+  googleBoost: {
+    label: "Google Business Boost",
+    description: "One-time setup for Google Business Profile and Maps optimization.",
+    envName: "STRIPE_PRICE_GOOGLE_BOOST",
+  },
+} as const;
 
 // =============================================================================
 // Validation Helpers
@@ -37,7 +121,6 @@ function isValidPlan(plan: unknown): plan is ValidPlan {
 function sanitizeEmail(email: unknown): string | undefined {
   if (typeof email !== "string") return undefined;
   const trimmed = email.trim().toLowerCase();
-  // Basic email format validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(trimmed) || trimmed.length > 254) return undefined;
   return trimmed;
@@ -45,6 +128,7 @@ function sanitizeEmail(email: unknown): string | undefined {
 
 function validateAddOns(addOns: unknown): AddOns {
   const defaults: AddOns = {
+    billingCycle: "monthly",
     hasDomain: null,
     domainRouting: null,
     textAlerts: false,
@@ -57,6 +141,7 @@ function validateAddOns(addOns: unknown): AddOns {
   const obj = addOns as Record<string, unknown>;
 
   return {
+    billingCycle: obj.billingCycle === "upfront" ? "upfront" : "monthly",
     hasDomain:
       obj.hasDomain === true || obj.hasDomain === false ? obj.hasDomain : null,
     domainRouting:
@@ -67,6 +152,142 @@ function validateAddOns(addOns: unknown): AddOns {
     unlimitedEdits: obj.unlimitedEdits === true,
     googleBoost: obj.googleBoost === true,
   };
+}
+
+function getRequiredPriceId(envName: string): string {
+  const value = process.env[envName];
+  if (!value) {
+    throw new Error(`Missing required Stripe price configuration: ${envName}`);
+  }
+  return value;
+}
+
+function getTrialEndTimestamp() {
+  const trialEnd = new Date();
+  trialEnd.setMonth(trialEnd.getMonth() + 4);
+  return Math.floor(trialEnd.getTime() / 1000);
+}
+
+function formatAmount(amountCents: number, currency: string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(amountCents / 100);
+}
+
+async function retrieveConfiguredPrice(
+  envName: string,
+  expectedType: "one_time" | "recurring"
+) {
+  const priceId = getRequiredPriceId(envName);
+  const price = await stripe.prices.retrieve(priceId);
+
+  if (!price.active) {
+    throw new Error(`Stripe price is inactive: ${envName}`);
+  }
+
+  if (price.unit_amount == null) {
+    throw new Error(`Stripe price is missing unit_amount: ${envName}`);
+  }
+
+  const isRecurring = Boolean(price.recurring);
+  if (expectedType === "one_time" && isRecurring) {
+    throw new Error(`Expected one-time Stripe price but received recurring price: ${envName}`);
+  }
+
+  if (expectedType === "recurring" && !isRecurring) {
+    throw new Error(`Expected recurring Stripe price but received one-time price: ${envName}`);
+  }
+
+  return price;
+}
+
+function buildInlineLineItemFromPrice(
+  price: Stripe.Price,
+  {
+    name,
+    description,
+    recurring,
+  }: {
+    name: string;
+    description: string;
+    recurring: boolean;
+  }
+): Stripe.Checkout.SessionCreateParams.LineItem {
+  const priceData: Stripe.Checkout.SessionCreateParams.LineItem.PriceData = {
+    currency: price.currency,
+    product_data: {
+      name,
+      description,
+    },
+    unit_amount: price.unit_amount ?? undefined,
+  };
+
+  if (price.tax_behavior && price.tax_behavior !== "unspecified") {
+    priceData.tax_behavior = price.tax_behavior;
+  }
+
+  if (recurring) {
+    if (!price.recurring) {
+      throw new Error("Recurring price data expected but missing.");
+    }
+
+    priceData.recurring = {
+      interval: price.recurring.interval,
+      ...(price.recurring.interval_count
+        ? { interval_count: price.recurring.interval_count }
+        : {}),
+    };
+  }
+
+  return {
+    price_data: priceData,
+    quantity: 1,
+  };
+}
+
+function buildInlineOneTimeAmountLineItem(
+  {
+    name,
+    description,
+    amountCents,
+    currency,
+  }: {
+    name: string;
+    description: string;
+    amountCents: number;
+    currency: string;
+  }
+): Stripe.Checkout.SessionCreateParams.LineItem {
+  return {
+    price_data: {
+      currency,
+      product_data: {
+        name,
+        description,
+      },
+      unit_amount: amountCents,
+    },
+    quantity: 1,
+  };
+}
+
+function buildSubmitMessage({
+  isUpfront,
+  dueTodayCents,
+  recurringStartCents,
+  currency,
+}: {
+  isUpfront: boolean;
+  dueTodayCents: number;
+  recurringStartCents: number;
+  currency: string;
+}) {
+  if (isUpfront) {
+    return `Today you pay ${formatAmount(dueTodayCents, currency)} for months 1-3. Month 4 is free. ${formatAmount(recurringStartCents, currency)}/month starts in month 5.`;
+  }
+
+  return `Today you start your monthly plan at ${formatAmount(recurringStartCents, currency)}/month.`;
 }
 
 // =============================================================================
@@ -110,16 +331,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate plan parameter
     const plan = req.nextUrl.searchParams.get("plan");
     if (!isValidPlan(plan)) {
       return NextResponse.json(
-        { error: "Invalid plan. Must be 'starter' or 'pro'." },
+        { error: "Invalid plan. Must be 'starter', 'growth', or 'city_dominator'." },
         { status: 400, headers }
       );
     }
 
-    // Parse and validate body
     let body: Record<string, unknown> = {};
     try {
       const text = await req.text();
@@ -135,76 +354,147 @@ export async function POST(req: NextRequest) {
 
     const email = sanitizeEmail(body?.email);
     const addOns = validateAddOns(body?.addOns);
+    const isUpfront = addOns.billingCycle === "upfront";
+    const planConfig = PLAN_CONFIG[plan];
+    const monthlyPlanPrice = await retrieveConfiguredPrice(
+      planConfig.monthlyPriceEnv,
+      "recurring"
+    );
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+    let recurringStartCents = monthlyPlanPrice.unit_amount ?? 0;
+    let dueTodayCents = 0;
 
-    // Get base plan price ID
-    const priceId =
-      plan === "starter"
-        ? process.env.STRIPE_PRICE_STARTER_MONTHLY
-        : process.env.STRIPE_PRICE_PRO_MONTHLY;
+    let trialEndTimestamp: number | undefined;
+    if (isUpfront) {
+      const upfrontPlanPrice = await retrieveConfiguredPrice(
+        planConfig.upfrontPriceEnv,
+        "one_time"
+      );
+      dueTodayCents += upfrontPlanPrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(upfrontPlanPrice, {
+          name: planConfig.upfrontLabel,
+          description: "Pays for months 1-3. Month 4 is free.",
+          recurring: false,
+        })
+      );
+      trialEndTimestamp = getTrialEndTimestamp();
+    }
 
-    if (!priceId) {
-      console.error(`Missing price configuration for plan: ${plan}`);
-      return NextResponse.json(
-        { error: "Service configuration error. Please contact support." },
-        { status: 500, headers }
+    lineItems.push(
+      buildInlineLineItemFromPrice(monthlyPlanPrice, {
+        name: planConfig.recurringLabel,
+        description: isUpfront
+          ? `Starts in month 5 at ${formatAmount(recurringStartCents, monthlyPlanPrice.currency)}/month. Cancel anytime.`
+          : `${formatAmount(recurringStartCents, monthlyPlanPrice.currency)}/month. Cancel anytime.`,
+        recurring: true,
+      })
+    );
+    dueTodayCents += isUpfront ? 0 : recurringStartCents;
+
+    if (addOns.domainRouting === "us") {
+      const domainRoutingPrice = await retrieveConfiguredPrice(
+        ONE_TIME_ADDON_CONFIG.domainRouting.envName,
+        "one_time"
+      );
+      dueTodayCents += domainRoutingPrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(domainRoutingPrice, {
+          name: ONE_TIME_ADDON_CONFIG.domainRouting.label,
+          description: ONE_TIME_ADDON_CONFIG.domainRouting.description,
+          recurring: false,
+        })
       );
     }
 
-    // Build line items array
-    const lineItems: { price: string; quantity: number }[] = [
-      { price: priceId, quantity: 1 },
-    ];
-
-    // Add domain routing if selected ($99 one-time)
-    if (
-      addOns.domainRouting === "us" &&
-      process.env.STRIPE_PRICE_DOMAIN_ROUTING
-    ) {
-      lineItems.push({
-        price: process.env.STRIPE_PRICE_DOMAIN_ROUTING,
-        quantity: 1,
-      });
+    if (addOns.googleBoost) {
+      const googleBoostPrice = await retrieveConfiguredPrice(
+        ONE_TIME_ADDON_CONFIG.googleBoost.envName,
+        "one_time"
+      );
+      dueTodayCents += googleBoostPrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(googleBoostPrice, {
+          name: ONE_TIME_ADDON_CONFIG.googleBoost.label,
+          description: ONE_TIME_ADDON_CONFIG.googleBoost.description,
+          recurring: false,
+        })
+      );
     }
 
-    // Add text alerts if selected ($29/mo)
-    if (addOns.textAlerts && process.env.STRIPE_PRICE_TEXT_ALERTS) {
-      lineItems.push({
-        price: process.env.STRIPE_PRICE_TEXT_ALERTS,
-        quantity: 1,
-      });
+    let recurringCurrency = monthlyPlanPrice.currency;
+    if (addOns.textAlerts) {
+      const textAlertsPrice = await retrieveConfiguredPrice(
+        RECURRING_ADDON_CONFIG.textAlerts.envName,
+        "recurring"
+      );
+      const monthlyAddonAmount = textAlertsPrice.unit_amount ?? 0;
+      recurringCurrency = textAlertsPrice.currency;
+
+      if (isUpfront) {
+        const prepayAmount = monthlyAddonAmount * 3;
+        dueTodayCents += prepayAmount;
+        lineItems.push(
+          buildInlineOneTimeAmountLineItem({
+            name: `${RECURRING_ADDON_CONFIG.textAlerts.label} - 3 Month Prepay`,
+            description: "Pays for months 1-3. Monthly billing starts in month 5.",
+            amountCents: prepayAmount,
+            currency: textAlertsPrice.currency,
+          })
+        );
+      }
+
+      lineItems.push(
+        buildInlineLineItemFromPrice(textAlertsPrice, {
+          name: `${RECURRING_ADDON_CONFIG.textAlerts.label} - Monthly Add-on`,
+          description: isUpfront
+            ? `Starts in month 5 at ${formatAmount(monthlyAddonAmount, textAlertsPrice.currency)}/month.`
+            : `${formatAmount(monthlyAddonAmount, textAlertsPrice.currency)}/month with your plan.`,
+          recurring: true,
+        })
+      );
+      recurringStartCents += monthlyAddonAmount;
+      dueTodayCents += isUpfront ? 0 : monthlyAddonAmount;
     }
 
-    // Add unlimited edits if selected ($99/mo)
-    if (addOns.unlimitedEdits && process.env.STRIPE_PRICE_UNLIMITED_EDITS) {
-      lineItems.push({
-        price: process.env.STRIPE_PRICE_UNLIMITED_EDITS,
-        quantity: 1,
-      });
+    if (addOns.unlimitedEdits) {
+      const unlimitedEditsPrice = await retrieveConfiguredPrice(
+        RECURRING_ADDON_CONFIG.unlimitedEdits.envName,
+        "recurring"
+      );
+      const monthlyAddonAmount = unlimitedEditsPrice.unit_amount ?? 0;
+      recurringCurrency = unlimitedEditsPrice.currency;
+
+      if (isUpfront) {
+        const prepayAmount = monthlyAddonAmount * 3;
+        dueTodayCents += prepayAmount;
+        lineItems.push(
+          buildInlineOneTimeAmountLineItem({
+            name: `${RECURRING_ADDON_CONFIG.unlimitedEdits.label} - 3 Month Prepay`,
+            description: "Pays for months 1-3. Monthly billing starts in month 5.",
+            amountCents: prepayAmount,
+            currency: unlimitedEditsPrice.currency,
+          })
+        );
+      }
+
+      lineItems.push(
+        buildInlineLineItemFromPrice(unlimitedEditsPrice, {
+          name: `${RECURRING_ADDON_CONFIG.unlimitedEdits.label} - Monthly Add-on`,
+          description: isUpfront
+            ? `Starts in month 5 at ${formatAmount(monthlyAddonAmount, unlimitedEditsPrice.currency)}/month.`
+            : `${formatAmount(monthlyAddonAmount, unlimitedEditsPrice.currency)}/month with your plan.`,
+          recurring: true,
+        })
+      );
+      recurringStartCents += monthlyAddonAmount;
+      dueTodayCents += isUpfront ? 0 : monthlyAddonAmount;
     }
 
-    // Add Google Boost if selected ($199 one-time)
-    if (addOns.googleBoost && process.env.STRIPE_PRICE_GOOGLE_BOOST) {
-      lineItems.push({
-        price: process.env.STRIPE_PRICE_GOOGLE_BOOST,
-        quantity: 1,
-      });
-    }
-
-    // Build URLs
     const successUrl = `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${siteUrl}/cancel`;
 
-    // Debug logging
-    console.log("Checkout config:", {
-      siteUrl,
-      successUrl,
-      cancelUrl,
-      priceId,
-      lineItemsCount: lineItems.length,
-    });
-
-    // Create Stripe Checkout session
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: "subscription",
       line_items: lineItems,
       success_url: successUrl,
@@ -212,29 +502,63 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       customer_email: email || undefined,
-      // Store add-on selections and analytics data in metadata
       metadata: {
         plan,
+        planLabel: planConfig.label,
+        billingCycle: addOns.billingCycle,
         hasDomain: String(addOns.hasDomain),
         domainRouting: addOns.domainRouting || "none",
         textAlerts: String(addOns.textAlerts),
         unlimitedEdits: String(addOns.unlimitedEdits),
         googleBoost: String(addOns.googleBoost),
-        analytics_source: 'quicklaunchweb',
+        analytics_source: "quicklaunchweb",
         analytics_timestamp: new Date().toISOString(),
+        offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
+        trialEnd:
+          isUpfront && trialEndTimestamp
+            ? new Date(trialEndTimestamp * 1000).toISOString()
+            : "none",
       },
+      custom_text: {
+        submit: {
+          message: buildSubmitMessage({
+            isUpfront,
+            dueTodayCents,
+            recurringStartCents,
+            currency: recurringCurrency,
+          }),
+        },
+      },
+    };
+
+    if (isUpfront && trialEndTimestamp) {
+      sessionParams.subscription_data = {
+        trial_end: trialEndTimestamp,
+      };
+    }
+
+    console.log("Checkout config:", {
+      siteUrl,
+      successUrl,
+      cancelUrl,
+      plan,
+      billingCycle: addOns.billingCycle,
+      lineItemsCount: lineItems.length,
+      hasTrial: Boolean(trialEndTimestamp),
     });
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     if (!session.url) {
       throw new Error("Stripe did not return a checkout URL");
     }
 
-    // Log successful checkout session creation
     const selectedAddons: string[] = [];
-    if (addOns.textAlerts) selectedAddons.push('text_alerts');
-    if (addOns.unlimitedEdits) selectedAddons.push('unlimited_edits');
-    if (addOns.googleBoost) selectedAddons.push('google_boost');
-    if (addOns.domainRouting === 'us') selectedAddons.push('domain_routing');
+    if (isUpfront) selectedAddons.push("upfront_billing");
+    if (addOns.textAlerts) selectedAddons.push("text_alerts");
+    if (addOns.unlimitedEdits) selectedAddons.push("unlimited_edits");
+    if (addOns.googleBoost) selectedAddons.push("google_boost");
+    if (addOns.domainRouting === "us") selectedAddons.push("domain_routing");
 
     logCheckoutEvent(
       session.id,
@@ -247,15 +571,13 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
 
-    // Log error securely (don't expose to client)
     console.error("Stripe checkout error:", {
       message: errorMessage,
       timestamp: new Date().toISOString(),
     });
 
-    // Log error to analytics
-    logErrorEvent('checkout_error', errorMessage, {
-      endpoint: '/api/stripe/checkout',
+    logErrorEvent("checkout_error", errorMessage, {
+      endpoint: "/api/stripe/checkout",
     });
 
     return NextResponse.json(
@@ -265,7 +587,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Reject other HTTP methods
 export async function GET() {
   return NextResponse.json(
     { error: "Method not allowed" },
