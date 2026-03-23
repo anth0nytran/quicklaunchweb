@@ -23,9 +23,9 @@ const lato = Lato({
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const homeMetadata = buildPageMetadata({
-  title: "QuickLaunchWeb | Stop Losing Customers to Competitors With Better Websites",
+  title: "QuickLaunchWeb | Look Better Online. Win More Jobs.",
   description:
-    "Every day without a website, your competitors get the call instead. QuickLaunchWeb builds websites for local businesses that get you customers - live in 48 hours. $0 upfront. Starting at $99/mo. Cancel anytime.",
+    "We help local businesses look legit online, show up better on Google, and get more 5-star reviews so more people call.",
   path: "/",
 });
 
@@ -34,23 +34,18 @@ export const metadata: Metadata = {
   ...homeMetadata,
   keywords: [
     "QuickLaunchWeb",
-    "free website builder",
-    "professional website builder",
-    "affordable website",
-    "website builder for business",
-    "professional website design",
-    "business website builder",
-    "website in 48 hours",
-    "website builder subscription",
-    "monthly website hosting",
-    "convert visitors to customers",
-    "SEO website builder",
-    "mobile-friendly website",
-    "website for service business",
-    "freelancer website builder",
-    "no-code website builder",
-    "online business website",
-    "service company website",
+    "local business website",
+    "service business website",
+    "website that gets calls",
+    "google business profile help",
+    "local SEO for small business",
+    "google reviews follow up",
+    "website for contractors",
+    "website for home services",
+    "multi city SEO",
+    "city landing pages",
+    "website for local business",
+    "business website subscription",
   ],
   robots: {
     index: true,

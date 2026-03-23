@@ -201,10 +201,10 @@ export function SocialProofSection() {
         <div className="mb-14 md:text-center px-6">
           <div className="mx-auto max-w-7xl">
             <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
-              Don&apos;t Take Our Word For It. <span className="text-accent">See the Results.</span>
+              This is what happens when you stop looking small online.
             </h2>
             <p className="mt-3 text-secondary">
-              Real businesses. Real results. All built and launched in under 48 hours.
+              Real businesses. Real results. Better first impressions, more calls, and more work coming in.
             </p>
           </div>
         </div>

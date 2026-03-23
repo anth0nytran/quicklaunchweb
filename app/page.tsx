@@ -159,9 +159,20 @@ function ChevronDownIcon({ className }: { className?: string }) {
 
 // Feature icons
 const featureIcons = {
+  trust: (
+    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 4v5c0 5-3.5 8.5-7 9.5-3.5-1-7-4.5-7-9.5V7l7-4z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 12.5l1.5 1.5 3.5-4" />
+    </svg>
+  ),
   mobile: (
     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+    </svg>
+  ),
+  star: (
+    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.5l2.18 4.42 4.88.71-3.53 3.44.83 4.86L11.48 14.7 7.12 16.93l.83-4.86L4.42 8.63l4.88-.71L11.48 3.5z" />
     </svg>
   ),
   lightning: (
@@ -180,10 +191,10 @@ const defaultPageCopy = {
   analyticsTitle: "QuickLaunchWeb - Homepage",
   pageType: "homepage",
   scrollPath: "/",
-  heroPill: "48-HOUR WEBSITES FOR CONTRACTORS. $0 TO BUILD.",
+  heroPill: "FOR LOCAL BUSINESSES THAT WANT MORE CALLS",
   heroHeading: (
     <>
-      Every Day Without a Website,{" "}
+      Look better online.{" "}
       <span
         className="text-transparent bg-clip-text"
         style={{
@@ -192,94 +203,94 @@ const defaultPageCopy = {
         }}
       >
         <br className="hidden md:block" />
-        You're Paying Your Competitors.
+        Win more jobs.
       </span>
     </>
   ),
   heroBullets: [
-    "Built by hand. Live in 48 hours. Not a template.",
-    "Tap-to-call + quote forms that ring your phone.",
-    "Starting at $99/mo. Cancel anytime.",
+    "People check your site before they call.",
+    "They check your Google page.",
+    "They check your reviews.",
   ],
   features: [
     {
-      title: "One Tap to Call You.",
-      desc: "If people can't call you in 3 seconds, they leave. Your site has tap-to-call, quote forms, and zero dead ends.",
-      icon: featureIcons.mobile,
+      title: "A site that makes you look real",
+      desc: "Clean, fast, and built to make people call instead of bounce.",
+      icon: featureIcons.trust,
     },
     {
-      title: "Loads Fast. Keeps Customers.",
-      desc: "Slow sites lose money. Every extra second costs you 7 out of 100 visitors. Your site loads in under 2 seconds.",
-      icon: featureIcons.lightning,
-    },
-    {
-      title: "Show Up When People Search",
-      desc: "When someone Googles \"contractor near me\" — you show up. Not the guy who paid $3,000 for a worse site.",
+      title: "A Google presence that does not look half-finished",
+      desc: "So people can find you, check you out fast, and feel better about calling.",
       icon: featureIcons.search,
+    },
+    {
+      title: "More good reviews without all the chasing",
+      desc: "We help set up a simple review follow-up so happy customers leave the proof that wins the next job.",
+      icon: featureIcons.star,
     },
   ],
   featureHeading: (
     <>
-      A pretty website is <span className="text-accent">worthless</span>.
-      <br />One that books jobs <span className="text-accent">isn't</span>.
+      People do not always hire the best business first.
+      <br />They hire the one that looks <span className="text-accent">easiest to trust</span>.
     </>
   ),
   featureDescription:
-    "Most designers build something nice to look at. We build something that makes your phone ring.",
+    "That is why we focus on the three things people check before they call: your site, your Google page, and your reviews.",
   bestFor: [
-    "Contractors & home service pros",
-    "Local businesses that want more calls",
-    "Anyone tired of a site that does nothing",
+    "Local service businesses",
+    "Owners who look smaller online than they really are",
+    "Businesses that want more calls without looking cheap",
   ],
   deliverables: [
-    { label: "01", title: "Works on every phone — that's where your customers are", detail: "Tap-to-call ready" },
-    { label: "02", title: "Messages go right to your inbox", detail: "Quote form included" },
-    { label: "03", title: "Google finds you before the other guy", detail: "Local SEO built in" },
-    { label: "04", title: "Opens fast — no waiting, no spinning wheel", detail: "Speed + SSL included" },
-    { label: "05", title: "Live and landing you jobs while you sleep", detail: "Launched in 48 hours" },
-    { label: "06", title: "We keep it running. You do the work.", detail: "Ongoing support" },
+    { label: "01", title: "A clean site that says what you do fast", detail: "No guessing. No dead ends." },
+    { label: "02", title: "Easy ways to call or ask for a quote", detail: "Tap-to-call + forms ready" },
+    { label: "03", title: "A stronger Google page", detail: "So you are easier to find and trust" },
+    { label: "04", title: "A review follow-up system", detail: "More 5-star reviews with less chasing" },
+    { label: "05", title: "Pages built around your work and area", detail: "So the right people land in the right place" },
+    { label: "06", title: "Support after launch", detail: "Updates and upkeep included" },
   ],
   deliverablesHeading: (
     <>
-      In <span className="text-accent">48 Hours</span>, You're Taking Calls
+      We fix the stuff people <span className="text-accent">judge</span> you on.
     </>
   ),
   deliverablesDescription:
-    "No \"we'll have mockups in 2 weeks.\" Your site is live and getting leads while your competitors are still picking fonts.",
+    "Not fluff. Just the parts that make people trust you faster and contact you easier.",
   steps: [
-    { step: "01", title: "Pick a Plan (60 seconds)", desc: "No pitches. No \"discovery calls.\" Pick your plan, pay, and we start building that day." },
-    { step: "02", title: "Send Us the Basics", desc: "Your services, area, photos, and contact info. Takes 5 minutes. That's the last thing you do." },
-    { step: "03", title: "We Launch. You Get Customers.", desc: "48 hours later your site is live on Google. We handle the rest — you just answer the phone." },
+    { step: "01", title: "Pick the plan that fits", desc: "Start simple or choose the level built to help you grow." },
+    { step: "02", title: "Send the basics", desc: "What you do, where you work, your photos, and how people should reach you." },
+    { step: "03", title: "We build it and launch it", desc: "You get a stronger online presence without dragging this out for weeks." },
   ],
   stats: [
-    { value: "FREE", label: "Website Build" },
-    { value: "48h", label: "Launch Time" },
-    { value: "$99", label: "/mo Starting" },
-    { value: "Unlimited", label: "Cancel Anytime" },
+    { value: "48h", label: "Launch" },
+    { value: "Google", label: "Set Up Better" },
+    { value: "Reviews", label: "Built In" },
+    { value: "Anytime", label: "Cancel" },
   ],
   pricingEyebrow:
-    "You wouldn't pay $2,000 for a sign that doesn't bring in foot traffic",
-  pricingHeading: "$0 to build. Plans starting at $99/mo.",
+    "Start where you are and grow from there",
+  pricingHeading: "Pick the level that fits right now.",
   pricingDescription:
-    "Most agencies charge $1,500+ upfront for a site that just sits there. We build yours free — and make Google send you customers. Cancel the second it's not working.",
-  growthHelperHeading: "Go Growth if you want Google sending you leads:",
+    "Some businesses just need to stop looking behind online. Some want more calls from Google. Some want to grow into more cities over time.",
+  growthHelperHeading: "Go Growth Engine if:",
   growthHelperItems: [
-    "You want SEO, reviews automation, and blog content",
-    "You want to outrank competitors on Google",
-    "You want a full 5-page site with lead tracking",
+    "You want more calls from Google",
+    "You want help getting more reviews without chasing people",
+    "You want more than a basic site",
   ],
-  starterHelperHeading: "Starter works if:",
+  starterHelperHeading: "Starter makes sense if:",
   starterHelperItems: [
-    "You just need something live that gets calls",
-    "You want the lowest monthly investment",
+    "You need to clean up how you look online fast",
+    "You want something simple that gets people to call",
   ],
-  guidesHeading: "Free Playbooks That Actually Work",
+  guidesHeading: "Free guides to help you win more local jobs",
   guidesDescription:
-    "No fluff. No sign-up walls. Short guides that show you how to get more customers.",
-  faqHeading: "Frequently Asked Questions",
+    "Short, useful guides on websites, Google, reviews, and getting more calls.",
+  faqHeading: "Questions Before You Start",
   footerDescription:
-    "Websites that make local businesses money. Built in 48 hours. No upfront cost.",
-  footerTagline: "Your next customer is Googling you right now.",
+    "We help local businesses look better online, show up better on Google, and win more work.",
+  footerTagline: "Look stronger online. Get picked more often.",
 };
 
 const houstonPageCopy = {
@@ -790,7 +801,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
               3 steps. 48 hours.<br />
-              <span className="text-muted">You&apos;re live.</span>
+              <span className="text-muted">You look like the real deal.</span>
             </h2>
             <div className="mt-12 space-y-8">
               {steps.map((item, i) => {
@@ -1256,7 +1267,7 @@ export default function HomePage() {
                 size="lg"
                 onClick={() => {
                   track('cta_click', {
-                    cta_text: 'Start My Free Website',
+                    cta_text: 'Get Started',
                     cta_location: 'hero',
                     event_category: 'engagement',
                     event_label: 'hero_primary_cta',
@@ -1267,7 +1278,7 @@ export default function HomePage() {
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
                 className="group w-full sm:w-auto text-base py-4 md:py-4 md:px-8"
               >
-                Start My Free Website
+                Get Started
               </GlassButton>
               <GlassButton
                 variant="ghost"
@@ -1288,13 +1299,13 @@ export default function HomePage() {
               </GlassButton>
             </div>
             <p className="mt-6 max-w-xs text-balance text-center text-[13px] text-muted sm:max-w-none sm:text-sm">
-              60 seconds to start. No sales calls. No hoops.
+              Start in 60 seconds. No sales calls. No runaround.
             </p>
 
             {/* Client logo marquee - Static Layout */}
             <div className="mt-14 pt-8 border-t border-white/[0.06] w-full relative">
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted text-center mb-6">
-                Recent Launches
+                Businesses We&apos;ve Helped
               </p>
 
               {/* Fade masks for horizontal scrolling on mobile */}
@@ -1350,21 +1361,26 @@ export default function HomePage() {
           <GlassDivider className="absolute top-0 left-0 right-0" />
 
           <div className="relative z-10 mx-auto max-w-7xl">
-            <div className="mb-16 md:text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
+            <div className="mb-14 md:text-center">
+              <h2 className="mx-auto max-w-5xl text-3xl font-bold tracking-tight text-white text-balance md:text-5xl">
                 {pageCopy.featureHeading}
               </h2>
-              <p className="mt-4 text-lg text-secondary md:mx-auto md:max-w-2xl">
+              <p className="mt-4 text-lg text-secondary text-balance md:mx-auto md:max-w-3xl">
                 {pageCopy.featureDescription}
               </p>
-              <div className="mt-6 md:mx-auto md:max-w-4xl">
-                <p className="text-xs uppercase tracking-widest text-muted mb-4">Best for</p>
-                <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-secondary">
+              <div className="mt-10 md:mx-auto md:max-w-3xl">
+                <p className="mb-6 text-xs uppercase tracking-[0.35em] text-accent/80 font-bold text-center">Best for</p>
+                <div className="mx-auto flex w-fit flex-col gap-4 text-left">
                   {pageCopy.bestFor.map((item) => (
-                    <span key={item} className="flex items-center gap-2">
-                      <CheckIcon className="h-4 w-4 text-accent" />
-                      {item}
-                    </span>
+                    <div
+                      key={item}
+                      className="group flex items-center md:items-start gap-4"
+                    >
+                      <div className="flex shrink-0 items-center justify-center rounded-full bg-accent/10 border border-accent/20 h-5 w-5 md:mt-0.5">
+                        <CheckIcon className="h-3 w-3 text-accent transition-transform group-hover:scale-110" />
+                      </div>
+                      <span className="text-[15px] font-medium text-white/80 whitespace-nowrap">{item}</span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1372,17 +1388,28 @@ export default function HomePage() {
 
             <div className="grid gap-6 md:grid-cols-3 md:gap-8">
               {features.map((feature, i) => (
-                <SpotlightCard
+                <GlassCard
                   key={i}
-                  className="p-8 border-white/[0.08] bg-white/[0.03] backdrop-blur-md"
-                  spotlightColor="rgba(var(--color-accent-rgb), 0.15)"
+                  hover
+                  className="flex min-h-[320px] flex-col p-8 relative overflow-hidden group border-white/[0.06]"
                 >
-                  <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                    {feature.icon}
+                  <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex h-full flex-col relative z-10">
+                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.02] border border-white/[0.08] shadow-[0_4px_20px_rgba(var(--color-accent-rgb),0.05)] text-accent transition-transform duration-500 group-hover:scale-110 group-hover:bg-accent/10 group-hover:border-accent/20 ring-1 ring-white/5">
+                      {feature.icon}
+                    </div>
+                    <h3 className="mt-8 text-2xl font-bold tracking-tight text-white md:text-[26px] leading-[1.2] max-w-[16ch]">
+                      {feature.title}
+                    </h3>
+                    <div className="mt-auto pt-8">
+                      <div className="mb-5 h-px w-full bg-gradient-to-r from-accent/20 to-transparent" />
+                      <p className="text-[14px] leading-[1.7] text-secondary">
+                        {feature.desc}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="mb-3 text-xl font-semibold text-white">{feature.title}</h3>
-                  <p className="text-secondary leading-relaxed">{feature.desc}</p>
-                </SpotlightCard>
+                </GlassCard>
               ))}
             </div>
           </div>
@@ -1402,7 +1429,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-2xl">
                   <p className="text-[11px] uppercase tracking-[0.4em] text-accent/80">
-                    Launch timeline
+                    What You Get
                   </p>
                   <h2 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">
                     {pageCopy.deliverablesHeading}
@@ -1464,17 +1491,17 @@ export default function HomePage() {
 
             {/* Value Stack — full-width moment, no card box */}
             <div className="mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] text-white/30 uppercase tracking-[0.25em] font-bold text-center mb-6">What this would cost you anywhere else</p>
+              <p className="text-[11px] text-white/30 uppercase tracking-[0.25em] font-bold text-center mb-6">What most businesses pay for piece by piece</p>
 
               {/* Value items — single column, each line carries weight */}
               <div className="space-y-2.5 mb-6">
                 {[
-                  { item: 'Custom website (not a template)', value: '$3,000–5,000' },
+                  { item: 'Professional website build', value: '$3,000-5,000' },
                   { item: 'Google Business Profile setup', value: '$500' },
-                  { item: 'Google Reviews automation', value: '$300/mo' },
-                  { item: 'On-page SEO optimization', value: '$1,500' },
-                  { item: 'Monthly blog content', value: '$200/mo' },
-                  { item: 'Hosting + security + support', value: '$300/yr' },
+                  { item: 'Review request system', value: '$300/mo' },
+                  { item: 'SEO setup', value: '$1,500' },
+                  { item: 'Monthly updates', value: '$200/mo' },
+                  { item: 'Hosting + support', value: '$300/yr' },
                 ].map((row, i) => (
                   <div key={i} className="flex items-center justify-between gap-4 group">
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -1502,7 +1529,7 @@ export default function HomePage() {
               {/* Starter Plan */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">Basic Presence</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">Get online fast</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Starter</h3>
                   <div className="mt-3 flex items-center gap-3">
                     <span className="text-xl text-white/50 line-through">$799</span>
@@ -1515,19 +1542,19 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    One page. Makes your phone ring. Cancel anytime.
+                    Get online fast and look like a business people trust.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {[
-                    "Free build (waived)",
-                    "Hosting + site care included",
-                    "Built for phones first",
-                    "Fast load speed",
-                    "Shows up on Google",
-                    "1 content change / month",
-                    "6-month site checkup",
+                    "Build fee waived",
+                    "Hosting + care included",
+                    "Built for phones",
+                    "Loads fast",
+                    "Basic Google setup",
+                    "1 content update / month",
+                    "6-month checkup",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <CheckIcon className="h-4 w-4 text-accent shrink-0" />
@@ -1543,7 +1570,7 @@ export default function HomePage() {
                   loading={loadingPlan === "starter"}
                   className="w-full"
                 >
-                  Start My Free Website
+                  Choose Starter
                 </GlassButton>
               </GlassCard>
 
@@ -1556,7 +1583,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">The Google Lead System</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">Get found more often</p>
                   <h3 className="text-xl font-semibold text-white mt-1">Growth Engine</h3>
                   <div className="mt-3 flex items-center gap-3">
                     <span className="text-xl text-white/50 line-through">$1,999</span>
@@ -1569,20 +1596,20 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Your website + the SEO system that makes Google send you customers every month. Cancel anytime.
+                    Show up more, get more calls, and build more good reviews.
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-2.5 text-sm text-secondary">
                   {[
-                    "5-page website (Home, About, Services, Gallery, Contact)",
-                    "Tap-to-call + quote forms that ring your phone",
-                    "Full on-page SEO (meta tags, schema, alt text, internal links)",
-                    "Google Business Profile setup + optimization",
-                    "Google Reviews automation — reviews stack on autopilot",
+                    "5-page website",
+                    "Tap-to-call + quote forms",
+                    "On-page SEO across the site",
+                    "Google Business Profile setup + cleanup",
+                    "Review follow-up system",
                     "1 SEO blog post / month",
                     "Monthly ranking + traffic snapshot",
-                    "2 content edits / month",
+                    "2 content updates / month",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <CheckIcon className="h-4 w-4 text-accent shrink-0" />
@@ -1598,14 +1625,14 @@ export default function HomePage() {
                   loading={loadingPlan === "growth"}
                   className="w-full"
                 >
-                  Start My Free Website
+                  Choose Growth Engine
                 </GlassButton>
               </GlassCard>
 
               {/* City Dominator */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">Own Every Search in Your Area</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">Grow into more areas</p>
                   <h3 className="text-xl font-semibold text-white mt-1">City Dominator</h3>
                   <div className="mt-3 flex items-center gap-3">
                     <span className="text-xl text-white/50 line-through">$3,999</span>
@@ -1618,7 +1645,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Show up first in every city you serve — not just one. Cancel anytime.
+                    Show up in more places and grow your reach.
                   </p>
                 </div>
 
@@ -1626,12 +1653,12 @@ export default function HomePage() {
                   {[
                     "10+ page website",
                     "Everything in Growth Engine",
-                    "Individual page for every service you offer",
+                    "A page for each service",
                     "2 city landing pages added / month",
                     "2 SEO blog posts / month",
-                    "12-month city page SEO roadmap",
-                    "Priority edits (24h turnaround)",
-                    "4 content edits / month",
+                    "12-month city page plan",
+                    "Priority edits",
+                    "4 content updates / month",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <CheckIcon className="h-4 w-4 text-accent shrink-0" />
@@ -1645,7 +1672,7 @@ export default function HomePage() {
                   size="lg"
                   onClick={() => {
                     track('cta_click', {
-                      cta_text: 'Start City Dominator',
+                      cta_text: 'Choose City Dominator',
                       cta_location: 'pricing_dominator',
                       event_category: 'engagement',
                       event_label: 'dominator_checkout',
@@ -1655,7 +1682,7 @@ export default function HomePage() {
                   loading={loadingPlan === "city_dominator"}
                   className="w-full"
                 >
-                  Start City Dominator
+                  Choose City Dominator
                 </GlassButton>
               </GlassCard>
             </div>
@@ -1663,26 +1690,26 @@ export default function HomePage() {
             {/* Bottom strip — ROI + Guarantee + Call CTA — all compact */}
             <div className="mt-12 max-w-3xl mx-auto text-center space-y-6">
               <p className="text-base md:text-lg font-bold text-white leading-snug">
-                Your average job is $2,500. <span className="text-accent">One extra job</span> from your website covers the entire year.
+                One good job can cover this. <span className="text-accent">The bigger cost</span> is looking weak when people check you out.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-secondary">
                 <span className="flex items-center gap-1.5">
                   <CheckIcon className="h-4 w-4 text-accent" />
                   48h launch or first month free
                 </span>
-                <span className="hidden sm:block text-white/20">·</span>
+                <span className="hidden sm:block text-white/20">|</span>
                 <span className="flex items-center gap-1.5">
                   <CheckIcon className="h-4 w-4 text-accent" />
                   No contracts
                 </span>
-                <span className="hidden sm:block text-white/20">·</span>
+                <span className="hidden sm:block text-white/20">|</span>
                 <span className="flex items-center gap-1.5">
                   <CheckIcon className="h-4 w-4 text-accent" />
                   Cancel anytime
                 </span>
               </div>
               <div className="flex flex-col items-center gap-2 pt-2">
-                <p className="text-sm text-white/40">Want us to walk you through it?</p>
+                <p className="text-sm text-white/40">Want help picking the right plan?</p>
                 <a
                   href="https://calendly.com/quicklaunchweb/15min"
                   target="_blank"
@@ -1899,7 +1926,7 @@ export default function HomePage() {
               <button
                 onClick={() => {
                   track('cta_click', {
-                    cta_text: 'Start My Free Website',
+                    cta_text: 'Get Started',
                     cta_location: 'mobile_sticky',
                     event_category: 'engagement',
                     event_label: 'mobile_sticky_cta',
@@ -1908,7 +1935,7 @@ export default function HomePage() {
                 }}
                 className="group flex items-center gap-2 rounded-full border border-white/[0.15] bg-black/60 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_-5px_var(--color-accent)] backdrop-blur-md transition-all ease-smooth active:scale-95"
               >
-                Start My Free Website
+                Get Started
                 <svg className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -1928,13 +1955,12 @@ export default function HomePage() {
             {[1, 2, 3, 4].map((step) => (
               <div
                 key={step}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  step === upsellStep
-                    ? "w-6 bg-accent"
-                    : step < upsellStep
+                className={`h-1.5 rounded-full transition-all duration-300 ${step === upsellStep
+                  ? "w-6 bg-accent"
+                  : step < upsellStep
                     ? "w-1.5 bg-accent/40"
                     : "w-1.5 bg-white/10"
-                }`}
+                  }`}
               />
             ))}
           </div>
