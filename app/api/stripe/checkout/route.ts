@@ -494,6 +494,40 @@ export async function POST(req: NextRequest) {
     const successUrl = `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${siteUrl}/cancel`;
 
+    const sessionMetadata: Stripe.MetadataParam = {
+      plan,
+      planLabel: planConfig.label,
+      billingCycle: addOns.billingCycle,
+      hasDomain: String(addOns.hasDomain),
+      domainRouting: addOns.domainRouting || "none",
+      textAlerts: String(addOns.textAlerts),
+      unlimitedEdits: String(addOns.unlimitedEdits),
+      googleBoost: String(addOns.googleBoost),
+      analytics_source: "quicklaunchweb",
+      analytics_timestamp: new Date().toISOString(),
+      offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
+      trialEnd:
+        isUpfront && trialEndTimestamp
+          ? new Date(trialEndTimestamp * 1000).toISOString()
+          : "none",
+    };
+
+    const subscriptionMetadata: Stripe.MetadataParam = {
+      plan,
+      planLabel: planConfig.label,
+      billingCycle: addOns.billingCycle,
+      hasDomain: String(addOns.hasDomain),
+      domainRouting: addOns.domainRouting || "none",
+      textAlerts: String(addOns.textAlerts),
+      unlimitedEdits: String(addOns.unlimitedEdits),
+      googleBoost: String(addOns.googleBoost),
+      offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
+      trialEnd:
+        isUpfront && trialEndTimestamp
+          ? new Date(trialEndTimestamp * 1000).toISOString()
+          : "none",
+    };
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: "subscription",
       line_items: lineItems,
@@ -502,22 +536,15 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       customer_email: email || undefined,
-      metadata: {
-        plan,
-        planLabel: planConfig.label,
-        billingCycle: addOns.billingCycle,
-        hasDomain: String(addOns.hasDomain),
-        domainRouting: addOns.domainRouting || "none",
-        textAlerts: String(addOns.textAlerts),
-        unlimitedEdits: String(addOns.unlimitedEdits),
-        googleBoost: String(addOns.googleBoost),
-        analytics_source: "quicklaunchweb",
-        analytics_timestamp: new Date().toISOString(),
-        offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
-        trialEnd:
-          isUpfront && trialEndTimestamp
-            ? new Date(trialEndTimestamp * 1000).toISOString()
-            : "none",
+      client_reference_id: plan,
+      metadata: sessionMetadata,
+      subscription_data: {
+        metadata: subscriptionMetadata,
+        ...(isUpfront && trialEndTimestamp
+          ? {
+              trial_end: trialEndTimestamp,
+            }
+          : {}),
       },
       custom_text: {
         submit: {
@@ -530,12 +557,6 @@ export async function POST(req: NextRequest) {
         },
       },
     };
-
-    if (isUpfront && trialEndTimestamp) {
-      sessionParams.subscription_data = {
-        trial_end: trialEndTimestamp,
-      };
-    }
 
     console.log("Checkout config:", {
       siteUrl,

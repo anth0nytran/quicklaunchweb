@@ -34,6 +34,148 @@ const ENROLLMENT_HEADERS = [
   'Stripe Session ID',
 ];
 
+const PLAN_LABELS = {
+  starter: 'Starter',
+  growth: 'Growth Engine',
+  city_dominator: 'City Dominator',
+} as const;
+
+type KnownPlan = keyof typeof PLAN_LABELS;
+
+type HydratedCheckoutSession = Stripe.Checkout.Session & {
+  line_items?: Stripe.ApiList<Stripe.LineItem>;
+};
+
+function normalizePlanKey(value: string | null | undefined): KnownPlan | undefined {
+  if (!value) return undefined;
+  if (value === 'starter' || value === 'growth' || value === 'city_dominator') {
+    return value;
+  }
+  return undefined;
+}
+
+function getSubscriptionMetadata(session: Stripe.Checkout.Session): Stripe.Metadata | null {
+  const subscription = session.subscription;
+  if (!subscription || typeof subscription === 'string') {
+    return null;
+  }
+  return subscription.metadata ?? null;
+}
+
+function mergeMetadata(
+  sessionMetadata: Stripe.Metadata | null,
+  subscriptionMetadata: Stripe.Metadata | null
+): Stripe.Metadata | null {
+  const merged = {
+    ...(subscriptionMetadata ?? {}),
+    ...(sessionMetadata ?? {}),
+  };
+
+  return Object.keys(merged).length > 0 ? merged : null;
+}
+
+function getPlanPriceIds(): Record<KnownPlan, string[]> {
+  return {
+    starter: [
+      process.env.STRIPE_PRICE_STARTER_MONTHLY,
+      process.env.STRIPE_PRICE_STARTER_UPFRONT,
+    ].filter(Boolean) as string[],
+    growth: [
+      process.env.STRIPE_PRICE_GROWTH_MONTHLY,
+      process.env.STRIPE_PRICE_GROWTH_UPFRONT,
+    ].filter(Boolean) as string[],
+    city_dominator: [
+      process.env.STRIPE_PRICE_CITY_DOMINATOR_MONTHLY,
+      process.env.STRIPE_PRICE_CITY_DOMINATOR_UPFRONT,
+    ].filter(Boolean) as string[],
+  };
+}
+
+function inferPlanLabelFromLineItems(
+  lineItems?: Stripe.ApiList<Stripe.LineItem>
+): string | undefined {
+  if (!lineItems?.data?.length) return undefined;
+
+  const planPriceIds = getPlanPriceIds();
+
+  for (const item of lineItems.data) {
+    const description = item.description ?? '';
+    const price = item.price;
+    const priceId = price && typeof price !== 'string' ? price.id : typeof price === 'string' ? price : undefined;
+
+    for (const [planKey, label] of Object.entries(PLAN_LABELS) as [KnownPlan, string][]) {
+      if (description.includes(label)) {
+        return label;
+      }
+
+      if (priceId && planPriceIds[planKey].includes(priceId)) {
+        return label;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function resolvePlanLabel(
+  session: HydratedCheckoutSession,
+  metadata: Stripe.Metadata | null
+): string {
+  const normalizedPlan = normalizePlanKey(metadata?.plan);
+  if (metadata?.planLabel) return metadata.planLabel;
+  if (normalizedPlan) return PLAN_LABELS[normalizedPlan];
+
+  const clientReferencePlan = normalizePlanKey(session.client_reference_id);
+  if (clientReferencePlan) return PLAN_LABELS[clientReferencePlan];
+
+  const inferredFromLineItems = inferPlanLabelFromLineItems(session.line_items);
+  if (inferredFromLineItems) return inferredFromLineItems;
+
+  return 'QuickLaunchWeb Plan';
+}
+
+function resolveBillingCycle(
+  session: HydratedCheckoutSession,
+  metadata: Stripe.Metadata | null
+): 'monthly' | 'upfront' {
+  if (metadata?.billingCycle === 'upfront') return 'upfront';
+  if (metadata?.billingCycle === 'monthly') return 'monthly';
+
+  const hasUpfrontLineItem = session.line_items?.data?.some((item) =>
+    (item.description ?? '').includes('3 Month Prepay')
+  );
+
+  return hasUpfrontLineItem ? 'upfront' : 'monthly';
+}
+
+async function hydrateCheckoutSession(
+  session: Stripe.Checkout.Session
+): Promise<HydratedCheckoutSession> {
+  if (!session.id || session.id === 'test_session') {
+    return session as HydratedCheckoutSession;
+  }
+
+  try {
+    const [fullSession, lineItems] = await Promise.all([
+      stripe.checkout.sessions.retrieve(session.id, {
+        expand: ['subscription'],
+      }),
+      stripe.checkout.sessions.listLineItems(session.id, {
+        limit: 20,
+        expand: ['data.price'],
+      }),
+    ]);
+
+    return {
+      ...fullSession,
+      line_items: lineItems,
+    };
+  } catch (err) {
+    console.error('[Stripe Webhook] Failed to hydrate checkout session:', err);
+    return session as HydratedCheckoutSession;
+  }
+}
+
 function formatAddOns(metadata: Stripe.Metadata | null): string {
   if (!metadata) return 'None';
   const addons: string[] = [];
@@ -192,12 +334,16 @@ function buildInternalEmailHtml(
 }
 
 function buildClientWelcomeHtml(name: string, plan: string): string {
-  const firstName = name.split(' ')[0] || name;
+  const cleanName = name.trim();
+  const firstName =
+    cleanName && cleanName !== 'Unknown' ? cleanName.split(' ')[0] || cleanName : 'there';
+  const planReference =
+    plan === 'QuickLaunchWeb Plan' ? 'your QuickLaunchWeb plan' : `the ${plan} plan`;
   return `
   <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#222222;">
     <p>Dear ${escapeHtml(firstName)},</p>
 
-    <p>Thank you for purchasing the <strong>${escapeHtml(plan)}</strong> package! I look forward to working with you on your new website.</p>
+    <p>Thank you for starting <strong>${escapeHtml(planReference)}</strong>. I look forward to working with you on your new website.</p>
 
     <p>To get started, please follow these next steps:</p>
 
@@ -272,15 +418,34 @@ export async function POST(req: Request) {
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
-  const clientEmail = session.customer_details?.email || session.customer_email || '';
-  const clientName = session.customer_details?.name || 'Unknown';
-  const amount = formatAmount(session.amount_total);
-  const metadata = session.metadata;
-  const planLabel = metadata?.planLabel || metadata?.plan || 'Unknown';
-  const billingSuffix = metadata?.billingCycle === 'upfront' ? ' (Upfront Offer)' : '';
+  const hydratedSession = await hydrateCheckoutSession(session);
+  const clientEmail =
+    hydratedSession.customer_details?.email || hydratedSession.customer_email || '';
+  const clientName = hydratedSession.customer_details?.name || 'Unknown';
+  const amount = formatAmount(hydratedSession.amount_total);
+  const metadata = mergeMetadata(
+    hydratedSession.metadata ?? null,
+    getSubscriptionMetadata(hydratedSession)
+  );
+  const planLabel = resolvePlanLabel(hydratedSession, metadata);
+  const billingCycle = resolveBillingCycle(hydratedSession, metadata);
+  const billingSuffix = billingCycle === 'upfront' ? ' (Upfront Offer)' : '';
   const plan = `${planLabel}${billingSuffix}`;
   const addOns = formatAddOns(metadata);
-  const sessionId = session.id || 'test_session';
+  const sessionId = hydratedSession.id || 'test_session';
+
+  if (planLabel === 'QuickLaunchWeb Plan') {
+    console.error('[Stripe Webhook] Could not resolve plan label from checkout session.', {
+      sessionId,
+      metadata,
+      clientReferenceId: hydratedSession.client_reference_id,
+      lineItems: hydratedSession.line_items?.data?.map((item) => ({
+        description: item.description,
+        priceId:
+          item.price && typeof item.price !== 'string' ? item.price.id : item.price,
+      })),
+    });
+  }
 
   const timestamp = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/Chicago',
