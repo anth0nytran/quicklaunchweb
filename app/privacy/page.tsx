@@ -196,27 +196,29 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-base font-semibold text-white">7. SMS/Text Messaging</h2>
               <p className="mt-3">
-                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb Lead Notifications
+                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb SMS Program
               </p>
               <p className="mt-3">
                 QuickLaunchWeb and websites we build for our clients may send SMS (text) messages in connection with
-                lead notification and confirmation services. By providing your mobile phone number and opting in to
+                lead notification, confirmation, and review request services. By providing your mobile phone number and opting in to
                 receive text messages, you consent to receive SMS messages from us or from the business whose form you
-                submitted. These messages are transactional and informational only — we do not send marketing texts.
+                submitted or whose services you received. These messages are transactional and informational only — we do not send marketing texts.
               </p>
               <p className="mt-3">
                 Consent to receive SMS messages is not a condition of any purchase or service. You may opt in or
-                decline SMS at your discretion without affecting your ability to use our services or submit a lead form.
+                decline SMS at your discretion without affecting your ability to use our services, submit a lead form, or receive services.
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
-                  <span className="font-medium text-white">What messages you may receive:</span> Lead submission
-                  confirmations (e.g., &ldquo;We received your request. Someone will contact you shortly.&rdquo;) and lead
-                  alert notifications sent to business owners/staff.
+                  <span className="font-medium text-white">What messages you may receive:</span> (1) Lead submission
+                  confirmations (e.g., &ldquo;We received your request. Someone will contact you shortly.&rdquo;),
+                  (2) lead alert notifications sent to business owners/staff, and
+                  (3) review requests — a one-time SMS after a completed service inviting you to share feedback about your
+                  experience with the business.
                 </li>
                 <li>
                   <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
-                  lead volume. Typically 1–2 messages per form submission.
+                  activity. Typically 1–3 messages per customer interaction.
                 </li>
                 <li>
                   <span className="font-medium text-white">Opt-out:</span> You can opt out at any time by replying STOP

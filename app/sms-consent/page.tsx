@@ -39,7 +39,7 @@ export default function SmsConsentPage() {
             <div className="space-y-4">
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Program Name</p>
-                <p className="text-sm text-white/90">QuickLaunchWeb Lead Notifications</p>
+                <p className="text-sm text-white/90">QuickLaunchWeb SMS Program</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Operated By</p>
@@ -65,9 +65,9 @@ export default function SmsConsentPage() {
             <section>
               <h2 className="text-base font-semibold text-white">Program Overview</h2>
               <p className="mt-3">
-                The <span className="font-medium text-white">QuickLaunchWeb Lead Notifications</span> program sends
-                transactional and informational SMS (text) messages related to lead form submissions. Messages are
-                sent to two groups:
+                The <span className="font-medium text-white">QuickLaunchWeb SMS Program</span> sends
+                transactional and informational SMS (text) messages related to lead form submissions and
+                review requests. Messages are sent to three groups:
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
@@ -80,6 +80,11 @@ export default function SmsConsentPage() {
                   QuickLaunchWeb plan that includes text alerts, or enable text alerts in your account, you will
                   receive SMS notifications when a new lead is submitted, including the lead&rsquo;s name, phone
                   number, service requested, and optionally a link to view the lead.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Review Request Recipients:</span> After a completed service,
+                  the business may send you a one-time text message with a link to share your feedback about your
+                  experience. This message is triggered manually by the business owner — it is not automated marketing.
                 </li>
               </ul>
               <p className="mt-3">
@@ -143,13 +148,40 @@ export default function SmsConsentPage() {
               </p>
             </section>
 
+            {/* How review request recipients opt in */}
+            <section>
+              <h2 className="text-base font-semibold text-white">How Review Request Recipients Opt In</h2>
+              <p className="mt-3">
+                Customers provide their phone number directly to the business during a service engagement
+                (in person, by phone, or through an online booking). After service is completed, the business
+                owner manually triggers a one-time review request SMS through the QuickLaunchWeb platform.
+              </p>
+              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  The message includes a link to a short feedback page and clear opt-out instructions
+                  (reply STOP to opt out).
+                </li>
+                <li>
+                  Only one review request message is sent per service interaction. No follow-up marketing
+                  messages are sent.
+                </li>
+                <li>
+                  Recipients can reply STOP at any time to opt out of future messages from that number.
+                </li>
+              </ul>
+              <p className="mt-3 font-medium text-white">
+                Review request messages are transactional, not marketing. They are sent only after a completed
+                service and are manually triggered by the business owner.
+              </p>
+            </section>
+
             {/* Message details */}
             <section>
               <h2 className="text-base font-semibold text-white">Message Details</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
-                  <span className="font-medium text-white">Message frequency:</span> Varies based on lead volume.
-                  Typically 1&ndash;2 messages per lead form submission.
+                  <span className="font-medium text-white">Message frequency:</span> Varies based on activity.
+                  Typically 1&ndash;3 messages per customer interaction.
                 </li>
                 <li>
                   <span className="font-medium text-white">Message and data rates:</span> Standard message and data
@@ -199,6 +231,20 @@ export default function SmsConsentPage() {
                   <p className="text-sm text-white/80">
                     Reminder: you still have 1 new lead from John. View: https://app.example.com/leads/123.
                     Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">To customer (review request)</p>
+                  <p className="text-sm text-white/80">
+                    Hey John &mdash; thanks for choosing ABC Fencing! If you have a moment, we&rsquo;d love your feedback:
+                    https://quicklaunchweb.us/r/abc123. Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">To customer (review request — alternate)</p>
+                  <p className="text-sm text-white/80">
+                    ABC Fencing values your opinion! Share your experience:
+                    https://quicklaunchweb.us/r/abc123. Reply STOP to opt out, HELP for help.
                   </p>
                 </div>
               </div>

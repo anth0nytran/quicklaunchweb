@@ -200,21 +200,28 @@ export default function TermsPage() {
             <section>
               <h2 className="text-base font-semibold text-white">9. SMS/Text Messaging Terms</h2>
               <p className="mt-3">
-                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb Lead Notifications
+                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb SMS Program
               </p>
               <p className="mt-3">
-                QuickLaunchWeb offers SMS (text message) services as part of its lead notification system. By opting
-                in to receive text messages — either as a consumer submitting a lead form or as a business
-                owner/staff member enabling lead alert notifications — you agree to the following:
+                QuickLaunchWeb offers SMS (text message) services as part of its business communication platform. By opting
+                in to receive text messages — as a consumer submitting a lead form, a business owner/staff member enabling
+                lead alert notifications, or a customer receiving a review request after a completed service — you agree to
+                the following:
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
                   <span className="font-medium text-white">Consent:</span> You consent to receive transactional and
-                  informational SMS messages related to lead submissions. No marketing messages will be sent via SMS.
+                  informational SMS messages related to lead submissions and review requests. No marketing messages will be sent via SMS.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Message types:</span> (1) Lead confirmations sent to consumers
+                  who opt in via a lead form. (2) Lead alert notifications sent to business owners/staff.
+                  (3) Review requests — after a completed service, a business owner may trigger a one-time SMS inviting the
+                  customer to share feedback about their experience. The message includes a link to a short feedback page.
                 </li>
                 <li>
                   <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
-                  lead volume. Typically 1–2 messages per form submission event.
+                  activity. Typically 1–3 messages per customer interaction.
                 </li>
                 <li>
                   <span className="font-medium text-white">Opt-out:</span> You may opt out at any time by replying STOP
@@ -240,7 +247,7 @@ export default function TermsPage() {
               </ul>
               <p className="mt-3">
                 Consent to receive SMS messages is not a condition of any purchase or service. You may use our
-                services and submit lead forms without opting in to SMS.
+                services, submit lead forms, or receive services from our clients without opting in to SMS.
               </p>
               <p className="mt-3">
                 For full details on how we handle your data, see our{" "}
