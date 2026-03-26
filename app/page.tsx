@@ -1500,6 +1500,7 @@ export default function HomePage() {
                   { item: 'Google Business Profile setup', value: '$500' },
                   { item: 'Review request system', value: '$300/mo' },
                   { item: 'SEO setup', value: '$1,500' },
+                  { item: 'AI search setup', value: '$1,200' },
                   { item: 'Monthly updates', value: '$200/mo' },
                   { item: 'Hosting + support', value: '$300/yr' },
                 ].map((row, i) => (
@@ -1519,7 +1520,7 @@ export default function HomePage() {
               {/* Total line */}
               <div className="flex items-center justify-between border-t border-white/[0.06] pt-4 mb-8">
                 <span className="text-[11px] text-white/40 uppercase tracking-[0.2em] font-bold">Total value</span>
-                <span className="text-lg text-white/30 line-through font-bold">$9,800+</span>
+                <span className="text-lg text-white/30 line-through font-bold">$11,000+</span>
               </div>
 
             </div>
@@ -1596,7 +1597,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Show up more, get more calls, and build more good reviews.
+                    Show up on Google and AI search. Get more calls. Build more good reviews.
                   </p>
                 </div>
 
@@ -1604,10 +1605,10 @@ export default function HomePage() {
                   {[
                     "5-page website",
                     "Tap-to-call + quote forms",
-                    "On-page SEO across the site",
+                    "SEO + AI search setup on every page",
                     "Google Business Profile setup + cleanup",
                     "Review follow-up system",
-                    "1 SEO blog post / month",
+                    "1 SEO blog post / month (AI search-ready)",
                     "Monthly ranking + traffic snapshot",
                     "2 content updates / month",
                   ].map((item, i) => (
@@ -1632,7 +1633,7 @@ export default function HomePage() {
               {/* City Dominator */}
               <GlassCard hover className="flex flex-col p-8">
                 <div className="mb-6">
-                  <p className="text-xs text-muted uppercase tracking-wider">Grow into more areas</p>
+                  <p className="text-xs text-muted uppercase tracking-wider">Dominate Google + AI search</p>
                   <h3 className="text-xl font-semibold text-white mt-1">City Dominator</h3>
                   <div className="mt-3 flex items-center gap-3">
                     <span className="text-xl text-white/50 line-through">$3,999</span>
@@ -1645,7 +1646,7 @@ export default function HomePage() {
                     <span className="text-secondary">/mo</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">
-                    Show up in more places and grow your reach.
+                    Show up on Google, AI search, and in more cities.
                   </p>
                 </div>
 
@@ -1654,9 +1655,11 @@ export default function HomePage() {
                     "10+ page website",
                     "Everything in Growth Engine",
                     "A page for each service",
-                    "2 city landing pages added / month",
-                    "2 SEO blog posts / month",
+                    "2 city landing pages / month",
+                    "2 SEO blog posts / month (AI search-ready)",
+                    "Every page structured so AI tools find you",
                     "12-month city page plan",
+                    "Show up when people ask AI for help near them",
                     "Priority edits",
                     "4 content updates / month",
                   ].map((item, i) => (
