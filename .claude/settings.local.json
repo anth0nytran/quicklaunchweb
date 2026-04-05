@@ -14,7 +14,10 @@
       "Bash(for f:*)",
       "Bash(do echo:*)",
       "Read(//c/Users/antho/Desktop/Work/quicklaunchweb/**)",
-      "Bash(done)"
+      "Bash(done)",
+      "WebSearch",
+      "Bash(sed -n '1723,2556p' lib/guides.ts)",
+      "Bash(sed -n '89,1722p' lib/guides.ts)"
     ]
   }
 }

@@ -1,0 +1,69 @@
+- dialog "Unhandled Runtime Error" [ref=e4]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - navigation [ref=e8]:
+          - button "previous" [disabled] [ref=e9]:
+            - img "previous" [ref=e10]
+          - button "next" [disabled] [ref=e12]:
+            - img "next" [ref=e13]
+          - generic [ref=e15]: 1 of 1 error
+          - generic [ref=e16]:
+            - text: Next.js (14.2.6) is outdated
+            - link "(learn more)" [ref=e18] [cursor=pointer]:
+              - /url: https://nextjs.org/docs/messages/version-staleness
+        - button "Close" [ref=e19] [cursor=pointer]:
+          - img [ref=e21]
+      - heading "Unhandled Runtime Error" [level=1] [ref=e24]
+      - paragraph [ref=e25]: "Error: Invalid easing type 'steps(4)'. For more information and steps for solving, visit https://motion.dev/troubleshooting/invalid-easing-type"
+    - generic [ref=e26]:
+      - heading "Call Stack" [level=2] [ref=e27]
+      - generic [ref=e28]:
+        - heading "invariant" [level=3] [ref=e29]
+        - generic [ref=e31]: node_modules\motion-utils\dist\es\errors.mjs (14:1)
+      - generic [ref=e32]:
+        - heading "easingDefinitionToFunction" [level=3] [ref=e33]
+        - generic [ref=e35]: node_modules\motion-utils\dist\es\easing\utils\map.mjs (35:18)
+      - generic [ref=e36]:
+        - heading "keyframes" [level=3] [ref=e37]
+        - generic [ref=e39]: node_modules\motion-dom\dist\es\animation\generators\keyframes.mjs (16:37)
+      - generic [ref=e40]:
+        - heading "JSAnimation.initAnimation" [level=3] [ref=e41]
+        - generic [ref=e43]: node_modules\motion-dom\dist\es\animation\JSAnimation.mjs (69:1)
+      - generic [ref=e44]:
+        - heading "new JSAnimation" [level=3] [ref=e45]
+        - generic [ref=e47]: node_modules\motion-dom\dist\es\animation\JSAnimation.mjs (49:1)
+      - generic [ref=e48]:
+        - heading "NativeAnimationExtended.updateMotionValue" [level=3] [ref=e49]
+        - generic [ref=e51]: node_modules\motion-dom\dist\es\animation\NativeAnimationExtended.mjs (56:1)
+      - generic [ref=e52]:
+        - heading "NativeAnimationExtended.stop" [level=3] [ref=e53]
+        - generic [ref=e55]: node_modules\motion-dom\dist\es\animation\NativeAnimation.mjs (85:1)
+      - generic [ref=e56]:
+        - heading "AsyncMotionValueAnimation.stop" [level=3] [ref=e57]
+        - generic [ref=e59]: node_modules\motion-dom\dist\es\animation\AsyncMotionValueAnimation.mjs (29:1)
+      - generic [ref=e60]:
+        - heading "MotionValue.stop" [level=3] [ref=e61]
+        - generic [ref=e63]: node_modules\motion-dom\dist\es\value\index.mjs (282:1)
+      - generic [ref=e64]:
+        - heading "eval" [level=3] [ref=e65]
+        - generic [ref=e67]: node_modules\motion-dom\dist\es\render\VisualElement.mjs (254:1)
+      - generic [ref=e68]:
+        - heading "eval" [level=3] [ref=e69]
+        - generic [ref=e71]: node_modules\motion-dom\dist\es\render\VisualElement.mjs (204:1)
+      - generic [ref=e72]:
+        - heading "Map.forEach" [level=3] [ref=e73]
+        - generic [ref=e75]: <anonymous>
+      - generic [ref=e76]:
+        - heading "HTMLVisualElement.unmount" [level=3] [ref=e77]
+        - generic [ref=e79]: node_modules\motion-dom\dist\es\render\VisualElement.mjs (204:1)
+      - generic [ref=e80]:
+        - heading "unmount" [level=3] [ref=e81]
+        - link "..\\src\\motion\\utils\\use-motion-ref.ts (39:17)" [ref=e82] [cursor=pointer]:
+          - generic [ref=e83]: ..\src\motion\utils\use-motion-ref.ts (39:17)
+          - img [ref=e84]
+      - group [ref=e88]:
+        - generic "React" [ref=e89] [cursor=pointer]:
+          - img [ref=e90]
+          - img [ref=e92]
+          - text: React

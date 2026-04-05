@@ -13,10 +13,17 @@ function isFaqSection(
   return section.kind === "faq";
 }
 
+function isChecklistSection(
+  section: GuideSection
+): section is Extract<GuideSection, { kind: "checklist" }> {
+  return section.kind === "checklist";
+}
+
 export function GuideStructuredData({ guide }: { guide: Guide }) {
   const guideUrl = absoluteUrl(`/guides/${guide.slug}`);
   const dateModified = parseMonthYearToIso(guide.updated);
   const faqSection = guide.sections.find(isFaqSection);
+  const checklistSections = guide.sections.filter(isChecklistSection);
 
   const graph: Record<string, unknown>[] = [
     {
@@ -37,6 +44,10 @@ export function GuideStructuredData({ guide }: { guide: Guide }) {
         "@id": websiteId,
       },
       ...(dateModified ? { dateModified } : {}),
+      ...(guide.category ? { articleSection: guide.category } : {}),
+      ...(guide.readTime
+        ? { timeRequired: `PT${parseInt(guide.readTime) || 10}M` }
+        : {}),
     },
     {
       "@type": "BreadcrumbList",
@@ -64,6 +75,7 @@ export function GuideStructuredData({ guide }: { guide: Guide }) {
     },
   ];
 
+  // FAQPage schema — critical for AEO/GEO (28% more likely to appear in AI Overviews)
   if (faqSection) {
     graph.push({
       "@type": "FAQPage",
@@ -75,6 +87,22 @@ export function GuideStructuredData({ guide }: { guide: Guide }) {
           "@type": "Answer",
           text: item.a,
         },
+      })),
+    });
+  }
+
+  // HowTo schema for guides with checklists (step-by-step content)
+  if (checklistSections.length > 0) {
+    const primaryChecklist = checklistSections[0];
+    graph.push({
+      "@type": "HowTo",
+      "@id": `${guideUrl}#howto`,
+      name: primaryChecklist.title,
+      step: primaryChecklist.items.map((item, idx) => ({
+        "@type": "HowToStep",
+        position: idx + 1,
+        name: item.title,
+        text: item.detail || item.title,
       })),
     });
   }

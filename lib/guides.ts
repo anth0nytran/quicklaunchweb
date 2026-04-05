@@ -86,6 +86,839 @@ export type Guide = {
 };
 
 const guides: Guide[] = [
+  /* ───────────────────────────────────────────────────────────
+     BLOG 1 — The Contractor's Lead Machine (Pillar)
+     Primary KW: "contractor lead generation without ads"
+     SEO + AEO + GEO optimized
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "contractor-lead-machine-no-ads",
+    type: "pillar" as GuideType,
+    title:
+      "The Contractor's Lead Machine: How to Get More Calls, Reviews, and Jobs Without Paying for Ads",
+    description:
+      "Ads rent attention. A system owns it. Here is the step-by-step blueprint for building a lead generation machine that runs while you are on a job — no ad spend required.",
+    metaTitle:
+      "How to Get More Contractor Leads Without Ads: The System Blueprint | QuickLaunchWeb",
+    metaDescription:
+      "Stop paying for ads that dry up the second you stop spending. Build the 5-part lead system that gets contractors more calls, more reviews, and more jobs on autopilot.",
+    kicker: "Pillar Guide",
+    category: "Lead Generation",
+    updated: "Apr 2026",
+    readTime: "14 min read",
+    stats: [
+      { label: "Cost of missed call", value: "$1,200 avg" },
+      { label: "Speed-to-lead winner", value: "78% of jobs" },
+      { label: "System cost", value: "$99–$399/mo" },
+    ],
+    heroBullets: [
+      "The 5 components of a contractor lead system that runs without ad spend.",
+      "Why 78% of jobs go to whoever responds first — and how to always be first.",
+      "The exact math: what missed calls, stale reviews, and slow follow-ups cost you per year.",
+      "How to show up on Google, Maps, ChatGPT, and Siri without paying a dime in ads.",
+    ],
+    jumpLinks: [
+      { id: "why-tactics-fail", label: "Why tactics fail" },
+      { id: "component-1-visibility", label: "1. Get found everywhere" },
+      { id: "component-2-missed-calls", label: "2. Catch every lead" },
+      { id: "component-3-reviews", label: "3. Automate reviews" },
+      { id: "component-4-follow-up", label: "4. Auto follow-up" },
+      { id: "component-5-expansion", label: "5. Expand into cities" },
+      { id: "system-cost-vs-return", label: "Cost vs. return" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Get the full system",
+      description:
+        "All 5 components, one flat monthly fee. Live in 48 hours — $0 down.",
+      href: "/#pricing",
+      label: "See plans",
+    },
+    ctaBottom: {
+      title: "Stop renting attention. Start owning it.",
+      description:
+        "Every component in this guide — visibility, lead capture, reviews, follow-up, city expansion — built and managed for you. No ad spend. No contracts.",
+      href: "/#pricing",
+      label: "Get started",
+    },
+    aside: {
+      takeaways: [
+        "Individual marketing tactics fail because they are disconnected. A system compounds.",
+        "78% of buyers choose the first contractor to respond. Speed wins more than quality.",
+        "One extra closed lead per month at $700 average job value covers the entire system cost.",
+      ],
+      benchmarks: [
+        "Show up in Google, Maps, and at least one AI search engine.",
+        "Every missed call gets a text back within 60 seconds.",
+        "Review request sent within 2 hours of job completion.",
+        "Leads get a response within 60 seconds — even at 10 PM.",
+      ],
+      benchmarkNote:
+        "These are not aspirational targets. Each one is automated. Set it once, it runs forever.",
+      roi: [
+        "Average plumbing job: $500. One extra lead per month = $6,000/year from a $1,188 investment.",
+        "Average HVAC install: $5,500. One extra lead per quarter covers years of system cost.",
+        "Missed call recovery alone typically generates 3–5 extra leads per month.",
+      ],
+      roiNote:
+        "The ROI math is not theoretical. Contractors using these systems report measurable results within the first 30 days.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "why-tactics-fail",
+        title: "Why individual marketing tactics fail contractors (and what actually works)",
+        paragraphs: [
+          "A contractor lead generation system combines five automated components — local search visibility, instant lead response, automated review collection, systematic follow-up, and geographic expansion — to generate calls, reviews, and jobs without ad spend. When these five pieces are connected and running, they compound. When they are not, you are doing what every other contractor does: trying random tactics and hoping something sticks.",
+          "Here is what most contractors do. They pay for a website. Then they try Google Ads for a month. Then they post on Facebook a few times. Then they hear about SEO and throw some money at that. None of it works because none of it is connected. The website does not ask for reviews. The reviews do not improve the Google ranking. The ranking does not trigger follow-ups. Every piece is isolated, so every piece underperforms.",
+          "A system is different. A system means: someone finds you on Google, lands on your site, calls you — and if you miss that call, they get an automatic text within 60 seconds. When you finish the job, a review request goes out automatically. That review improves your Google ranking. The higher ranking brings more calls. The cycle compounds. That is a system.",
+          "Ads have their place. But ads rent attention — the moment you stop paying, the leads stop. A system owns attention. It builds over time. Every review, every ranking, every city page you add makes the next lead cheaper than the last.",
+        ],
+        list: [
+          "The average contractor wastes $3,000–$8,000 per year on disconnected marketing tactics that generate inconsistent results.",
+          "Businesses with automated lead systems generate 2–3x more leads at half the cost per lead compared to ad-dependent businesses.",
+          "The compounding effect: a system that adds 5 reviews, 2 city pages, and 1 blog post per month creates an exponentially growing lead pipeline.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "component-1-visibility",
+        title: "Component 1: Get found on Google, Maps, ChatGPT, and Siri — without paying for ads",
+        paragraphs: [
+          "To show up in local search results without ads, a contractor needs an optimized Google Business Profile linked to a fast website with structured data, consistent business information across 15 or more directories, and content that answers the questions customers are asking. This combination signals to Google, AI search engines, and voice assistants that your business is legitimate, active, and relevant.",
+          "In 2026, 45% of consumers use AI tools like ChatGPT, Perplexity, and Google AI Overviews to find local service providers. But AI search currently recommends only 1.2% of local businesses. The contractors who show up in these results get leads that convert at 4–23x higher rates than traditional search — because the customer already trusts the recommendation before they call.",
+          "Here is how to get visible everywhere people search:",
+        ],
+        list: [
+          "Google Business Profile — Complete every field. Add real photos weekly. Post updates at least monthly. Respond to every review. This is your most important free asset. Contractors with fully optimized GBP profiles rank 2x higher in the map pack than those with incomplete profiles.",
+          "Your website — Fast, mobile-first, with schema markup (LocalBusiness, Service, FAQPage). Each service you offer gets its own page. Each city you cover gets its own page. This is how Google understands exactly what you do and where you do it.",
+          "AI search optimization — ChatGPT and Perplexity cross-reference your business across multiple platforms before recommending you. Being listed on 15+ directories (Google, Yelp, BBB, Angi, Thumbtack, Nextdoor, industry-specific directories) with identical business information is what gets you recommended.",
+          "Voice search — Siri, Alexa, and Google Assistant pull from Google Business Profile and structured website data. The same optimizations that help you rank on Google also make you visible in voice search.",
+          "Content that answers questions — When someone asks 'how much does a plumber charge to fix a leaking pipe,' the contractor whose website answers that question directly gets cited by Google AI Overviews and ChatGPT. One good FAQ section can drive more qualified traffic than months of social media posting.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "component-2-missed-calls",
+        title: "Component 2: Never lose a lead to a missed call again",
+        paragraphs: [
+          "Missed call text-back is an automated system that sends a text message to any caller you cannot answer, within 60 seconds, saying something like: 'Hey, this is [Your Name] from [Your Business]. I am on a job right now but I saw you called — what do you need help with?' This simple automation recovers 30–50% of leads that would otherwise be permanently lost.",
+          "The numbers are brutal. The average contractor misses 4–7 calls per day. Less than 3% of those callers leave a voicemail. And 85% of callers who do not reach you on the first attempt will never call back — they call the next contractor on the list. At an average job value of $500–$1,200, that adds up to $45,000–$120,000 per year in lost revenue.",
+          "You are not losing these leads because you are bad at your job. You are losing them because you are good at your job — you are under a house, on a roof, or elbow-deep in a panel when the phone rings. That is exactly why this needs to be automated.",
+        ],
+        list: [
+          "27% of all calls to home service businesses go unanswered during business hours.",
+          "After-hours is even worse: 41% of online job bookings happen outside of 9-to-5. A customer with a flooded basement at 10 PM calls three plumbers. Whoever responds first wins.",
+          "Responding within 60 seconds increases conversion by 391% compared to responding within 5 minutes.",
+          "The fix is not 'try harder to answer the phone.' The fix is a system that responds when you cannot.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "component-3-reviews",
+        title: "Component 3: Build a reputation that sells for you — on autopilot",
+        paragraphs: [
+          "An automated review request system sends a text or email to your customer within 1–2 hours of job completion, with a direct link to leave a Google review. It then automatically responds to every review that comes in. This removes the two biggest barriers to building a strong review profile: remembering to ask and finding time to respond.",
+          "Reviews are not just nice to have. They are the single most important trust signal for a local service business in 2026. 91% of homeowners check reviews before calling a contractor. 70% will not even request a quote from a business under 4 stars. And 65% expect to see at least 50 reviews before they feel confident hiring you.",
+          "Here is what most contractors get wrong about reviews: they think they need to ask in person. They feel awkward about it. They forget. They tell themselves they will do it later and they never do. The contractors with 200+ reviews are not more likable than you — they have a system that asks for them.",
+        ],
+        list: [
+          "SMS review requests get a 19% response rate versus 4% for email. Always text, not email.",
+          "Timing matters: requests sent within 2 hours of job completion get 3x the response rate of requests sent the next day. The customer is still impressed — you are still top of mind.",
+          "Responding to every review — positive and negative — increases customer trust by 88%. It also signals to Google that your business is active, which improves your ranking.",
+          "A contractor with 50 recent reviews will outrank a competitor with 200 old reviews. Recency matters as much as volume. The system keeps fresh reviews flowing every week.",
+          "Google's algorithm weights review velocity — businesses that consistently receive new reviews rank higher than those with sporadic bursts followed by silence.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "component-4-follow-up",
+        title: "Component 4: Automatic follow-up that closes leads you would otherwise lose",
+        paragraphs: [
+          "Speed-to-lead is the most underrated factor in contractor lead generation. 78% of buyers choose the first business to respond to their inquiry. Not the best. Not the cheapest. The first. An automated follow-up system sends an instant reply to every form submission, missed call, and after-hours inquiry — then follows up at 24 hours and 72 hours if the lead has not converted.",
+          "Most contractors think they respond fast. They do not. The average contractor takes over 4 hours to respond to an online lead. By that point, the homeowner has already called two other contractors and probably hired one of them. You never even got a chance to compete.",
+          "This is not about being pushy. It is about being present. A simple message at 24 hours — 'Hey, just checking if you still need help with that water heater' — converts leads that would have gone cold. A message at 72 hours catches the ones who got busy and forgot. These are leads you already earned. The follow-up system just makes sure you actually close them.",
+        ],
+        list: [
+          "Responding in under 60 seconds increases conversion by 391%. Responding in 5 minutes drops that by 80%.",
+          "The 24-hour follow-up recovers 15–20% of leads that did not convert on first contact.",
+          "The 72-hour follow-up catches another 5–10% — these are people who meant to call back but life got in the way.",
+          "After-hours auto-reply captures leads that come in at night and on weekends. 41% of bookings happen outside business hours — without an auto-reply, those are all going to competitors.",
+          "A CRM tracks every lead from first contact to closed job. No more leads lost in text threads, voicemails, or forgotten sticky notes.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "component-5-expansion",
+        title: "Component 5: Expand into more cities without opening more offices",
+        paragraphs: [
+          "City expansion pages are dedicated pages on your website that target specific cities, neighborhoods, and zip codes you serve. Each page is optimized for local search terms like 'plumber in [City Name]' or 'HVAC repair [Neighborhood].' When done correctly, each page functions as a new lead pipeline for that geographic area — without you having to open a physical office there.",
+          "This is how contractors go from serving one city to dominating a region. Your Google Business Profile is tied to your physical address, which limits its geographic reach. But your website has no such limitation. A plumber in Dallas can create pages targeting Plano, Frisco, McKinney, Allen, and Richardson — and rank in each of those cities' local search results.",
+          "The key is that each city page must be unique. Duplicate pages with just the city name swapped out do not work — Google penalizes that. Each page needs to reference specific details about that market: the neighborhoods you serve there, common problems in that area (older homes, specific pipe types, regional climate issues), and social proof from customers in that area.",
+        ],
+        list: [
+          "Priority framework for which cities to target first: (job value in that area) x (estimated search volume) x (1 / competition level). Start with high-value, low-competition neighboring cities.",
+          "Each city page should include: services you offer there, specific neighborhoods covered, photos from jobs in that area, reviews from customers in that area, and a click-to-call button.",
+          "Two new city pages per month, compounded over 12 months, gives you 24 new geographic lead pipelines. Each one continues generating leads indefinitely.",
+          "City pages also strengthen your overall domain authority, which improves rankings for your primary service area. The expansion benefits your core market too.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "system-cost-vs-return",
+        title: "What this system costs vs. doing it piece by piece",
+        columns: [
+          "Component",
+          "DIY / Separate Tools",
+          "Integrated System",
+        ],
+        rows: [
+          ["Professional website + hosting", "$3,000–$5,000 build + $300/mo hosting", "Included"],
+          ["SEO + AI search setup", "$2,500 setup + $500/mo retainer", "Included"],
+          ["Google Business Profile management", "$200–$500/mo agency fee", "Included"],
+          ["Missed call text-back", "$75–$150/mo (separate tool)", "Included"],
+          ["Review automation + auto-replies", "$100–$200/mo (Podium, Broadly)", "Included"],
+          ["CRM + lead tracking", "$200–$400/mo (ServiceTitan, HCP)", "Included"],
+          ["Auto follow-ups + after-hours reply", "$75–$150/mo (separate tool)", "Included"],
+          ["Monthly blog + city pages", "$400–$800/mo (freelance writer)", "Included"],
+          ["Year 1 total", "$18,000–$35,000+", "$1,188–$4,788"],
+        ],
+        note: "Every component in the left column is a different login, different bill, and different thing to manage. The right column is one system, one bill, fully managed for you.",
+      },
+      {
+        kind: "callout",
+        id: "the-compound-effect",
+        title: "The compound effect — why systems beat tactics",
+        body: [
+          "Month 1: your site goes live, GBP is optimized, missed call text-back is on. You recover 3 leads you would have lost. You get 5 new reviews from automated requests.",
+          "Month 3: those 15 new reviews pushed you into the Google Map Pack top 3. Your website ranks for 2 new service keywords. City page #1 starts generating leads from the next town over. Calls are up 40%.",
+          "Month 6: you have 45 new reviews, 4 city pages, 6 blog posts, and a review reply rate of 100%. Google, ChatGPT, and Siri all recommend your business. You are getting leads from cities you have never advertised in. Your cost per lead is under $20.",
+          "Month 12: 90+ new reviews, 12 city pages, a dominant Google presence, AI search visibility, and a lead pipeline that runs whether you are on a job, on vacation, or asleep. You did not pay for a single ad. That is the compound effect of a system.",
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Can a one-person contracting business really run this kind of system?",
+            a: "Yes — that is who it is built for. The whole point of automation is that it runs without you. You do the jobs. The system handles visibility, lead capture, reviews, and follow-up. The only thing you need to do is answer the phone and send us photos of completed work.",
+          },
+          {
+            q: "How long before I start getting leads from this system?",
+            a: "Most contractors see new leads within the first 2 weeks from missed call recovery and faster response times. SEO and review growth take 60–90 days to compound. By month 3, most clients report a measurable increase in calls. By month 6, the system is typically generating 5–15 new leads per month depending on market and trade.",
+          },
+          {
+            q: "What is the difference between a marketing system and just having a website?",
+            a: "A website is one piece of the puzzle — it is where leads land. A system is everything that happens before, during, and after that visit. A system gets you found, captures the lead even if you miss the call, follows up automatically, asks for reviews, replies to reviews, and expands into new cities. A website without a system is a billboard in the desert.",
+          },
+          {
+            q: "How do I show up in AI search like ChatGPT as a contractor?",
+            a: "AI search engines cross-reference your business across multiple platforms — Google, Yelp, BBB, industry directories, your website. They look for consistent business information, recent reviews, structured data markup on your site, and content that answers customer questions. The system handles all of this: directory listings, schema markup, review velocity, and FAQ content.",
+          },
+          {
+            q: "What is missed call text-back and how does it work?",
+            a: "When you miss a call, the system automatically sends a text to the caller within 60 seconds. The message identifies your business and asks how you can help. The caller replies by text, and you now have their information and can respond when you are off the job. It recovers 30–50% of leads that would otherwise be permanently lost.",
+          },
+          {
+            q: "Is $99 per month enough to actually get more customers?",
+            a: "The Starter plan gives you a professional website, Google listing, and basic lead capture. For most solo contractors, that is enough to start generating leads. The Growth Engine at $199 per month adds SEO, AI search optimization, and automated reviews — which is where the compounding effect kicks in. One extra job at $500 covers the cost. Most clients generate that within the first month.",
+          },
+          {
+            q: "Do I need to stop using Angi or Thumbtack if I use this system?",
+            a: "No. This system does not replace lead platforms — it reduces your dependence on them. Lead platforms charge $15–$80 per lead and you compete with 5–10 other contractors for each one. Organic leads from your system come to YOU directly — no competition, no per-lead fee. Over time, most contractors shift their budget away from paid platforms as organic leads increase.",
+          },
+          {
+            q: "How many Google reviews do I need to start ranking higher?",
+            a: "There is no magic number, but data shows: 10 reviews gets you into consideration, 25 reviews makes you competitive, and 50+ reviews with a 4.5+ average puts you in the top tier for most local markets. What matters most is velocity — getting new reviews consistently every week signals to Google that your business is active and trusted.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          {
+            href: "/guides/invisible-contractor-ai-search",
+            label: "Invisible Contractor: Why Customers Can't Find You on Google or AI Search",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/120k-leak-missed-calls-reviews",
+            label: "The $120K Leak: How Missed Calls and Zero Reviews Are Bleeding You Dry",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/why-website-not-getting-customers",
+            label: "Why Your Website Isn't Getting You Customers",
+            tag: "Pillar",
+          },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     BLOG 2 — Invisible Contractor (Pillar)
+     Primary KW: "how to show up in AI search as a contractor"
+     SEO + AEO + GEO optimized
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "invisible-contractor-ai-search",
+    type: "pillar" as GuideType,
+    title:
+      "Invisible Contractor: Why 78% of Your Potential Customers Can't Find You (On Google, ChatGPT, or Anywhere Else)",
+    description:
+      "45% of consumers now use AI search to find local services. AI recommends only 1.2% of businesses. If you are not in that 1.2%, you are invisible to nearly half your potential customers — and you do not even know it.",
+    metaTitle:
+      "How to Show Up on Google, ChatGPT, and AI Search as a Contractor | QuickLaunchWeb",
+    metaDescription:
+      "45% of homeowners use AI search to find contractors. Only 1.2% of businesses get recommended. Here is how to make sure you are one of them.",
+    kicker: "Pillar Guide",
+    category: "AI Search & Visibility",
+    updated: "Apr 2026",
+    readTime: "12 min read",
+    stats: [
+      { label: "Consumers using AI search", value: "45% in 2026" },
+      { label: "Businesses AI recommends", value: "only 1.2%" },
+      { label: "AI lead conversion rate", value: "4–23x higher" },
+    ],
+    heroBullets: [
+      "Where customers actually look for contractors in 2026 — it is not just Google anymore.",
+      "A 5-minute test to check if you are invisible right now.",
+      "The 7 things AI checks before recommending your business.",
+      "How to start showing up in AI search results this month.",
+    ],
+    jumpLinks: [
+      { id: "where-customers-search", label: "Where they search now" },
+      { id: "invisibility-test", label: "5-minute visibility test" },
+      { id: "why-ai-search-matters", label: "Why AI search matters" },
+      { id: "what-ai-checks", label: "What AI checks" },
+      { id: "google-still-matters", label: "Google still matters" },
+      { id: "how-to-get-visible", label: "How to get visible" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Show up everywhere people search",
+      description:
+        "Google, Maps, ChatGPT, Siri — one system makes you visible in all of them.",
+      href: "/#pricing",
+      label: "See plans",
+    },
+    ctaBottom: {
+      title: "Stop being invisible. Start showing up.",
+      description:
+        "We set up your Google profile, optimize your website for AI search, and build the listings that get you recommended. 48 hours from now, people can actually find you.",
+      href: "/#pricing",
+      label: "Get started",
+    },
+    aside: {
+      takeaways: [
+        "45% of consumers used AI to find local services in 2026 — up from 6% one year prior.",
+        "AI leads convert at 4–23x higher rates because customers already trust the recommendation.",
+        "The same optimizations that help you rank on Google also make AI recommend you.",
+      ],
+      benchmarks: [
+        "Ask ChatGPT for your trade + your city. Are you mentioned?",
+        "Google your business name. Does a complete, professional result appear?",
+        "Check Google Maps. Are you in the top 3 for your primary service?",
+        "Count your directories. Are you listed on 15+ platforms with matching info?",
+      ],
+      benchmarkNote:
+        "If you failed even one of these checks, you are losing leads to contractors who pass all four. The good news: all of these are fixable.",
+      roi: [
+        "Contractors who add a website to their GBP see 30–50% more profile views within 90 days.",
+        "Businesses visible in AI search get leads that convert at 4–23x higher rates.",
+        "Consistent NAP across 15+ directories improves Google Map Pack ranking by an average of 3 positions.",
+      ],
+      roiNote:
+        "Visibility improvements compound. Each platform you appear on strengthens your presence on every other platform.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "where-customers-search",
+        title: "Where customers actually look for contractors in 2026",
+        paragraphs: [
+          "In 2026, homeowners search for contractors across at least seven different platforms. Google Search is still the biggest, but it is no longer the only one that matters. If you are only showing up on Google — or worse, only on your Google Business Profile — you are invisible to a growing share of the market.",
+          "Here is where people look, and what each one means for you:",
+        ],
+        list: [
+          "Google Search — Still the number one starting point. But Google is changing. AI Overviews now appear at the top of many local searches, pushing traditional results down. If you are not mentioned in the AI Overview, you are below the fold before the page even loads.",
+          "Google Maps and the Map Pack — The 3 business listings that appear with a map at the top of local searches. This is where the highest-intent customers are. They are ready to call right now. Ranking in the Map Pack requires an optimized Google Business Profile, recent reviews, and a linked website.",
+          "ChatGPT — 800 million weekly active users. 60.4% of the AI search market. When someone asks ChatGPT 'who is the best plumber in [your city],' it generates a recommendation based on your online presence across multiple platforms. It is not pulling from a database — it is synthesizing your reviews, your website content, your directory listings, and your overall digital footprint.",
+          "Google AI Overviews — Google's own AI-generated summary that appears above traditional search results. These summaries cite specific businesses and pull from your website content, reviews, and structured data. Being cited here is the new 'ranking #1.'",
+          "Perplexity — Growing AI search engine that provides sourced answers. It links directly to the sources it cites, driving highly qualified traffic. Contractors with strong website content and directory presence are getting cited here regularly.",
+          "Siri and voice assistants — 'Hey Siri, find me an electrician near me.' Voice search pulls primarily from Google Business Profile data and structured website data. Optimizing for Google automatically optimizes for voice search.",
+          "Angi inside ChatGPT — Angi launched an integration within ChatGPT in 2025. When someone asks ChatGPT for a home service provider, it can now pull from Angi's database directly. If you are listed on Angi, you have an additional path into AI search results.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "invisibility-test",
+        title: "The 5-minute invisibility test (do this right now)",
+        items: [
+          {
+            title: "Open ChatGPT and ask for your trade in your city",
+            detail:
+              "Type: 'Who is the best [plumber/electrician/HVAC tech] in [your city]?' If you are not mentioned, you are invisible to the 45% of consumers who use AI search. Try Perplexity too — it is the second largest AI search platform.",
+          },
+          {
+            title: "Check Google AI Overviews",
+            detail:
+              "Google '[your trade] in [your city]' on your phone. Look at the AI-generated summary at the top. Are you mentioned? If there is no AI Overview for your query, Google the most common question about your trade ('how much does a plumber charge in [city]'). This is the content AI pulls from.",
+          },
+          {
+            title: "Check your Google Map Pack position",
+            detail:
+              "Search your primary service + your city on Google. Do you appear in the top 3 map results? If not, you are losing the highest-intent leads to the contractors who do. 44% of people click on one of the top 3 map results and never scroll further.",
+          },
+          {
+            title: "Google your own business name",
+            detail:
+              "What shows up? A complete Google Business Profile with photos, reviews, and a website link? Or a half-empty listing with no reviews and no site? This is exactly what a referral sees when someone gives them your name. If the result does not inspire confidence, you are losing warm leads.",
+          },
+          {
+            title: "Count your directory listings",
+            detail:
+              "Are you on Google, Yelp, BBB, Angi, Thumbtack, Nextdoor, Facebook, and at least 7 more industry-specific directories? AI search engines cross-reference your business across multiple platforms. Being on fewer than 15 directories with consistent information means AI does not have enough data to recommend you confidently.",
+          },
+        ],
+        note: "If you failed 2 or more of these checks, you are invisible to a significant percentage of potential customers in your market. Every day you stay invisible is a day of leads going to contractors who pass all five.",
+      },
+      {
+        kind: "text",
+        id: "why-ai-search-matters",
+        title: "Why AI search leads are worth 4–23x more than traditional search leads",
+        paragraphs: [
+          "AI search leads convert at 4–23x higher rates than traditional search leads. That is not a typo. Here is why: when ChatGPT or Perplexity recommends your business, the customer treats it as a trusted referral — not a search result to evaluate. The decision is already 80% made before they call you.",
+          "Think about the difference in mindset. A traditional Google searcher sees 10 results and picks 3 to evaluate. They are comparison shopping. An AI search user asks 'who should I hire for this job?' and gets a specific recommendation with reasoning. They are ready to act.",
+          "The data backs this up:",
+        ],
+        list: [
+          "42% of consumers trust AI recommendations as much as personal recommendations from friends and family.",
+          "23% make hiring decisions based solely on AI guidance without further research.",
+          "AI search usage for finding local services grew from 6% to 45% in just 12 months. This is not a trend. It is a fundamental shift in how people find and hire contractors.",
+          "Google review usage — the primary trust signal for the last decade — dropped from 83% to 71% as AI search rose. Customers are outsourcing the evaluation process to AI.",
+          "Contractors who are visible in AI search are pulling leads from a pool that most of their competitors do not even know exists yet. First-mover advantage here is enormous and will not last forever.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "what-ai-checks",
+        title: "The 7 things AI checks before recommending your business",
+        items: [
+          {
+            title: "Google Business Profile completeness",
+            detail:
+              "AI systems start with your GBP. Every field filled out, correct business hours, accurate service categories, real photos (not stock), and an active posting history. An incomplete GBP is the number one reason contractors get overlooked by AI.",
+          },
+          {
+            title: "Review volume, recency, and sentiment",
+            detail:
+              "AI weighs recent reviews more heavily than old ones. 50 reviews from the last 6 months beats 200 reviews from 2019. Average rating matters, but velocity matters more. Businesses receiving new reviews every week are flagged as active and trustworthy.",
+          },
+          {
+            title: "NAP consistency across directories",
+            detail:
+              "NAP stands for Name, Address, Phone number. If your business name is 'Johnson Plumbing' on Google but 'Johnson Plumbing LLC' on Yelp and 'Johnson's Plumbing Services' on BBB, AI treats these as potentially different businesses. Exact consistency across every directory is critical.",
+          },
+          {
+            title: "Website with structured data",
+            detail:
+              "Structured data (also called schema markup) is code that tells search engines and AI exactly what your business is, what services you offer, where you operate, and what your customers say about you. LocalBusiness, Service, and FAQPage schema are the three most important types for contractors.",
+          },
+          {
+            title: "Content that answers customer questions",
+            detail:
+              "AI search engines generate answers by synthesizing content. If your website has a page that answers 'how much does it cost to replace a water heater in [city],' you are a candidate for citation when someone asks ChatGPT that exact question. FAQ sections, service descriptions, and educational blog posts all feed this.",
+          },
+          {
+            title: "Mentions on trusted platforms",
+            detail:
+              "AI cross-validates your business by checking how many trusted platforms mention you. Google, Yelp, BBB, Angi, Thumbtack, Nextdoor, HomeAdvisor, Facebook, industry associations — the more sources that confirm your business exists and is legitimate, the more confident AI is in recommending you.",
+          },
+          {
+            title: "Response patterns",
+            detail:
+              "Do you reply to reviews? Do you respond to messages? AI systems can detect whether a business is actively engaged or dormant. Businesses that respond to 100% of reviews and have recent activity are weighted higher than businesses that set up a profile and abandoned it.",
+          },
+        ],
+        note: "You do not need to be perfect on all seven. But contractors who score well on 5 or more consistently show up in AI recommendations. The threshold for visibility is lower than most people think — you just need to be better than the contractors in your market who are doing nothing.",
+      },
+      {
+        kind: "text",
+        id: "google-still-matters",
+        title: "Google is not dead — but it is changing fast",
+        paragraphs: [
+          "Let us be clear: Google is still the most important platform for contractor visibility. 94% of homeowners begin their search for a contractor online, and Google captures the largest share of those searches. Nothing in this guide suggests abandoning Google — everything here makes your Google presence stronger.",
+          "But Google itself is changing. AI Overviews now appear at the top of many local searches. Traditional organic results have been pushed lower. The Map Pack is more competitive than ever. And Google is increasingly rewarding the same signals that AI search engines look for: authoritative content, consistent directory listings, fresh reviews, and structured data.",
+          "The contractors who will dominate in 2026 and beyond are the ones who optimize once for a system that works everywhere — Google, Maps, ChatGPT, Perplexity, Siri, and whatever comes next. The fundamentals are the same across all platforms: be findable, be credible, be responsive.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "how-to-get-visible",
+        title: "How to start showing up in AI search this month",
+        items: [
+          {
+            title: "Complete your Google Business Profile — 100%",
+            detail:
+              "Every field. Real photos of your work. Correct hours. Accurate service areas. At least one post per month. This is the foundation everything else builds on. Takes 30 minutes to audit and fix.",
+          },
+          {
+            title: "Fix your NAP consistency across all directories",
+            detail:
+              "Pick your exact business name, address, and phone number. Then update it identically on every platform you are listed on. Use a spreadsheet to track which directories have which information. Inconsistencies confuse both Google and AI.",
+          },
+          {
+            title: "Get listed on 15+ directories",
+            detail:
+              "Google, Yelp, BBB, Angi, Thumbtack, Nextdoor, HomeAdvisor, Facebook, Apple Maps, Bing Places, and industry-specific directories for your trade. Each listing is a vote of legitimacy that AI systems use to validate your business.",
+          },
+          {
+            title: "Add FAQ schema to your website",
+            detail:
+              "FAQPage structured data tells AI search engines: 'Here are questions this business answers.' Pages with FAQ schema are 28% more likely to appear as AI Overview sources. Every service page on your site should have 3–5 frequently asked questions with direct, specific answers.",
+          },
+          {
+            title: "Build review velocity",
+            detail:
+              "Start sending automated review requests after every job. Target 2–3 new reviews per week. This signals to both Google and AI search engines that your business is active, growing, and trusted. Respond to every review — positive and negative.",
+          },
+          {
+            title: "Create content that answers the questions people ask AI",
+            detail:
+              "What do homeowners in your city ask ChatGPT about your trade? 'How much does X cost in [city]?' 'Who is the best [trade] near me?' 'What should I look for when hiring a [trade]?' Create website content that directly answers these questions. AI cites the content that best answers the query.",
+          },
+        ],
+        note: "You can do all of this yourself — or get a system that does it for you. Either way, the window for first-mover advantage in AI search is closing. Contractors who act now will have a significant lead over those who wait.",
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "How do I get my contracting business recommended by ChatGPT?",
+            a: "ChatGPT synthesizes information about your business from multiple sources: your Google Business Profile, your website, directory listings (Yelp, BBB, Angi), and review platforms. To get recommended, you need consistent business information across 15+ platforms, recent positive reviews, a website with structured data, and content that answers customer questions about your trade.",
+          },
+          {
+            q: "Does AI search actually send real customers to local contractors?",
+            a: "Yes. AI search leads convert at 4–23x higher rates than traditional search leads because customers treat AI recommendations as trusted referrals. 45% of consumers now use AI tools to find local services, up from 6% one year ago. This is already a significant source of leads and growing rapidly.",
+          },
+          {
+            q: "How many reviews do I need to show up in AI search?",
+            a: "There is no hard minimum, but data shows: 10+ reviews gets you into consideration, 25+ makes you competitive, and 50+ with a 4.5 average and regular new reviews puts you in the top tier. Recency matters more than total count — AI systems weight recent reviews more heavily.",
+          },
+          {
+            q: "What is structured data and do I need it as a contractor?",
+            a: "Structured data is code added to your website that tells search engines and AI exactly what your business is. Think of it as a label on every page that says: 'This is a plumbing business in Dallas that offers drain cleaning and water heater installation.' Without it, AI has to guess what your pages are about. With it, AI knows exactly what you offer and where you offer it.",
+          },
+          {
+            q: "Can a contractor show up in AI search without a website?",
+            a: "Technically yes, through Google Business Profile and directory listings alone. But the probability is much lower. AI systems use your website as a primary source for understanding your services, service area, and expertise. Contractors with websites are 2–3x more likely to be cited in AI search results.",
+          },
+          {
+            q: "What is the difference between SEO, AEO, and GEO?",
+            a: "SEO (Search Engine Optimization) helps you rank on Google. AEO (Answer Engine Optimization) helps you appear in AI-generated answers from ChatGPT, Perplexity, and Siri. GEO (Generative Engine Optimization) specifically targets AI Overviews in Google search results. The good news: the fundamentals are the same — consistent information, recent reviews, quality content, and structured data. Optimize once, show up everywhere.",
+          },
+          {
+            q: "How long does it take to start showing up in AI search?",
+            a: "Directory consistency improvements take 2–4 weeks to propagate. Review velocity improvements take 4–8 weeks to impact rankings. Content and structured data changes are indexed within days but take 4–8 weeks to influence AI recommendations. Most contractors see measurable improvements within 60–90 days of systematic optimization.",
+          },
+          {
+            q: "Is Angi inside ChatGPT going to replace Google for finding contractors?",
+            a: "Not replace, but it is a significant new channel. Angi's ChatGPT integration means contractors listed on Angi have an additional path into AI search results. But Google, direct ChatGPT recommendations, and Perplexity all still operate independently. The smart move is to be visible everywhere — not to bet on one platform.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          {
+            href: "/guides/contractor-lead-machine-no-ads",
+            label: "The Contractor's Lead Machine: Get Calls Without Ads",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/120k-leak-missed-calls-reviews",
+            label: "The $120K Leak: What Missed Calls and Missing Reviews Cost You",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/how-to-get-more-customers-website",
+            label: "How to Get More Customers From Your Website",
+            tag: "Pillar",
+          },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     BLOG 3 — The $120K Leak (Pillar)
+     Primary KW: "cost of missed calls for contractors"
+     SEO + AEO + GEO optimized
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "120k-leak-missed-calls-reviews",
+    type: "pillar" as GuideType,
+    title:
+      "The $120K Leak: How Missed Calls, Slow Follow-Ups, and Zero Reviews Are Bleeding Your Contracting Business Dry",
+    description:
+      "You do not have a marketing problem. You have a leak problem. Leads are coming in and falling through five specific cracks — each one costing you thousands per year. Here are the numbers.",
+    metaTitle:
+      "Cost of Missed Calls for Contractors: The $120K Leak You Don't See | QuickLaunchWeb",
+    metaDescription:
+      "The average contractor loses $45K–$120K/year from missed calls alone. Add slow follow-ups and missing reviews and the total leak exceeds $150K. Here's how to plug every hole.",
+    kicker: "Pillar Guide",
+    category: "Lead Recovery",
+    updated: "Apr 2026",
+    readTime: "13 min read",
+    stats: [
+      { label: "Avg cost per missed call", value: "$1,200" },
+      { label: "Calls missed daily", value: "4–7 avg" },
+      { label: "Callers who never call back", value: "85%" },
+    ],
+    heroBullets: [
+      "The 5 leaks that cost the average contractor $135,000–$365,000 per year.",
+      "Why 85% of missed callers never call back (and the 60-second fix).",
+      "The speed-to-lead stat that changes everything: 78% choose whoever responds first.",
+      "How to plug every leak with one automated system — not 7 different tools.",
+    ],
+    jumpLinks: [
+      { id: "the-invisible-bleed", label: "The invisible bleed" },
+      { id: "leak-1-missed-calls", label: "Leak 1: Missed calls" },
+      { id: "leak-2-slow-response", label: "Leak 2: Slow response" },
+      { id: "leak-3-reviews", label: "Leak 3: Missing reviews" },
+      { id: "leak-4-after-hours", label: "Leak 4: After-hours silence" },
+      { id: "leak-5-invisible", label: "Leak 5: Being invisible online" },
+      { id: "total-leak", label: "The total leak" },
+      { id: "plug-every-leak", label: "Plug every leak" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Stop the bleeding",
+      description:
+        "One system. Every leak plugged. $0 down, live in 48 hours.",
+      href: "/#pricing",
+      label: "See plans",
+    },
+    ctaBottom: {
+      title: "Every day you wait is another $500+ walking out the door",
+      description:
+        "Missed calls, slow follow-ups, missing reviews — the system plugs all of it automatically. One flat monthly fee. No contracts. Cancel if it does not pay for itself.",
+      href: "/#pricing",
+      label: "Plug the leaks",
+    },
+    aside: {
+      takeaways: [
+        "The average contractor loses $45,000–$120,000 per year from missed calls alone.",
+        "78% of buyers hire the first contractor to respond. Average response time is 4+ hours.",
+        "91% of homeowners check reviews before calling. 70% will not hire under 4 stars.",
+      ],
+      benchmarks: [
+        "Every missed call gets an auto-text within 60 seconds.",
+        "Every lead gets a response within 60 seconds — even at midnight.",
+        "Every completed job triggers an automatic review request.",
+        "Every Google review gets a response within 24 hours.",
+      ],
+      benchmarkNote:
+        "These are not goals. They are automation rules. Set them once and they run on every lead, every call, every job — without you doing anything.",
+      roi: [
+        "Recovering just 2 missed calls per week at $500/job = $52,000/year in recovered revenue.",
+        "Responding in 60 seconds instead of 4 hours can double your close rate on inbound leads.",
+        "Going from 10 to 50 Google reviews typically doubles Map Pack click-through rate.",
+      ],
+      roiNote:
+        "You are not spending money to fix these leaks. You are recovering money you are already losing.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "the-invisible-bleed",
+        title: "Your business is not under-marketed. It is leaking.",
+        paragraphs: [
+          "The average contractor loses $45,000 to $120,000 per year from missed calls alone. Add slow follow-ups, missing reviews, after-hours silence, and online invisibility, and most contracting businesses are leaking $135,000 to $365,000 in revenue they never see. This is not a marketing problem. It is a plumbing problem — your lead pipeline has holes, and money is draining out of every one.",
+          "Here is what makes this so painful: you are already doing the hard part. You are good at your trade. You have happy customers. Leads are finding you. But between the moment a customer decides to call and the moment you actually speak to them, there are five places where that lead can — and does — fall through the cracks.",
+          "These leaks are invisible because you never see the leads you lose. You do not get a notification that says 'a homeowner tried to call you, could not reach you, and hired your competitor instead.' It just looks like a slow week. But it is not a slow week. It is a leaky system.",
+          "Let us put a dollar figure on every leak so you know exactly how much this is costing you.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "leak-1-missed-calls",
+        title: "Leak #1: Missed calls — $45,000 to $120,000 per year",
+        paragraphs: [
+          "A missed call to a home service business costs an average of $1,200 in lost revenue. The average contractor misses 4 to 7 calls per day. Less than 3% of those callers leave a voicemail. And 85% of callers who do not reach you on the first attempt never call back. They call the next contractor on the list.",
+          "Do the math on your own numbers. If your average job value is $500 and you miss just 3 calls per day, 5 days per week, that is 15 missed calls per week. If even a third of those would have converted to jobs, you are losing 5 jobs per week, which is $2,500 per week — or $130,000 per year.",
+          "You are not missing these calls because you do not care. You are missing them because you are on a job. You are under a house, on a roof, running a saw, or talking to another customer. Your hands are full. Your phone is in your pocket. By the time you see the missed call notification, that customer has already called two other contractors.",
+        ],
+        list: [
+          "27% of all calls to home service businesses go unanswered during business hours.",
+          "62% of callers say they will not leave a voicemail for a business they have never used before.",
+          "A customer who gets a voicemail from a plumber when their pipe is leaking will call the next number, not wait for a callback.",
+          "The fix: Missed call text-back sends an automatic text within 60 seconds. 'Hey, this is [Name] from [Business]. I saw you called — I am on a job right now. What do you need help with?' Recovery rate: 30–50% of previously lost leads.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "leak-2-slow-response",
+        title: "Leak #2: Slow follow-up — $30,000 to $80,000 per year",
+        paragraphs: [
+          "78% of buyers hire the first contractor to respond to their inquiry. Not the most experienced. Not the cheapest. The first. Responding to a lead within 60 seconds increases your conversion rate by 391% compared to responding in 5 minutes. After 5 minutes, the probability of qualifying the lead drops by 80%.",
+          "The average contractor takes over 4 hours to respond to an online lead. Four hours. In that time, the homeowner has already contacted, compared, and possibly hired someone else. You never even got to compete.",
+          "This is not about sending a sales pitch. It is about acknowledgment. A simple automatic message — 'Got your message. I am finishing up a job right now and will call you back within the hour' — does two things: it tells the customer you are real and responsive, and it stops them from calling your competitor. That 15-second message is worth thousands of dollars per year.",
+        ],
+        list: [
+          "Lead response time is the single strongest predictor of conversion in home services. Stronger than price, stronger than reviews, stronger than years of experience.",
+          "The 24-hour follow-up catches leads who were interested but got distracted: 'Hey, just checking if you still need help with that water heater.' This recovers 15–20% of leads that went quiet.",
+          "The 72-hour follow-up catches the ones who meant to call back but forgot. Another 5–10% recovery.",
+          "41% of online bookings happen after business hours. If a customer fills out your contact form at 9 PM and does not hear back until 9 AM, that is a 12-hour response time. Your competitor with an auto-reply already texted them at 9:01 PM.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "leak-3-reviews",
+        title: "Leak #3: Missing or stale reviews — $20,000 to $50,000 per year",
+        paragraphs: [
+          "91% of homeowners check reviews before calling a contractor. 70% will not even request a quote from a business rated below 4 stars. 65% expect to see 50 or more reviews before they feel confident hiring you. And 43% of contractors never respond to their reviews — which signals to both customers and Google that the business is either too busy to care or no longer active.",
+          "Here is the real cost: a contractor with 3 reviews from 2022 is not competing with the contractor across town who has 75 reviews from the last 6 months. It does not matter that you do better work. It does not matter that you have been in business longer. The customer sees the review gap and makes their decision before they ever call. You lose the job before you even knew it existed.",
+          "Reviews are not just social proof. They are the primary ranking signal for Google's Map Pack. Businesses with more recent reviews, higher ratings, and regular owner responses rank higher. And now, AI search engines use review data to determine which businesses to recommend. Low review count is a double penalty: customers do not trust you AND you do not rank.",
+        ],
+        list: [
+          "SMS review requests sent within 2 hours of job completion get 3x the response rate of next-day requests.",
+          "A 19% response rate on SMS review requests means: if you complete 10 jobs per week and text each customer, you get 2 new reviews per week, 8 per month, 96 per year.",
+          "Responding to every review — including negative ones — increases trust by 88% and signals to Google that your business is actively managed.",
+          "Review velocity (new reviews per week) is now weighted more heavily by Google than total review count. 5 reviews per week beats 200 total reviews with no new ones.",
+          "The fix: automated review request sent after every job + automatic response to every new review. Zero effort from you after initial setup.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "leak-4-after-hours",
+        title: "Leak #4: After-hours silence — $15,000 to $40,000 per year",
+        paragraphs: [
+          "41% of online job bookings in home services happen outside of standard business hours. Plumbing emergencies do not respect your office hours. A homeowner with a flooded basement at 10 PM is not going to fill out your contact form and wait until morning. They are going to call three plumbers, and the first one who responds — even with an automated message — gets the job.",
+          "This leak is especially costly for emergency-service contractors: plumbers, electricians, and HVAC techs. The jobs that come in after hours tend to be urgent, which means higher willingness to pay and faster conversion. A burst pipe at 11 PM is not a price-shopping call — it is a 'who can come right now' call. Losing these leads is losing your highest-margin work.",
+          "The fix is not answering the phone 24/7. The fix is an after-hours auto-reply that captures the lead. 'Hi, this is [Business]. We are closed right now but your message is important. I will call you first thing in the morning — or if this is an emergency, reply to this text and I will get back to you as soon as possible.' This keeps the customer from calling your competitor and gives you first shot at the job when you wake up.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "leak-5-invisible",
+        title: "Leak #5: Being invisible online — $25,000 to $75,000 per year",
+        paragraphs: [
+          "94% of homeowners begin their search for a contractor online. If your competitor has 50 reviews, a clean professional web presence, and shows up on Google Maps — and you have a half-empty Google Business Profile with 3 reviews from 2021 and no website — you lose before anyone even calls. The homeowner never saw you. You were not in the consideration set.",
+          "This leak is the hardest to quantify because you cannot count the leads that never found you. But the data is clear: contractors who rank in the Google Map Pack top 3 get 44% of all clicks for that search. Contractors who are visible on AI search platforms like ChatGPT get leads that convert at 4–23x higher rates. Contractors with professional websites get 2–3x more inquiries than those without.",
+          "The compounding problem: invisibility makes every other leak worse. If fewer people find you, you have fewer chances for calls — which means every missed call costs you proportionally more. A contractor who gets 50 calls per month and misses 10 can absorb that loss. A contractor who gets 10 calls per month and misses 4 is in trouble.",
+        ],
+        list: [
+          "84% of consumers trust a business more when it has a professional web presence.",
+          "45% now use AI search to find local services. AI recommends only 1.2% of businesses. If you are not visible, you are losing leads from a channel most competitors are not even competing on yet.",
+          "The fix: a professional web presence optimized for Google, Maps, and AI search, with Google Business Profile fully managed, and directory listings consistent across 15+ platforms.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "total-leak",
+        title: "The total leak: $135,000–$365,000 per year",
+        columns: [
+          "Leak",
+          "Annual Cost (Low)",
+          "Annual Cost (High)",
+          "The Fix",
+        ],
+        rows: [
+          ["Missed calls", "$45,000", "$120,000", "Missed call text-back (auto)"],
+          ["Slow follow-up", "$30,000", "$80,000", "Instant reply + 24h/72h follow-up"],
+          ["Missing/stale reviews", "$20,000", "$50,000", "Auto review requests + replies"],
+          ["After-hours silence", "$15,000", "$40,000", "After-hours auto-reply"],
+          ["Online invisibility", "$25,000", "$75,000", "Website + GBP + AI search optimization"],
+          ["TOTAL", "$135,000", "$365,000", "One integrated system"],
+        ],
+        note: "These ranges are based on industry data for small to mid-size contracting businesses. Your actual numbers depend on your market, trade, and job values. Even at the low end, the leak dwarfs the cost of fixing it.",
+      },
+      {
+        kind: "callout",
+        id: "plug-every-leak",
+        title: "Plug every leak with one system — not 7 different tools",
+        body: [
+          "You could fix each leak individually. Missed call text-back from one provider ($75/mo). CRM from another ($200/mo). Review automation from another ($100/mo). Website from a freelancer ($3,000 + $50/mo hosting). SEO agency ($500/mo). That is 5 logins, 5 bills, and zero integration between them.",
+          "Or you could get one system that connects everything. The website feeds the Google ranking. The Google ranking brings calls. The missed call text-back catches the calls you miss. The auto-reply handles after-hours leads. The review requests go out after every job. The reviews improve your ranking. The ranking brings more calls. One system. One bill. Every leak plugged.",
+          "At $99–$399 per month with no upfront cost and no contracts, the math is simple. If the system recovers even one extra job per month that you would have lost — one missed call you would not have caught, one lead that would have gone cold, one customer who would have picked your competitor because they had more reviews — it pays for itself many times over.",
+          "The real cost is not the monthly fee. The real cost is every day you wait while $500+ in leads leaks out the bottom of your business.",
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "How much does a missed call actually cost a contractor?",
+            a: "Industry data puts the average cost of a missed call for home service businesses at $1,200 in lost revenue. This accounts for the job value multiplied by the probability that the caller would have converted to a paying customer. For higher-value trades like HVAC and roofing, a single missed call can cost $3,000–$10,000 in lost revenue.",
+          },
+          {
+            q: "What is missed call text-back and how does it work?",
+            a: "When you miss an incoming call, the system automatically sends a text message to the caller within 60 seconds. The message identifies your business and asks how you can help. The caller responds by text, starting a conversation you can continue when you are off the job. It recovers 30–50% of leads that would have been permanently lost.",
+          },
+          {
+            q: "How fast should a contractor respond to a lead?",
+            a: "Within 60 seconds is ideal. Data shows that responding within 1 minute increases conversion rates by 391% compared to a 5-minute response. After 5 minutes, the probability of qualifying the lead drops by 80%. The average contractor takes 4+ hours to respond, which is why automation is so important.",
+          },
+          {
+            q: "How many Google reviews does a contractor need to be competitive?",
+            a: "10 reviews gets you into consideration. 25 makes you competitive. 50+ with a 4.5 average and consistent new reviews puts you in the top tier for most local markets. But velocity matters more than total count — getting 2–3 new reviews per week signals that your business is active and trusted.",
+          },
+          {
+            q: "What happens to leads that come in after hours?",
+            a: "Without an after-hours system, those leads call your competitor. With an auto-reply, they get an immediate text acknowledging their message and capturing their information. 41% of home service bookings happen outside business hours — this is not a small number to ignore.",
+          },
+          {
+            q: "Can one system really fix all five of these leaks?",
+            a: "Yes. An integrated lead system handles missed call text-back, instant lead response, automated follow-up sequences, after-hours auto-reply, review automation, and online visibility management in one connected platform. The components are stronger together because each one feeds the others.",
+          },
+          {
+            q: "How much does it cost to set up a lead recovery system?",
+            a: "Doing it yourself with separate tools costs $500–$1,200 per month (CRM, review tool, texting platform, website, SEO). An integrated system like QuickLaunchWeb bundles everything for $99–$399 per month with no upfront cost. The ROI math: one recovered lead per month at your average job value covers the cost.",
+          },
+          {
+            q: "How quickly will I see results from fixing these leaks?",
+            a: "Missed call recovery and faster response times generate results within the first week. Review automation shows impact within 30 days. SEO and visibility improvements take 60–90 days to compound. Most contractors report measurable increases in calls within the first month and significant growth by month 3.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          {
+            href: "/guides/contractor-lead-machine-no-ads",
+            label: "The Contractor's Lead Machine: Get Calls Without Ads",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/invisible-contractor-ai-search",
+            label: "Invisible Contractor: Why Customers Can't Find You",
+            tag: "Pillar",
+          },
+          {
+            href: "/guides/how-to-get-more-customers-website",
+            label: "How to Get More Customers From Your Website",
+            tag: "Pillar",
+          },
+        ],
+      },
+    ],
+  },
   {
     slug: "why-website-not-getting-customers",
     type: "pillar",

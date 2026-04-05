@@ -20,6 +20,7 @@ export function SiteStructuredData() {
             name: siteName,
             url: siteUrl,
             email: siteSupportEmail,
+            description: "The system that keeps your phone ringing. Show up on Google, Maps, and AI search. Missed calls get texted back. Reviews build on autopilot. Free website included.",
             founder: {
               "@type": "Person",
               name: "Anthony Tran",
@@ -36,12 +37,14 @@ export function SiteStructuredData() {
                 url: absoluteUrl("/support"),
               },
             ],
+            sameAs: [],
           },
           {
             "@type": "WebSite",
             "@id": websiteId,
             url: siteUrl,
             name: siteName,
+            description: "More jobs. Zero ads. The system that keeps local businesses' phones ringing.",
             publisher: {
               "@id": organizationId,
             },

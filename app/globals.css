@@ -561,6 +561,39 @@
   will-change: transform, opacity;
 }
 
+/* Feature card animations */
+.feat-typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1.5px solid rgba(var(--color-accent-rgb), 0.6);
+  width: 0;
+  animation:
+    featTyping 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards,
+    featBlink 0.6s step-end infinite;
+  will-change: width;
+}
+
+@keyframes featTyping {
+  0% { width: 0; }
+  100% { width: calc(var(--chars) * 0.57em); }
+}
+
+@keyframes featBlink {
+  0%, 100% { border-color: rgba(var(--color-accent-rgb), 0.6); }
+  50% { border-color: transparent; }
+}
+
+.feat-dot-pulse {
+  animation: featDotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes featDotPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
 @keyframes vStarterFade {
   0% {
     opacity: 1;

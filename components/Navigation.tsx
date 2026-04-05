@@ -9,7 +9,7 @@ import { GlassButton } from "@/components/ui/glass";
 import { useEventTracker } from "@/lib/analytics";
 
 interface NavigationProps {
-    onOpenUpsellModal: (plan: "starter" | "growth" | "city_dominator") => void;
+    onOpenUpsellModal?: (plan: "starter" | "growth" | "city_dominator") => void;
 }
 
 export function Navigation({ onOpenUpsellModal }: NavigationProps) {
@@ -53,9 +53,11 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
         { name: "FAQ", href: "#faq" },
     ];
 
+    const isHomePage = pathname === "/" || pathname === "/houston-web-design-for-contractors";
+
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         // If it's a hash link and we're on the home page, smooth scroll
-        if (href.startsWith("#") && pathname === "/") {
+        if (href.startsWith("#") && isHomePage) {
             e.preventDefault();
             const targetId = href.substring(1);
             const element = document.getElementById(targetId);
@@ -68,6 +70,14 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
         } else {
             setIsOpen(false);
         }
+    };
+
+    // On non-home pages, prefix hash links with / so they navigate home
+    const resolveHref = (href: string) => {
+        if (href.startsWith("#") && !isHomePage) {
+            return `/${href}`;
+        }
+        return href;
     };
 
     return (
@@ -88,7 +98,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
-                            href={link.href}
+                            href={resolveHref(link.href)}
                             onClick={(e) => handleLinkClick(e, link.href)}
                             className="hover:text-white transition-colors duration-200"
                         >
@@ -99,21 +109,29 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
 
                 {/* Desktop CTA */}
                 <div className="hidden md:block">
-                    <GlassButton
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => {
-                            track('cta_click', {
-                                cta_text: 'Start My Free Website',
-                                cta_location: 'header',
-                                event_category: 'engagement',
-                                event_label: 'header_cta',
-                            });
-                            onOpenUpsellModal("starter");
-                        }}
-                    >
-                        Start My Free Website
-                    </GlassButton>
+                    {onOpenUpsellModal ? (
+                        <GlassButton
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => {
+                                track('cta_click', {
+                                    cta_text: 'Start My Free Website',
+                                    cta_location: 'header',
+                                    event_category: 'engagement',
+                                    event_label: 'header_cta',
+                                });
+                                onOpenUpsellModal("starter");
+                            }}
+                        >
+                            Start My Free Website
+                        </GlassButton>
+                    ) : (
+                        <Link href="/#pricing">
+                            <GlassButton variant="secondary" size="sm">
+                                Start My Free Website
+                            </GlassButton>
+                        </Link>
+                    )}
                 </div>
 
                 {/* Mobile Toggle */}
@@ -144,7 +162,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                                         transition={{ delay: 0.1 + i * 0.05 }}
                                     >
                                         <Link
-                                            href={link.href}
+                                            href={resolveHref(link.href)}
                                             onClick={(e) => handleLinkClick(e, link.href)}
                                             className="block py-2 hover:text-white hover:pl-2 transition-all duration-200 border-b border-white/[0.05]"
                                         >
@@ -160,23 +178,39 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                                 transition={{ delay: 0.4 }}
                                 className="mt-8"
                             >
-                                <GlassButton
-                                    variant="primary"
-                                    size="lg"
-                                    className="w-full justify-center"
-                                    onClick={() => {
-                                        setIsOpen(false);
-                                        track('cta_click', {
-                                            cta_text: 'Start My Free Website',
-                                            cta_location: 'mobile_menu',
-                                            event_category: 'engagement',
-                                            event_label: 'header_cta_mobile',
-                                        });
-                                        onOpenUpsellModal("starter");
-                                    }}
-                                >
-                                    Start My Free Website
-                                </GlassButton>
+                                {onOpenUpsellModal ? (
+                                    <GlassButton
+                                        variant="primary"
+                                        size="lg"
+                                        className="w-full justify-center"
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            track('cta_click', {
+                                                cta_text: 'Start My Free Website',
+                                                cta_location: 'mobile_menu',
+                                                event_category: 'engagement',
+                                                event_label: 'header_cta_mobile',
+                                            });
+                                            onOpenUpsellModal("starter");
+                                        }}
+                                    >
+                                        Start My Free Website
+                                    </GlassButton>
+                                ) : (
+                                    <Link
+                                        href="/#pricing"
+                                        onClick={() => setIsOpen(false)}
+                                        className="block"
+                                    >
+                                        <GlassButton
+                                            variant="primary"
+                                            size="lg"
+                                            className="w-full justify-center"
+                                        >
+                                            Start My Free Website
+                                        </GlassButton>
+                                    </Link>
+                                )}
                             </motion.div>
                         </motion.div>
                     )}

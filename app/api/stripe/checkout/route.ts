@@ -45,8 +45,11 @@ type AddOns = {
   hasDomain: boolean | null;
   domainRouting: "us" | "self" | null;
   textAlerts: boolean;
-  unlimitedEdits: boolean;
   googleBoost: boolean;
+  photoShoot: boolean;
+  adCreative: boolean;
+  brandPackage: boolean;
+  adsCall: boolean;
 };
 
 const PLAN_CONFIG: Record<
@@ -89,12 +92,6 @@ const RECURRING_ADDON_CONFIG = {
     envName: "STRIPE_PRICE_TEXT_ALERTS",
     monthlyDescription: "Monthly lead text notifications.",
   },
-  unlimitedEdits: {
-    label: "Monthly Conversion Boost",
-    monthlyAmountCents: 4900,
-    envName: "STRIPE_PRICE_UNLIMITED_EDITS",
-    monthlyDescription: "Monthly site optimization and updates.",
-  },
 } as const;
 
 const ONE_TIME_ADDON_CONFIG = {
@@ -104,9 +101,24 @@ const ONE_TIME_ADDON_CONFIG = {
     envName: "STRIPE_PRICE_DOMAIN_ROUTING",
   },
   googleBoost: {
-    label: "Google Business Boost",
+    label: "Google Business Setup",
     description: "One-time setup for Google Business Profile and Maps optimization.",
     envName: "STRIPE_PRICE_GOOGLE_BOOST",
+  },
+  photoShoot: {
+    label: "Professional Photo Shoot",
+    description: "Professional on-site photography for website and Google profile.",
+    envName: "STRIPE_PRICE_PHOTO_SHOOT",
+  },
+  adCreative: {
+    label: "Ad Creative Package",
+    description: "3 short videos + scripts for ads and social media.",
+    envName: "STRIPE_PRICE_AD_CREATIVE",
+  },
+  brandPackage: {
+    label: "Brand Content Package",
+    description: "Full photo shoot + 3 videos + ad creatives bundle.",
+    envName: "STRIPE_PRICE_BRAND_PACKAGE",
   },
 } as const;
 
@@ -132,8 +144,11 @@ function validateAddOns(addOns: unknown): AddOns {
     hasDomain: null,
     domainRouting: null,
     textAlerts: false,
-    unlimitedEdits: false,
     googleBoost: false,
+    photoShoot: false,
+    adCreative: false,
+    brandPackage: false,
+    adsCall: false,
   };
 
   if (!addOns || typeof addOns !== "object") return defaults;
@@ -149,8 +164,11 @@ function validateAddOns(addOns: unknown): AddOns {
         ? obj.domainRouting
         : null,
     textAlerts: obj.textAlerts === true,
-    unlimitedEdits: obj.unlimitedEdits === true,
     googleBoost: obj.googleBoost === true,
+    photoShoot: obj.photoShoot === true,
+    adCreative: obj.adCreative === true,
+    brandPackage: obj.brandPackage === true,
+    adsCall: obj.adsCall === true,
   };
 }
 
@@ -422,6 +440,51 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (addOns.photoShoot) {
+      const photoShootPrice = await retrieveConfiguredPrice(
+        ONE_TIME_ADDON_CONFIG.photoShoot.envName,
+        "one_time"
+      );
+      dueTodayCents += photoShootPrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(photoShootPrice, {
+          name: ONE_TIME_ADDON_CONFIG.photoShoot.label,
+          description: ONE_TIME_ADDON_CONFIG.photoShoot.description,
+          recurring: false,
+        })
+      );
+    }
+
+    if (addOns.adCreative) {
+      const adCreativePrice = await retrieveConfiguredPrice(
+        ONE_TIME_ADDON_CONFIG.adCreative.envName,
+        "one_time"
+      );
+      dueTodayCents += adCreativePrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(adCreativePrice, {
+          name: ONE_TIME_ADDON_CONFIG.adCreative.label,
+          description: ONE_TIME_ADDON_CONFIG.adCreative.description,
+          recurring: false,
+        })
+      );
+    }
+
+    if (addOns.brandPackage) {
+      const brandPackagePrice = await retrieveConfiguredPrice(
+        ONE_TIME_ADDON_CONFIG.brandPackage.envName,
+        "one_time"
+      );
+      dueTodayCents += brandPackagePrice.unit_amount ?? 0;
+      lineItems.push(
+        buildInlineLineItemFromPrice(brandPackagePrice, {
+          name: ONE_TIME_ADDON_CONFIG.brandPackage.label,
+          description: ONE_TIME_ADDON_CONFIG.brandPackage.description,
+          recurring: false,
+        })
+      );
+    }
+
     let recurringCurrency = monthlyPlanPrice.currency;
     if (addOns.textAlerts) {
       const textAlertsPrice = await retrieveConfiguredPrice(
@@ -457,40 +520,6 @@ export async function POST(req: NextRequest) {
       dueTodayCents += isUpfront ? 0 : monthlyAddonAmount;
     }
 
-    if (addOns.unlimitedEdits) {
-      const unlimitedEditsPrice = await retrieveConfiguredPrice(
-        RECURRING_ADDON_CONFIG.unlimitedEdits.envName,
-        "recurring"
-      );
-      const monthlyAddonAmount = unlimitedEditsPrice.unit_amount ?? 0;
-      recurringCurrency = unlimitedEditsPrice.currency;
-
-      if (isUpfront) {
-        const prepayAmount = monthlyAddonAmount * 3;
-        dueTodayCents += prepayAmount;
-        lineItems.push(
-          buildInlineOneTimeAmountLineItem({
-            name: `${RECURRING_ADDON_CONFIG.unlimitedEdits.label} - 3 Month Prepay`,
-            description: "Pays for months 1-3. Monthly billing starts in month 5.",
-            amountCents: prepayAmount,
-            currency: unlimitedEditsPrice.currency,
-          })
-        );
-      }
-
-      lineItems.push(
-        buildInlineLineItemFromPrice(unlimitedEditsPrice, {
-          name: `${RECURRING_ADDON_CONFIG.unlimitedEdits.label} - Monthly Add-on`,
-          description: isUpfront
-            ? `Starts in month 5 at ${formatAmount(monthlyAddonAmount, unlimitedEditsPrice.currency)}/month.`
-            : `${formatAmount(monthlyAddonAmount, unlimitedEditsPrice.currency)}/month with your plan.`,
-          recurring: true,
-        })
-      );
-      recurringStartCents += monthlyAddonAmount;
-      dueTodayCents += isUpfront ? 0 : monthlyAddonAmount;
-    }
-
     const successUrl = `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${siteUrl}/cancel`;
 
@@ -501,8 +530,11 @@ export async function POST(req: NextRequest) {
       hasDomain: String(addOns.hasDomain),
       domainRouting: addOns.domainRouting || "none",
       textAlerts: String(addOns.textAlerts),
-      unlimitedEdits: String(addOns.unlimitedEdits),
       googleBoost: String(addOns.googleBoost),
+      photoShoot: String(addOns.photoShoot),
+      adCreative: String(addOns.adCreative),
+      brandPackage: String(addOns.brandPackage),
+      adsCall: String(addOns.adsCall),
       analytics_source: "quicklaunchweb",
       analytics_timestamp: new Date().toISOString(),
       offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
@@ -519,8 +551,11 @@ export async function POST(req: NextRequest) {
       hasDomain: String(addOns.hasDomain),
       domainRouting: addOns.domainRouting || "none",
       textAlerts: String(addOns.textAlerts),
-      unlimitedEdits: String(addOns.unlimitedEdits),
       googleBoost: String(addOns.googleBoost),
+      photoShoot: String(addOns.photoShoot),
+      adCreative: String(addOns.adCreative),
+      brandPackage: String(addOns.brandPackage),
+      adsCall: String(addOns.adsCall),
       offer: isUpfront ? "3_month_prepay_1_month_free" : "monthly",
       trialEnd:
         isUpfront && trialEndTimestamp
@@ -577,8 +612,11 @@ export async function POST(req: NextRequest) {
     const selectedAddons: string[] = [];
     if (isUpfront) selectedAddons.push("upfront_billing");
     if (addOns.textAlerts) selectedAddons.push("text_alerts");
-    if (addOns.unlimitedEdits) selectedAddons.push("unlimited_edits");
     if (addOns.googleBoost) selectedAddons.push("google_boost");
+    if (addOns.photoShoot) selectedAddons.push("photo_shoot");
+    if (addOns.adCreative) selectedAddons.push("ad_creative");
+    if (addOns.brandPackage) selectedAddons.push("brand_package");
+    if (addOns.adsCall) selectedAddons.push("ads_call");
     if (addOns.domainRouting === "us") selectedAddons.push("domain_routing");
 
     logCheckoutEvent(

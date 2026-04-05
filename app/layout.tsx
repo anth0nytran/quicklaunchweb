@@ -23,9 +23,9 @@ const lato = Lato({
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const homeMetadata = buildPageMetadata({
-  title: "QuickLaunchWeb | Look Better Online. Win More Jobs.",
+  title: "QuickLaunchWeb | The System That Keeps Your Phone Ringing",
   description:
-    "We help local businesses look legit online, show up better on Google, and get more 5-star reviews so more people call.",
+    "More jobs. Zero ads. Show up on Google, Maps, and AI search. Missed calls get texted back. Reviews build on autopilot. Free website included. Live in 48 hours.",
   path: "/",
 });
 
@@ -34,18 +34,19 @@ export const metadata: Metadata = {
   ...homeMetadata,
   keywords: [
     "QuickLaunchWeb",
-    "local business website",
-    "service business website",
-    "website that gets calls",
-    "google business profile help",
+    "get more calls without ads",
+    "local business lead system",
+    "automated review requests",
+    "google business profile automation",
     "local SEO for small business",
-    "google reviews follow up",
-    "website for contractors",
-    "website for home services",
-    "multi city SEO",
-    "city landing pages",
+    "missed call text back",
+    "contractor lead generation",
+    "local business marketing system",
+    "google reviews automation",
+    "CRM for contractors",
     "website for local business",
-    "business website subscription",
+    "show up on google",
+    "AI search optimization",
   ],
   robots: {
     index: true,

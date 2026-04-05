@@ -1,0 +1,699 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "QL|QuickLaunchWeb" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - link "Features" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "Work" [ref=e8] [cursor=pointer]:
+          - /url: "#work"
+        - link "How it Works" [ref=e9] [cursor=pointer]:
+          - /url: "#how-it-works"
+        - link "Pricing" [ref=e10] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Guides" [ref=e11] [cursor=pointer]:
+          - /url: /guides
+        - link "FAQ" [ref=e12] [cursor=pointer]:
+          - /url: "#faq"
+      - button "Start My Free Website" [ref=e14]
+      - button "Toggle menu" [ref=e15]:
+        - img [ref=e16]
+  - main [ref=e17]:
+    - generic [ref=e23]:
+      - generic [ref=e24]: FOR LOCAL BUSINESSES THAT WANT MORE CALLS
+      - heading "Look better online. Win more jobs." [level=1] [ref=e25]:
+        - text: Look better online.
+        - generic [ref=e26]: Win more jobs.
+      - list [ref=e28]:
+        - listitem [ref=e29]:
+          - img [ref=e30]
+          - text: People check your site before they call.
+        - listitem [ref=e32]:
+          - img [ref=e33]
+          - text: They check your Google page.
+        - listitem [ref=e35]:
+          - img [ref=e36]
+          - text: They check your reviews.
+      - generic [ref=e38]:
+        - button "Get Started" [ref=e39]:
+          - text: Get Started
+          - img [ref=e40]
+        - button "See Recent Launches" [ref=e42]
+      - paragraph [ref=e43]: Start in 60 seconds. No sales calls. No runaround.
+      - generic [ref=e44]:
+        - paragraph [ref=e45]: Businesses We've Helped
+        - generic [ref=e47]:
+          - img "Elite Home Repairs" [ref=e49]
+          - img "Made New Pressure Washing" [ref=e51]
+          - img "JN Ornamental Design" [ref=e53]
+          - img "3D Fencing" [ref=e55]
+          - img "AN Painting Renovations" [ref=e57]
+          - img "Alvarez Pool Service" [ref=e59]
+          - img "Jimenez Junk Removal" [ref=e61]
+          - img "Jimenez Tree Pro" [ref=e63]
+          - img "McMillian Junk Removal" [ref=e65]
+          - img "Landeros Electrical" [ref=e67]
+          - img "The Toro Group" [ref=e69]
+          - img "Tomi Jewelry" [ref=e71]
+          - img "Becreativesco" [ref=e73]
+    - generic [ref=e75]:
+      - generic [ref=e77]:
+        - heading "This is what happens when you stop looking small online." [level=2] [ref=e78]
+        - paragraph [ref=e79]: Real businesses. Real results. Better first impressions, more calls, and more work coming in.
+      - generic [ref=e81]:
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - img [ref=e86]
+              - img [ref=e88]
+              - img [ref=e90]
+              - img [ref=e92]
+              - img [ref=e94]
+            - text: 3 new jobs from Google in 30 days
+          - paragraph [ref=e96]: “was paying some seo guy 250 a month for a website that looked honestly like crap. zero calls from it. decided to go with Anthony because hes local and it was the best choice. he actually cared and worked with us 1:1 to get exactly what we wanted. dude was available 24/7 to answer questions. got 3 real jobs from google in the first month. highly recommend”
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - paragraph [ref=e99]: Jose
+              - paragraph [ref=e100]: Home Remodeling · Houston, TX
+            - link "Elite Home Repairs" [ref=e101] [cursor=pointer]:
+              - /url: https://elitehomerepairs.us
+              - text: Elite Home Repairs
+              - img [ref=e102]
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - img [ref=e108]
+              - img [ref=e110]
+              - img [ref=e112]
+              - img [ref=e114]
+              - img [ref=e116]
+            - text: Ranking on Google in weeks
+          - paragraph [ref=e118]: “really glad i found them. we were just doing word of mouth and facebook groups before. Anthony met with us 1 on 1 to figure out what we needed. now when people search pressure washing near me we actually show up. getting quote requests straight to my email every few days now without doing anything.”
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - paragraph [ref=e121]: Blake
+              - paragraph [ref=e122]: Pressure Washing · Houston, TX
+            - link "Made New Pressure Washing" [ref=e123] [cursor=pointer]:
+              - /url: https://madenewpressurewashing.com
+              - text: Made New Pressure Washing
+              - img [ref=e124]
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - img [ref=e130]
+              - img [ref=e132]
+              - img [ref=e134]
+              - img [ref=e136]
+              - img [ref=e138]
+            - text: 40% more calls in week one
+          - paragraph [ref=e140]: “we had a site but it didnt even have a way for people to call us from their phone easily... Anthony built us a whole new site in like 2 days. loved that hes local and actually cared about my business. phone definitely rings more now. should have just done this a year ago tbh.”
+          - generic [ref=e141]:
+            - generic [ref=e142]:
+              - paragraph [ref=e143]: Juan
+              - paragraph [ref=e144]: Fencing & Fabrication · Houston, TX
+            - link "JN Ornamental Design" [ref=e145] [cursor=pointer]:
+              - /url: https://jnornamentaldesign.com
+              - text: JN Ornamental Design
+              - img [ref=e146]
+        - generic [ref=e149]:
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - img [ref=e152]
+              - img [ref=e154]
+              - img [ref=e156]
+              - img [ref=e158]
+              - img [ref=e160]
+            - text: Leads within the first week
+          - paragraph [ref=e162]: “man we were losing bids to guys doing worse work than us just cause their website looked better. customers judge u before they even call. Anthony worked with me 1:1 and was literally replying to me 24/7 to get the design exactly how I wanted. quicklaunch gave us a site that actually looks professional. closing way more people now”
+          - generic [ref=e163]:
+            - generic [ref=e164]:
+              - paragraph [ref=e165]: David
+              - paragraph [ref=e166]: Fencing Contractor · Houston, TX
+            - link "3D Fencing" [ref=e167] [cursor=pointer]:
+              - /url: https://3dfencing.com
+              - text: 3D Fencing
+              - img [ref=e168]
+        - generic [ref=e171]:
+          - generic [ref=e172]:
+            - generic [ref=e173]:
+              - img [ref=e174]
+              - img [ref=e176]
+              - img [ref=e178]
+              - img [ref=e180]
+              - img [ref=e182]
+            - text: 4 jobs booked from website
+          - paragraph [ref=e184]: “Tried making my own wix site and it was a mess. was honestly embarrassed to send it to homeowners. went with anthony cause hes local and u can tell he actually cares. turned it around in 2 days and it looks super clean. booked 4 solid painting jobs just from people finding the site so far”
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - paragraph [ref=e187]: Jamie
+              - paragraph [ref=e188]: Painting & Renovation · Houston, TX
+            - link "AN Painting Renovations" [ref=e189] [cursor=pointer]:
+              - /url: https://anpaintingrenovations.com
+              - text: AN Painting Renovations
+              - img [ref=e190]
+        - generic [ref=e193]:
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - img [ref=e196]
+              - img [ref=e198]
+              - img [ref=e200]
+              - img [ref=e202]
+              - img [ref=e204]
+            - text: Calls every week from Google
+          - paragraph [ref=e206]: “had absolutely nothing for my tree service just a facebook page. Anthony is the man, completely hands on 1:1 process and answered my texts 24/7. they built me a site that actually shows up when people search in baytown... went from basically invisible online to getting a few calls a week. best investment ive made for the business”
+          - generic [ref=e207]:
+            - generic [ref=e208]:
+              - paragraph [ref=e209]: Cristian
+              - paragraph [ref=e210]: Tree & Junk Removal · Baytown, TX
+            - link "Jimenez Tree Pro" [ref=e211] [cursor=pointer]:
+              - /url: https://jimeneztreepro.com
+              - text: Jimenez Tree Pro
+              - img [ref=e212]
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - img [ref=e218]
+              - img [ref=e220]
+              - img [ref=e222]
+              - img [ref=e224]
+              - img [ref=e226]
+            - text: Steady leads from Google
+          - paragraph [ref=e228]: “business was too up and down. good weeks then dead weeks. needed people to find us when they needed an electrician fast. Loved working with Anthony since he's local. he really took the time to understand what we needed 1:1. they set up the site with tap to call buttons and its been steady leads from google since”
+          - generic [ref=e229]:
+            - generic [ref=e230]:
+              - paragraph [ref=e231]: Juan
+              - paragraph [ref=e232]: Electrical Contractor · Houston, TX
+            - link "Landeros Electrical" [ref=e233] [cursor=pointer]:
+              - /url: https://landeroselectrical.com
+              - text: Landeros Electrical
+              - img [ref=e234]
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e239]:
+              - img [ref=e240]
+              - img [ref=e242]
+              - img [ref=e244]
+              - img [ref=e246]
+              - img [ref=e248]
+            - text: 3 new listings from website
+          - paragraph [ref=e250]: “In real estate everyone looks the same. needed something that made us look like top producers in our area. even though hes out of state, anthony felt like he was right down the street. incredible communication and super responsive 24/7. the site he built captures leads instantly instead of losing them to zillow. got 3 new listings directly from the site!”
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - paragraph [ref=e253]: Jack
+              - paragraph [ref=e254]: Real Estate Team · San Dimas, CA
+            - link "The Toro Group Corp" [ref=e255] [cursor=pointer]:
+              - /url: https://soldbytoro.com
+              - text: The Toro Group Corp
+              - img [ref=e256]
+        - generic [ref=e259]:
+          - generic [ref=e260]:
+            - generic [ref=e261]:
+              - img [ref=e262]
+              - img [ref=e264]
+              - img [ref=e266]
+              - img [ref=e268]
+              - img [ref=e270]
+            - text: More foot traffic from Google
+          - paragraph [ref=e272]: “our old site looked super cheap compared to the actual jewelry we sell... people literally told us that. Anthony worked with us 1:1 and he was so patient and actually cared about getting it perfect. definitely seeing more foot traffic from people finding us online first.”
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - paragraph [ref=e275]: Tomi
+              - paragraph [ref=e276]: Jewelry Store · Houston, TX
+            - link "Tomi Jewelry" [ref=e277] [cursor=pointer]:
+              - /url: https://tomijewelry.com
+              - text: Tomi Jewelry
+              - img [ref=e278]
+        - generic [ref=e281]:
+          - generic [ref=e282]:
+            - generic [ref=e283]:
+              - img [ref=e284]
+              - img [ref=e286]
+              - img [ref=e288]
+              - img [ref=e290]
+              - img [ref=e292]
+            - text: 12 new inquiries in 6 weeks
+          - paragraph [ref=e294]: “was running my whole business out of instagram DMs which was getting annoying. quick launch got me set up fast. was worried about hiring someone out of state but anthony was awesome. crazy communicative and basically available 24/7 whenever I had a question. we show up for local searches now and had 12 inquiries come in last month. process was super easy too”
+          - generic [ref=e295]:
+            - generic [ref=e296]:
+              - paragraph [ref=e297]: Brian
+              - paragraph [ref=e298]: Marketing & Branding · Boston, MA
+            - link "Becreativesco" [ref=e299] [cursor=pointer]:
+              - /url: https://becreativesco.com
+              - text: Becreativesco
+              - img [ref=e300]
+      - generic [ref=e302]:
+        - button "Scroll left" [disabled] [ref=e303]:
+          - img
+        - generic [ref=e305]:
+          - button "Go to page 1" [ref=e306]
+          - button "Go to page 2" [ref=e307]
+          - button "Go to page 3" [ref=e308]
+        - button "Scroll right" [ref=e309]:
+          - img
+    - generic [ref=e313]:
+      - generic [ref=e314]:
+        - heading "3 steps. 48 hours. You look like the real deal." [level=2] [ref=e315]:
+          - text: 3 steps. 48 hours.
+          - text: You look like the real deal.
+        - generic [ref=e316]:
+          - button "01 Pick the plan that fits Start simple or choose the level built to help you grow." [ref=e317]:
+            - generic [ref=e318]:
+              - img [ref=e319]
+              - generic [ref=e322]: "01"
+            - generic [ref=e323]:
+              - heading "Pick the plan that fits" [level=3] [ref=e324]
+              - paragraph [ref=e325]: Start simple or choose the level built to help you grow.
+          - button "02 Send the basics What you do, where you work, your photos, and how people should reach you." [ref=e326]:
+            - generic [ref=e327]:
+              - img [ref=e328]
+              - generic [ref=e330]: "02"
+            - generic [ref=e331]:
+              - heading "Send the basics" [level=3] [ref=e332]
+              - paragraph [ref=e333]: What you do, where you work, your photos, and how people should reach you.
+          - button "03 We build it and launch it You get a stronger online presence without dragging this out for weeks." [ref=e334]:
+            - generic [ref=e335]:
+              - img [ref=e336]
+              - generic [ref=e338]: "03"
+            - generic [ref=e339]:
+              - heading "We build it and launch it" [level=3] [ref=e340]
+              - paragraph [ref=e341]: You get a stronger online presence without dragging this out for weeks.
+      - generic [ref=e346]:
+        - paragraph [ref=e347]: Choose Your Plan
+        - generic [ref=e349]:
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - paragraph [ref=e353]: Starter
+              - paragraph [ref=e354]: 1-page site
+            - generic [ref=e355]: $99/mo
+          - generic [ref=e357]:
+            - generic [ref=e358]:
+              - generic [ref=e359]:
+                - generic [ref=e360]:
+                  - paragraph [ref=e361]: Growth
+                  - text: POPULAR
+                - paragraph [ref=e362]: 5-page + SEO system
+              - generic [ref=e363]: $199/mo
+            - img [ref=e365]
+        - generic [ref=e367]:
+          - generic [ref=e368]: 5-page website + SEO
+          - generic [ref=e369]: Reviews automation
+          - generic [ref=e370]: Cancel anytime
+        - generic [ref=e374]:
+          - text: Continue to Checkout
+          - img [ref=e375]
+        - generic [ref=e377]:
+          - img [ref=e378]
+          - text: Secured by Stripe
+    - generic [ref=e381]:
+      - generic [ref=e382]:
+        - heading "People do not always hire the best business first. They hire the one that looks easiest to trust." [level=2] [ref=e383]:
+          - text: People do not always hire the best business first.
+          - text: They hire the one that looks easiest to trust.
+        - paragraph [ref=e384]: "That is why we focus on the three things people check before they call: your site, your Google page, and your reviews."
+        - generic [ref=e385]:
+          - paragraph [ref=e386]: Best for
+          - generic [ref=e387]:
+            - generic [ref=e388]:
+              - img [ref=e390]
+              - text: Local service businesses
+            - generic [ref=e392]:
+              - img [ref=e394]
+              - text: Owners who look smaller online than they really are
+            - generic [ref=e396]:
+              - img [ref=e398]
+              - text: Businesses that want more calls without looking cheap
+      - generic [ref=e400]:
+        - generic [ref=e402]:
+          - img [ref=e404]
+          - heading "A site that makes you look real" [level=3] [ref=e407]
+          - paragraph [ref=e409]: Clean, fast, and built to make people call instead of bounce.
+        - generic [ref=e411]:
+          - img [ref=e413]
+          - heading "A Google presence that does not look half-finished" [level=3] [ref=e415]
+          - paragraph [ref=e417]: So people can find you, check you out fast, and feel better about calling.
+        - generic [ref=e419]:
+          - img [ref=e421]
+          - heading "More good reviews without all the chasing" [level=3] [ref=e423]
+          - paragraph [ref=e425]: We help set up a simple review follow-up so happy customers leave the proof that wins the next job.
+    - generic [ref=e428]:
+      - generic [ref=e429]:
+        - generic [ref=e430]:
+          - paragraph [ref=e431]: What You Get
+          - heading "We fix the stuff people judge you on." [level=2] [ref=e432]
+          - paragraph [ref=e433]: Not fluff. Just the parts that make people trust you faster and contact you easier.
+          - paragraph [ref=e434]: Delivery starts after your details are submitted.
+        - generic [ref=e435]:
+          - paragraph [ref=e436]: delivery window
+          - paragraph [ref=e437]: 24-48h
+      - generic [ref=e438]:
+        - generic [ref=e439]:
+          - text: "01"
+          - generic [ref=e440]:
+            - paragraph [ref=e441]: A clean site that says what you do fast
+            - paragraph [ref=e442]: No guessing. No dead ends.
+        - generic [ref=e443]:
+          - text: "02"
+          - generic [ref=e444]:
+            - paragraph [ref=e445]: Easy ways to call or ask for a quote
+            - paragraph [ref=e446]: Tap-to-call + forms ready
+        - generic [ref=e447]:
+          - text: "03"
+          - generic [ref=e448]:
+            - paragraph [ref=e449]: A stronger Google page
+            - paragraph [ref=e450]: So you are easier to find and trust
+        - generic [ref=e451]:
+          - text: "04"
+          - generic [ref=e452]:
+            - paragraph [ref=e453]: A review follow-up system
+            - paragraph [ref=e454]: More 5-star reviews with less chasing
+        - generic [ref=e455]:
+          - text: "05"
+          - generic [ref=e456]:
+            - paragraph [ref=e457]: Pages built around your work and area
+            - paragraph [ref=e458]: So the right people land in the right place
+        - generic [ref=e459]:
+          - text: "06"
+          - generic [ref=e460]:
+            - paragraph [ref=e461]: Support after launch
+            - paragraph [ref=e462]: Updates and upkeep included
+    - generic [ref=e464]:
+      - generic [ref=e465]:
+        - heading "Pick the level that fits right now." [level=2] [ref=e466]
+        - paragraph [ref=e467]: Some businesses just need to stop looking behind online. Some want more calls from Google. Some want to grow into more cities over time.
+      - generic [ref=e468]:
+        - paragraph [ref=e469]: What most businesses pay for piece by piece
+        - generic [ref=e470]:
+          - generic [ref=e471]:
+            - generic [ref=e472]:
+              - img [ref=e474]
+              - text: Professional website build
+            - text: $3,000-5,000
+          - generic [ref=e476]:
+            - generic [ref=e477]:
+              - img [ref=e479]
+              - text: Google Business Profile setup
+            - text: $500
+          - generic [ref=e481]:
+            - generic [ref=e482]:
+              - img [ref=e484]
+              - text: Review request system
+            - text: $300/mo
+          - generic [ref=e486]:
+            - generic [ref=e487]:
+              - img [ref=e489]
+              - text: SEO setup
+            - text: $1,500
+          - generic [ref=e491]:
+            - generic [ref=e492]:
+              - img [ref=e494]
+              - text: AI search setup
+            - text: $1,200
+          - generic [ref=e496]:
+            - generic [ref=e497]:
+              - img [ref=e499]
+              - text: Monthly updates
+            - text: $200/mo
+          - generic [ref=e501]:
+            - generic [ref=e502]:
+              - img [ref=e504]
+              - text: Hosting + support
+            - text: $300/yr
+        - generic [ref=e506]: Total value$11,000+
+      - generic [ref=e507]:
+        - generic [ref=e508]:
+          - generic [ref=e509]:
+            - paragraph [ref=e510]: Get online. Look legit.
+            - heading "Starter" [level=3] [ref=e511]
+            - generic [ref=e512]: $799BUILD WAIVED
+            - generic [ref=e513]: $99/mo
+            - paragraph [ref=e514]: A real website that makes customers trust you the second they find you.
+          - list [ref=e515]:
+            - listitem [ref=e516]:
+              - img [ref=e517]
+              - text: Custom website — not a template
+            - listitem [ref=e519]:
+              - img [ref=e520]
+              - text: Looks great on phones
+            - listitem [ref=e522]:
+              - img [ref=e523]
+              - text: Hosting, speed, security — handled
+            - listitem [ref=e525]:
+              - img [ref=e526]
+              - text: Contact form → leads to your email
+            - listitem [ref=e528]:
+              - img [ref=e529]
+              - text: Listed on Google
+            - listitem [ref=e531]:
+              - img [ref=e532]
+              - text: 1 site update / month
+          - button "Choose Starter" [ref=e534]
+        - generic [ref=e535]:
+          - generic [ref=e536]: Most Popular
+          - generic [ref=e537]:
+            - paragraph [ref=e538]: Show up on Google. Get more calls.
+            - heading "Growth Engine" [level=3] [ref=e539]
+            - generic [ref=e540]: $1,999BUILD WAIVED
+            - generic [ref=e541]: $199/mo
+            - paragraph [ref=e542]: People search your service, find you first, and call you — not your competitor.
+          - list [ref=e543]:
+            - listitem [ref=e544]:
+              - img [ref=e545]
+              - text: Everything in Starter
+            - listitem [ref=e547]:
+              - img [ref=e548]
+              - text: A page for every service you offer
+            - listitem [ref=e550]:
+              - img [ref=e551]
+              - text: SEO — rank when people search your city
+            - listitem [ref=e553]:
+              - img [ref=e554]
+              - text: AI search ready — ChatGPT, Siri, Google AI
+            - listitem [ref=e556]:
+              - img [ref=e557]
+              - text: Google Business Profile — fully set up
+            - listitem [ref=e559]:
+              - img [ref=e560]
+              - text: Weekly Google posts — keeps your profile active
+            - listitem [ref=e562]:
+              - img [ref=e563]
+              - text: Auto-reply to every Google review
+            - listitem [ref=e565]:
+              - img [ref=e566]
+              - text: Review request link after every job
+            - listitem [ref=e568]:
+              - img [ref=e569]
+              - text: 1 blog post / month
+            - listitem [ref=e571]:
+              - img [ref=e572]
+              - text: Monthly rankings + traffic report
+            - listitem [ref=e574]:
+              - img [ref=e575]
+              - text: 2 site updates / month
+          - button "Choose Growth Engine" [ref=e577]
+        - generic [ref=e578]:
+          - generic [ref=e579]:
+            - paragraph [ref=e580]: Leads on autopilot. Every city around you.
+            - heading "City Dominator" [level=3] [ref=e581]
+            - generic [ref=e582]: $3,999BUILD WAIVED
+            - generic [ref=e583]: $399/mo
+            - paragraph [ref=e584]: Your marketing team — without hiring one. Leads come in, get followed up, and never fall through.
+          - list [ref=e585]:
+            - listitem [ref=e586]:
+              - img [ref=e587]
+              - text: Everything in Growth Engine
+            - listitem [ref=e589]:
+              - img [ref=e590]
+              - text: Full CRM — track every lead
+            - listitem [ref=e592]:
+              - img [ref=e593]
+              - text: Missed call text-back — automatic
+            - listitem [ref=e595]:
+              - img [ref=e596]
+              - text: Instant lead reply — they hear from you in seconds
+            - listitem [ref=e598]:
+              - img [ref=e599]
+              - text: Auto follow-up at 24h + 72h
+            - listitem [ref=e601]:
+              - img [ref=e602]
+              - text: After-hours auto-reply
+            - listitem [ref=e604]:
+              - img [ref=e605]
+              - text: Auto review requests — hands-free
+            - listitem [ref=e607]:
+              - img [ref=e608]
+              - text: 2 new city pages / month
+            - listitem [ref=e610]:
+              - img [ref=e611]
+              - text: 2 blog posts / month
+            - listitem [ref=e613]:
+              - img [ref=e614]
+              - text: 12-month city growth plan
+            - listitem [ref=e616]:
+              - img [ref=e617]
+              - text: Priority edits — 24h turnaround
+            - listitem [ref=e619]:
+              - img [ref=e620]
+              - text: 4 site updates / month
+          - button "Choose City Dominator" [ref=e622]
+      - generic [ref=e623]:
+        - paragraph [ref=e624]: One good job can cover this. The bigger cost is looking weak when people check you out.
+        - generic [ref=e625]:
+          - generic [ref=e626]:
+            - img [ref=e627]
+            - text: 48h launch or first month free
+          - text: "|"
+          - generic [ref=e629]:
+            - img [ref=e630]
+            - text: No contracts
+          - text: "|"
+          - generic [ref=e632]:
+            - img [ref=e633]
+            - text: Cancel anytime
+        - generic [ref=e635]:
+          - paragraph [ref=e636]: Want help picking the right plan?
+          - link "Book a Quick Call" [ref=e637] [cursor=pointer]:
+            - /url: https://calendly.com/quicklaunchweb/15min
+            - button "Book a Quick Call" [ref=e638]:
+              - text: Book a Quick Call
+              - img [ref=e639]
+    - generic [ref=e642]:
+      - heading "Questions Before You Start" [level=2] [ref=e643]
+      - generic [ref=e647]:
+        - img [ref=e648]
+        - textbox "Search questions..." [ref=e650]
+      - generic [ref=e652]:
+        - button "All Questions" [ref=e653]
+        - button "Pricing & Billing" [ref=e654]
+        - button "Plans & What's Included" [ref=e655]
+        - button "Getting Started" [ref=e656]
+        - button "How It Works" [ref=e657]
+        - button "Results & Ownership" [ref=e658]
+      - generic [ref=e659]:
+        - group [ref=e660]:
+          - generic "Do I pay anything upfront?" [ref=e661]:
+            - text: Do I pay anything upfront?
+            - img [ref=e662]
+        - group [ref=e664]:
+          - generic "How does pricing work?" [ref=e665]:
+            - text: How does pricing work?
+            - img [ref=e666]
+        - group [ref=e668]:
+          - generic "Why is it monthly?" [ref=e669]:
+            - text: Why is it monthly?
+            - img [ref=e670]
+        - group [ref=e672]:
+          - generic "Can I cancel anytime?" [ref=e673]:
+            - text: Can I cancel anytime?
+            - img [ref=e674]
+        - group [ref=e676]:
+          - generic "What happens if I cancel?" [ref=e677]:
+            - text: What happens if I cancel?
+            - img [ref=e678]
+        - group [ref=e680]:
+          - generic "What comes with each plan?" [ref=e681]:
+            - text: What comes with each plan?
+            - img [ref=e682]
+        - group [ref=e684]:
+          - generic "What counts as a content update?" [ref=e685]:
+            - text: What counts as a content update?
+            - img [ref=e686]
+        - group [ref=e688]:
+          - generic "What's not included?" [ref=e689]:
+            - text: What's not included?
+            - img [ref=e690]
+        - group [ref=e692]:
+          - generic "Can I request changes anytime?" [ref=e693]:
+            - text: Can I request changes anytime?
+            - img [ref=e694]
+        - group [ref=e696]:
+          - generic "How fast can you launch it?" [ref=e697]:
+            - text: How fast can you launch it?
+            - img [ref=e698]
+        - group [ref=e700]:
+          - generic "Do I need a domain?" [ref=e701]:
+            - text: Do I need a domain?
+            - img [ref=e702]
+        - group [ref=e704]:
+          - generic "Can you connect my domain for me?" [ref=e705]:
+            - text: Can you connect my domain for me?
+            - img [ref=e706]
+        - group [ref=e708]:
+          - generic "How do leads come in?" [ref=e709]:
+            - text: How do leads come in?
+            - img [ref=e710]
+        - group [ref=e712]:
+          - generic "Where do form submissions go?" [ref=e713]:
+            - text: Where do form submissions go?
+            - img [ref=e714]
+        - group [ref=e716]:
+          - generic "Do you offer text message lead alerts?" [ref=e717]:
+            - text: Do you offer text message lead alerts?
+            - img [ref=e718]
+        - group [ref=e720]:
+          - generic "Can you add tracking?" [ref=e721]:
+            - text: Can you add tracking?
+            - img [ref=e722]
+        - group [ref=e724]:
+          - generic "Do I own the website?" [ref=e725]:
+            - text: Do I own the website?
+            - img [ref=e726]
+        - group [ref=e728]:
+          - generic "Can you help me show up on Google and AI search?" [ref=e729]:
+            - text: Can you help me show up on Google and AI search?
+            - img [ref=e730]
+        - group [ref=e732]:
+          - generic "Will this help me get more work?" [ref=e733]:
+            - text: Will this help me get more work?
+            - img [ref=e734]
+        - group [ref=e736]:
+          - generic "Who is this best for?" [ref=e737]:
+            - text: Who is this best for?
+            - img [ref=e738]
+  - contentinfo [ref=e740]:
+    - generic [ref=e741]:
+      - generic [ref=e742]:
+        - generic [ref=e743]:
+          - link "QL|QuickLaunchWeb" [ref=e744] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e745]: We help local businesses look better online, show up better on Google, and win more work.
+          - paragraph [ref=e746]: Look stronger online. Get picked more often.
+        - generic [ref=e747]:
+          - heading "Explore" [level=4] [ref=e748]
+          - list [ref=e749]:
+            - listitem [ref=e750]:
+              - link "Features" [ref=e751] [cursor=pointer]:
+                - /url: "#features"
+            - listitem [ref=e752]:
+              - link "Recent Work" [ref=e753] [cursor=pointer]:
+                - /url: "#work"
+            - listitem [ref=e754]:
+              - link "How It Works" [ref=e755] [cursor=pointer]:
+                - /url: "#how-it-works"
+            - listitem [ref=e756]:
+              - link "Pricing" [ref=e757] [cursor=pointer]:
+                - /url: "#pricing"
+            - listitem [ref=e758]:
+              - link "Guides" [ref=e759] [cursor=pointer]:
+                - /url: /guides
+            - listitem [ref=e760]:
+              - link "FAQ" [ref=e761] [cursor=pointer]:
+                - /url: "#faq"
+        - generic [ref=e762]:
+          - heading "Account" [level=4] [ref=e763]
+          - paragraph [ref=e764]: Manage billing and subscriptions through Stripe.
+          - link "Open the Stripe customer portal" [ref=e765] [cursor=pointer]:
+            - /url: https://billing.stripe.com/p/login/4gMbJ1dxi6CffXsg6R4c800
+            - text: Open Customer Portal
+          - paragraph [ref=e766]: Use the email from your checkout.
+      - generic [ref=e767]:
+        - paragraph [ref=e768]: (c) 2026 QuickLaunchWeb. All rights reserved.
+        - generic [ref=e769]:
+          - link "Terms" [ref=e770] [cursor=pointer]:
+            - /url: /terms
+          - link "Privacy" [ref=e771] [cursor=pointer]:
+            - /url: /privacy
+          - link "SMS" [ref=e772] [cursor=pointer]:
+            - /url: /sms-consent
+          - link "Support" [ref=e773] [cursor=pointer]:
+            - /url: https://calendly.com/quicklaunchweb/15-minute-support-call

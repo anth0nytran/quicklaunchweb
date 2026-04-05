@@ -55,12 +55,12 @@ const testimonials: Testimonial[] = [
     stat: "Ranking on Google in weeks",
   },
   {
-    text: "we had a site but it didnt even have a way for people to call us from their phone easily... Anthony built us a whole new site in like 2 days. loved that hes local and actually cared about my business. phone definitely rings more now. should have just done this a year ago tbh.",
+    text: "honestly the only reason i gave Anthony a shot was cause hes local. i trusted him and he made it happen. we started using their system with facebook ads and its been bringing in a solid amount of extra leads every month. best decision we made for the business.",
     name: "Juan",
     company: "JN Ornamental Design",
     role: "Fencing & Fabrication · Houston, TX",
     url: "jnornamentaldesign.com",
-    stat: "40% more calls in week one",
+    stat: "Consistent new leads monthly",
   },
   {
     text: "man we were losing bids to guys doing worse work than us just cause their website looked better. customers judge u before they even call. Anthony worked with me 1:1 and was literally replying to me 24/7 to get the design exactly how I wanted. quicklaunch gave us a site that actually looks professional. closing way more people now",
@@ -69,14 +69,6 @@ const testimonials: Testimonial[] = [
     role: "Fencing Contractor · Houston, TX",
     url: "3dfencing.com",
     stat: "Leads within the first week",
-  },
-  {
-    text: "Tried making my own wix site and it was a mess. was honestly embarrassed to send it to homeowners. went with anthony cause hes local and u can tell he actually cares. turned it around in 2 days and it looks super clean. booked 4 solid painting jobs just from people finding the site so far",
-    name: "Jamie",
-    company: "AN Painting Renovations",
-    role: "Painting & Renovation · Houston, TX",
-    url: "anpaintingrenovations.com",
-    stat: "4 jobs booked from website",
   },
   {
     text: "had absolutely nothing for my tree service just a facebook page. Anthony is the man, completely hands on 1:1 process and answered my texts 24/7. they built me a site that actually shows up when people search in baytown... went from basically invisible online to getting a few calls a week. best investment ive made for the business",
@@ -201,10 +193,10 @@ export function SocialProofSection() {
         <div className="mb-14 md:text-center px-6">
           <div className="mx-auto max-w-7xl">
             <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
-              This is what happens when you stop looking small online.
+              They turned it on. The calls started coming in.
             </h2>
             <p className="mt-3 text-secondary">
-              Real businesses. Real results. Better first impressions, more calls, and more work coming in.
+              Real businesses using this system. More calls, more reviews, more jobs.
             </p>
           </div>
         </div>

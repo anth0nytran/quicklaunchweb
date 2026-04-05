@@ -180,8 +180,11 @@ function formatAddOns(metadata: Stripe.Metadata | null): string {
   if (!metadata) return 'None';
   const addons: string[] = [];
   if (metadata.textAlerts === 'true') addons.push('Text Alerts');
-  if (metadata.unlimitedEdits === 'true') addons.push('Unlimited Edits');
-  if (metadata.googleBoost === 'true') addons.push('Google Boost');
+  if (metadata.googleBoost === 'true') addons.push('Google Business Setup');
+  if (metadata.photoShoot === 'true') addons.push('Photo Shoot');
+  if (metadata.adCreative === 'true') addons.push('Ad Creative Package');
+  if (metadata.brandPackage === 'true') addons.push('Brand Content Package');
+  if (metadata.adsCall === 'true') addons.push('Ads Consultation');
   if (metadata.domainRouting && metadata.domainRouting !== 'none') addons.push('Domain Routing');
   if (metadata.hasDomain === 'true') addons.push('Has Domain');
   return addons.length > 0 ? addons.join(', ') : 'None';
