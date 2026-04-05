@@ -38,7 +38,7 @@ export default function PrivacyPage() {
             <div className="space-y-4">
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Last updated</p>
-                <p className="text-sm text-white/90">January 2026</p>
+                <p className="text-sm text-white/90">April 2026</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Owner / Operator</p>
@@ -193,59 +193,172 @@ export default function PrivacyPage() {
               </p>
             </section>
 
-            <section>
+            <section id="sms">
               <h2 className="text-base font-semibold text-white">7. SMS/Text Messaging</h2>
-              <p className="mt-3">
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.1 Platform Operator Disclosure</h3>
+              <p className="mt-2">
                 <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb SMS Program
               </p>
-              <p className="mt-3">
-                QuickLaunchWeb and websites we build for our clients may send SMS (text) messages in connection with
-                lead notification, confirmation, and review request services. By providing your mobile phone number and opting in to
-                receive text messages, you consent to receive SMS messages from us or from the business whose form you
-                submitted or whose services you received. These messages are transactional and informational only — we do not send marketing texts.
+              <p className="mt-2">
+                QuickLaunchWeb is a platform that builds, hosts, and operates websites and business communication
+                tools for local service businesses. As the platform operator, QuickLaunchWeb is the sole sender of
+                all SMS messages across every client website and business account on our platform. Each business
+                client may be assigned a dedicated phone number for their SMS communications, but all phone numbers
+                are owned, registered, and operated by QuickLaunchWeb under a single brand registration. The
+                individual business does not independently send text messages — QuickLaunchWeb sends all messages on
+                their behalf through our platform.
               </p>
-              <p className="mt-3">
-                Consent to receive SMS messages is not a condition of any purchase or service. You may opt in or
-                decline SMS at your discretion without affecting your ability to use our services, submit a lead form, or receive services.
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.2 Message Types and Purpose</h3>
+              <p className="mt-2">
+                All SMS messages sent through our platform are <span className="font-medium text-white">transactional
+                and informational only</span>. We do not send marketing, promotional, or advertising messages via SMS.
+                Message types include:
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
                 <li>
-                  <span className="font-medium text-white">What messages you may receive:</span> (1) Lead submission
-                  confirmations (e.g., &ldquo;We received your request. Someone will contact you shortly.&rdquo;),
-                  (2) lead alert notifications sent to business owners/staff, and
-                  (3) review requests — a one-time SMS after a completed service inviting you to share feedback about your
-                  experience with the business.
+                  <span className="font-medium text-white">Lead confirmations (to consumers):</span> When you submit a
+                  lead form on a QuickLaunchWeb-powered website and opt in to SMS, you receive a confirmation that the
+                  business received your request.
                 </li>
                 <li>
-                  <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
-                  activity. Typically 1–3 messages per customer interaction.
+                  <span className="font-medium text-white">Lead alerts (to business owners/staff):</span> When a new
+                  lead is submitted, the business owner or designated staff receives an SMS notification with the
+                  lead details.
                 </li>
                 <li>
-                  <span className="font-medium text-white">Opt-out:</span> You can opt out at any time by replying STOP
-                  to any message. After opting out, you will not receive further SMS messages from that number. Reply
-                  START to re-subscribe.
+                  <span className="font-medium text-white">Missed call text-back (to consumers):</span> If a consumer
+                  calls a business and the call is not answered, an automated text is sent to the caller letting them
+                  know the business will follow up.
                 </li>
                 <li>
-                  <span className="font-medium text-white">Help:</span> Reply HELP to any message for assistance, or
-                  contact us at anthotranllc@gmail.com.
+                  <span className="font-medium text-white">Auto follow-ups (to consumers):</span> Automated follow-up
+                  messages sent to leads who have not yet been contacted, to ensure no inquiry goes unanswered.
                 </li>
                 <li>
-                  <span className="font-medium text-white">Costs:</span> Message and data rates may apply depending on
-                  your mobile carrier and plan. QuickLaunchWeb is not responsible for carrier charges.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Carriers:</span> Supported carriers include but are not limited
-                  to AT&amp;T, T-Mobile, Verizon, and Sprint. Service may not be available on all carriers.
-                </li>
-                <li>
-                  <span className="font-medium text-white">No SMS data sharing:</span> We do not sell, rent, or share
-                  mobile phone numbers or SMS opt-in data with third parties for marketing purposes.
+                  <span className="font-medium text-white">Review requests (to customers):</span> After a completed
+                  service, a one-time SMS inviting the customer to share feedback about their experience. This message
+                  includes a link to a short feedback page.
                 </li>
               </ul>
-              <p className="mt-3">
-                For complete SMS disclosures and opt-in details, visit our{" "}
-                <a href="/sms-consent" className="text-accent underline">SMS Consent &amp; Disclosures</a> page.
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.3 How You Opt In</h3>
+              <p className="mt-2 font-medium text-white">Consumers / Leads:</p>
+              <p className="mt-1">
+                Each QuickLaunchWeb-powered website includes a lead form with a phone number field and
+                an <span className="font-medium text-white">unchecked</span> SMS consent checkbox (not pre-checked).
+                The disclosure language next to the checkbox reads:
               </p>
+              <div className="mt-2 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3 text-sm italic text-white/70">
+                &ldquo;I agree to receive SMS notifications about my request. Msg frequency varies.
+                Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.
+                Privacy Policy &amp; Terms.&rdquo;
+              </div>
+              <p className="mt-2">
+                The Privacy Policy and Terms links are clickable. We capture and store proof of opt-in including
+                timestamp, source page URL, phone number, and checkbox state.
+              </p>
+              <p className="mt-3 font-medium text-white">Business Owners / Staff:</p>
+              <p className="mt-1">
+                Business owners opt in during onboarding when they subscribe to a plan that includes text alerts, or
+                by enabling text alerts through our support form. They provide their mobile number and agree to receive
+                SMS lead notifications as part of the service setup.
+              </p>
+              <p className="mt-3 font-medium text-white">Review Request Recipients:</p>
+              <p className="mt-1">
+                Customers provide their phone number directly to the business during a service engagement. After
+                service is completed, the business owner triggers a one-time review request through the QuickLaunchWeb
+                platform. The message includes opt-out instructions (reply STOP). Only one review request is sent per
+                service interaction.
+              </p>
+              <p className="mt-3 font-medium text-white">
+                Consent to receive SMS is not a condition of any purchase or service. You may use our services,
+                submit lead forms, or receive services without opting in to SMS.
+              </p>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.4 Message Frequency and Costs</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  <span className="font-medium text-white">Frequency:</span> Message frequency varies based on
+                  activity. Typically 1&ndash;5 messages per customer interaction.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Message and data rates:</span> Standard message and data
+                  rates from your mobile carrier may apply. QuickLaunchWeb is not responsible for carrier charges.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Supported carriers:</span> Major US carriers including
+                  AT&amp;T, T-Mobile, Verizon, and Sprint. Service availability may vary by carrier.
+                </li>
+              </ul>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.5 Opt-Out and Help</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  <span className="font-medium text-white">Opt-out:</span> Reply <span className="font-medium text-white">STOP</span> to
+                  any message to immediately unsubscribe. You will receive a one-time confirmation and no further
+                  messages will be sent from that number.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Help:</span> Reply <span className="font-medium text-white">HELP</span> to
+                  any message for assistance, or email anthotranllc@gmail.com.
+                </li>
+                <li>
+                  <span className="font-medium text-white">Re-subscribe:</span> Reply <span className="font-medium text-white">START</span> to
+                  re-subscribe if you previously opted out.
+                </li>
+              </ul>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.6 SMS Data and Privacy</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>
+                  We do <span className="font-medium text-white">not</span> sell, rent, or share your mobile phone
+                  number or SMS consent data with any third parties for their marketing purposes.
+                </li>
+                <li>
+                  SMS consent and opt-in data is used solely for sending the transactional messages described in this
+                  section.
+                </li>
+                <li>
+                  Opt-in records (timestamp, source URL, phone number, consent state) are retained for compliance
+                  purposes and are available upon request.
+                </li>
+              </ul>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">7.7 Sample Messages</h3>
+              <div className="mt-3 space-y-3">
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">Lead confirmation (to consumer)</p>
+                  <p className="text-sm text-white/80">
+                    Hi John &mdash; we received your request for ABC Fencing. Someone will reach out shortly.
+                    Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">Missed call text-back (to consumer)</p>
+                  <p className="text-sm text-white/80">
+                    Hi, you just called ABC Fencing. Sorry we missed you! We&rsquo;ll get back to you shortly. If
+                    you&rsquo;d like, reply with details about what you need.
+                    Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">Lead alert (to business owner)</p>
+                  <p className="text-sm text-white/80">
+                    New lead: John &mdash; (555) 123-4567 &mdash; Fence Installation &mdash; Houston.
+                    Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <p className="text-xs uppercase tracking-wider text-white/50 mb-2">Review request (to customer)</p>
+                  <p className="text-sm text-white/80">
+                    Hey John &mdash; thanks for choosing ABC Fencing! If you have a moment, we&rsquo;d love your
+                    feedback: https://quicklaunchweb.us/r/abc123.
+                    Reply STOP to opt out, HELP for help.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section>

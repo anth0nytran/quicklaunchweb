@@ -1354,6 +1354,9 @@ export default function HomePage() {
                     { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
                     { src: "/logos/tomi.png", alt: "Tomi Jewelry", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
                     { src: "/logos/becreativesco.jpg", alt: "Becreativesco", hasBg: true, h: "h-10 md:h-10", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/apexepoxy.png", alt: "Apex Epoxy & Surface Systems", hasBg: true, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/onestopoutdoor.png", alt: "One Stop Outdoor Construction", hasBg: true, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
+                    { src: "/logos/cuervohomes.png", alt: "Cuervo Homes", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
                   ].map((logo) => (
                     <div key={logo.alt} className="flex items-center justify-center shrink-0 w-auto">
                       <img
@@ -1911,6 +1914,7 @@ export default function HomePage() {
                 <li><Link href="#pricing" className="text-sm text-secondary hover:text-white transition-colors">Pricing</Link></li>
                 <li><Link href="/guides" className="text-sm text-secondary hover:text-white transition-colors">Guides</Link></li>
                 <li><Link href="#faq" className="text-sm text-secondary hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/support" className="text-sm text-secondary hover:text-white transition-colors">Support</Link></li>
               </ul>
             </div>
 
@@ -1939,8 +1943,8 @@ export default function HomePage() {
             <div className="flex items-center gap-4 text-xs">
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="/sms-consent" className="hover:text-white transition-colors">SMS</Link>
-              <a href="https://calendly.com/quicklaunchweb/15-minute-support-call" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Support</a>
+              <Link href="/privacy#sms" className="hover:text-white transition-colors">SMS</Link>
+              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
             </div>
           </div>
         </div>

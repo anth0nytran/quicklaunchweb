@@ -502,7 +502,7 @@ export default function InstagramLanding() {
               By booking a call, you consent to receive SMS and email communications from QuickLaunchWeb regarding your appointment and our services. Message frequency varies. Message and data rates may apply. Reply STOP to opt out of SMS at any time. Reply HELP for assistance. Your information is never sold to third parties. Carrier conditions may apply. By using this site, you agree to our{' '}
               <a href="/terms" className="underline hover:text-neutral-400 transition-colors">Terms of Service</a>,{' '}
               <a href="/privacy" className="underline hover:text-neutral-400 transition-colors">Privacy Policy</a>, and{' '}
-              <a href="/sms-consent" className="underline hover:text-neutral-400 transition-colors">SMS Consent &amp; Disclosures</a>.
+              <a href="/privacy#sms" className="underline hover:text-neutral-400 transition-colors">SMS Disclosures</a>.
               QuickLaunchWeb is not affiliated with or endorsed by Calendly, Google, Meta, or any third-party platform referenced on this page. Results mentioned in testimonials are based on individual experiences and are not guaranteed. Individual results may vary depending on business type, location, and market conditions.
             </p>
             <p className="text-[11px] text-neutral-600 mt-3">

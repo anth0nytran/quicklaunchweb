@@ -38,7 +38,7 @@ export default function TermsPage() {
             <div className="space-y-4">
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Last updated</p>
-                <p className="text-sm text-white/90">January 2026</p>
+                <p className="text-sm text-white/90">April 2026</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50">Owner / Operator</p>
@@ -95,9 +95,10 @@ export default function TermsPage() {
             <section>
               <h2 className="text-base font-semibold text-white">3. Subscription Plans and Pricing</h2>
               <p className="mt-3">
-                Our Starter and Pro plans, described on the pricing and checkout pages, define the features available to you.
-                Subscription fees are billed monthly in advance and renew automatically until you cancel. By subscribing,
-                you authorize QuickLaunchWeb (via our payment processor) to charge your payment method on a recurring basis.
+                Our Starter, Growth Engine, and City Dominator plans, described on the pricing and checkout pages, define
+                the features available to you. Subscription fees are billed monthly in advance and renew automatically
+                until you cancel. By subscribing, you authorize QuickLaunchWeb (via our payment processor) to charge your
+                payment method on a recurring basis.
               </p>
               <p className="mt-3">
                 Early adopters keep their rate. We do not currently increase subscription fees for existing subscribers.
@@ -129,10 +130,15 @@ export default function TermsPage() {
               <h2 className="text-base font-semibold text-white">5. Service Scope</h2>
               <p className="mt-3">
                 You agree that the services provided under your plan include only the features listed on the pricing and
-                checkout page. For example, the Starter plan includes a one-page conversion-focused website, hosting and
-                basic maintenance, basic local SEO, and simple copywriting. The Pro plan includes up to three pages and
-                enhanced local SEO. Features not expressly included (for example, custom design, advanced animations, CRM
-                integrations, or marketing automation) fall outside the subscription and may be quoted separately.
+                checkout page. The Starter plan ($99/mo) includes a custom-built one-page website, hosting and security,
+                basic local SEO, a contact form, and 1 content update per month. The Growth Engine plan ($199/mo) adds
+                service pages, full SEO and AI search setup, Google Business Profile setup, review reply automation, a
+                review request link, 1 blog post per month, a monthly ranking snapshot, and 2 content updates. The City
+                Dominator plan ($399/mo) adds everything in Growth Engine plus a full CRM, missed call text-back, instant
+                lead reply with auto follow-ups, after-hours auto-reply, automated review requests, 2 city pages and 2
+                blog posts per month, a 12-month city growth plan, priority edits, and 4 content updates. Features not
+                expressly included in your plan (for example, custom design, advanced animations, ecommerce, or complex
+                integrations) fall outside the subscription and may be quoted separately.
               </p>
               <h3 className="mt-6 text-sm font-semibold text-white">5.1 Support and Content Updates (Fair Use)</h3>
               <p className="mt-2">
@@ -197,62 +203,78 @@ export default function TermsPage() {
               </p>
             </section>
 
-            <section>
+            <section id="sms">
               <h2 className="text-base font-semibold text-white">9. SMS/Text Messaging Terms</h2>
-              <p className="mt-3">
+
+              <h3 className="mt-3 text-sm font-semibold text-white">9.1 Platform Operator</h3>
+              <p className="mt-2">
                 <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb SMS Program
               </p>
-              <p className="mt-3">
-                QuickLaunchWeb offers SMS (text message) services as part of its business communication platform. By opting
-                in to receive text messages — as a consumer submitting a lead form, a business owner/staff member enabling
-                lead alert notifications, or a customer receiving a review request after a completed service — you agree to
-                the following:
+              <p className="mt-2">
+                QuickLaunchWeb is a platform that builds, hosts, and operates websites and business communication
+                tools for local service businesses. As the platform operator, QuickLaunchWeb is the sole sender of
+                all SMS messages across every client website and business account on our platform. Each business
+                client may be assigned a dedicated phone number for their SMS communications, but all phone numbers
+                are owned, registered, and operated by QuickLaunchWeb under a single brand registration. The
+                individual business does not independently send text messages — QuickLaunchWeb sends all messages on
+                their behalf through our platform.
               </p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-white/30">
-                <li>
-                  <span className="font-medium text-white">Consent:</span> You consent to receive transactional and
-                  informational SMS messages related to lead submissions and review requests. No marketing messages will be sent via SMS.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Message types:</span> (1) Lead confirmations sent to consumers
-                  who opt in via a lead form. (2) Lead alert notifications sent to business owners/staff.
-                  (3) Review requests — after a completed service, a business owner may trigger a one-time SMS inviting the
-                  customer to share feedback about their experience. The message includes a link to a short feedback page.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Message frequency:</span> Message frequency varies based on
-                  activity. Typically 1–3 messages per customer interaction.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Opt-out:</span> You may opt out at any time by replying STOP
-                  to any message. You will receive a confirmation and no further messages will be sent from that number.
-                  Reply START to re-subscribe.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Help:</span> Reply HELP to any message for assistance, or
-                  contact anthotranllc@gmail.com.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Message and data rates:</span> Standard message and data rates
-                  from your mobile carrier may apply. QuickLaunchWeb is not responsible for carrier charges.
-                </li>
-                <li>
-                  <span className="font-medium text-white">No sharing:</span> We do not sell, rent, or share your mobile
-                  phone number or SMS consent data with any third parties for their marketing purposes.
-                </li>
-                <li>
-                  <span className="font-medium text-white">Supported carriers:</span> Major US carriers are supported
-                  including AT&amp;T, T-Mobile, Verizon, and Sprint. Service availability may vary by carrier.
-                </li>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">9.2 Consent</h3>
+              <p className="mt-2">
+                By opting in to receive text messages — whether as a consumer submitting a lead form, a business
+                owner enabling lead alert notifications, or a customer receiving a review request — you consent to
+                receive transactional and informational SMS messages as described in this section. No marketing,
+                promotional, or advertising messages will be sent via SMS.
+              </p>
+              <p className="mt-2">
+                Consumers opt in through an unchecked SMS consent checkbox on each QuickLaunchWeb-powered lead form.
+                The checkbox includes disclosure language with links to our Privacy Policy and Terms of Service.
+                Business owners opt in during onboarding or by enabling text alerts through our support form. Review
+                request recipients receive a one-time message after providing their phone number to the business
+                during a service engagement.
+              </p>
+              <p className="mt-2">
+                We capture and store proof of opt-in including timestamp, source page URL, phone number, and consent
+                checkbox state. Consent to receive SMS is not a condition of any purchase or service.
+              </p>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">9.3 Message Types</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>Lead submission confirmations sent to consumers who opt in via a lead form.</li>
+                <li>Lead alert notifications sent to business owners and staff.</li>
+                <li>Missed call text-back messages sent to consumers when a call is not answered.</li>
+                <li>Automated follow-up messages sent to leads who have not yet been contacted.</li>
+                <li>After-hours auto-reply messages sent to consumers who reach out outside business hours.</li>
+                <li>Review requests — a one-time SMS after a completed service inviting the customer to share
+                  feedback. The message includes a link to a short feedback page and opt-out instructions.</li>
               </ul>
-              <p className="mt-3">
-                Consent to receive SMS messages is not a condition of any purchase or service. You may use our
-                services, submit lead forms, or receive services from our clients without opting in to SMS.
+
+              <h3 className="mt-6 text-sm font-semibold text-white">9.4 Message Frequency and Costs</h3>
+              <p className="mt-2">
+                Message frequency varies based on activity. Typically 1&ndash;5 messages per customer interaction.
+                Standard message and data rates from your mobile carrier may apply. QuickLaunchWeb is not responsible
+                for carrier charges. Major US carriers are supported including AT&amp;T, T-Mobile, Verizon, and
+                Sprint. Service availability may vary by carrier.
               </p>
-              <p className="mt-3">
-                For full details on how we handle your data, see our{" "}
-                <a href="/privacy" className="text-accent underline">Privacy Policy</a> and our{" "}
-                <a href="/sms-consent" className="text-accent underline">SMS Consent &amp; Disclosures</a> page.
+
+              <h3 className="mt-6 text-sm font-semibold text-white">9.5 Opt-Out, Help, and Re-Subscribe</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+                <li>Reply <span className="font-medium text-white">STOP</span> to any message to immediately
+                  unsubscribe. You will receive a one-time confirmation and no further messages will be sent from
+                  that number.</li>
+                <li>Reply <span className="font-medium text-white">HELP</span> to any message for assistance, or
+                  email anthotranllc@gmail.com.</li>
+                <li>Reply <span className="font-medium text-white">START</span> to re-subscribe if you previously
+                  opted out.</li>
+              </ul>
+
+              <h3 className="mt-6 text-sm font-semibold text-white">9.6 SMS Data</h3>
+              <p className="mt-2">
+                We do not sell, rent, or share your mobile phone number or SMS consent data with any third parties
+                for their marketing purposes. SMS consent and opt-in data is used solely for sending the
+                transactional messages described in this section. For full details on how we handle your data, see
+                our <a href="/privacy#sms" className="text-accent underline">Privacy Policy</a>.
               </p>
             </section>
 
@@ -321,12 +343,12 @@ export default function TermsPage() {
 
             <section>
               <h2 className="text-base font-semibold text-white">16. Dispute Resolution and Governing Law</h2>
-              <h3 className="mt-3 text-sm font-semibold text-white">15.1 Informal Resolution</h3>
+              <h3 className="mt-3 text-sm font-semibold text-white">16.1 Informal Resolution</h3>
               <p className="mt-2">
                 Before filing a claim, you agree to contact us by email and allow 30 days for us to try to resolve the
                 dispute.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">15.2 Arbitration and Class-Action Waiver</h3>
+              <h3 className="mt-6 text-sm font-semibold text-white">16.2 Arbitration and Class-Action Waiver</h3>
               <p className="mt-2">
                 If we cannot resolve the dispute informally, we both agree to resolve any remaining dispute through binding
                 arbitration administered by the American Arbitration Association under its Consumer Arbitration Rules. The
@@ -335,7 +357,7 @@ export default function TermsPage() {
                 proceedings to the fullest extent permitted by law. Either party may bring an individual action in small
                 claims court if the claim qualifies.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">15.3 Governing Law</h3>
+              <h3 className="mt-6 text-sm font-semibold text-white">16.3 Governing Law</h3>
               <p className="mt-2">
                 These Terms are governed by the laws of the State of Texas, without regard to its conflict-of-law principles.
                 You consent to the exclusive jurisdiction of the state and federal courts located in Texas to resolve any
