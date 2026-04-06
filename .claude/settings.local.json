@@ -17,7 +17,9 @@
       "Bash(done)",
       "WebSearch",
       "Bash(sed -n '1723,2556p' lib/guides.ts)",
-      "Bash(sed -n '89,1722p' lib/guides.ts)"
+      "Bash(sed -n '89,1722p' lib/guides.ts)",
+      "WebFetch(domain:www.twilio.com)",
+      "WebFetch(domain:forms.gle)"
     ]
   }
 }

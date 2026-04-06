@@ -261,16 +261,19 @@ export default function PrivacyPage() {
               </p>
               <p className="mt-3 font-medium text-white">Business Owners / Staff:</p>
               <p className="mt-1">
-                Business owners opt in during onboarding when they subscribe to a plan that includes text alerts, or
-                by enabling text alerts through our support form. They provide their mobile number and agree to receive
-                SMS lead notifications as part of the service setup.
+                Business owners opt in during onboarding when they subscribe to a plan that includes text alerts.
+                They provide their mobile number and explicitly agree to receive SMS lead notifications by checking
+                an SMS consent checkbox. The disclosure reads: &ldquo;I agree to receive SMS lead alert notifications
+                from QuickLaunchWeb. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out,
+                HELP for help. See Privacy Policy &amp; Terms.&rdquo; SMS consent is not required to use our services.
               </p>
               <p className="mt-3 font-medium text-white">Review Request Recipients:</p>
               <p className="mt-1">
-                Customers provide their phone number directly to the business during a service engagement. After
-                service is completed, the business owner triggers a one-time review request through the QuickLaunchWeb
-                platform. The message includes opt-out instructions (reply STOP). Only one review request is sent per
-                service interaction.
+                Review request messages are only sent to customers who have already opted in to SMS through the
+                website lead form consent checkbox described above. After a completed service, the business owner
+                may trigger a one-time review request through the QuickLaunchWeb platform. The message includes
+                opt-out instructions (reply STOP). Only one review request is sent per service interaction. No
+                review request messages are sent to customers who did not opt in via the lead form.
               </p>
               <p className="mt-3 font-medium text-white">
                 Consent to receive SMS is not a condition of any purchase or service. You may use our services,
