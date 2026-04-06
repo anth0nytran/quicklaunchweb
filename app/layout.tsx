@@ -25,7 +25,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const homeMetadata = buildPageMetadata({
   title: "QuickLaunchWeb | The System That Keeps Your Phone Ringing",
   description:
-    "More jobs. Zero ads. Show up on Google, Maps, and AI search. Missed calls get texted back. Reviews build on autopilot. Free website included. Live in 48 hours.",
+    "More jobs. Zero ads. Show up on Google, Maps, and AI search. Missed calls get texted back. Leads follow up automatically. Reviews build on autopilot. Free website included. Live in 48 hours.",
   path: "/",
 });
 
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#000000",
+  themeColor: "#080e24",
 };
 
 export default function RootLayout({
@@ -77,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth overflow-x-hidden">
       <body
         className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased overflow-x-hidden`}
       >

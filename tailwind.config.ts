@@ -62,12 +62,12 @@ const config: Config = {
         "float": "float 6s ease-in-out infinite",
         "glow-pulse": "glow-pulse 4s ease-in-out infinite",
         "shimmer": "shimmer 2s ease-in-out infinite",
-        "marquee": "marquee 50s linear infinite",
+        "marquee": "marquee 35s linear infinite",
       },
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(calc(-50% - 1.75rem))" }, // Half the total width minus gap
+          "100%": { transform: "translateX(-50%)" },
         },
       },
 

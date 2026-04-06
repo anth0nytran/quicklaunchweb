@@ -10,9 +10,10 @@ import { useEventTracker } from "@/lib/analytics";
 
 interface NavigationProps {
     onOpenUpsellModal?: (plan: "starter" | "growth" | "city_dominator") => void;
+    onOpenPlanPicker?: () => void;
 }
 
-export function Navigation({ onOpenUpsellModal }: NavigationProps) {
+export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { track } = useEventTracker();
@@ -109,7 +110,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
 
                 {/* Desktop CTA */}
                 <div className="hidden md:block">
-                    {onOpenUpsellModal ? (
+                    {onOpenPlanPicker ? (
                         <GlassButton
                             variant="secondary"
                             size="sm"
@@ -120,7 +121,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                                     event_category: 'engagement',
                                     event_label: 'header_cta',
                                 });
-                                onOpenUpsellModal("starter");
+                                onOpenPlanPicker();
                             }}
                         >
                             Start My Free Website
@@ -178,7 +179,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                                 transition={{ delay: 0.4 }}
                                 className="mt-8"
                             >
-                                {onOpenUpsellModal ? (
+                                {onOpenPlanPicker ? (
                                     <GlassButton
                                         variant="primary"
                                         size="lg"
@@ -191,7 +192,7 @@ export function Navigation({ onOpenUpsellModal }: NavigationProps) {
                                                 event_category: 'engagement',
                                                 event_label: 'header_cta_mobile',
                                             });
-                                            onOpenUpsellModal("starter");
+                                            onOpenPlanPicker();
                                         }}
                                     >
                                         Start My Free Website

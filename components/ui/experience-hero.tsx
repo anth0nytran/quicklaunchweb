@@ -1,73 +1,38 @@
 "use client";
 
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, MeshDistortMaterial } from '@react-three/drei';
-import * as THREE from 'three';
-
-const LiquidBackground = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const { viewport } = useThree();
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0, 0) },
-  }), []);
-
-  useFrame((state) => {
-    const { clock, mouse } = state;
-    if (meshRef.current) {
-      (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = clock.getElapsedTime();
-      (meshRef.current.material as THREE.ShaderMaterial).uniforms.uMouse.value.lerp(mouse, 0.05);
-    }
-  });
-
-  return (
-    <mesh ref={meshRef} scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[1, 1]} />
-      <shaderMaterial
-        transparent
-        uniforms={uniforms}
-        vertexShader={`varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`}
-        fragmentShader={`
-          uniform float uTime; uniform vec2 uMouse; varying vec2 vUv;
-          void main() {
-            vec2 uv = vUv; float t = uTime * 0.15;
-            vec2 m = uMouse * 0.1;
-            float color = smoothstep(0.0, 1.0, (sin(uv.x * 8.0 + t + m.x * 12.0) + sin(uv.y * 6.0 - t + m.y * 12.0)) * 0.5 + 0.5);
-            gl_FragColor = vec4(mix(vec3(0.005), vec3(0.05), color), 1.0);
-          }
-        `}
-      />
-    </mesh>
-  );
-};
-
-const Monolith = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.25;
-    }
-  });
-  return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-      <mesh ref={meshRef}>
-        <icosahedronGeometry args={[13, 1]} />
-        <MeshDistortMaterial color="#0a0a0a" speed={4} distort={0.4} roughness={0.05} metalness={1.0} />
-      </mesh>
-    </Float>
-  );
-};
+import React from "react";
 
 export const ExperienceHeroBackground = () => {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 60], fov: 35 }}>
-        <ambientLight intensity={0.4} />
-        <spotLight position={[50, 50, 50]} intensity={3} />
-        <LiquidBackground />
-        <Monolith />
-      </Canvas>
+    <div className="absolute inset-0 z-0 overflow-hidden" style={{ backgroundColor: "#21346e" }}>
+      {/* Background video — scaled down to show more of the scene */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        className="absolute w-full h-full object-cover"
+        style={{
+          transform: "scale(1.15)",
+          transformOrigin: "center 40%",
+        }}
+      >
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260206_044704_dd33cb15-c23f-4cfc-aa09-a0465d4dcb54.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/45" />
+
+      {/* Top vignette */}
+      <div className="absolute top-0 left-0 right-0 h-40" style={{ background: "linear-gradient(to bottom, rgba(8,14,36,0.6), transparent)" }} />
+
+      {/* Bottom gradient fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 md:h-56" style={{ background: "linear-gradient(to bottom, transparent, #080e24)" }} />
     </div>
   );
 };

@@ -74,6 +74,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   body {
@@ -1411,24 +1412,9 @@
 }
 
 /* Logo marquee */
-.animate-marquee-custom {
-  animation: marquee 50s linear infinite;
-}
-
-.animate-marquee-custom:hover {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-
-  100% {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-  }
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Experience Hero Background Animations */

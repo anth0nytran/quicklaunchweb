@@ -58,8 +58,10 @@ const DialogContent = React.forwardRef<
         "duration-200",
         className
       )}
+      aria-describedby={undefined}
       {...props}
     >
+      <DialogPrimitive.Title className="sr-only">Dialog</DialogPrimitive.Title>
       {children}
     </DialogPrimitive.Content>
   </DialogPortal>

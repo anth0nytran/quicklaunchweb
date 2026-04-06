@@ -802,7 +802,7 @@ function HowItWorksSection({ steps }: { steps: { step: string; title: string; de
   ];
 
   return (
-    <section id="how-it-works" className="relative px-6 pt-16 pb-20 md:pt-20 md:pb-24 allow-motion">
+    <section id="how-it-works" className="relative px-6 pt-16 pb-20 md:pt-20 md:pb-24 allow-motion overflow-hidden">
       <AmbientGlow color="accent" position="center" intensity="subtle" />
       <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
 
@@ -922,6 +922,9 @@ export default function HomePage() {
 
   const selectedPlanDetails = selectedPlan ? PLAN_DETAILS[selectedPlan] : null;
 
+  // Plan picker modal state (shown before upsell for generic CTAs)
+  const [showPlanPicker, setShowPlanPicker] = useState(false);
+
   // Mobile sticky CTA state
   const [showMobileCTA, setShowMobileCTA] = useState(false);
 
@@ -977,6 +980,16 @@ export default function HomePage() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Open plan picker (for generic CTAs that don't specify a plan)
+  const openPlanPicker = () => {
+    track('cta_click', {
+      cta_text: 'plan_picker_opened',
+      cta_location: 'generic_cta',
+      event_category: 'engagement',
+    });
+    setShowPlanPicker(true);
+  };
 
   // Open upsell modal
   const openUpsellModal = (plan: Plan) => {
@@ -1247,48 +1260,46 @@ export default function HomePage() {
   // Render
   // ==========================================================================
   return (
-    <div className="flex min-h-screen flex-col font-sans relative">
+    <div className="flex min-h-screen flex-col font-sans relative overflow-x-hidden">
       <FAQSchema />
       {/* ===== Navbar ===== */}
-      <Navigation onOpenUpsellModal={openUpsellModal} />
+      <Navigation onOpenUpsellModal={openUpsellModal} onOpenPlanPicker={openPlanPicker} />
 
       <main className="flex-1">
         {/* ===== Hero Section ===== */}
-        <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 pb-16 pt-24 md:px-6 md:pb-28 md:pt-52">
+        <section className="relative flex h-dvh flex-col overflow-hidden bg-[#080e24] px-6 pb-3 pt-24 md:px-12 md:pb-4 md:pt-40 lg:px-20">
           {/* Experience Hero Background */}
           {isHoustonLanding ? <GlobeBackground /> : <ExperienceHeroBackground />}
 
-          <div className="relative z-10 flex w-full max-w-full flex-col items-center">
+          <div className="relative z-10 flex w-full max-w-6xl flex-col items-start">
             {/* Status pill */}
             <GlassPill
               variant="accent"
               pulse
-              className="mb-8 inline-flex max-w-[calc(100%-1rem)] sm:max-w-full items-center rounded-2xl px-3 py-2 text-center text-[10px] font-semibold tracking-wide leading-relaxed whitespace-normal md:mb-10 md:rounded-full md:px-5 md:py-2 md:text-sm md:leading-normal"
+              className="mb-6 inline-flex items-center rounded-full px-4 py-2 text-[10px] font-semibold tracking-wide md:mb-8 md:px-5 md:py-2 md:text-sm"
             >
-              <span className="flex-1 text-balance">
-                {pageCopy.heroPill}
-              </span>
+              <span>{pageCopy.heroPill}</span>
             </GlassPill>
 
             {/* Headline */}
-            <h1 className="mx-auto max-w-5xl px-0 text-center text-4xl/tight font-extrabold tracking-tight text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-left text-4xl/[1.05] font-extrabold tracking-tight text-white sm:text-5xl/[1.05] md:text-6xl/[1.05] lg:text-7xl/[1.05]" style={{ textShadow: "0 2px 20px rgba(0,0,0,0.5)" }}>
               {pageCopy.heroHeading}
             </h1>
 
-            {/* Subhead - Centered bullet points */}
-            <div className="mx-auto mt-6 w-full max-w-2xl px-2 md:mt-8 md:px-0">
-              <ul className="space-y-4 text-sm font-medium text-white/80 md:text-base lg:text-lg">
+            {/* Subhead - Left-aligned bullet points */}
+            <div className="mt-6 w-full max-w-xl md:mt-8">
+              <ul className="space-y-3 text-[15px] font-medium text-white/80 md:text-base lg:text-lg">
                 {pageCopy.heroBullets.map((item, idx) => (
-                  <li key={idx} className="flex items-start justify-start gap-3 md:items-center md:justify-center text-left md:text-center">
-                    <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-accent md:mt-0" />
-                    <span className="text-balance">{item}</span>
+                  <li key={idx} className="flex items-center gap-3">
+                    <CheckIcon className="h-5 w-5 shrink-0 text-accent" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* CTAs */}
-            <div className="mt-10 flex w-full max-w-[calc(100%-2rem)] flex-col items-stretch gap-4 sm:max-w-none sm:flex-row sm:justify-center">
+            <div className="mt-8 flex w-full flex-col gap-4 sm:flex-row sm:items-center md:mt-10">
               <GlassButton
                 variant="primary"
                 size="lg"
@@ -1299,9 +1310,8 @@ export default function HomePage() {
                     event_category: 'engagement',
                     event_label: 'hero_primary_cta',
                   });
-                  openUpsellModal("starter");
+                  openPlanPicker();
                 }}
-                loading={loadingPlan === "starter"}
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
                 className="group w-full sm:w-auto text-base py-4 md:py-4 md:px-8"
               >
@@ -1325,45 +1335,51 @@ export default function HomePage() {
                 See Recent Launches
               </GlassButton>
             </div>
-            <p className="mt-6 max-w-xs text-balance text-center text-[13px] text-muted sm:max-w-none sm:text-sm">
+            <p className="mt-5 text-[13px] text-white/40 sm:text-sm">
               Start in 60 seconds. No sales calls. No runaround.
             </p>
+          </div>
 
-            {/* Client logo marquee - Static Layout */}
-            <div className="mt-14 pt-8 border-t border-white/[0.06] w-full relative">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted text-center mb-6">
+          {/* Client logo marquee — pinned to bottom of hero, full width, centered */}
+          <div className="relative z-10 mt-auto w-full">
+            <div className="border-t border-white/[0.08] pt-4 pb-2">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 text-center mb-3">
                 Businesses We&apos;ve Helped
               </p>
 
-              {/* Fade masks for horizontal scrolling on mobile */}
-              <div className="absolute left-0 top-[60px] bottom-0 w-8 bg-gradient-to-r from-[#020202] to-transparent z-10 pointer-events-none md:hidden" />
-              <div className="absolute right-0 top-[60px] bottom-0 w-8 bg-gradient-to-l from-[#020202] to-transparent z-10 pointer-events-none md:hidden" />
-
-              <div className="w-full">
-                <div className="flex flex-nowrap w-full items-center md:justify-between gap-5 md:gap-5 overflow-x-auto scrollbar-hide px-4 py-2 md:px-0 md:py-0">
-                  {[
-                    { src: "/logos/elitehomerepairs.png", alt: "Elite Home Repairs", hasBg: false, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/madenewpressure.svg", alt: "Made New Pressure Washing", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/jnornamentaldesign.svg", alt: "JN Ornamental Design", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/3dfencing.png", alt: "3D Fencing", hasBg: false, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/alvarez_pool_logo_transparent.png", alt: "Alvarez Pool Service", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/jimenezjunkremoval.png", alt: "Jimenez Junk Removal", hasBg: false, h: "h-6 md:h-7", mw: "max-w-[90px] md:max-w-[100px]" },
-                    { src: "/logos/JimenezTreePro.png", alt: "Jimenez Tree Pro", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/mcmillianjunkremoval.png", alt: "McMillian Junk Removal", hasBg: true, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/landeroselectrical.png", alt: "Landeros Electrical", hasBg: false, h: "h-8 md:h-10", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/tomi.png", alt: "Tomi Jewelry", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/becreativesco.jpg", alt: "Becreativesco", hasBg: true, h: "h-10 md:h-10", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/apexepoxy.png", alt: "Apex Epoxy & Surface Systems", hasBg: true, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/onestopoutdoor.png", alt: "One Stop Outdoor Construction", hasBg: true, h: "h-8 md:h-9", mw: "max-w-[70px] md:max-w-[85px]" },
-                    { src: "/logos/cuervohomes.png", alt: "Cuervo Homes", hasBg: false, h: "h-10 md:h-12", mw: "max-w-[70px] md:max-w-[85px]" },
-                  ].map((logo) => (
-                    <div key={logo.alt} className="flex items-center justify-center shrink-0 w-auto">
-                      <img
-                        src={logo.src}
-                        alt={logo.alt}
-                        className={`${logo.h} ${logo.mw} w-auto object-contain opacity-70 ${logo.hasBg ? "rounded" : ""}`}
-                      />
+              <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes logo-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+                .logo-marquee-track { display: flex; width: max-content; animation: logo-scroll 75s linear infinite; }
+              `}} />
+              <div className="relative overflow-hidden">
+                <div className="logo-marquee-track allow-motion">
+                  {[0, 1].map((copy) => (
+                    <div key={copy} className="flex shrink-0 items-center gap-14 md:gap-20 px-7 md:px-10" aria-hidden={copy === 1 ? "true" : undefined}>
+                      {[
+                        { src: "/logos/alvarez_pool_logo_transparent.png", alt: "Alvarez Pool Service", w: "w-[75px] md:w-[95px]" },
+                        { src: "/logos/3dfencing.png", alt: "3D Fencing", w: "w-[160px] md:w-[200px]", h: "h-[60px] md:h-[72px]" },
+                        { src: "/logos/cuervohomes.png", alt: "Cuervo Homes", w: "w-[120px] md:w-[150px]", h: "h-[70px] md:h-[85px]" },
+                        { src: "/logos/madenewpressure.svg", alt: "Made New Pressure Washing", w: "w-[75px] md:w-[95px]" },
+                        { src: "/logos/landeroselectrical.png", alt: "Landeros Electrical", w: "w-[95px] md:w-[125px]" },
+                        { src: "/logos/apexepoxy.png", alt: "Apex Epoxy & Surface Systems", w: "w-[85px] md:w-[105px]" },
+                        { src: "/logos/JimenezTreePro.png", alt: "Jimenez Tree Pro", w: "w-[70px] md:w-[85px]" },
+                        { src: "/logos/onestopoutdoor.png", alt: "One Stop Outdoor Construction", w: "w-[105px] md:w-[135px]" },
+                        { src: "/logos/elitehomerepairs.png", alt: "Elite Home Repairs", w: "w-[105px] md:w-[135px]" },
+                        { src: "/logos/jacksoldbytoro.png", alt: "The Toro Group", w: "w-[70px] md:w-[85px]" },
+                        { src: "/logos/jnornamentaldesign.svg", alt: "JN Ornamental Design", w: "w-[70px] md:w-[85px]" },
+                        { src: "/logos/mcmillianjunkremoval.png", alt: "McMillian Junk Removal", w: "w-[95px] md:w-[115px]" },
+                        { src: "/logos/tomi.png", alt: "Tomi Jewelry", w: "w-[65px] md:w-[80px]" },
+                        { src: "/logos/jimenezjunkremoval.png", alt: "Jimenez Junk Removal", w: "w-[115px] md:w-[145px]" },
+                        { src: "/logos/becreativesco.jpg", alt: "Becreativesco", w: "w-[85px] md:w-[105px]" },
+                      ].map((logo: { src: string; alt: string; w: string; h?: string }) => (
+                        <div key={logo.alt} className={`flex items-center justify-center ${logo.h || "h-[40px] md:h-[48px]"} ${logo.w} shrink-0`}>
+                          <img
+                            src={logo.src}
+                            alt={logo.alt}
+                            className="max-w-full max-h-full object-contain opacity-75"
+                          />
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
@@ -1399,16 +1415,16 @@ export default function HomePage() {
               </p>
               <div className="mt-10 md:mx-auto md:max-w-3xl">
                 <p className="mb-6 text-xs uppercase tracking-[0.35em] text-accent/80 font-bold text-center">Best for</p>
-                <div className="mx-auto flex w-fit flex-col gap-4 text-left">
+                <div className="mx-auto flex max-w-md flex-col gap-4 text-left">
                   {pageCopy.bestFor.map((item) => (
                     <div
                       key={item}
-                      className="group flex items-center md:items-start gap-4"
+                      className="group flex items-start gap-3"
                     >
-                      <div className="flex shrink-0 items-center justify-center rounded-full bg-accent/10 border border-accent/20 h-5 w-5 md:mt-0.5">
+                      <div className="flex shrink-0 items-center justify-center rounded-full bg-accent/10 border border-accent/20 h-5 w-5 mt-0.5">
                         <CheckIcon className="h-3 w-3 text-accent transition-transform group-hover:scale-110" />
                       </div>
-                      <span className="text-[15px] font-medium text-white/80 whitespace-nowrap">{item}</span>
+                      <span className="text-[14px] sm:text-[15px] font-medium text-white/80">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1969,7 +1985,7 @@ export default function HomePage() {
                     event_category: 'engagement',
                     event_label: 'mobile_sticky_cta',
                   });
-                  openUpsellModal("starter");
+                  openPlanPicker();
                 }}
                 className="group flex items-center gap-2 rounded-full border border-white/[0.15] bg-black/60 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_-5px_var(--color-accent)] backdrop-blur-md transition-all ease-smooth active:scale-95"
               >
@@ -1982,6 +1998,124 @@ export default function HomePage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ===== Plan Picker Modal ===== */}
+      <Dialog open={showPlanPicker} onOpenChange={setShowPlanPicker}>
+        <DialogContent className="max-w-md sm:max-w-lg p-0 overflow-hidden">
+          <DialogCloseButton />
+
+          <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-5 sm:pb-6">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-white">Pick your plan</h3>
+              <p className="mt-1.5 text-sm text-muted">Choose the one that fits where you are right now. You can upgrade anytime.</p>
+            </div>
+
+            <div className="space-y-4">
+              {/* Starter */}
+              <button
+                onClick={() => {
+                  setShowPlanPicker(false);
+                  openUpsellModal("starter");
+                }}
+                className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 text-left transition-all duration-200 hover:bg-white/[0.06] hover:border-white/[0.15] active:scale-[0.98]"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-white text-base">Starter</p>
+                    <p className="text-[13px] text-white/50 mt-1">Look professional. Start getting calls.</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-lg font-bold text-white">$99<span className="text-sm font-normal text-white/40">/mo</span></p>
+                  </div>
+                </div>
+                <ul className="mt-3 space-y-1.5">
+                  {[
+                    "Custom website that makes people call you",
+                    "Shows up on Google searches",
+                    "Hosting, speed, and security handled",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-white/40">
+                      <CheckIcon className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </button>
+
+              {/* Growth Engine — highlighted */}
+              <button
+                onClick={() => {
+                  setShowPlanPicker(false);
+                  openUpsellModal("growth");
+                }}
+                className="w-full rounded-xl border border-accent/40 bg-accent/[0.08] p-4 sm:p-5 text-left transition-all duration-200 hover:bg-accent/[0.12] hover:border-accent/50 active:scale-[0.98] relative"
+              >
+                <div className="absolute -top-2.5 left-4">
+                  <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-bold text-black uppercase tracking-wider">Most Popular</span>
+                </div>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-white text-base">Growth Engine</p>
+                    <p className="text-[13px] text-white/50 mt-1">Get found first on Google. Get the call.</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-lg font-bold text-white">$199<span className="text-sm font-normal text-white/40">/mo</span></p>
+                  </div>
+                </div>
+                <ul className="mt-3 space-y-1.5">
+                  {[
+                    "Rank when people search your service + city",
+                    "Google Business Profile fully built out",
+                    "Reviews come in on autopilot after every job",
+                    "Show up in AI search — ChatGPT, Siri, Google AI",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-white/40">
+                      <CheckIcon className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </button>
+
+              {/* City Dominator */}
+              <button
+                onClick={() => {
+                  setShowPlanPicker(false);
+                  openUpsellModal("city_dominator");
+                }}
+                className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 text-left transition-all duration-200 hover:bg-white/[0.06] hover:border-white/[0.15] active:scale-[0.98]"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-white text-base">City Dominator</p>
+                    <p className="text-[13px] text-white/50 mt-1">Every lead caught. Every city covered.</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-lg font-bold text-white">$399<span className="text-sm font-normal text-white/40">/mo</span></p>
+                  </div>
+                </div>
+                <ul className="mt-3 space-y-1.5">
+                  {[
+                    "Missed calls get texted back automatically",
+                    "Every lead tracked and followed up for you",
+                    "New city pages every month to expand your reach",
+                    "Full CRM — know exactly where every job comes from",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-white/40">
+                      <CheckIcon className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </button>
+            </div>
+
+            <p className="mt-5 text-center text-xs text-muted">
+              All plans include a free custom website. No contracts.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* ===== Upsell Modal — Quiz Flow ===== */}
       <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
