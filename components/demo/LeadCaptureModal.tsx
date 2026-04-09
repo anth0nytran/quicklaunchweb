@@ -102,7 +102,6 @@ export function LeadCaptureModal({
               Phone
               <input
                 type="tel"
-                required
                 className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900"
                 placeholder="(480) 555-0176"
               />
@@ -124,8 +123,8 @@ export function LeadCaptureModal({
                 className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 shrink-0"
               />
               <span className="text-[11px] text-slate-500 leading-relaxed">
-                I agree to receive SMS notifications about my request. Msg frequency varies. Msg &amp; data rates may apply.
-                Reply STOP to opt out, HELP for help.{' '}
+                I consent to receive SMS notifications, alerts &amp; occasional updates from QuickLaunchWeb. Message frequency may vary. Msg &amp; data rates may apply.
+                Text HELP for assistance. You may reply STOP to unsubscribe at any time.{' '}
                 <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a>
                 {' '}&amp;{' '}
                 <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline">Terms</a>.

@@ -251,9 +251,9 @@ export default function PrivacyPage() {
                 The disclosure language next to the checkbox reads:
               </p>
               <div className="mt-2 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3 text-sm italic text-white/70">
-                &ldquo;I agree to receive SMS notifications about my request. Msg frequency varies.
-                Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.
-                Privacy Policy &amp; Terms.&rdquo;
+                &ldquo;I consent to receive SMS notifications, alerts &amp; occasional updates from QuickLaunchWeb.
+                Message frequency may vary. Msg &amp; data rates may apply. Text HELP for assistance.
+                You may reply STOP to unsubscribe at any time. Privacy Policy &amp; Terms.&rdquo;
               </div>
               <p className="mt-2">
                 The Privacy Policy and Terms links are clickable. We capture and store proof of opt-in including
@@ -326,6 +326,11 @@ export default function PrivacyPage() {
                 <li>
                   Opt-in records (timestamp, source URL, phone number, consent state) are retained for compliance
                   purposes and are available upon request.
+                </li>
+                <li>
+                  All the above categories exclude text messaging originator opt-in data and consent; this
+                  information will not be shared with any third parties, excluding aggregators and providers
+                  of the Text Message services.
                 </li>
               </ul>
 

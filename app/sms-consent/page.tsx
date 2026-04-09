@@ -103,8 +103,9 @@ export default function SmsConsentPage() {
                 check the box to opt in. The checkbox text reads:
               </p>
               <div className="mt-2 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3 text-sm italic text-white/70">
-                &ldquo;By checking this box, you agree to receive text messages from [Business Name]. You can reply STOP
-                to opt-out or HELP for help. Message and data rates may apply. See
+                &ldquo;I consent to receive SMS notifications, alerts &amp; occasional updates from QuickLaunchWeb.
+                Message frequency may vary. Msg &amp; data rates may apply. Text HELP for assistance.
+                You may reply STOP to unsubscribe at any time. See
                 our <span className="underline">Terms of Service</span> and <span className="underline">Privacy Policy</span>.&rdquo;
               </div>
               <p className="mt-2">

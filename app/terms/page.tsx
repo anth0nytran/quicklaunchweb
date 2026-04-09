@@ -256,6 +256,7 @@ export default function TermsPage() {
                 Standard message and data rates from your mobile carrier may apply. QuickLaunchWeb is not responsible
                 for carrier charges. Major US carriers are supported including AT&amp;T, T-Mobile, Verizon, and
                 Sprint. Service availability may vary by carrier.
+                Carriers are not liable for delayed or undelivered messages.
               </p>
 
               <h3 className="mt-6 text-sm font-semibold text-white">9.5 Opt-Out, Help, and Re-Subscribe</h3>
