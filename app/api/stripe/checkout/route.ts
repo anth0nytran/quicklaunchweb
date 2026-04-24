@@ -619,7 +619,7 @@ export async function POST(req: NextRequest) {
     if (addOns.adsCall) selectedAddons.push("ads_call");
     if (addOns.domainRouting === "us") selectedAddons.push("domain_routing");
 
-    logCheckoutEvent(
+    await logCheckoutEvent(
       session.id,
       plan,
       session.amount_total ? session.amount_total / 100 : 0,
@@ -635,7 +635,7 @@ export async function POST(req: NextRequest) {
       timestamp: new Date().toISOString(),
     });
 
-    logErrorEvent("checkout_error", errorMessage, {
+    await logErrorEvent("checkout_error", errorMessage, {
       endpoint: "/api/stripe/checkout",
     });
 

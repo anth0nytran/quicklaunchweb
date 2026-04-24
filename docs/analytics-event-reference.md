@@ -2,6 +2,8 @@
 
 Quick reference table of all tracked events in QuickLaunchWeb.
 
+Client events are sent to both GA4 and Vercel Web Analytics through the shared analytics wrapper. Server events are sent to Vercel Web Analytics from route handlers.
+
 ## Page View Events
 
 | Event | Trigger | Parameters |
@@ -25,6 +27,13 @@ Quick reference table of all tracked events in QuickLaunchWeb.
 | `begin_checkout` | Continue to payment | plan, total_value, addons[], currency |
 | `purchase` | Payment complete | transaction_id, plan, value, addons[] |
 | `checkout_cancelled` | Leave checkout | plan |
+| `checkout_modal_opened` | Plan picker opens | modal_name, funnel_stage |
+| `checkout_modal_closed` | Plan picker or checkout modal closes | modal_name, plan, step_number, funnel_stage |
+| `checkout_modal_step_viewed` | Checkout modal step becomes active | plan, step_name, step_number, funnel_stage |
+| `checkout_modal_step_completed` | User completes checkout modal step | plan, step_name, step_number, addons, total_value |
+| `checkout_domain_answered` | User answers domain question | plan, has_domain |
+| `checkout_domain_routing_selected` | User chooses who handles domain setup | plan, domain_routing |
+| `checkout_billing_cycle_selected` | User chooses monthly or upfront billing | plan, billing_cycle |
 
 ## CTA Events
 
@@ -77,6 +86,17 @@ Quick reference table of all tracked events in QuickLaunchWeb.
 |-------|---------|------------|
 | `checkout_session_created` | API success | session_id, plan, total_value, addons[] |
 | `server_error` | API error | error_type, error_message |
+
+## Vercel Event Context
+
+Every client-side custom event is enriched with:
+
+| Parameter | Description |
+|-----------|-------------|
+| `page_path` | Current path when the event fired |
+| `page_url` | Current URL, capped for Vercel custom event limits |
+| `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term` | Captured from the landing URL and persisted for the session |
+| `gclid`, `fbclid` | Captured from the landing URL and persisted for the session |
 
 ## Event Parameter Reference
 

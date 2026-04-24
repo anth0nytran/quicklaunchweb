@@ -1,5 +1,8 @@
 // Server-side analytics event logger
 
+import { track as trackVercelServerEvent } from "@vercel/analytics/server";
+import { sanitizeVercelProperties } from "../vercel-shared";
+
 /**
  * Server-side event data structure
  */
@@ -25,14 +28,14 @@ export interface ServerEvent {
  *   total_value: 497,
  * });
  */
-export function logServerEvent(
+export async function logServerEvent(
   eventName: string,
   eventData?: Record<string, unknown>,
   context?: {
     userAgent?: string;
     ipAddress?: string;
   }
-): void {
+): Promise<void> {
   const serverEvent: ServerEvent = {
     event_name: eventName,
     event_data: eventData,
@@ -49,9 +52,15 @@ export function logServerEvent(
     console.log('[Server Analytics]', JSON.stringify(serverEvent));
   }
 
-  // Future enhancement: Send to GA4 Measurement Protocol
-  // This would require implementing the GA4 Measurement Protocol API
-  // https://developers.google.com/analytics/devguides/collection/protocol/ga4
+  try {
+    await trackVercelServerEvent(eventName, sanitizeVercelProperties(eventData), {
+      headers: context?.userAgent ? { "user-agent": context.userAgent } : undefined,
+    });
+  } catch (error) {
+    if (process.env.NEXT_PUBLIC_GA_DEBUG === "true") {
+      console.warn("[Vercel Analytics] Server event not sent:", eventName, error);
+    }
+  }
 }
 
 /**
@@ -62,13 +71,13 @@ export function logServerEvent(
  * @param totalValue - Total checkout value
  * @param addons - Selected add-ons
  */
-export function logCheckoutEvent(
+export async function logCheckoutEvent(
   sessionId: string,
   plan: string,
   totalValue: number,
   addons?: string[]
-): void {
-  logServerEvent('checkout_session_created', {
+): Promise<void> {
+  await logServerEvent('checkout_session_created', {
     session_id: sessionId,
     plan,
     total_value: totalValue,
@@ -84,12 +93,12 @@ export function logCheckoutEvent(
  * @param errorMessage - Error message
  * @param errorContext - Additional context
  */
-export function logErrorEvent(
+export async function logErrorEvent(
   errorType: string,
   errorMessage: string,
   errorContext?: Record<string, unknown>
-): void {
-  logServerEvent('server_error', {
+): Promise<void> {
+  await logServerEvent('server_error', {
     error_type: errorType,
     error_message: errorMessage,
     ...errorContext,
@@ -103,12 +112,12 @@ export function logErrorEvent(
  * @param success - Whether submission was successful
  * @param errorMessage - Error message if failed
  */
-export function logFormSubmission(
+export async function logFormSubmission(
   formName: string,
   success: boolean,
   errorMessage?: string
-): void {
-  logServerEvent('form_submission_server', {
+): Promise<void> {
+  await logServerEvent('form_submission_server', {
     form_name: formName,
     success,
     error_message: errorMessage,

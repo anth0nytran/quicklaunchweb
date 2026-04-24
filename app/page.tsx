@@ -989,12 +989,24 @@ export default function HomePage() {
       cta_location: 'generic_cta',
       event_category: 'engagement',
     });
+    track('checkout_modal_opened', {
+      modal_name: 'plan_picker',
+      funnel_stage: 'plan_selection',
+      event_category: 'checkout',
+    });
     setShowPlanPicker(true);
   };
 
   // Open upsell modal
   const openUpsellModal = (plan: Plan) => {
     trackPlanSelected(plan, 'homepage_pricing');
+    track('checkout_modal_step_viewed', {
+      plan,
+      step_name: 'setup',
+      step_number: 1,
+      funnel_stage: 'checkout_setup',
+      event_category: 'checkout',
+    });
     setSelectedPlan(plan);
     setCheckoutError("");
     setUpsellStep(1);
@@ -1037,6 +1049,20 @@ export default function HomePage() {
     const upfrontSavings = isUpfront ? monthly : 0;
 
     return { monthly, oneTime, isUpfront, upfrontTotal, upfrontSavings };
+  };
+
+  const getSelectedAddons = () => {
+    const selectedAddons = [];
+    if (addOns.billingCycle === 'upfront') selectedAddons.push('upfront_billing');
+    if (addOns.textAlerts) selectedAddons.push('text_alerts');
+    if (addOns.googleBoost) selectedAddons.push('google_boost');
+    if (addOns.photoShoot) selectedAddons.push('photo_shoot');
+    if (addOns.adCreative) selectedAddons.push('ad_creative');
+    if (addOns.brandPackage) selectedAddons.push('brand_package');
+    if (addOns.adsCall) selectedAddons.push('ads_call');
+    if (addOns.domainRouting === 'us') selectedAddons.push('domain_routing');
+
+    return selectedAddons;
   };
 
   // Proceed to Stripe checkout with add-ons
@@ -1089,22 +1115,24 @@ export default function HomePage() {
 
     if (selectedPlan) {
       const { monthly, oneTime } = calculateTotal();
-      const selectedAddons = [];
-      if (addOns.billingCycle === 'upfront') selectedAddons.push('upfront_billing');
-      if (addOns.textAlerts) selectedAddons.push('text_alerts');
-      if (addOns.googleBoost) selectedAddons.push('google_boost');
-      if (addOns.photoShoot) selectedAddons.push('photo_shoot');
-      if (addOns.adCreative) selectedAddons.push('ad_creative');
-      if (addOns.brandPackage) selectedAddons.push('brand_package');
-      if (addOns.adsCall) selectedAddons.push('ads_call');
-      if (addOns.domainRouting === 'us') selectedAddons.push('domain_routing');
+      const selectedAddons = getSelectedAddons();
 
+      track('checkout_modal_step_completed', {
+        plan: selectedPlan,
+        step_name: 'summary',
+        step_number: 3,
+        funnel_stage: 'stripe_redirect',
+        billing_cycle: addOns.billingCycle,
+        total_value: monthly + oneTime,
+        addons: selectedAddons,
+        event_category: 'checkout',
+      });
       trackCheckoutInitiated(selectedPlan, monthly + oneTime, selectedAddons);
 
       setShowUpsellModal(false);
       startCheckout(selectedPlan);
     }
-  }, [addOns, selectedPlan, startCheckout, calculateTotal, trackCheckoutInitiated]);
+  }, [addOns, selectedPlan, startCheckout, calculateTotal, trackCheckoutInitiated, track]);
 
   const submitCustomRequest = useCallback(async () => {
     setCustomError("");
@@ -2005,7 +2033,19 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* ===== Plan Picker Modal ===== */}
-      <Dialog open={showPlanPicker} onOpenChange={setShowPlanPicker}>
+      <Dialog
+        open={showPlanPicker}
+        onOpenChange={(open) => {
+          if (!open) {
+            track('checkout_modal_closed', {
+              modal_name: 'plan_picker',
+              funnel_stage: 'plan_selection',
+              event_category: 'checkout',
+            });
+          }
+          setShowPlanPicker(open);
+        }}
+      >
         <DialogContent className="max-w-md sm:max-w-lg p-0 overflow-hidden">
           <DialogCloseButton />
 
@@ -2123,7 +2163,21 @@ export default function HomePage() {
       </Dialog>
 
       {/* ===== Upsell Modal — Quiz Flow ===== */}
-      <Dialog open={showUpsellModal} onOpenChange={setShowUpsellModal}>
+      <Dialog
+        open={showUpsellModal}
+        onOpenChange={(open) => {
+          if (!open) {
+            track('checkout_modal_closed', {
+              modal_name: 'upsell_checkout',
+              plan: selectedPlan || 'unknown',
+              step_number: upsellStep,
+              funnel_stage: upsellStep === 1 ? 'checkout_setup' : upsellStep === 2 ? 'addon_selection' : 'checkout_summary',
+              event_category: 'checkout',
+            });
+          }
+          setShowUpsellModal(open);
+        }}
+      >
         <DialogContent className="max-w-lg p-0 overflow-hidden">
           <DialogCloseButton />
 
@@ -2150,7 +2204,15 @@ export default function HomePage() {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => setAddOns({ ...addOns, hasDomain: true, domainRouting: null })}
+                  onClick={() => {
+                    track('checkout_domain_answered', {
+                      plan: selectedPlan || 'unknown',
+                      has_domain: true,
+                      funnel_stage: 'checkout_setup',
+                      event_category: 'checkout',
+                    });
+                    setAddOns({ ...addOns, hasDomain: true, domainRouting: null });
+                  }}
                   className={`flex-1 rounded-xl border py-3.5 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === true
                     ? "border-accent/50 bg-accent/10 text-accent"
                     : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
@@ -2159,7 +2221,15 @@ export default function HomePage() {
                   Yes, I have one
                 </button>
                 <button
-                  onClick={() => setAddOns({ ...addOns, hasDomain: false, domainRouting: null })}
+                  onClick={() => {
+                    track('checkout_domain_answered', {
+                      plan: selectedPlan || 'unknown',
+                      has_domain: false,
+                      funnel_stage: 'checkout_setup',
+                      event_category: 'checkout',
+                    });
+                    setAddOns({ ...addOns, hasDomain: false, domainRouting: null });
+                  }}
                   className={`flex-1 rounded-xl border py-3.5 text-sm font-medium transition-all duration-200 ${addOns.hasDomain === false
                     ? "border-accent/50 bg-accent/10 text-accent"
                     : "border-white/[0.08] bg-white/[0.03] text-secondary hover:bg-white/[0.06] hover:border-white/[0.15]"
@@ -2174,7 +2244,15 @@ export default function HomePage() {
                   <p className="text-sm font-medium text-white">Want us to set it up for you?</p>
                   <GlassSelect
                     selected={addOns.domainRouting === "us"}
-                    onClick={() => setAddOns({ ...addOns, domainRouting: "us" })}
+                    onClick={() => {
+                      track('checkout_domain_routing_selected', {
+                        plan: selectedPlan || 'unknown',
+                        domain_routing: 'us',
+                        funnel_stage: 'checkout_setup',
+                        event_category: 'checkout',
+                      });
+                      setAddOns({ ...addOns, domainRouting: "us" });
+                    }}
                     label="Yes, do it for me"
                     description="We handle everything so you don't have to."
                     price="$99 (just once)"
@@ -2182,7 +2260,15 @@ export default function HomePage() {
                   />
                   <GlassSelect
                     selected={addOns.domainRouting === "self"}
-                    onClick={() => setAddOns({ ...addOns, domainRouting: "self" })}
+                    onClick={() => {
+                      track('checkout_domain_routing_selected', {
+                        plan: selectedPlan || 'unknown',
+                        domain_routing: 'self',
+                        funnel_stage: 'checkout_setup',
+                        event_category: 'checkout',
+                      });
+                      setAddOns({ ...addOns, domainRouting: "self" });
+                    }}
                     label="I can do it myself"
                     description="We'll send you easy step-by-step instructions."
                     price="Free"
@@ -2215,6 +2301,22 @@ export default function HomePage() {
                     setCheckoutError("Let us know who sets up your domain.");
                     return;
                   }
+                  track('checkout_modal_step_completed', {
+                    plan: selectedPlan || 'unknown',
+                    step_name: 'setup',
+                    step_number: 1,
+                    has_domain: addOns.hasDomain,
+                    domain_routing: addOns.domainRouting || 'none',
+                    funnel_stage: 'checkout_setup',
+                    event_category: 'checkout',
+                  });
+                  track('checkout_modal_step_viewed', {
+                    plan: selectedPlan || 'unknown',
+                    step_name: 'extras',
+                    step_number: 2,
+                    funnel_stage: 'addon_selection',
+                    event_category: 'checkout',
+                  });
                   setUpsellStep(2);
                 }}
               >
@@ -2396,7 +2498,17 @@ export default function HomePage() {
 
                 <div className="flex gap-3 pt-1">
                   <button
-                    onClick={() => setUpsellStep(1)}
+                    onClick={() => {
+                      track('checkout_modal_step_viewed', {
+                        plan: selectedPlan || 'unknown',
+                        step_name: 'setup',
+                        step_number: 1,
+                        funnel_stage: 'checkout_setup',
+                        navigation_direction: 'back',
+                        event_category: 'checkout',
+                      });
+                      setUpsellStep(1);
+                    }}
                     className="rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 px-4 sm:px-5 text-sm font-medium text-secondary transition-all duration-200 hover:bg-white/[0.06]"
                   >
                     Back
@@ -2405,7 +2517,30 @@ export default function HomePage() {
                     variant="primary"
                     size="lg"
                     className="flex-1"
-                    onClick={() => setUpsellStep(3)}
+                    onClick={() => {
+                      const { monthly, oneTime } = calculateTotal();
+                      const selectedAddons = getSelectedAddons();
+                      track('checkout_modal_step_completed', {
+                        plan: selectedPlan || 'unknown',
+                        step_name: 'extras',
+                        step_number: 2,
+                        addons: selectedAddons,
+                        addon_count: selectedAddons.length,
+                        total_value: monthly + oneTime,
+                        funnel_stage: 'addon_selection',
+                        event_category: 'checkout',
+                      });
+                      track('checkout_modal_step_viewed', {
+                        plan: selectedPlan || 'unknown',
+                        step_name: 'summary',
+                        step_number: 3,
+                        billing_cycle: addOns.billingCycle,
+                        total_value: monthly + oneTime,
+                        funnel_stage: 'checkout_summary',
+                        event_category: 'checkout',
+                      });
+                      setUpsellStep(3);
+                    }}
                   >
                     {calculateTotal().oneTime > 0 || addOns.textAlerts || addOns.adsCall ? "Continue" : "No thanks, skip"}
                   </GlassButton>
@@ -2451,7 +2586,15 @@ export default function HomePage() {
 
                 {/* Monthly option */}
                 <button
-                  onClick={() => setAddOns({ ...addOns, billingCycle: "monthly" })}
+                  onClick={() => {
+                    track('checkout_billing_cycle_selected', {
+                      plan: selectedPlan || 'unknown',
+                      billing_cycle: 'monthly',
+                      funnel_stage: 'checkout_summary',
+                      event_category: 'checkout',
+                    });
+                    setAddOns({ ...addOns, billingCycle: "monthly" });
+                  }}
                   className={`w-full flex items-start gap-3 rounded-lg p-3 text-left transition-all duration-200 ${addOns.billingCycle === "monthly"
                     ? "bg-white/[0.05]"
                     : "hover:bg-white/[0.03]"
@@ -2473,7 +2616,15 @@ export default function HomePage() {
 
                 {/* Upfront option */}
                 <button
-                  onClick={() => setAddOns({ ...addOns, billingCycle: "upfront" })}
+                  onClick={() => {
+                    track('checkout_billing_cycle_selected', {
+                      plan: selectedPlan || 'unknown',
+                      billing_cycle: 'upfront',
+                      funnel_stage: 'checkout_summary',
+                      event_category: 'checkout',
+                    });
+                    setAddOns({ ...addOns, billingCycle: "upfront" });
+                  }}
                   className={`w-full flex items-start gap-3 rounded-lg p-3 text-left transition-all duration-200 ${addOns.billingCycle === "upfront"
                     ? "bg-white/[0.05]"
                     : "hover:bg-white/[0.03]"
@@ -2566,7 +2717,17 @@ export default function HomePage() {
               <div className="pt-2 space-y-3">
                 <div className="flex gap-3">
                   <button
-                    onClick={() => setUpsellStep(2)}
+                    onClick={() => {
+                      track('checkout_modal_step_viewed', {
+                        plan: selectedPlan || 'unknown',
+                        step_name: 'extras',
+                        step_number: 2,
+                        funnel_stage: 'addon_selection',
+                        navigation_direction: 'back',
+                        event_category: 'checkout',
+                      });
+                      setUpsellStep(2);
+                    }}
                     className="rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 px-4 sm:px-5 text-sm font-medium text-secondary transition-all duration-200 hover:bg-white/[0.06]"
                   >
                     Back

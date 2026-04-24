@@ -2,6 +2,7 @@
 
 import { analyticsConfig, isAnalyticsEnabled } from './config';
 import type { BaseEvent, PageViewEvent } from './types';
+import { trackVercelAnalyticsEvent } from './vercel';
 
 /**
  * Extend Window interface to include gtag
@@ -47,6 +48,8 @@ export function sendGtagEvent(
   eventName: string,
   eventParams: BaseEvent = {}
 ): void {
+  trackVercelAnalyticsEvent(eventName, eventParams);
+
   // Check if analytics is enabled
   if (!isAnalyticsEnabled()) {
     if (analyticsConfig.debug) {

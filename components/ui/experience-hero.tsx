@@ -14,18 +14,13 @@ export const ExperienceHeroBackground = () => {
     if (!canUseMotion || connection?.saveData) return;
 
     const loadVideo = () => setShouldLoadVideo(true);
-    const idleId =
-      "requestIdleCallback" in window
-        ? window.requestIdleCallback(loadVideo, { timeout: 1800 })
-        : window.setTimeout(loadVideo, 1400);
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(loadVideo, { timeout: 1800 });
+      return () => window.cancelIdleCallback(idleId);
+    }
 
-    return () => {
-      if ("cancelIdleCallback" in window && typeof idleId === "number") {
-        window.cancelIdleCallback(idleId);
-      } else {
-        window.clearTimeout(idleId as number);
-      }
-    };
+    const timeoutId = globalThis.setTimeout(loadVideo, 1400);
+    return () => globalThis.clearTimeout(timeoutId);
   }, []);
 
   return (
