@@ -62,7 +62,7 @@ export function ImagePlaceholder({
       className={`relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 ${aspectClassName ?? 'aspect-[4/3]'} ${className ?? ''}`}
     >
       {preview ? (
-        <img src={preview} alt={label} className="h-full w-full object-cover" />
+        <img src={preview} alt={label} width={800} height={600} className="h-full w-full object-cover" />
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-6 text-center">
           <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white">

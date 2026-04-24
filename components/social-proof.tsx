@@ -274,27 +274,22 @@ export function SocialProofSection() {
           </button>
 
           {/* Scroll position dots */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => scrollToPage(i)}
-                style={{
-                  width: i === activePage ? 24 : 8,
-                  height: 8,
-                  borderRadius: 9999,
-                  backgroundColor: i === activePage ? "rgb(20, 184, 166)" : "rgba(255,255,255,0.2)",
-                  transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  if (i !== activePage) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.4)";
-                }}
-                onMouseLeave={(e) => {
-                  if (i !== activePage) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.2)";
-                }}
+                className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
                 aria-label={`Go to page ${i + 1}`}
-              />
+              >
+                <span
+                  className="h-2 w-2 rounded-full transition-transform duration-300 group-hover:scale-x-[1.8]"
+                  style={{
+                    backgroundColor: i === activePage ? "rgb(20, 184, 166)" : "rgba(255,255,255,0.2)",
+                    transform: i === activePage ? "scaleX(3)" : "scaleX(1)",
+                  }}
+                />
+              </button>
             ))}
           </div>
 
