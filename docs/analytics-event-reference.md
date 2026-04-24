@@ -4,6 +4,8 @@ Quick reference table of all tracked events in QuickLaunchWeb.
 
 Client events are sent to both GA4 and Vercel Web Analytics through the shared analytics wrapper. Server events are sent to Vercel Web Analytics from route handlers.
 
+Vercel Web Analytics pageviews are enabled globally through `<Analytics />` in `app/layout.tsx`. Site-wide engagement events are also mounted globally, so new pages are covered automatically without adding page-specific code.
+
 ## Page View Events
 
 | Event | Trigger | Parameters |
@@ -76,9 +78,26 @@ Client events are sent to both GA4 and Vercel Web Analytics through the shared a
 
 | Event | Trigger | Parameters |
 |-------|---------|------------|
-| `scroll_depth` | Scroll milestone | scroll_depth (25/50/75/90), page_path |
+| `page_engaged` | Visitor stays on a page for 15 seconds | page_path, page_type, engaged_seconds |
+| `scroll_depth` | Visitor reaches scroll milestone on any page | scroll_depth (25/50/75/90), percent_scrolled, page_path, page_type |
 | `faq_expanded` | Open FAQ item | question, question_index |
 | `social_proof_clicked` | Click portfolio | item_name, item_url, item_index |
+
+## Guide Reading Events
+
+| Event | Trigger | Parameters |
+|-------|---------|------------|
+| `guide_read_started` | Visitor stays on a guide article for 10 seconds | guide_slug, page_path, engaged_seconds |
+| `guide_read_depth` | Visitor reaches 25/50/75/90% scroll depth on a guide article | guide_slug, scroll_depth, percent_scrolled, page_path |
+| `guide_section_viewed` | Visitor views an article section for the first time | guide_slug, section_id, section_index, section_title |
+| `guide_read_completed` | Visitor reaches 90% scroll depth on a guide article | guide_slug, scroll_depth, percent_scrolled, page_path |
+
+Use these Vercel Analytics custom events to answer:
+- Which guide articles are getting actual reading time: `guide_read_started`
+- How far visitors get down guide articles: `guide_read_depth`
+- Which sections are reached before visitors leave: `guide_section_viewed`
+- Which articles are effectively completed: `guide_read_completed`
+- How far visitors get down any page: `scroll_depth`
 
 ## Server Events
 
@@ -95,6 +114,7 @@ Every client-side custom event is enriched with:
 |-----------|-------------|
 | `page_path` | Current path when the event fired |
 | `page_url` | Current URL, capped for Vercel custom event limits |
+| `page_type` | Route grouping such as homepage, guide_article, demo, instagram, support, checkout_success, checkout_cancel, or standard |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term` | Captured from the landing URL and persisted for the session |
 | `gclid`, `fbclid` | Captured from the landing URL and persisted for the session |
 

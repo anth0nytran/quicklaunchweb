@@ -18,6 +18,8 @@ export type {
   DemoEvent,
   NavigationEvent,
   ScrollDepthEvent,
+  PageEngagementEvent,
+  GuideReadingEvent,
   FAQEvent,
   SocialProofEvent,
   PageViewEvent,

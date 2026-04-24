@@ -166,6 +166,11 @@ trackLeadCaptured();
 | `demo_customized` | Demo customized | customization_type |
 | `faq_expanded` | FAQ opened | question, question_index |
 | `scroll_depth` | Scroll milestone | scroll_depth, page_path |
+| `page_engaged` | Visitor stayed 15 seconds | page_path, page_type |
+| `guide_read_started` | Guide visitor stayed 10 seconds | guide_slug, page_path |
+| `guide_read_depth` | Guide scroll milestone | guide_slug, scroll_depth |
+| `guide_section_viewed` | Guide section entered viewport | guide_slug, section_id, section_index |
+| `guide_read_completed` | Visitor reached 90% of a guide | guide_slug, scroll_depth |
 | `social_proof_clicked` | Portfolio clicked | item_name, item_url |
 
 ## Testing
@@ -199,6 +204,8 @@ Console output will show:
 - [ ] Form start/submit tracked
 - [ ] Demo template switches tracked
 - [ ] Scroll depth milestones firing
+- [ ] Guide read-start and read-depth events firing
+- [ ] Guide section views firing on article pages
 - [ ] FAQ expansions tracked
 
 ## GA4 Configuration

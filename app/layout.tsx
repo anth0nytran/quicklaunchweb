@@ -5,6 +5,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
+import { SiteEngagementTracker } from "@/lib/analytics";
 import { SiteStructuredData } from "@/components/seo/SiteStructuredData";
 import { buildPageMetadata, siteUrl } from "@/lib/seo";
 
@@ -109,6 +110,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <SiteStructuredData />
+        <SiteEngagementTracker />
         <Analytics />
       </body>
     </html>

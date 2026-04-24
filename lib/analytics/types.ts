@@ -105,6 +105,35 @@ export interface NavigationEvent extends BaseEvent {
 export interface ScrollDepthEvent extends BaseEvent {
   scroll_depth: 25 | 50 | 75 | 90;
   page_path: string;
+  page_type?: string;
+  percent_scrolled?: 25 | 50 | 75 | 90;
+  guide_slug?: string;
+}
+
+/**
+ * Page Engagement Event
+ * Tracks meaningful time-on-page across all routes
+ */
+export interface PageEngagementEvent extends BaseEvent {
+  page_path: string;
+  page_type: string;
+  engaged_seconds: number;
+}
+
+/**
+ * Guide Reading Event
+ * Tracks guide reading starts, progress, section views, and completions
+ */
+export interface GuideReadingEvent extends BaseEvent {
+  guide_slug: string;
+  page_path: string;
+  page_type?: "guide_article";
+  scroll_depth?: 25 | 50 | 75 | 90;
+  percent_scrolled?: 25 | 50 | 75 | 90;
+  section_id?: string;
+  section_index?: number;
+  section_title?: string;
+  engaged_seconds?: number;
 }
 
 /**
@@ -151,6 +180,8 @@ export type AnalyticsEvent =
   | DemoEvent
   | NavigationEvent
   | ScrollDepthEvent
+  | PageEngagementEvent
+  | GuideReadingEvent
   | FAQEvent
   | SocialProofEvent;
 
@@ -175,6 +206,11 @@ export const EVENT_NAMES = {
   DEMO_CUSTOMIZED: 'demo_customized',
   FAQ_EXPANDED: 'faq_expanded',
   SCROLL_DEPTH: 'scroll_depth',
+  PAGE_ENGAGED: 'page_engaged',
+  GUIDE_READ_STARTED: 'guide_read_started',
+  GUIDE_READ_DEPTH: 'guide_read_depth',
+  GUIDE_SECTION_VIEWED: 'guide_section_viewed',
+  GUIDE_READ_COMPLETED: 'guide_read_completed',
   NAVIGATION_CLICK: 'navigation_click',
   SOCIAL_PROOF_CLICKED: 'social_proof_clicked',
   GUIDE_CLICKED: 'guide_clicked',
