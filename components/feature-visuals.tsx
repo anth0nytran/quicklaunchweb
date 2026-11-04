@@ -43,15 +43,15 @@ export function SearchVisual() {
         transition={{ duration: 0.4, ease }}
       >
         {/* Search bar */}
-        <div className="rounded-lg bg-white/[0.05] border border-white/[0.08] px-3 py-2 flex items-center gap-2 mb-3">
-          <svg className="h-3.5 w-3.5 text-white/20 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="rounded-lg bg-white border border-[#E5EDF6] shadow-sm px-3 py-2 flex items-center gap-2 mb-3">
+          <svg className="h-3.5 w-3.5 text-[#46516B]/60 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <span className="text-[11px] text-white/45 font-mono">
+          <span className="text-[11px] text-[#07143F] font-mono">
             {text.slice(0, typedChars)}
             {phase >= 1 && phase <= text.length && (
               <motion.span
-                className="inline-block w-[1px] h-[12px] bg-accent/70 ml-px align-middle"
+                className="inline-block w-[1px] h-[12px] bg-[#0866FF] ml-px align-middle"
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
               />
@@ -65,21 +65,21 @@ export function SearchVisual() {
             <AnimatePresence key={r.platform}>
               {resultsPhase >= i + 1 && (
                 <motion.div
-                  className="rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-2.5 flex items-center justify-between"
+                  className="rounded-lg bg-white border border-[#E5EDF6] shadow-[0_4px_12px_-8px_rgba(7,20,63,0.2)] px-3 py-2.5 flex items-center justify-between"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.5, ease }}
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="h-2 w-2 rounded-full bg-accent/60" />
+                    <div className="h-2 w-2 rounded-full bg-[#0866FF]" />
                     <div>
-                      <p className="text-[11px] text-white/55 font-medium leading-none">{r.platform}</p>
-                      <p className="text-[9px] text-white/25 mt-0.5">Your Business</p>
+                      <p className="text-[11px] text-[#07143F] font-semibold leading-none">{r.platform}</p>
+                      <p className="text-[9px] text-[#46516B] mt-0.5">Your Business</p>
                     </div>
                   </div>
                   <motion.span
-                    className="text-[9px] text-accent font-semibold px-1.5 py-0.5 rounded bg-accent/10"
+                    className="text-[9px] text-[#0866FF] font-bold px-1.5 py-0.5 rounded bg-[#EFF8FF]"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.15, duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
@@ -101,10 +101,10 @@ export function SearchVisual() {
 // =============================================================================
 
 const notifications = [
-  { icon: "phone", label: "Missed call", detail: "Auto text-back sent", color: "text-red-400", dot: "bg-red-400" },
-  { icon: "form", label: "New form lead", detail: "Replied in 3 seconds", color: "text-blue-400", dot: "bg-blue-400" },
-  { icon: "moon", label: "After-hours msg", detail: "Auto response sent", color: "text-amber-400", dot: "bg-amber-400" },
-  { icon: "clock", label: "Lead went quiet", detail: "Follow-up at 24h", color: "text-purple-400", dot: "bg-purple-400" },
+  { icon: "phone", label: "Missed call", detail: "Auto text-back sent", color: "text-red-600", dot: "bg-red-400" },
+  { icon: "form", label: "New form lead", detail: "Replied in 3 seconds", color: "text-[#0866FF]", dot: "bg-blue-400" },
+  { icon: "moon", label: "After-hours msg", detail: "Auto response sent", color: "text-amber-600", dot: "bg-amber-400" },
+  { icon: "clock", label: "Lead went quiet", detail: "Follow-up at 24h", color: "text-purple-600", dot: "bg-purple-400" },
 ];
 
 const nIcons: Record<string, React.ReactNode> = {
@@ -164,14 +164,14 @@ export function LeadVisual() {
           <AnimatePresence key={n.label}>
             {i < visibleCount && (
               <motion.div
-                className="rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-2 flex items-center gap-2.5"
+                className="rounded-lg bg-white border border-[#E5EDF6] shadow-[0_4px_12px_-8px_rgba(7,20,63,0.2)] px-3 py-2 flex items-center gap-2.5"
                 initial={{ opacity: 0, y: -8, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.5, ease }}
               >
                 {/* Icon */}
-                <div className="h-7 w-7 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center shrink-0">
+                <div className="h-7 w-7 rounded-lg bg-white border border-[#E5EDF6] shadow-[0_4px_12px_-8px_rgba(7,20,63,0.2)] flex items-center justify-center shrink-0">
                   <svg className={`h-3 w-3 ${n.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     {nIcons[n.icon]}
                   </svg>
@@ -179,11 +179,11 @@ export function LeadVisual() {
                 {/* Text */}
                 <div className="flex-1 min-w-0">
                   <p className={`text-[10px] font-semibold ${n.color} leading-none`}>{n.label}</p>
-                  <p className="text-[9px] text-white/30 mt-0.5">{n.detail}</p>
+                  <p className="text-[9px] text-[#46516B] mt-0.5">{n.detail}</p>
                 </div>
                 {/* Checkmark */}
                 <motion.div
-                  className="h-4 w-4 rounded-full bg-accent/15 flex items-center justify-center shrink-0"
+                  className="h-4 w-4 rounded-full bg-[#0866FF]/10 flex items-center justify-center shrink-0"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{
                     scale: showCheck.has(i) ? 1 : 0,
@@ -191,7 +191,7 @@ export function LeadVisual() {
                   }}
                   transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
                 >
-                  <svg className="h-2.5 w-2.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <svg className="h-2.5 w-2.5 text-[#0866FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </motion.div>
@@ -247,8 +247,8 @@ export function ReviewVisual() {
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Fade masks */}
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[rgb(18,18,21)] to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[rgb(18,18,21)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#F5F9FF] to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#F5F9FF] to-transparent z-10 pointer-events-none" />
 
       <div className="absolute inset-0 flex justify-center px-5">
         <div className="w-full max-w-[228px] relative h-full">
@@ -270,7 +270,7 @@ export function ReviewVisual() {
                 return (
                   <div
                     key={`${copy}-${i}`}
-                    className="rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-2.5"
+                    className="rounded-lg bg-white border border-[#E5EDF6] shadow-[0_4px_12px_-8px_rgba(7,20,63,0.2)] px-3 py-2.5"
                     style={{ height: cardH - 8 }}
                   >
                     {/* Stars + name */}
@@ -282,17 +282,17 @@ export function ReviewVisual() {
                           </svg>
                         ))}
                       </div>
-                      <span className="text-[8px] text-white/25">{reviewNames[i]}</span>
+                      <span className="text-[8px] text-[#46516B]">{reviewNames[i]}</span>
                     </div>
                     {/* Review text */}
-                    <p className="text-[10px] text-white/45 leading-snug">&ldquo;{text}&rdquo;</p>
+                    <p className="text-[10px] text-[#07143F] leading-snug">&ldquo;{text}&rdquo;</p>
                     {/* Auto-replied badge */}
                     <div
                       className="mt-1.5 flex items-center gap-1 transition-opacity duration-500"
                       style={{ opacity: nearCenter ? 1 : 0.15 }}
                     >
-                      <div className="h-1 w-1 rounded-full bg-accent" />
-                      <span className="text-[8px] text-accent font-medium">Auto-replied</span>
+                      <div className="h-1 w-1 rounded-full bg-[#0866FF]" />
+                      <span className="text-[8px] text-[#0866FF] font-semibold">Auto-replied</span>
                     </div>
                   </div>
                 );

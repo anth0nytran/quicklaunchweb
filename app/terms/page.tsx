@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { BGPattern } from "@/components/ui/bg-pattern";
-import { GlassCard, GlassButton, GlassDivider, AmbientGlow } from "@/components/ui/glass";
+import { BrandShell } from "@/components/brand/brand-shell";
+import { Eyebrow } from "@/components/brand/primitives";
 import { buildPageMetadata } from "@/lib/seo";
+import { focusRing, container, pageH1, bodyText } from "@/components/brand/tokens";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Terms of Service | QuickLaunchWeb",
@@ -11,67 +11,160 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/terms",
 });
 
+const legalH2 =
+  "scroll-mt-28 text-[22px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[#07143F] sm:text-[24px]";
+const tocLink = `block rounded-md py-1 text-[15px] leading-[1.4] text-[#46516B] transition-colors hover:text-[#0866FF] ${focusRing}`;
+
 export default function TermsPage() {
   return (
-    <main className="relative min-h-screen px-6 py-24 md:py-32">
-      <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
-      <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
-
-      <div className="relative z-10 mx-auto max-w-4xl">
-        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wider text-muted">Legal</p>
-            <h1 className="mt-2 text-3xl font-bold text-white md:text-4xl">Terms of Service</h1>
-            <p className="mt-3 text-sm text-secondary">
-              Please read these terms carefully before using QuickLaunchWeb.
-            </p>
+    <BrandShell stickyCta={false}>
+      <section className="bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-10 pt-[104px] sm:pb-14 sm:pt-28 lg:pt-32">
+        <div className={container}>
+          <div className="mx-auto max-w-[760px]">
+            <Eyebrow>Legal</Eyebrow>
+            <h1 className={`mt-4 ${pageH1}`}>Terms of Service</h1>
+            <p className={`mt-4 max-w-[40rem] ${bodyText}`}>Please read these terms carefully before using QuickLaunchWeb.</p>
           </div>
-          <Link href="/">
-            <GlassButton variant="ghost" size="md" className="w-full md:w-auto">
-              Back to home
-            </GlassButton>
-          </Link>
         </div>
+      </section>
 
-        <GlassCard variant="elevated" className="p-6 md:p-10">
-          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 md:grid md:grid-cols-2 md:gap-6">
+      <section className="bg-white pb-16 pt-10 sm:pb-24 sm:pt-14">
+        <div className={container}>
+          <article className="mx-auto max-w-[760px]">
+          <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-5 sm:p-6 md:grid md:grid-cols-2 md:gap-6">
             <div className="space-y-4">
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50">Last updated</p>
-                <p className="text-sm text-white/90">April 2026</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Last updated</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">April 2026</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50">Owner / Operator</p>
-                <p className="text-sm text-white/90">Anthony Tran (QuickLaunchWeb, we, us)</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Owner / Operator</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">Anthony Tran (QuickLaunchWeb, we, us)</p>
               </div>
             </div>
             <div className="mt-4 space-y-4 md:mt-0">
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50">Website</p>
-                <p className="text-sm text-white/90">quicklaunchweb.us</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Website</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">quicklaunchweb.us</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50">Support Form</p>
-                <p className="text-sm text-white/90">quicklaunchweb.us/support</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Form</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">quicklaunchweb.us/support</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50">Support Email</p>
-                <p className="text-sm text-white/90">anthotranllc@gmail.com</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Email</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">anthotranllc@gmail.com</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-xs text-muted leading-relaxed">
+          <div className="mt-4 rounded-xl border border-[#E5EDF6] bg-white p-4 text-[13px] leading-relaxed text-[#46516B]">
             Disclaimer: This document is provided for informational purposes only and does not constitute legal advice.
             Because laws vary by jurisdiction and circumstances, consult a qualified attorney to review these terms and
             ensure compliance with applicable laws.
           </div>
 
-          <GlassDivider className="my-8" />
+          <nav aria-label="Contents" className="mt-8 rounded-xl border border-[#E5EDF6] bg-white p-5 shadow-[0_4px_20px_-10px_rgba(7,20,63,0.12)] sm:p-6">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">On this page</p>
+              <ol className="mt-3 grid gap-x-8 gap-y-1 sm:grid-cols-2">
+                <li>
+                  <a href="#agreement-to-terms" className={tocLink}>
+                    1. Agreement to Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#what-we-provide" className={tocLink}>
+                    2. What We Provide
+                  </a>
+                </li>
+                <li>
+                  <a href="#subscription-plans-and-pricing" className={tocLink}>
+                    3. Subscription Plans and Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#payment-terms-and-refunds" className={tocLink}>
+                    4. Payment Terms and Refunds
+                  </a>
+                </li>
+                <li>
+                  <a href="#service-scope" className={tocLink}>
+                    5. Service Scope
+                  </a>
+                </li>
+                <li>
+                  <a href="#cancellation" className={tocLink}>
+                    6. Cancellation
+                  </a>
+                </li>
+                <li>
+                  <a href="#ownership-licensing-and-data-portability" className={tocLink}>
+                    7. Ownership, Licensing, and Data Portability
+                  </a>
+                </li>
+                <li>
+                  <a href="#analytics-and-tracking" className={tocLink}>
+                    8. Analytics and Tracking
+                  </a>
+                </li>
+                <li>
+                  <a href="#sms-text-messaging-terms" className={tocLink}>
+                    9. SMS/Text Messaging Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#acceptable-use-policy" className={tocLink}>
+                    10. Acceptable Use Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#modifications-suspension-and-force-majeure" className={tocLink}>
+                    11. Modifications, Suspension, and Force Majeure
+                  </a>
+                </li>
+                <li>
+                  <a href="#no-guarantees-disclaimer" className={tocLink}>
+                    12. No Guarantees; Disclaimer
+                  </a>
+                </li>
+                <li>
+                  <a href="#limitation-of-liability" className={tocLink}>
+                    13. Limitation of Liability
+                  </a>
+                </li>
+                <li>
+                  <a href="#indemnification" className={tocLink}>
+                    14. Indemnification
+                  </a>
+                </li>
+                <li>
+                  <a href="#accessibility" className={tocLink}>
+                    15. Accessibility
+                  </a>
+                </li>
+                <li>
+                  <a href="#dispute-resolution-and-governing-law" className={tocLink}>
+                    16. Dispute Resolution and Governing Law
+                  </a>
+                </li>
+                <li>
+                  <a href="#changes-to-terms" className={tocLink}>
+                    17. Changes to Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" className={tocLink}>
+                    18. Contact
+                  </a>
+                </li>
+              </ol>
+            </nav>
 
-          <div className="space-y-10 text-[15px] text-secondary leading-relaxed">
+            <hr className="my-10 border-[#E5EDF6] sm:my-12" />
+
+          <div className="space-y-12 text-[16px] leading-[1.7] text-[#46516B] sm:text-[17px]">
             <section>
-              <h2 className="text-base font-semibold text-white">1. Agreement to Terms</h2>
+              <h2 id="agreement-to-terms" className={legalH2}>1. Agreement to Terms</h2>
               <p className="mt-3">
                 By purchasing, accessing, or using any service offered by QuickLaunchWeb ("QuickLaunchWeb," "we," "us," or
                 "our"), you ("you," "your," or "Client") agree to be bound by these Terms of Service ("Terms"). If you do
@@ -81,7 +174,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">2. What We Provide</h2>
+              <h2 id="what-we-provide" className={legalH2}>2. What We Provide</h2>
               <p className="mt-3">
                 QuickLaunchWeb offers subscription plans for professionally built websites aimed at local business marketing.
                 Each subscription includes a template-based website build, secure hosting with SSL, basic maintenance to keep
@@ -93,7 +186,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">3. Subscription Plans and Pricing</h2>
+              <h2 id="subscription-plans-and-pricing" className={legalH2}>3. Subscription Plans and Pricing</h2>
               <p className="mt-3">
                 Our Starter, Growth Engine, and City Dominator plans, described on the pricing and checkout pages, define
                 the features available to you. Subscription fees are billed monthly in advance and renew automatically
@@ -108,7 +201,7 @@ export default function TermsPage() {
                 email or through your account. Continued use of the services after the effective date of a price change
                 constitutes acceptance.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">3.1 Free Build Offer</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">3.1 Free Build Offer</h3>
               <p className="mt-2">
                 Our "free build" means we waive the initial website build fee so long as your subscription remains active.
                 The monthly subscription fee still applies. We may decline free builds if we determine that your business is
@@ -117,7 +210,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">4. Payment Terms and Refunds</h2>
+              <h2 id="payment-terms-and-refunds" className={legalH2}>4. Payment Terms and Refunds</h2>
               <p className="mt-3">
                 All payments are non-refundable, including partial months and unused service time. You may cancel your
                 subscription at any time to stop future billing (see Section 6). In some jurisdictions, you may have
@@ -127,7 +220,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">5. Service Scope</h2>
+              <h2 id="service-scope" className={legalH2}>5. Service Scope</h2>
               <p className="mt-3">
                 You agree that the services provided under your plan include only the features listed on the pricing and
                 checkout page. The Starter plan ($99/mo) includes a custom-built one-page website, hosting and security,
@@ -140,7 +233,7 @@ export default function TermsPage() {
                 expressly included in your plan (for example, custom design, advanced animations, ecommerce, or complex
                 integrations) fall outside the subscription and may be quoted separately.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">5.1 Support and Content Updates (Fair Use)</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.1 Support and Content Updates (Fair Use)</h3>
               <p className="mt-2">
                 Support is provided primarily through our support form; urgent matters may be submitted via email. We aim to
                 respond as quickly as possible but do not guarantee specific response times. Content updates are small
@@ -148,7 +241,7 @@ export default function TermsPage() {
                 updates, including new pages beyond your plan, full redesigns, custom features, or complex SEO campaigns, are
                 not included and may incur additional charges.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">5.2 Response Times</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.2 Response Times</h3>
               <p className="mt-2">
                 After receiving all required onboarding assets (for example, logo, services, contact information), we aim to
                 deliver an initial website draft within 48 hours. This is a target, not a guarantee. Delays may occur if
@@ -157,7 +250,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">6. Cancellation</h2>
+              <h2 id="cancellation" className={legalH2}>6. Cancellation</h2>
               <p className="mt-3">
                 You may cancel your subscription at any time through the Stripe customer portal or by emailing support.
                 Cancellation will be effective at the end of the current billing period. After cancellation, recurring
@@ -167,8 +260,8 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">7. Ownership, Licensing, and Data Portability</h2>
-              <h3 className="mt-3 text-sm font-semibold text-white">7.1 Website Ownership</h3>
+              <h2 id="ownership-licensing-and-data-portability" className={legalH2}>7. Ownership, Licensing, and Data Portability</h2>
+              <h3 className="mt-5 text-[18px] font-bold text-[#07143F]">7.1 Website Ownership</h3>
               <p className="mt-2">
                 While your subscription is active, you receive a non-exclusive, non-transferable license to use the website
                 created by QuickLaunchWeb for your business purposes. The underlying templates, code, and proprietary
@@ -176,7 +269,7 @@ export default function TermsPage() {
                 sublicense the website without our consent. Your original content (for example, text and images you supply)
                 remains your property.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">7.2 Hosting and Access</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.2 Hosting and Access</h3>
               <p className="mt-2">
                 We host and operate your website on Vercel or a similar hosting platform. If your subscription lapses or is
                 canceled, hosting may be terminated and the site may go offline. We are under no obligation to provide files
@@ -184,7 +277,7 @@ export default function TermsPage() {
                 request before cancellation, we will provide a reasonable opportunity to export your own content (such as
                 text and images) in a commonly used format.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">7.3 Website Buyout</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.3 Website Buyout</h3>
               <p className="mt-2">
                 You may request to purchase your website at any time. If approved, we will provide a written quote
                 specifying the buyout price. Ownership transfers only after full payment and confirmation. The buyout price
@@ -193,7 +286,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">8. Analytics and Tracking</h2>
+              <h2 id="analytics-and-tracking" className={legalH2}>8. Analytics and Tracking</h2>
               <p className="mt-3">
                 If you opt in, we will implement analytics scripts (for example, Umami, Vercel Analytics, or Google
                 Analytics) to track site performance. You are responsible for providing valid tracking IDs and ensuring you
@@ -203,12 +296,12 @@ export default function TermsPage() {
               </p>
             </section>
 
-            <section id="sms">
-              <h2 className="text-base font-semibold text-white">9. SMS/Text Messaging Terms</h2>
+            <section id="sms" className="scroll-mt-28">
+              <h2 id="sms-text-messaging-terms" className={legalH2}>9. SMS/Text Messaging Terms</h2>
 
-              <h3 className="mt-3 text-sm font-semibold text-white">9.1 Platform Operator</h3>
+              <h3 className="mt-5 text-[18px] font-bold text-[#07143F]">9.1 Platform Operator</h3>
               <p className="mt-2">
-                <span className="font-medium text-white">Program Name:</span> QuickLaunchWeb SMS Program
+                <span className="font-semibold text-[#07143F]">Program Name:</span> QuickLaunchWeb SMS Program
               </p>
               <p className="mt-2">
                 QuickLaunchWeb is a platform that builds, hosts, and operates websites and business communication
@@ -220,7 +313,7 @@ export default function TermsPage() {
                 their behalf through our platform.
               </p>
 
-              <h3 className="mt-6 text-sm font-semibold text-white">9.2 Consent</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.2 Consent</h3>
               <p className="mt-2">
                 By opting in to receive text messages — whether as a consumer submitting a lead form, a business
                 owner enabling lead alert notifications, or a customer receiving a review request — you consent to
@@ -239,8 +332,8 @@ export default function TermsPage() {
                 checkbox state. Consent to receive SMS is not a condition of any purchase or service.
               </p>
 
-              <h3 className="mt-6 text-sm font-semibold text-white">9.3 Message Types</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.3 Message Types</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
                 <li>Lead submission confirmations sent to consumers who opt in via a lead form.</li>
                 <li>Lead alert notifications sent to business owners and staff.</li>
                 <li>Missed call text-back messages sent to consumers when a call is not answered.</li>
@@ -250,7 +343,7 @@ export default function TermsPage() {
                   feedback. The message includes a link to a short feedback page and opt-out instructions.</li>
               </ul>
 
-              <h3 className="mt-6 text-sm font-semibold text-white">9.4 Message Frequency and Costs</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.4 Message Frequency and Costs</h3>
               <p className="mt-2">
                 Message frequency varies based on activity. Typically 1&ndash;5 messages per customer interaction.
                 Standard message and data rates from your mobile carrier may apply. QuickLaunchWeb is not responsible
@@ -259,28 +352,28 @@ export default function TermsPage() {
                 Carriers are not liable for delayed or undelivered messages.
               </p>
 
-              <h3 className="mt-6 text-sm font-semibold text-white">9.5 Opt-Out, Help, and Re-Subscribe</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-white/30">
-                <li>Reply <span className="font-medium text-white">STOP</span> to any message to immediately
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.5 Opt-Out, Help, and Re-Subscribe</h3>
+              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
+                <li>Reply <span className="font-semibold text-[#07143F]">STOP</span> to any message to immediately
                   unsubscribe. You will receive a one-time confirmation and no further messages will be sent from
                   that number.</li>
-                <li>Reply <span className="font-medium text-white">HELP</span> to any message for assistance, or
+                <li>Reply <span className="font-semibold text-[#07143F]">HELP</span> to any message for assistance, or
                   email anthotranllc@gmail.com.</li>
-                <li>Reply <span className="font-medium text-white">START</span> to re-subscribe if you previously
+                <li>Reply <span className="font-semibold text-[#07143F]">START</span> to re-subscribe if you previously
                   opted out.</li>
               </ul>
 
-              <h3 className="mt-6 text-sm font-semibold text-white">9.6 SMS Data</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.6 SMS Data</h3>
               <p className="mt-2">
                 We do not sell, rent, or share your mobile phone number or SMS consent data with any third parties
                 for their marketing purposes. SMS consent and opt-in data is used solely for sending the
                 transactional messages described in this section. For full details on how we handle your data, see
-                our <a href="/privacy#sms" className="text-accent underline">Privacy Policy</a>.
+                our <a href="/privacy#sms" className="font-medium text-[#0866FF] underline underline-offset-2 hover:text-[#0753CF]">Privacy Policy</a>.
               </p>
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">10. Acceptable Use Policy</h2>
+              <h2 id="acceptable-use-policy" className={legalH2}>10. Acceptable Use Policy</h2>
               <p className="mt-3">
                 You agree not to use our services for illegal activity, fraud, or misleading business practices; to
                 distribute malware or phishing attacks; to send spam; or to harass or threaten others. We reserve the right
@@ -291,7 +384,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">11. Modifications, Suspension, and Force Majeure</h2>
+              <h2 id="modifications-suspension-and-force-majeure" className={legalH2}>11. Modifications, Suspension, and Force Majeure</h2>
               <p className="mt-3">
                 We may update, modify, or discontinue any part of the services at any time to improve quality or maintain
                 operations. We may suspend service for nonpayment, chargebacks, abuse, or policy violations. We are not
@@ -302,7 +395,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">12. No Guarantees; Disclaimer</h2>
+              <h2 id="no-guarantees-disclaimer" className={legalH2}>12. No Guarantees; Disclaimer</h2>
               <p className="mt-3">
                 The services are provided "as is" without warranties of any kind. QuickLaunchWeb does not guarantee
                 specific results, leads, revenue, or ROI. To the fullest extent permitted by law, we expressly disclaim all
@@ -312,7 +405,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">13. Limitation of Liability</h2>
+              <h2 id="limitation-of-liability" className={legalH2}>13. Limitation of Liability</h2>
               <p className="mt-3">
                 To the maximum extent permitted by law, QuickLaunchWeb shall not be liable for any indirect, incidental,
                 special, consequential, or punitive damages, or for any loss of profits or revenue, arising out of or in
@@ -322,7 +415,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">14. Indemnification</h2>
+              <h2 id="indemnification" className={legalH2}>14. Indemnification</h2>
               <p className="mt-3">
                 You agree to defend, indemnify, and hold harmless QuickLaunchWeb and its affiliates, officers, and employees
                 from any claims, losses, damages, liabilities, and expenses (including reasonable attorneys' fees) arising
@@ -332,7 +425,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">15. Accessibility</h2>
+              <h2 id="accessibility" className={legalH2}>15. Accessibility</h2>
               <p className="mt-3">
                 QuickLaunchWeb strives to build websites that are easy to use, but we cannot guarantee full compliance with
                 the Americans with Disabilities Act (ADA) or other accessibility regulations. Clients are responsible for
@@ -343,13 +436,13 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">16. Dispute Resolution and Governing Law</h2>
-              <h3 className="mt-3 text-sm font-semibold text-white">16.1 Informal Resolution</h3>
+              <h2 id="dispute-resolution-and-governing-law" className={legalH2}>16. Dispute Resolution and Governing Law</h2>
+              <h3 className="mt-5 text-[18px] font-bold text-[#07143F]">16.1 Informal Resolution</h3>
               <p className="mt-2">
                 Before filing a claim, you agree to contact us by email and allow 30 days for us to try to resolve the
                 dispute.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">16.2 Arbitration and Class-Action Waiver</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">16.2 Arbitration and Class-Action Waiver</h3>
               <p className="mt-2">
                 If we cannot resolve the dispute informally, we both agree to resolve any remaining dispute through binding
                 arbitration administered by the American Arbitration Association under its Consumer Arbitration Rules. The
@@ -358,7 +451,7 @@ export default function TermsPage() {
                 proceedings to the fullest extent permitted by law. Either party may bring an individual action in small
                 claims court if the claim qualifies.
               </p>
-              <h3 className="mt-6 text-sm font-semibold text-white">16.3 Governing Law</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">16.3 Governing Law</h3>
               <p className="mt-2">
                 These Terms are governed by the laws of the State of Texas, without regard to its conflict-of-law principles.
                 You consent to the exclusive jurisdiction of the state and federal courts located in Texas to resolve any
@@ -367,7 +460,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">17. Changes to Terms</h2>
+              <h2 id="changes-to-terms" className={legalH2}>17. Changes to Terms</h2>
               <p className="mt-3">
                 We may update these Terms from time to time. If we make material changes, we will notify you by email or
                 through our website and indicate the new effective date. Your continued use of the services after the
@@ -376,15 +469,16 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-base font-semibold text-white">18. Contact</h2>
+              <h2 id="contact" className={legalH2}>18. Contact</h2>
               <p className="mt-3">
                 If you have any questions about these Terms, please contact Anthony Tran at anthotranllc@gmail.com or through
                 the support form on our website.
               </p>
             </section>
           </div>
-        </GlassCard>
-      </div>
-    </main>
+          </article>
+        </div>
+      </section>
+    </BrandShell>
   );
 }

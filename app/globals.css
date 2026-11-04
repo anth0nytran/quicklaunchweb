@@ -121,6 +121,11 @@
     font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   }
 
+  /* Light rebrand (components/brand/brand-shell.tsx) uses one font (Inter) throughout. */
+  .ql-brand :is(h1, h2, h3, h4, h5, h6, button, .btn, [role="button"], summary) {
+    font-family: inherit;
+  }
+
   /* Glass surface base */
   .glass {
     background: var(--glass-bg);
@@ -1443,4 +1448,107 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari and Opera */
+}
+/* =============================================================================
+   Home hero overlays (components/brand/hero-dashboard.tsx)
+   ============================================================================= */
+
+/* Exhaust puff: appears just past the nozzle, swells, drifts away, fades. */
+@keyframes ql-puff {
+  0% {
+    transform: translate(-50%, -50%) translate(var(--sx), var(--sy)) scale(0.3);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--ex), var(--ey)) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Chart endpoint: soft ring that breathes out from the dot. */
+@keyframes ql-dot-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.ql-dot-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ql-dot-pulse 2.4s ease-out infinite;
+}
+
+.ql-puff {
+  will-change: transform, opacity;
+}
+
+/* Offscreen or hidden tab: freeze the loops. */
+/* !important: puffs set their animation inline, which would otherwise win. */
+.ql-hero[data-paused="true"] .ql-anim {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ql-hero .ql-anim {
+    animation: none !important;
+  }
+  .ql-hero .ql-puff {
+    display: none;
+  }
+}
+
+/* "Example dashboard" label: in the art when the hero is wide enough, as a caption below it otherwise. */
+.ql-hero-caption {
+  display: none;
+}
+@container (max-width: 440px) {
+  .ql-hero-pill {
+    display: none;
+  }
+  .ql-hero-caption {
+    display: block;
+  }
+}
+
+/* Brand flair (components/brand/flair.tsx) */
+@keyframes ql-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ql-marquee {
+  animation: ql-marquee 45s linear infinite;
+}
+.ql-marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes ql-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-1.5deg);
+  }
+}
+.ql-float {
+  animation: ql-float 4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ql-marquee,
+  .ql-float {
+    animation: none !important;
+  }
 }

@@ -1,44 +1,11 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { GlassCard, GlassButton, GlassPill, AmbientGlow } from "@/components/ui/glass";
+import { BrandShell } from "@/components/brand/brand-shell";
+import { Eyebrow, KitIcon, card, container, primaryBtn } from "@/components/brand/primitives";
 import { usePageTracker, useCheckoutTracker } from "@/lib/analytics";
-
-function CheckCircleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={1.5}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-  );
-}
-
-function ArrowLeftIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-    </svg>
-  );
-}
-
-import { Suspense } from "react";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -56,66 +23,68 @@ function SuccessContent() {
     );
   }, [searchParams, trackPurchase]);
 
-  return (
-    <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />
-  );
+  return null;
 }
+
+const nextSteps = [
+  "Check your email for the intake form",
+  "Fill in your business details",
+  "We build your site in 48h",
+];
 
 export default function SuccessPage() {
   // Analytics tracking
   usePageTracker('QuickLaunchWeb - Success', 'checkout_success');
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-5 py-16 relative">
-      {/* Ambient background */}
-      <AmbientGlow color="accent" position="center" intensity="medium" />
-
-      <Suspense fallback={<div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />}>
+    <BrandShell stickyCta={false}>
+      <Suspense fallback={null}>
         <SuccessContent />
       </Suspense>
 
-      <GlassCard variant="elevated" className="w-full max-w-lg p-10 text-center relative overflow-hidden">
-        {/* Inner glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent pointer-events-none" />
+      <section className="bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-16 pt-[104px] sm:pb-24 sm:pt-28 lg:pt-32">
+        <div className={container}>
+          <div className={`${card} mx-auto w-full max-w-xl p-6 text-center sm:p-10`}>
+            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#0866FF] p-4 shadow-[0_10px_25px_-10px_rgba(8,102,255,0.8)]">
+              <KitIcon name="check-circle" white className="h-full w-full" />
+            </span>
 
-        <div className="relative z-10">
-          {/* Success icon */}
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 ring-1 ring-green-500/30">
-            <CheckCircleIcon className="h-8 w-8 text-green-400" />
-          </div>
+            <Eyebrow className="mt-6">Payment complete</Eyebrow>
 
-          <GlassPill variant="success" className="mb-4">
-            Payment complete
-          </GlassPill>
+            <h1 className="mt-3 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[#07143F] sm:text-[40px]">
+              You&apos;re in!
+            </h1>
 
-          <h1 className="text-3xl font-bold text-white">You&apos;re in!</h1>
+            <p className="mx-auto mt-4 max-w-md text-[16px] leading-[1.6] text-[#46516B] sm:text-[17px]">
+              Thanks for starting your plan. We&apos;ll email you a quick intake
+              form to get your business details and launch your site in{" "}
+              <span className="font-semibold text-[#07143F]">48 hours</span>.
+            </p>
 
-          <p className="mt-4 text-secondary leading-relaxed">
-            Thanks for starting your plan. We&apos;ll email you a quick intake
-            form to get your business details and launch your site in{" "}
-            <span className="text-white font-medium">48 hours</span>.
-          </p>
+            {/* Next steps */}
+            <div className="mt-8 rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-5 text-left sm:p-6">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">What happens next</p>
+              <ol className="mt-4 space-y-3">
+                {nextSteps.map((step, i) => (
+                  <li key={step} className="flex items-center gap-3 text-[15px] text-[#07143F]">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0866FF] text-[13px] font-bold text-white">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-          <div className="mt-8 flex flex-col gap-3">
-            <Link href="/">
-              <GlassButton variant="primary" size="lg" className="w-full group">
-                <ArrowLeftIcon className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+            <div className="mt-8">
+              <Link href="/" className={`${primaryBtn} w-full px-7 py-4 text-[16px]`}>
+                <KitIcon name="arrow-left" white className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
                 Back to home
-              </GlassButton>
-            </Link>
-          </div>
-
-          {/* Next steps */}
-          <div className="mt-8 pt-6 border-t border-white/[0.08]">
-            <p className="text-xs text-muted uppercase tracking-wider mb-3">What happens next</p>
-            <div className="text-sm text-secondary space-y-2">
-              <p>1. Check your email for the intake form</p>
-              <p>2. Fill in your business details</p>
-              <p>3. We build your site in 48h</p>
+              </Link>
             </div>
           </div>
         </div>
-      </GlassCard>
-    </main>
+      </section>
+    </BrandShell>
   );
 }

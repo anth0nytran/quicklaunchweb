@@ -2,40 +2,9 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { GlassCard, GlassButton, GlassPill, AmbientGlow } from "@/components/ui/glass";
+import { BrandShell } from "@/components/brand/brand-shell";
+import { Eyebrow, KitIcon, card, container, outlineBtn, primaryBtn } from "@/components/brand/primitives";
 import { usePageTracker, useCheckoutTracker } from "@/lib/analytics";
-
-function XCircleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={1.5}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-  );
-}
-
-function ArrowRightIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-    </svg>
-  );
-}
 
 export default function CancelPage() {
   // Analytics tracking
@@ -48,54 +17,46 @@ export default function CancelPage() {
   }, [trackCheckoutCancelled]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-5 py-16 relative">
-      {/* Ambient background */}
-      <AmbientGlow color="white" position="center" intensity="subtle" />
-      
-      <GlassCard variant="elevated" className="w-full max-w-lg p-10 text-center relative overflow-hidden">
-        {/* Inner subtle glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
-        
-        <div className="relative z-10">
-          {/* Cancel icon */}
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] ring-1 ring-white/[0.15]">
-            <XCircleIcon className="h-8 w-8 text-muted" />
-          </div>
-          
-          <GlassPill className="mb-4">
-            Checkout canceled
-          </GlassPill>
-          
-          <h1 className="text-3xl font-bold text-white">No worries.</h1>
-          
-          <p className="mt-4 text-secondary leading-relaxed">
-            If you still want a site in{" "}
-            <span className="text-white font-medium">48 hours</span>, you can
-            restart your plan whenever you&apos;re ready.
-          </p>
-          
-          <div className="mt-8 flex flex-col gap-3">
-            <Link href="/#pricing">
-              <GlassButton variant="primary" size="lg" className="w-full group">
-                View pricing
-                <ArrowRightIcon className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </GlassButton>
-            </Link>
-            <Link href="/">
-              <GlassButton variant="ghost" size="md" className="w-full">
-                Back to home
-              </GlassButton>
-            </Link>
-          </div>
-          
-          {/* Reassurance */}
-          <div className="mt-8 pt-6 border-t border-white/[0.08]">
-            <p className="text-sm text-muted">
-              Questions? Just reply to any of our emails.
+    <BrandShell stickyCta={false}>
+      <section className="bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-16 pt-[104px] sm:pb-24 sm:pt-28 lg:pt-32">
+        <div className={container}>
+          <div className={`${card} mx-auto w-full max-w-xl p-6 text-center sm:p-10`}>
+            {/* Cancel icon */}
+            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF8FF] text-[#0866FF]">
+              <KitIcon name="x-circle" className="h-8 w-8" />
+            </span>
+
+            <Eyebrow className="mt-6">Checkout canceled</Eyebrow>
+
+            <h1 className="mt-3 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[#07143F] sm:text-[40px]">
+              No worries.
+            </h1>
+
+            <p className="mx-auto mt-4 max-w-md text-[16px] leading-[1.6] text-[#46516B] sm:text-[17px]">
+              If you still want a site in{" "}
+              <span className="font-semibold text-[#07143F]">48 hours</span>, you can
+              restart your plan whenever you&apos;re ready.
             </p>
+
+            <div className="mt-8 flex flex-col gap-3">
+              <Link href="/services/web-design#pricing" className={`${primaryBtn} w-full px-7 py-4 text-[16px]`}>
+                View pricing
+                <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link href="/" className={`${outlineBtn} w-full px-7 py-3.5 text-[15px]`}>
+                Back to home
+              </Link>
+            </div>
+
+            {/* Reassurance */}
+            <div className="mt-8 border-t border-[#E5EDF6] pt-6">
+              <p className="text-[14px] text-[#46516B]">
+                Questions? Just reply to any of our emails.
+              </p>
+            </div>
           </div>
         </div>
-      </GlassCard>
-    </main>
+      </section>
+    </BrandShell>
   );
 }

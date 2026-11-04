@@ -2,8 +2,19 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { BGPattern } from "@/components/ui/bg-pattern";
-import { GlassCard, GlassButton, GlassDivider, GlassInput, AmbientGlow } from "@/components/ui/glass";
+import { BrandShell } from "@/components/brand/brand-shell";
+import {
+  Eyebrow,
+  IconTile,
+  KitIcon,
+  bodyText,
+  card,
+  container,
+  focusRing,
+  outlineBtn,
+  pageH1,
+  primaryBtn,
+} from "@/components/brand/primitives";
 import { usePageTracker, useFormTracker } from "@/lib/analytics";
 
 type SupportForm = {
@@ -17,6 +28,10 @@ const createEmptySupportForm = (): SupportForm => ({
   email: "",
   message: "",
 });
+
+const inputClass =
+  "w-full rounded-xl border border-[#E5EDF6] bg-white px-4 py-3.5 text-[16px] text-[#07143F] placeholder:text-[#46516B]/60 transition-colors hover:border-[#0866FF]/40 focus:border-[#0866FF] focus:outline-none focus:ring-4 focus:ring-[#0866FF]/15";
+const labelClass = "mb-1.5 block text-[14px] font-semibold text-[#07143F]";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -113,96 +128,127 @@ export default function SupportPage() {
   }, [supportForm]);
 
   return (
-    <main className="relative min-h-screen px-6 py-24 md:py-32">
-      <BGPattern variant="dots" mask="fade-center" size={32} fill="rgba(255,255,255,0.03)" />
-      <AmbientGlow color="accent" position="top" intensity="subtle" className="-top-20" />
-
-      <div className="relative z-10 mx-auto max-w-4xl">
-        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wider text-muted">Support</p>
-            <h1 className="mt-2 text-3xl font-bold text-white md:text-4xl">Support Request</h1>
-            <p className="mt-3 text-sm text-secondary text-balance max-w-lg">
+    <BrandShell>
+      <section className="bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-10 pt-[104px] sm:pb-14 sm:pt-28 lg:pt-32">
+        <div className={container}>
+          <div className="max-w-3xl">
+            <Eyebrow>Support</Eyebrow>
+            <h1 className={`mt-4 ${pageH1}`}>Support Request</h1>
+            <p className={`mt-4 max-w-[36rem] ${bodyText}`}>
               Tell us what you need and we&apos;ll follow up quickly.
             </p>
-            <p className="mt-2 text-xs text-muted">Typical response: 1 business day.</p>
+            <p className="mt-2 text-[14px] font-medium text-[#46516B]">Typical response: 1 business day.</p>
           </div>
-          <Link href="/">
-            <GlassButton variant="ghost" size="md" className="w-full md:w-auto">
-              Back to home
-            </GlassButton>
-          </Link>
         </div>
+      </section>
 
-        <GlassCard variant="elevated" className="p-6 md:p-10">
-          <div className="grid gap-4 text-xs text-muted md:grid-cols-2">
-            <div>
-              <p className="uppercase tracking-wider text-white/50">Email</p>
-              <p className="mt-1 text-sm text-white/90">anthotranllc@gmail.com</p>
-            </div>
-            <div>
-              <p className="uppercase tracking-wider text-white/50">Support Hours</p>
-              <p className="mt-1 text-sm text-white/90">Mon-Fri, 9am-6pm CST</p>
-            </div>
-          </div>
-          <GlassDivider className="my-6" />
-          <form
-            className="space-y-3"
-            onSubmit={submitSupportRequest}
-          >
-            <GlassInput
-              type="text"
-              value={supportForm.name}
-              onChange={(e) =>
-                setSupportForm((prev) => ({ ...prev, name: e.target.value }))
-              }
-              onFocus={trackFormStart}
-              placeholder="Name"
-            />
-            <GlassInput
-              type="email"
-              value={supportForm.email}
-              onChange={(e) =>
-                setSupportForm((prev) => ({ ...prev, email: e.target.value }))
-              }
-              placeholder="Email"
-            />
-            <textarea
-              value={supportForm.message}
-              onChange={(e) =>
-                setSupportForm((prev) => ({ ...prev, message: e.target.value }))
-              }
-              placeholder="How can we help?"
-              rows={4}
-              className="w-full rounded-xl border bg-white/[0.03] backdrop-blur-sm px-4 py-3 text-sm text-white placeholder:text-white/30 border-white/[0.08] hover:border-white/[0.15] focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-0 transition-all duration-200 ease-smooth"
-            />
-
-            {supportError && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                {supportError}
-              </div>
-            )}
-            {supportSuccess && (
-              <div className="rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
-                {supportSuccess}
-              </div>
-            )}
-
-            <GlassDivider className="my-4" />
-
-            <GlassButton
-              variant="secondary"
-              size="lg"
-              type="submit"
-              loading={supportLoading}
-              className="w-full"
+      <section className="bg-white pb-16 pt-10 sm:pb-24 sm:pt-14">
+        <div className={`${container} grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-10`}>
+          <div className="space-y-4">
+            <a
+              href="mailto:anthotranllc@gmail.com"
+              className={`${card} group flex items-start gap-4 p-5 transition-colors hover:border-[#0866FF]/40 sm:p-6 ${focusRing}`}
             >
-              Submit Support Request
-            </GlassButton>
-          </form>
-        </GlassCard>
-      </div>
-    </main>
+              <IconTile name="mail" />
+              <div className="min-w-0">
+                <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Email</p>
+                <p className="mt-1 break-words text-[17px] font-bold text-[#07143F] group-hover:text-[#0866FF]">
+                  anthotranllc@gmail.com
+                </p>
+              </div>
+            </a>
+            <div className={`${card} flex items-start gap-4 p-5 sm:p-6`}>
+              <IconTile name="clock" />
+              <div>
+                <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Hours</p>
+                <p className="mt-1 text-[17px] font-bold text-[#07143F]">Mon-Fri, 9am-6pm CST</p>
+              </div>
+            </div>
+            <div className={`${card} flex items-start gap-4 p-5 sm:p-6`}>
+              <IconTile name="message" />
+              <div>
+                <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Typical Response</p>
+                <p className="mt-1 text-[17px] font-bold text-[#07143F]">1 business day</p>
+              </div>
+            </div>
+            <Link href="/" className={`${outlineBtn} w-full px-6 py-3.5 text-[15px] sm:w-auto`}>
+              Back to home
+            </Link>
+          </div>
+
+          <div className={`${card} p-5 sm:p-8`}>
+            <h2 className="text-[22px] font-extrabold tracking-[-0.02em] text-[#07143F] sm:text-[26px]">Send us a message</h2>
+            <p className="mt-1.5 text-[15px] text-[#46516B]">We&apos;ll reply by email.</p>
+            <form className="mt-6 space-y-4" onSubmit={submitSupportRequest}>
+              <div>
+                <label htmlFor="support-name" className={labelClass}>Name</label>
+                <input
+                  id="support-name"
+                  type="text"
+                  autoComplete="name"
+                  value={supportForm.name}
+                  onChange={(e) =>
+                    setSupportForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  onFocus={trackFormStart}
+                  placeholder="Name"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="support-email" className={labelClass}>Email</label>
+                <input
+                  id="support-email"
+                  type="email"
+                  autoComplete="email"
+                  value={supportForm.email}
+                  onChange={(e) =>
+                    setSupportForm((prev) => ({ ...prev, email: e.target.value }))
+                  }
+                  placeholder="Email"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="support-message" className={labelClass}>Message</label>
+                <textarea
+                  id="support-message"
+                  value={supportForm.message}
+                  onChange={(e) =>
+                    setSupportForm((prev) => ({ ...prev, message: e.target.value }))
+                  }
+                  placeholder="How can we help?"
+                  rows={5}
+                  className={`${inputClass} resize-y`}
+                />
+              </div>
+
+              {supportError && (
+                <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[15px] text-red-700">
+                  {supportError}
+                </div>
+              )}
+              {supportSuccess && (
+                <div role="status" className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-[15px] text-green-700">
+                  {supportSuccess}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={supportLoading}
+                className={`${primaryBtn} w-full px-7 py-4 text-[16px] disabled:cursor-not-allowed disabled:opacity-70`}
+              >
+                {supportLoading ? "Sending..." : "Submit Support Request"}
+                {!supportLoading && (
+                  <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </BrandShell>
   );
 }
 

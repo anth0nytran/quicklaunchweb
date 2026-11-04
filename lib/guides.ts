@@ -132,14 +132,14 @@ const guides: Guide[] = [
       eyebrow: "Get the full system",
       description:
         "All 5 components, one flat monthly fee. Live in 48 hours — $0 down.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "See plans",
     },
     ctaBottom: {
       title: "Stop renting attention. Start owning it.",
       description:
         "Every component in this guide — visibility, lead capture, reviews, follow-up, city expansion — built and managed for you. No ad spend. No contracts.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Get started",
     },
     aside: {
@@ -405,14 +405,14 @@ const guides: Guide[] = [
       eyebrow: "Show up everywhere people search",
       description:
         "Google, Maps, ChatGPT, Siri — one system makes you visible in all of them.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "See plans",
     },
     ctaBottom: {
       title: "Stop being invisible. Start showing up.",
       description:
         "We set up your Google profile, optimize your website for AI search, and build the listings that get you recommended. 48 hours from now, people can actually find you.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Get started",
     },
     aside: {
@@ -707,14 +707,14 @@ const guides: Guide[] = [
       eyebrow: "Stop the bleeding",
       description:
         "One system. Every leak plugged. $0 down, live in 48 hours.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "See plans",
     },
     ctaBottom: {
       title: "Every day you wait is another $500+ walking out the door",
       description:
         "Missed calls, slow follow-ups, missing reviews — the system plugs all of it automatically. One flat monthly fee. No contracts. Cancel if it does not pay for itself.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Plug the leaks",
     },
     aside: {
@@ -954,13 +954,13 @@ const guides: Guide[] = [
     ctaTop: {
       eyebrow: "Done diagnosing?",
       description: "Get a site built to convert — $0 down, live in 48 hours.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "See pricing",
     },
     ctaBottom: {
       title: "Ready for a website that actually works?",
       description: "We build sites that turn visitors into customers. No lock-in — cancel if it's not paying for itself.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Get started",
     },
     aside: {
@@ -1091,7 +1091,7 @@ const guides: Guide[] = [
           {
             context: "If you decide to start fresh, see",
             label: "how we build sites that convert",
-            href: "/#features",
+            href: "/services/web-design#features",
             suffix: "in 48 hours with no upfront cost.",
           },
         ],
@@ -1196,13 +1196,13 @@ const guides: Guide[] = [
     ctaTop: {
       eyebrow: "Want a site built this way?",
       description: "We build websites that turn visitors into customers — $0 down, live in 48 hours.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Start free",
     },
     ctaBottom: {
       title: "Ready for a website that sells for you?",
       description: "No lock-in. Cancel if it's not bringing you customers.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Get started",
     },
     aside: {
@@ -1407,13 +1407,13 @@ const guides: Guide[] = [
     ctaTop: {
       eyebrow: "Not sure?",
       description: "Get a site in 48 hours — $0 down, cancel if it doesn't work for you.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Try it risk-free",
     },
     ctaBottom: {
       title: "Ready to stop losing customers?",
       description: "No lock-in. If the website isn't paying for itself, walk away.",
-      href: "/#pricing",
+      href: "/services/web-design#pricing",
       label: "Get started",
     },
     aside: {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import HomePage from "@/app/page";
+import WebServicePage from "@/components/pages/web-service-page";
 import { StructuredData } from "@/components/seo/StructuredData";
 import {
   absoluteUrl,
@@ -99,7 +99,7 @@ export default function HoustonWebDesignForContractorsPage() {
           ],
         }}
       />
-      <HomePage />
+      <WebServicePage />
     </>
   );
 }

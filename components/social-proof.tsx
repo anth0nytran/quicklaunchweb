@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { GlassCard, AmbientGlow, GlassDivider } from "@/components/ui/glass";
+import { KitIcon, focusRing } from "@/components/brand/primitives";
 import { useEventTracker } from "@/lib/analytics";
 
 // =============================================================================
@@ -184,56 +184,60 @@ export function SocialProofSection() {
     }
   };
 
-  return (
-    <section id="work" className="relative pt-16 pb-20 md:pt-20 md:pb-24 overflow-hidden">
-      <AmbientGlow color="white" position="center" intensity="subtle" className="opacity-30" />
+  const navBtn = `flex h-11 w-11 items-center justify-center rounded-full border border-[#E5EDF6] bg-white text-[#07143F] shadow-sm transition-colors hover:border-[#0866FF] hover:bg-[#EFF8FF] hover:text-[#0866FF] disabled:cursor-default disabled:opacity-40 disabled:hover:border-[#E5EDF6] disabled:hover:bg-white disabled:hover:text-[#07143F] ${focusRing}`;
 
-      <div className="relative z-10">
+  return (
+    <section id="work" className="relative scroll-mt-24 bg-white py-12 sm:py-20">
+      <div className="relative">
         {/* Header */}
-        <div className="mb-14 md:text-center px-6">
-          <div className="mx-auto max-w-7xl">
-            <h2 className="text-2xl font-bold tracking-tight text-white md:text-4xl">
-              They turned it on. The calls started coming in.
-            </h2>
-            <p className="mt-3 text-secondary">
-              Real businesses using this system. More calls, more reviews, more jobs.
-            </p>
-          </div>
+        <div className="mx-auto mb-10 max-w-[1200px] px-4 text-center sm:px-6">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#0866FF]">Recent Work</p>
+          <h2 className="mt-3 text-[28px] font-extrabold leading-[1.15] tracking-[-0.03em] text-[#07143F] sm:text-[36px]">
+            They turned it on. The calls started coming in.
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-[16px] leading-[1.5] text-[#46516B] sm:text-[18px]">
+            Real businesses using this system. More calls, more reviews, more jobs.
+          </p>
         </div>
 
         {/* Scroll container */}
-        <div className="relative">
+        <div className="relative mx-auto max-w-[1200px]">
           <div
             ref={scrollRef}
-            className="flex gap-5 overflow-x-auto scroll-smooth pb-2 pl-6 pr-6 scrollbar-hide snap-x snap-mandatory scroll-pl-6"
+            className="scrollbar-hide flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto scroll-smooth px-4 pb-4 pt-1 sm:scroll-pl-6 sm:px-6"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {testimonials.map((t, i) => (
-              <div key={i} className="flex-none w-[320px] md:w-[370px] snap-start">
-                <GlassCard className="p-6 h-full flex flex-col" hover>
+              <div key={i} className="w-[300px] flex-none snap-start sm:w-[340px] md:w-[370px]">
+                <figure className="flex h-full flex-col rounded-xl border border-[#E5EDF6] bg-white p-6 shadow-[0_8px_30px_-14px_rgba(7,20,63,0.15)]">
                   {/* Stars + Stat */}
-                  <div className="flex items-start justify-between mb-4 gap-3">
-                    <div className="flex gap-0.5 shrink-0">
+                  <div className="mb-4 flex items-start justify-between gap-3">
+                    <div className="flex shrink-0 gap-0.5" aria-label="5 out of 5 stars" role="img">
                       {[...Array(5)].map((_, j) => (
-                        <StarIcon key={j} className="h-3.5 w-3.5 text-[#FBBC04]" />
+                        <StarIcon key={j} className="h-4 w-4 text-[#FBBC04]" />
                       ))}
                     </div>
-                    <span className="text-[9px] font-semibold text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full uppercase tracking-wider leading-tight whitespace-nowrap">
+                    <span className="whitespace-nowrap rounded-full bg-[#EFF8FF] px-2.5 py-1 text-[10px] font-semibold uppercase leading-tight tracking-wider text-[#0866FF]">
                       {t.stat}
                     </span>
                   </div>
 
                   {/* Quote */}
-                  <p className="text-sm text-secondary leading-relaxed italic mb-auto pb-5 flex-1">
-                    &ldquo;{t.text}&rdquo;
-                  </p>
+                  <div className="flex flex-1 gap-3 pb-5">
+                    <KitIcon name="quote" className="mt-0.5 h-5 w-5 shrink-0 opacity-80" />
+                    <blockquote className="text-[15px] leading-[1.6] text-[#46516B]">&ldquo;{t.text}&rdquo;</blockquote>
+                  </div>
 
                   {/* Attribution */}
-                  <GlassDivider className="mb-4" />
-                  <div className="flex items-center justify-between gap-3 min-w-0">
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-white truncate">{t.name}</p>
-                      <p className="text-xs text-muted mt-0.5 truncate">{t.role}</p>
+                  <figcaption className="flex min-w-0 items-center justify-between gap-3 border-t border-[#E5EDF6] pt-4">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0866FF] text-base font-bold text-white">
+                        {t.name.charAt(0)}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-[15px] font-bold text-[#07143F]">{t.name}</p>
+                        <p className="mt-0.5 truncate text-[13px] text-[#46516B]">{t.role}</p>
+                      </div>
                     </div>
                     <a
                       href={`https://${t.url}`}
@@ -248,44 +252,42 @@ export function SocialProofSection() {
                           event_label: t.company,
                         });
                       }}
-                      className="flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors shrink-0 max-w-[45%]"
+                      className={`flex max-w-[45%] shrink-0 items-center gap-1.5 rounded text-[13px] font-semibold text-[#0866FF] hover:text-[#0753CF] ${focusRing}`}
                     >
                       <span className="truncate">{t.company}</span>
-                      <ArrowIcon className="h-3 w-3 shrink-0" />
+                      <ArrowIcon className="h-3.5 w-3.5 shrink-0" />
+                      <span className="sr-only">(opens in a new tab)</span>
                     </a>
-                  </div>
-                </GlassCard>
+                  </figcaption>
+                </figure>
               </div>
             ))}
           </div>
         </div>
 
         {/* Navigation — centered below cards */}
-        <div className="flex items-center justify-center gap-3 mt-8 px-6">
-          <button
-            onClick={() => scroll("left")}
-            disabled={!canScrollLeft}
-            className="h-10 w-10 rounded-full border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-muted hover:text-white hover:border-white/[0.15] hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-default disabled:hover:text-muted disabled:hover:border-white/[0.08] disabled:hover:bg-white/[0.03] transition-all duration-200"
-            aria-label="Scroll left"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="mt-6 flex items-center justify-center gap-3 px-4">
+          <button type="button" onClick={() => scroll("left")} disabled={!canScrollLeft} className={navBtn} aria-label="Scroll left">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           {/* Scroll position dots */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
+                type="button"
                 key={i}
                 onClick={() => scrollToPage(i)}
-                className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+                className={`group flex h-11 w-9 shrink-0 items-center justify-center rounded-full ${focusRing}`}
                 aria-label={`Go to page ${i + 1}`}
+                aria-current={i === activePage ? "true" : undefined}
               >
                 <span
                   className="h-2 w-2 rounded-full transition-transform duration-300 group-hover:scale-x-[1.8]"
                   style={{
-                    backgroundColor: i === activePage ? "rgb(20, 184, 166)" : "rgba(255,255,255,0.2)",
+                    backgroundColor: i === activePage ? "#0866FF" : "#C9D6E8",
                     transform: i === activePage ? "scaleX(3)" : "scaleX(1)",
                   }}
                 />
@@ -293,13 +295,8 @@ export function SocialProofSection() {
             ))}
           </div>
 
-          <button
-            onClick={() => scroll("right")}
-            disabled={!canScrollRight}
-            className="h-10 w-10 rounded-full border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-muted hover:text-white hover:border-white/[0.15] hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-default disabled:hover:text-muted disabled:hover:border-white/[0.08] disabled:hover:bg-white/[0.03] transition-all duration-200"
-            aria-label="Scroll right"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <button type="button" onClick={() => scroll("right")} disabled={!canScrollRight} className={navBtn} aria-label="Scroll right">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>

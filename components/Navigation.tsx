@@ -8,12 +8,35 @@ import { Menu, X } from "lucide-react";
 import { GlassButton } from "@/components/ui/glass";
 import { useEventTracker } from "@/lib/analytics";
 
+export type NavLink = { name: string; href: string };
+
 interface NavigationProps {
     onOpenUpsellModal?: (plan: "starter" | "growth" | "city_dominator") => void;
     onOpenPlanPicker?: () => void;
+    /** Override the nav links. Defaults to the web services set. */
+    links?: NavLink[];
+    /** Override the header CTA label. */
+    ctaLabel?: string;
+    /** When set, the CTA becomes a link instead of opening the plan picker. */
+    ctaHref?: string;
 }
 
-export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationProps) {
+const defaultNavLinks: NavLink[] = [
+    { name: "Features", href: "#features" },
+    { name: "Work", href: "#work" },
+    { name: "How it Works", href: "#how-it-works" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "Guides", href: "/guides" },
+    { name: "FAQ", href: "#faq" },
+];
+
+export function Navigation({
+    onOpenUpsellModal,
+    onOpenPlanPicker,
+    links,
+    ctaLabel = "Start My Free Website",
+    ctaHref,
+}: NavigationProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { track } = useEventTracker();
@@ -45,40 +68,32 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
         };
     }, [isOpen]);
 
-    const navLinks = [
-        { name: "Features", href: "#features" },
-        { name: "Work", href: "#work" },
-        { name: "How it Works", href: "#how-it-works" },
-        { name: "Pricing", href: "#pricing" },
-        { name: "Guides", href: "/guides" },
-        { name: "FAQ", href: "#faq" },
-    ];
+    const navLinks = links ?? defaultNavLinks;
 
-    const isHomePage = pathname === "/" || pathname === "/houston-web-design-for-contractors";
+    // Pages that render the web services template and therefore own its anchors.
+    const webServicePaths = ["/services/web-design", "/houston-web-design-for-contractors"];
+    const ownsDefaultAnchors = webServicePaths.includes(pathname);
 
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        // If it's a hash link and we're on the home page, smooth scroll
-        if (href.startsWith("#") && isHomePage) {
+        if (!href.startsWith("#")) {
+            setIsOpen(false);
+            return;
+        }
+
+        // Smooth scroll only when the section actually exists on this page.
+        const element = document.getElementById(href.substring(1));
+        setIsOpen(false);
+        if (element) {
             e.preventDefault();
-            const targetId = href.substring(1);
-            const element = document.getElementById(targetId);
-
-            setIsOpen(false);
-
-            if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
-            }
-        } else {
-            setIsOpen(false);
+            element.scrollIntoView({ behavior: "smooth" });
         }
     };
 
-    // On non-home pages, prefix hash links with / so they navigate home
+    // Hash links fall back to the page that owns them when we are somewhere else.
     const resolveHref = (href: string) => {
-        if (href.startsWith("#") && !isHomePage) {
-            return `/${href}`;
-        }
-        return href;
+        if (!href.startsWith("#")) return href;
+        if (links) return pathname === "/" ? href : `/${href}`;
+        return ownsDefaultAnchors ? href : `/services/web-design${href}`;
     };
 
     return (
@@ -110,13 +125,30 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
 
                 {/* Desktop CTA */}
                 <div className="hidden md:block">
-                    {onOpenPlanPicker ? (
+                    {ctaHref ? (
+                        <Link
+                            href={resolveHref(ctaHref)}
+                            onClick={(e) => {
+                                track('cta_click', {
+                                    cta_text: ctaLabel,
+                                    cta_location: 'header',
+                                    event_category: 'engagement',
+                                    event_label: 'header_cta',
+                                });
+                                handleLinkClick(e, ctaHref);
+                            }}
+                        >
+                            <GlassButton variant="secondary" size="sm">
+                                {ctaLabel}
+                            </GlassButton>
+                        </Link>
+                    ) : onOpenPlanPicker ? (
                         <GlassButton
                             variant="secondary"
                             size="sm"
                             onClick={() => {
                                 track('cta_click', {
-                                    cta_text: 'Start My Free Website',
+                                    cta_text: ctaLabel,
                                     cta_location: 'header',
                                     event_category: 'engagement',
                                     event_label: 'header_cta',
@@ -124,12 +156,12 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
                                 onOpenPlanPicker();
                             }}
                         >
-                            Start My Free Website
+                            {ctaLabel}
                         </GlassButton>
                     ) : (
-                        <Link href="/#pricing">
+                        <Link href="/services/web-design#pricing">
                             <GlassButton variant="secondary" size="sm">
-                                Start My Free Website
+                                {ctaLabel}
                             </GlassButton>
                         </Link>
                     )}
@@ -179,7 +211,29 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
                                 transition={{ delay: 0.4 }}
                                 className="mt-8"
                             >
-                                {onOpenPlanPicker ? (
+                                {ctaHref ? (
+                                    <Link
+                                        href={resolveHref(ctaHref)}
+                                        onClick={(e) => {
+                                            track('cta_click', {
+                                                cta_text: ctaLabel,
+                                                cta_location: 'mobile_menu',
+                                                event_category: 'engagement',
+                                                event_label: 'header_cta_mobile',
+                                            });
+                                            handleLinkClick(e, ctaHref);
+                                        }}
+                                        className="block"
+                                    >
+                                        <GlassButton
+                                            variant="primary"
+                                            size="lg"
+                                            className="w-full justify-center"
+                                        >
+                                            {ctaLabel}
+                                        </GlassButton>
+                                    </Link>
+                                ) : onOpenPlanPicker ? (
                                     <GlassButton
                                         variant="primary"
                                         size="lg"
@@ -187,7 +241,7 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
                                         onClick={() => {
                                             setIsOpen(false);
                                             track('cta_click', {
-                                                cta_text: 'Start My Free Website',
+                                                cta_text: ctaLabel,
                                                 cta_location: 'mobile_menu',
                                                 event_category: 'engagement',
                                                 event_label: 'header_cta_mobile',
@@ -195,11 +249,11 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
                                             onOpenPlanPicker();
                                         }}
                                     >
-                                        Start My Free Website
+                                        {ctaLabel}
                                     </GlassButton>
                                 ) : (
                                     <Link
-                                        href="/#pricing"
+                                        href="/services/web-design#pricing"
                                         onClick={() => setIsOpen(false)}
                                         className="block"
                                     >
@@ -208,7 +262,7 @@ export function Navigation({ onOpenUpsellModal, onOpenPlanPicker }: NavigationPr
                                             size="lg"
                                             className="w-full justify-center"
                                         >
-                                            Start My Free Website
+                                            {ctaLabel}
                                         </GlassButton>
                                     </Link>
                                 )}

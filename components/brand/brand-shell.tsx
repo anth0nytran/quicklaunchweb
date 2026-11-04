@@ -1,0 +1,403 @@
+"use client";
+
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { Menu } from "lucide-react";
+import { SiteFooter } from "@/components/site-footer";
+import { CloudBand } from "@/components/brand/flair";
+import { useEventTracker } from "@/lib/analytics";
+import { BRAND_VARS, Backdrop, NAVY, KitIcon, focusRing, primaryBtn, container } from "@/components/brand/primitives";
+
+// Page frame for the light rebrand: header, footer, CTA band, sticky mobile
+// CTA, brand font + colors. Wrap a page's sections in <BrandShell>.
+
+type NavLink = { name: string; href: string };
+
+/** Top menu: the three offers, then proof and learning. Keep it flat, no dropdowns. */
+const mainLinks: (NavLink & { match: (path: string) => boolean; homeAnchor?: string })[] = [
+  { name: "The Engine", href: "/houston-growth-engine", match: (p) => p.startsWith("/houston-growth-engine") },
+  {
+    name: "AI Search & SEO",
+    href: "/services/web-design",
+    match: (p) => p.startsWith("/services/web-design") || p === "/houston-web-design-for-contractors",
+  },
+  { name: "Automations", href: "/services/automations", match: (p) => p.startsWith("/services/automations") },
+  { name: "Clients", href: "/#results", match: () => false, homeAnchor: "results" },
+  { name: "Guides", href: "/guides", match: (p) => p.startsWith("/guides") },
+];
+
+// =============================================================================
+// Booking — every "Book a Free Strategy Call" goes through here
+// =============================================================================
+
+const BookingContext = createContext<(location: string) => void>(() => {});
+
+/** Returns book(location): scrolls to this page's #book qualifier, or sends the visitor to the home page one. */
+export function useBooking() {
+  return useContext(BookingContext);
+}
+
+// =============================================================================
+// Header
+// =============================================================================
+
+const navItem = `rounded-lg px-3.5 py-2 text-[15px] font-medium transition-colors hover:bg-[#EFF8FF] hover:text-[#0866FF] ${focusRing}`;
+const navActive = "bg-[#EFF8FF] font-semibold text-[#0866FF]";
+const navIdle = "text-[#46516B]";
+
+function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
+  const pathname = usePathname() || "/";
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Home-page anchors: smooth scroll when we're already home, otherwise navigate.
+  const homeAnchor = (id: string) => (e: React.MouseEvent) => {
+    setMenuOpen(false);
+    if (pathname === "/") {
+      e.preventDefault();
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const mobileLink = "border-b border-[#E5EDF6] py-3.5 text-left text-lg font-semibold";
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300 ${
+        scrolled || menuOpen ? "shadow-[0_1px_0_#E5EDF6,0_8px_24px_-12px_rgba(7,20,63,0.15)]" : ""
+      }`}
+    >
+      <div className={`${container} flex h-[72px] items-center justify-between gap-4 lg:h-20`}>
+        <Link href="/" className={`shrink-0 rounded-lg ${focusRing}`}>
+          <Image
+            src="/home/logo.png"
+            alt="QuickLaunchWeb"
+            width={687}
+            height={215}
+            priority
+            className="h-auto w-[170px] sm:w-[210px] lg:w-[230px]"
+          />
+        </Link>
+
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+          {mainLinks.map((link) => {
+            const active = link.match(pathname);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={link.homeAnchor ? homeAnchor(link.homeAnchor) : undefined}
+                aria-current={active ? "page" : undefined}
+                className={`${navItem} ${active ? navActive : navIdle}`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => onBook("header")}
+            className={`${primaryBtn} hidden px-5 py-3 text-[15px] sm:inline-flex`}
+          >
+            Book a Call
+            <KitIcon name="arrow-right" white className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            className={`flex h-11 w-11 items-center justify-center rounded-xl text-[#07143F] hover:bg-[#EFF8FF] lg:hidden ${focusRing}`}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <KitIcon name="close" className="h-6 w-6" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-[#E5EDF6] bg-white lg:hidden"
+            aria-label="Mobile"
+          >
+            <div className={`${container} flex flex-col py-4`}>
+              {mainLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={link.homeAnchor ? homeAnchor(link.homeAnchor) : () => setMenuOpen(false)}
+                  className={mobileLink}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <Link href="/support" onClick={() => setMenuOpen(false)} className={mobileLink}>
+                Support
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onBook("mobile_menu");
+                }}
+                className={`${primaryBtn} mt-5 px-5 py-4 text-base`}
+              >
+                Book a Free Strategy Call
+                <KitIcon name="arrow-right" white className="h-4 w-4" />
+              </button>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
+
+// =============================================================================
+// CTA band (blue, footer.png bottom right)
+// =============================================================================
+
+export function CtaBand({
+  title = "Ready to Get More Calls and Booked Jobs?",
+  subtitle = "Let's build a custom growth plan for your business.",
+  location = "cta_band",
+  buttonLabel = "Book a Free Strategy Call",
+}: {
+  title?: string;
+  subtitle?: string;
+  buttonLabel?: string;
+  /** Analytics cta_location, so bands on different pages can be told apart. */
+  location?: string;
+}) {
+  const book = useBooking();
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-r from-[#0753CF] via-[#0866FF] to-[#2b7bff]">
+      <Image
+        src="/home/footer.png"
+        alt=""
+        width={1400}
+        height={597}
+        sizes="420px"
+        className="pointer-events-none absolute bottom-0 right-0 hidden h-auto w-[340px] md:block lg:w-[420px]"
+      />
+      <div className={`${container} relative flex flex-col items-center gap-7 py-12 text-center sm:py-14 lg:flex-row lg:justify-between lg:text-left`}>
+        <div>
+          <h2 className="text-[26px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[32px]">{title}</h2>
+          <p className="mt-2 text-[17px] text-white/85">{subtitle}</p>
+        </div>
+        <div className="flex shrink-0 flex-col items-center gap-3 lg:mr-[280px]">
+          <button
+            type="button"
+            onClick={() => book(location)}
+            className="group inline-flex items-center gap-2.5 whitespace-nowrap rounded-xl bg-white px-8 py-4 text-[16px] font-bold text-[#0866FF] shadow-xl shadow-[#07143F]/25 transition-all hover:bg-[#EFF8FF] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/50 active:scale-[0.98]"
+          >
+            {buttonLabel}
+            <KitIcon name="arrow-right" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </button>
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-[13px] text-white/85">
+            {["No Obligation", "100% Free", "15-Minute Call"].map((item) => (
+              <li key={item} className="flex items-center gap-1.5">
+                <KitIcon name="check" white className="h-3.5 w-3.5" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// =============================================================================
+// Shell
+// =============================================================================
+
+export function BrandShell({
+  children,
+  pagePath,
+  stickyCta = true,
+}: {
+  children: React.ReactNode;
+  /** Used in analytics events. Defaults to the current path. */
+  pagePath?: string;
+  /** Show the floating "Book a Free Strategy Call" button on phones. */
+  stickyCta?: boolean;
+}) {
+  const pathname = usePathname() || "/";
+  const path = pagePath ?? pathname;
+  const { track } = useEventTracker();
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
+  const scrollTrackedRef = useRef<Set<number>>(new Set());
+
+  const book = useCallback(
+    (location: string) => {
+      track("cta_click", {
+        cta_text: "Book a Free Strategy Call",
+        cta_location: location,
+        page_path: path,
+        event_category: "engagement",
+        event_label: `${location}_cta`,
+      });
+      const target = document.getElementById("book");
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+      else window.location.href = "/#book";
+    },
+    [track, path]
+  );
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const y = window.scrollY;
+      if (y > 500 && y > lastScrollY) setShowMobileCTA(true);
+      else if (y < lastScrollY) setShowMobileCTA(false);
+      lastScrollY = y;
+
+      const pct = ((y + window.innerHeight) / document.documentElement.scrollHeight) * 100;
+      [25, 50, 75, 90].forEach((threshold) => {
+        if (pct >= threshold && !scrollTrackedRef.current.has(threshold)) {
+          scrollTrackedRef.current.add(threshold);
+          track("scroll_depth", {
+            scroll_depth: threshold,
+            page_path: path,
+            event_category: "engagement",
+            event_label: `${threshold}%`,
+          });
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [track, path]);
+
+  return (
+    <BookingContext.Provider value={book}>
+      <MotionConfig reducedMotion="user">
+        <div
+          className="ql-brand relative flex min-h-screen flex-col overflow-x-clip bg-white antialiased"
+          style={{ ...BRAND_VARS, color: NAVY, fontFamily: "var(--font-inter), Arial, sans-serif" }}
+        >
+          <SiteHeader onBook={book} />
+          <main className="flex-1">{children}</main>
+          <div className="bg-[#07143F]">
+            <SiteFooter />
+          </div>
+
+          <AnimatePresence>
+            {stickyCta && showMobileCTA && (
+              <motion.div
+                initial={{ y: 60, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 60, opacity: 0 }}
+                transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
+                className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4 sm:hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() => book("mobile_sticky")}
+                  className={`${primaryBtn} pointer-events-auto w-full max-w-sm px-6 py-4 text-base shadow-2xl`}
+                >
+                  Book a Free Strategy Call
+                  <KitIcon name="arrow-right" white className="h-5 w-5" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </MotionConfig>
+    </BookingContext.Provider>
+  );
+}
+
+/** Light page hero for inner pages: eyebrow, H1, intro, CTAs, optional art on the right. */
+export function PageHero({
+  eyebrow,
+  title,
+  intro,
+  art,
+  primaryLabel = "Book a Free Strategy Call",
+  secondary,
+  children,
+}: {
+  eyebrow: string;
+  title: React.ReactNode;
+  intro?: React.ReactNode;
+  art?: React.ReactNode;
+  primaryLabel?: string;
+  secondary?: { label: string; href: string };
+  children?: React.ReactNode;
+}) {
+  const book = useBooking();
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-16 pt-[104px] sm:pt-28 lg:pb-28 lg:pt-32">
+      <Backdrop variant="dots" />
+      <CloudBand className="opacity-60" />
+      <div className={`${container} relative z-10 grid items-center gap-10 ${art ? "md:grid-cols-2 lg:grid-cols-[1.1fr_1fr]" : ""}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className={art ? "" : "max-w-3xl"}
+        >
+          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">{eyebrow}</p>
+          <h1 className="mt-4 text-[36px] font-extrabold leading-[1.08] tracking-[-0.04em] sm:text-[46px] lg:text-[52px]">
+            {title}
+          </h1>
+          {intro && <div className="mt-5 max-w-[36rem] text-[17px] leading-[1.55] text-[#46516B] sm:text-[18px]">{intro}</div>}
+          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
+            <button type="button" onClick={() => book("hero")} className={`${primaryBtn} px-7 py-4 text-[16px]`}>
+              {primaryLabel}
+              <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </button>
+            {secondary && (
+              <Link
+                href={secondary.href}
+                className={`group inline-flex items-center justify-center gap-2.5 rounded-xl border-2 border-[#0866FF]/30 bg-white px-7 py-4 text-[16px] font-bold text-[#0866FF] transition-all hover:border-[#0866FF] hover:bg-[#EFF8FF] ${focusRing}`}
+              >
+                {secondary.label}
+                <KitIcon name="play" className="h-4 w-4" />
+              </Link>
+            )}
+          </div>
+          {children}
+        </motion.div>
+        {art && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto w-full max-w-[620px]"
+          >
+            {art}
+          </motion.div>
+        )}
+      </div>
+    </section>
+  );
+}

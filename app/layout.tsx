@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Lato } from "next/font/google";
+import { Montserrat, Lato, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -22,11 +22,19 @@ const lato = Lato({
   display: "swap",
 });
 
+// Brand font for the light redesign (components/brand). Applied per page by BrandShell.
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const homeMetadata = buildPageMetadata({
-  title: "QuickLaunchWeb | The System That Keeps Your Phone Ringing",
+  title: "Houston Facebook Ads & Video for Contractors | QuickLaunchWeb",
   description:
-    "More jobs. Zero ads. Show up on Google, Maps, and AI search. Missed calls get texted back. Leads follow up automatically. Reviews build on autopilot. Free website included. Live in 48 hours.",
+    "Facebook and Instagram ads, contractor video, and social media marketing for Houston home service businesses. Live in 7 days. Leads go straight to your phone, or our team calls them and books the estimate.",
   path: "/",
 });
 
@@ -35,19 +43,18 @@ export const metadata: Metadata = {
   ...homeMetadata,
   keywords: [
     "QuickLaunchWeb",
-    "get more calls without ads",
-    "local business lead system",
-    "automated review requests",
-    "google business profile automation",
-    "local SEO for small business",
+    "houston social media marketing",
+    "social media marketing for contractors",
+    "home service marketing houston",
+    "done for you social media management",
+    "facebook ads for contractors",
+    "instagram marketing for home services",
+    "contractor lead generation houston",
+    "appointment setting for home services",
     "missed call text back",
-    "contractor lead generation",
-    "local business marketing system",
     "google reviews automation",
-    "CRM for contractors",
     "website for local business",
-    "show up on google",
-    "AI search optimization",
+    "local SEO for small business",
   ],
   robots: {
     index: true,
@@ -80,7 +87,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth overflow-x-hidden">
       <body
-        className={`${lato.variable} ${montserrat.variable} ${lato.className} bg-black text-white antialiased overflow-x-hidden`}
+        className={`${lato.variable} ${montserrat.variable} ${inter.variable} ${lato.className} bg-black text-white antialiased overflow-x-hidden`}
       >
         {GA_MEASUREMENT_ID && (
           <>
