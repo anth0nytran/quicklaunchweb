@@ -4,16 +4,17 @@ import Link from "next/link";
 import { DiscoveryCallSection } from "@/components/discovery-call";
 import { BrandShell, CtaBand, PageHero } from "@/components/brand/brand-shell";
 import { ResultsSection, ResultsStatCard } from "@/components/brand/results";
+import { ClientLogoStrip } from "@/components/brand/client-logo-grid";
 import { Backdrop, Eyebrow, IconCircle, IconTile, KitIcon, Reveal } from "@/components/brand/primitives";
 import { container, focusRing, sectionH2, sectionPad } from "@/components/brand/tokens";
 import { engine } from "@/lib/engineData";
 import { socialFaqs } from "@/lib/socialFaqData";
 import { usePageTracker, useEventTracker } from "@/lib/analytics";
 
-// The flagship offer page. Structure follows a Hormozi-style offer: the outcome
-// (booked, bigger jobs), why the old way fails, the parts of the Engine, who it's
-// for and not for, scarcity, proof, process, then the call. Copy lives in
-// lib/engineData.ts.
+// The flagship offer page. Same plain voice as the home page (3rd-grade level).
+// Order: the promise, the usual way vs. the Engine, each part in detail, who
+// it's for, real numbers, how it starts, then the call. Copy lives in
+// lib/engineData.ts. Price stays off the site.
 
 const stepIcons = ["calendar", "target", "rocket", "growth"];
 
@@ -26,14 +27,13 @@ function Sections() {
         eyebrow="The Houston Growth Engine"
         title={
           <>
-            Booked Jobs. Bigger Tickets. <span className="text-[#0866FF]">Real Revenue.</span>
+            More Calls. More Booked Jobs. <span className="text-[#0866FF]">More Money.</span>
           </>
         }
         intro={
           <p>
-            One done-for-you system that turns Facebook and Instagram into booked, higher-ticket jobs for
-            Houston home service businesses. We don&apos;t stop at leads. We qualify them, book them, and
-            judge ourselves by the jobs they turn into.
+            We film you on your real jobs. We run your Facebook and Instagram ads. Every lead gets a text in
+            60 seconds. Then our team calls and books the job for you.
           </p>
         }
         art={<ResultsStatCard />}
@@ -51,16 +51,17 @@ function Sections() {
         </ul>
       </PageHero>
 
+      <ClientLogoStrip />
+
       {/* ===================== OLD WAY vs ENGINE ===================== */}
       <section className={`relative overflow-hidden bg-white ${sectionPad}`}>
         <Backdrop variant="dots" />
         <div className={`${container} relative`}>
           <Reveal className="mx-auto max-w-3xl text-center">
-            <Eyebrow>Leads Are Not the Goal</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>A Phone Full of Leads Doesn&apos;t Pay the Bills. Booked Jobs Do.</h2>
+            <Eyebrow>Sound Familiar?</Eyebrow>
+            <h2 className={`mt-3 ${sectionH2}`}>Leads Don&apos;t Pay the Bills. Booked Jobs Do.</h2>
             <p className="mt-4 text-[16px] leading-[1.6] text-[#46516B] sm:text-[18px]">
-              Most marketing for contractors stops at the lead. The Engine is built to carry that lead all the
-              way to a booked estimate and a bigger job.
+              Most marketing stops at the lead. We don&apos;t. We take it all the way to your calendar.
             </p>
           </Reveal>
 
@@ -109,10 +110,9 @@ function Sections() {
         <div className={`${container} relative`}>
           <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>What&apos;s Inside the Engine</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>Five Parts. One System. Built to Book Jobs.</h2>
+            <h2 className={`mt-3 ${sectionH2}`}>Five Parts. One Job: Fill Your Calendar.</h2>
             <p className="mt-4 text-[16px] leading-[1.6] text-[#46516B] sm:text-[18px]">
-              Each part fixes a spot where home service businesses lose money. Together they turn a stranger
-              scrolling Facebook into an estimate on your calendar.
+              Each part fixes a spot where you lose money. Together they turn a stranger into a booked job.
             </p>
           </Reveal>
 
@@ -151,11 +151,11 @@ function Sections() {
                       One business per trade, per area.
                     </h3>
                     <p className="mt-3 text-[15px] leading-[1.6] text-white/85">
-                      We won&apos;t run the Engine for your competitor down the street. When a trade in an area
-                      is taken, it&apos;s taken.
+                      We won&apos;t run ads for the guy down the street. If your trade is taken in your area,
+                      it&apos;s taken.
                     </p>
                   </div>
-                  <p className="mt-6 text-[14px] font-semibold text-white">Ask on the call if your area is open.</p>
+                  <p className="mt-6 text-[14px] font-semibold text-white">Ask on your free call if your area is open.</p>
                 </div>
               </Reveal>
             </li>
@@ -168,7 +168,7 @@ function Sections() {
         <div className={`${container} relative`}>
           <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>Is This for You?</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>The Engine Isn&apos;t for Everyone. That&apos;s on Purpose.</h2>
+            <h2 className={`mt-3 ${sectionH2}`}>This Is Not for Everyone. On Purpose.</h2>
           </Reveal>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <Reveal>
@@ -240,15 +240,15 @@ function Sections() {
             {[
               {
                 icon: "search",
-                title: "Want to show up on Google and AI search too?",
-                body: "Our AI Search & SEO packages put you on Google, Maps, and ChatGPT.",
+                title: "Want to show up on Google too?",
+                body: "Our AI Search & SEO plans put you on Google, Maps, and ChatGPT.",
                 href: "/services/web-design",
                 label: "See AI Search & SEO",
               },
               {
                 icon: "automation",
                 title: "Losing time to busywork?",
-                body: "We diagnose your business and automate what makes or saves you money.",
+                body: "We find the busywork. Then we build tools that do it for you.",
                 href: "/services/automations",
                 label: "See Automations",
               },
@@ -275,19 +275,13 @@ function Sections() {
 
       <CtaBand
         location="engine_cta_band"
-        title="Ready to Turn On the Engine?"
-        subtitle="15 minutes. We'll tell you straight if your trade and area are open."
+        title="Ready for More Booked Jobs?"
+        subtitle="Book a free call. We'll tell you if your trade and area are open."
       />
 
       <DiscoveryCallSection
         theme="light"
         source="website_growth_engine"
-        eyebrow="BOOK YOUR FREE STRATEGY CALL"
-        heading={
-          <>
-            5 Quick Questions. Then <span className="text-[#0866FF]">Pick a Time</span>.
-          </>
-        }
       />
 
       {/* ===================== FAQ ===================== */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,11 @@ import { SiteFooter } from "@/components/site-footer";
 import { CloudBand } from "@/components/brand/flair";
 import { useEventTracker } from "@/lib/analytics";
 import { BRAND_VARS, Backdrop, NAVY, KitIcon, focusRing, primaryBtn, container } from "@/components/brand/primitives";
+import { BookingContext, useBooking, type BookingContextValue } from "@/components/booking/booking-context";
+import { BookingModal } from "@/components/booking/booking-modal";
+import { useQualifier } from "@/components/discovery-call";
+
+export { useBooking };
 
 // Page frame for the light rebrand: header, footer, CTA band, sticky mobile
 // CTA, brand font + colors. Wrap a page's sections in <BrandShell>.
@@ -30,14 +35,22 @@ const mainLinks: (NavLink & { match: (path: string) => boolean; homeAnchor?: str
 ];
 
 // =============================================================================
-// Booking — every "Book a Free Strategy Call" goes through here
+// Booking — every "Book a Free Call" goes through here
 // =============================================================================
 
-const BookingContext = createContext<(location: string) => void>(() => {});
+// useBooking() (re-exported above) returns book(location), which opens the
+// full-screen booking popup. See components/booking/.
 
-/** Returns book(location): scrolls to this page's #book qualifier, or sends the visitor to the home page one. */
-export function useBooking() {
-  return useContext(BookingContext);
+/** True for links that point at this page's (or the home page's) #book section. */
+function isBookHref(anchor: HTMLAnchorElement) {
+  const raw = anchor.getAttribute("href") || "";
+  if (!raw.endsWith("#book")) return false;
+  try {
+    const url = new URL(anchor.href, window.location.href);
+    return url.origin === window.location.origin && url.pathname === window.location.pathname;
+  } catch {
+    return false;
+  }
 }
 
 // =============================================================================
@@ -121,7 +134,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
             onClick={() => onBook("header")}
             className={`${primaryBtn} hidden px-5 py-3 text-[15px] sm:inline-flex`}
           >
-            Book a Call
+            Book a Free Call
             <KitIcon name="arrow-right" white className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
           <button
@@ -168,7 +181,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
                 }}
                 className={`${primaryBtn} mt-5 px-5 py-4 text-base`}
               >
-                Book a Free Strategy Call
+                Book a Free Call
                 <KitIcon name="arrow-right" white className="h-4 w-4" />
               </button>
             </div>
@@ -184,10 +197,10 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
 // =============================================================================
 
 export function CtaBand({
-  title = "Ready to Get More Calls and Booked Jobs?",
-  subtitle = "Let's build a custom growth plan for your business.",
+  title = "Ready for More Calls and More Booked Jobs?",
+  subtitle = "Book a free call. We'll tell you straight if we can help.",
   location = "cta_band",
-  buttonLabel = "Book a Free Strategy Call",
+  buttonLabel = "Book a Free Call",
 }: {
   title?: string;
   subtitle?: string;
@@ -221,7 +234,7 @@ export function CtaBand({
             <KitIcon name="arrow-right" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </button>
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-[13px] text-white/85">
-            {["No Obligation", "100% Free", "15-Minute Call"].map((item) => (
+            {["100% Free", "No Pressure", "Houston Only"].map((item) => (
               <li key={item} className="flex items-center gap-1.5">
                 <KitIcon name="check" white className="h-3.5 w-3.5" />
                 {item}
@@ -246,7 +259,7 @@ export function BrandShell({
   children: React.ReactNode;
   /** Used in analytics events. Defaults to the current path. */
   pagePath?: string;
-  /** Show the floating "Book a Free Strategy Call" button on phones. */
+  /** Show the floating "Book a Free Call" button on phones. */
   stickyCta?: boolean;
 }) {
   const pathname = usePathname() || "/";
@@ -255,20 +268,95 @@ export function BrandShell({
   const [showMobileCTA, setShowMobileCTA] = useState(false);
   const scrollTrackedRef = useRef<Set<number>>(new Set());
 
+  // One booking popup per page. Its qualifier state is shared with the inline
+  // #book section (if the page has one), so nobody answers twice.
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingSource, setBookingSource] = useState("website");
+  const qualifier = useQualifier(bookingSource);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+
+  const openBooking = useCallback(() => {
+    const active = document.activeElement;
+    returnFocusRef.current = active instanceof HTMLElement && active !== document.body ? active : null;
+    setBookingOpen(true);
+  }, []);
+
   const book = useCallback(
     (location: string) => {
       track("cta_click", {
-        cta_text: "Book a Free Strategy Call",
+        cta_text: "Book a Free Call",
         cta_location: location,
         page_path: path,
         event_category: "engagement",
         event_label: `${location}_cta`,
       });
-      const target = document.getElementById("book");
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-      else window.location.href = "/#book";
+      openBooking();
     },
-    [track, path]
+    [track, path, openBooking]
+  );
+
+  const onBookingOpenChange = useCallback((open: boolean) => {
+    setBookingOpen(open);
+    // Drop a #book hash so a refresh doesn't pop the booking open again.
+    if (!open && window.location.hash === "#book") {
+      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+    }
+  }, []);
+
+  const onBookingCloseAutoFocus = useCallback((e: Event) => {
+    const target = returnFocusRef.current;
+    if (target && target.isConnected) {
+      e.preventDefault();
+      target.focus({ preventScroll: true });
+    }
+    returnFocusRef.current = null;
+  }, []);
+
+  // Radix locks <body>; this site scrolls on <html>, so lock that too.
+  useEffect(() => {
+    if (!bookingOpen) return;
+    const html = document.documentElement;
+    const prev = html.style.overflow;
+    html.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = prev;
+    };
+  }, [bookingOpen]);
+
+  const registerSource = useCallback((source: string) => {
+    setBookingSource(source);
+    return () => setBookingSource((current) => (current === source ? "website" : current));
+  }, []);
+
+  // Links to "#book" (old guide CTAs, emails, other pages linking to "/#book")
+  // open the popup instead of jumping to the bottom of the page.
+  useEffect(() => {
+    if (window.location.hash === "#book") {
+      book("url_hash");
+    }
+    const onHash = () => {
+      if (window.location.hash === "#book") book("url_hash");
+    };
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const anchor = (e.target as Element | null)?.closest?.("a[href]");
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.target === "_blank") return;
+      if (!isBookHref(anchor)) return;
+      e.preventDefault();
+      book(anchor.dataset.ctaLocation || "book_link");
+    };
+    window.addEventListener("hashchange", onHash);
+    document.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("hashchange", onHash);
+      document.removeEventListener("click", onClick);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once per page; `book` only changes with path.
+  }, []);
+
+  const bookingValue = useMemo<BookingContextValue>(
+    () => ({ book, modalOpen: bookingOpen, qualifier, registerSource }),
+    [book, bookingOpen, qualifier, registerSource]
   );
 
   useEffect(() => {
@@ -297,7 +385,7 @@ export function BrandShell({
   }, [track, path]);
 
   return (
-    <BookingContext.Provider value={book}>
+    <BookingContext.Provider value={bookingValue}>
       <MotionConfig reducedMotion="user">
         <div
           className="ql-brand relative flex min-h-screen flex-col overflow-x-clip bg-white antialiased"
@@ -316,20 +404,27 @@ export function BrandShell({
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 60, opacity: 0 }}
                 transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
-                className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4 sm:hidden"
+                className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4 sm:hidden [body[data-cookie-banner=open]_&]:hidden"
               >
                 <button
                   type="button"
                   onClick={() => book("mobile_sticky")}
                   className={`${primaryBtn} pointer-events-auto w-full max-w-sm px-6 py-4 text-base shadow-2xl`}
                 >
-                  Book a Free Strategy Call
+                  Book a Free Call
                   <KitIcon name="arrow-right" white className="h-5 w-5" />
                 </button>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+
+        <BookingModal
+          open={bookingOpen}
+          onOpenChange={onBookingOpenChange}
+          qualifier={qualifier}
+          onCloseAutoFocus={onBookingCloseAutoFocus}
+        />
       </MotionConfig>
     </BookingContext.Provider>
   );
@@ -341,7 +436,7 @@ export function PageHero({
   title,
   intro,
   art,
-  primaryLabel = "Book a Free Strategy Call",
+  primaryLabel = "Book a Free Call",
   secondary,
   children,
 }: {

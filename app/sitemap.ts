@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { allGuides } from "@/lib/guides";
+import { parseMonthYearToIso } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = "https://quicklaunchweb.us";
@@ -77,7 +78,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...allGuides.map((guide) => ({
       url: `${siteUrl}/guides/${guide.slug}`,
-      lastModified: now,
+      // Real "updated" month, not build time: a lastmod that changes on every
+      // deploy teaches Google to ignore it.
+      lastModified: parseMonthYearToIso(guide.updated) ?? now,
       changeFrequency: "monthly" as const,
       priority: guide.type === "pillar" ? 0.9 : 0.7,
     })),

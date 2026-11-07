@@ -4,6 +4,7 @@ import {
   sendMetaConversionsEvents,
   type MetaEventInput,
 } from '@/lib/meta/conversions';
+import { hasAdConsent } from '@/lib/consent-server';
 
 export const runtime = 'nodejs';
 
@@ -47,6 +48,11 @@ export async function POST(req: Request) {
       { ok: false, error: 'Invalid request body.' },
       { status: 400 }
     );
+  }
+
+  // Consent gate: only send to Meta if the visitor opted in to advertising and GPC is off.
+  if (!hasAdConsent(req, data.adConsent)) {
+    return NextResponse.json({ ok: true, skipped: true, reason: 'no_ad_consent' });
   }
 
   const eventName = normalize(data.eventName);

@@ -1,7 +1,10 @@
 // Content for the Houston Growth Engine page (the flagship offer).
-// Copy rules: sell booked jobs and revenue, not lead counts. No guarantee (the
-// owner chose not to offer one). No invented dollar values or results; proof
-// comes from lib/adResults.ts.
+// Copy rules: 3rd-grade reading level, short plain lines. Sell more calls,
+// more booked jobs, more money. Video of the real contractor is HOW. No
+// guarantee (the owner chose not to offer one). No price on the site. No
+// invented dollar values or results; proof comes from lib/adResults.ts.
+// Say "our team", never "call center". metaTitle/metaDescription/keywords are
+// SEO fields: change them together with the SEO work, not here.
 
 export const engine = {
   name: "Houston Growth Engine",
@@ -21,71 +24,71 @@ export const engine = {
   ],
 
   oldWay: [
-    "Shared leads from Angi and Thumbtack, sold to five other contractors",
-    "Boosted posts that get likes and no calls",
-    "Agencies that report clicks and impressions, not booked jobs",
-    "Cheap, small jobs that keep your crew busy but not profitable",
-    "Leads that sit for hours because you're on a job",
+    "You pay for leads you share with other contractors",
+    "Homeowners can't see your work or your face",
+    "Leads come in, but they don't turn into jobs",
+    "Boosted posts get likes, not calls",
+    "Leads wait for hours while you're on a job",
   ],
   newWay: [
-    "Your own leads from your own ads, not shared with anyone",
-    "Real video of your work that makes homeowners trust you first",
-    "Measured in booked estimates and closed jobs",
-    "Aimed at the bigger jobs and the parts of Houston worth your gas",
-    "Every lead texted in seconds and called by our team",
+    "Your own ads. Your leads go only to you.",
+    "Video of you on the real job",
+    "Our team calls every lead and books it",
+    "Ads aimed at bigger jobs",
+    "Every lead gets a text in 60 seconds",
   ],
 
   /** The parts of the Engine. icon = kit icon in /public/home/icons. */
   parts: [
     {
       icon: "video-camera",
-      title: "Content that sells before you show up",
-      body: "We film you, your crew, and real Houston jobs, then cut it into short videos and ads. Homeowners see your work and your face before they ever call.",
-      points: ["On-site filming in Houston", "Short videos for ads and your pages", "Picture ads if you'd rather not be on camera"],
+      title: "Videos of you on the job",
+      body: "We come to your real jobs in Houston. We film you and your crew. No actors. No stock photos. Homeowners see your face before they call.",
+      points: ["We film on your jobs", "Short videos made for ads", "Picture ads if you hate the camera"],
     },
     {
-      icon: "target",
-      title: "Ads aimed at bigger tickets",
-      body: "Facebook and Instagram ads built around the jobs you actually want: replacements over patch jobs, full projects over touch-ups, in the zip codes worth your time.",
-      points: ["Homeowners only, in your service area", "Offers built for higher-value jobs", "You own the ad account"],
+      icon: "ads",
+      title: "Facebook & Instagram ads",
+      body: "We show your videos to Houston homeowners. We aim at the jobs you want. Big ones. In the areas worth your gas.",
+      points: ["Homeowners near you only", "Aimed at bigger jobs", "You own the ad account"],
     },
     {
       icon: "phone-message",
-      title: "Instant follow-up",
-      body: "Every lead gets a text back in seconds, day or night. Missed calls get answered by text. Leads that go quiet get followed up automatically.",
-      points: ["Missed-call text-back", "Instant replies to new leads", "Automatic follow-up sequences"],
+      title: "Follow-up texts in 60 seconds",
+      body: "A lead comes in at 9 at night. They get a text in 60 seconds. Missed a call? They get a text too.",
+      points: ["Text back on missed calls", "Every new lead texted fast", "Follow-up if they go quiet"],
     },
     {
       icon: "calendar",
-      title: "We qualify and book the estimate",
-      body: "Our team calls every lead, checks they own the home, live in your area, have a real project and a real budget, then puts the estimate on your calendar.",
-      points: ["Verified homeowner, real budget", "Booked straight onto your calendar", "Or take the leads yourself, your call"],
+      title: "Our team books your leads",
+      body: "Our team calls every lead. Do they own the home? Is the job real? Then we book it on your calendar.",
+      points: ["Real homeowners only", "Booked on your calendar", "Or take the calls yourself"],
     },
     {
       icon: "growth",
-      title: "Measured in jobs and revenue",
-      body: "We judge the Engine by what it puts on your calendar and in your bank account. We cut what doesn't book jobs and put more behind what does.",
-      points: ["Weekly ad tuning", "Booked jobs over lead counts", "Sales coaching to close more estimates"],
+      title: "Every Monday, you see the numbers",
+      body: "Calls, booked jobs, and money made. On one page. We cut what doesn't book jobs. We put more on what does.",
+      points: ["One-page report every Monday", "We tune ads every week", "Tips to win more bids"],
     },
   ],
 
   forYou: [
-    "You run a Houston home service business and do good work",
-    "You can take on more jobs, and want bigger ones",
-    "You (or your team) show up to estimates and follow through",
-    "You're tired of shared leads and word-of-mouth dry spells",
+    "You run a Houston home service business",
+    "You do good work and want bigger jobs",
+    "You can put money into ads each month",
+    "You (or your team) show up to every estimate",
   ],
   notForYou: [
-    "You're looking for the cheapest leads possible",
+    "You want the cheapest leads you can find",
     "You can't take on more work right now",
-    "You don't want to answer the phone or show up to estimates",
-    "You're outside the Houston metro",
+    "You won't answer the phone",
+    "You work outside the Houston area",
   ],
 
   steps: [
-    { label: "Day 1", title: "Strategy call", body: "15 minutes. Your trade, your area, the jobs you want more of. We tell you straight if the Engine fits." },
-    { label: "Days 2–5", title: "We build it", body: "Videos, ads, lead forms, text-back, and the booking process, all set up for you." },
-    { label: "Day 7", title: "The Engine turns on", body: "Ads go live. Leads get texted, called, qualified, and booked." },
-    { label: "Every week", title: "We tune it", body: "More money behind what books jobs. Less behind what doesn't." },
+    { label: "Day 1", title: "Free call", body: "We look at your trade and area. We tell you straight if it fits." },
+    { label: "Days 2–5", title: "We set it up and film", body: "We film you on a job. We set up ads, texts, and your calendar." },
+    { label: "Day 7", title: "Ads go live", body: "Leads come in. We text them. Our team calls and books them." },
+    { label: "Every Monday", title: "You see the numbers", body: "Calls, jobs, and money made. More money on what works." },
   ],
 };

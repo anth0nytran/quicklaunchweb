@@ -4,12 +4,14 @@ import Link from "next/link";
 import { useBooking } from "@/components/brand/brand-shell";
 import { KitIcon, outlineBtn, primaryBtn } from "@/components/brand/primitives";
 
-const BOOK_LABEL = "Book a Free Strategy Call";
+const BOOK_LABEL = "Book a Free Call";
 
 /**
- * Guide CTA button. With no href it is "Book a Free Strategy Call" (via useBooking);
+ * Guide CTA button. With no href it is "Book a Free Call" (via useBooking);
  * an explicit href is kept as a brand-styled link with its own label.
  * Callers pass hrefs through ctaHref() so old website-offer links become bookings.
+ * Hrefs that point at the booking section ("/#book", "/services/automations#book")
+ * also open the booking popup instead of leaving the guide.
  */
 export function GuideCtaButton({
   href,
@@ -34,10 +36,10 @@ export function GuideCtaButton({
     />
   );
 
-  if (!href) {
+  if (!href || href.endsWith("#book")) {
     return (
       <button type="button" onClick={() => book(location)} className={base}>
-        {BOOK_LABEL}
+        {href ? label ?? BOOK_LABEL : BOOK_LABEL}
         {arrow}
       </button>
     );

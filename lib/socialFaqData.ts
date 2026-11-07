@@ -1,39 +1,53 @@
-// FAQ content for the social media marketing offer (home page).
-// Keep answers short and plain. Each one also feeds FAQPage structured data.
+// FAQ for the home page and the Houston Growth Engine page.
+// Keep answers at a 3rd-grade reading level: short words, short lines.
+// No price, no guarantee, no made-up numbers. Each one also feeds FAQPage
+// structured data.
 
 export type SocialFaq = { q: string; a: string };
 
 export const socialFaqs: SocialFaq[] = [
   {
+    q: "What happens on the free call?",
+    a: "We look at your trade and your part of Houston. We show you what the guys getting jobs from video ads are doing. We do the math with your job size. That math is a guess, not a promise.\n\nThen we ask one thing: want us to do it for you? If not, no hard feelings.",
+  },
+  {
+    q: "How much should I spend on ads?",
+    a: "For most Houston trades, we suggest $2,000 to $4,000 a month. That money goes to Facebook on your own card. Not to us.\n\nBigger jobs can handle more. We look at your job size on the call and tell you where to start.",
+  },
+  {
     q: "Do I have to be on camera?",
-    a: "No. We run picture ads for a lot of our guys and they do great.\n\nWe will still tell you the truth: you talking on camera works best. People hire who they trust, and they trust a face. If you can do it, do it. If not, we make it work without you.",
+    a: "No. We can run picture ads.\n\nBut here is the truth. Video of you works best. People hire who they trust. They trust a face. If you can do it, do it. If not, we make it work.",
   },
   {
     q: "Do you call my leads?",
-    a: "Only if you want us to. You pick. Send the leads straight to your phone, or let our team call them, check they are a real homeowner with money to spend, and book the estimate for you.",
+    a: "Yes, if you want. Our team calls every lead. We check they own the home and have a real job. Then we book it on your calendar.\n\nOr we send the leads right to your phone. You pick.",
+  },
+  {
+    q: "I already pay Angi or HomeAdvisor. Why switch?",
+    a: "You don't have to stop. But with those, you share the lead with other contractors. Then it is a race to call first.\n\nWith your own ads, the lead comes to you. Only you.",
   },
   {
     q: "Is the ad money included?",
-    a: "No. Ad money goes to Facebook on your own card. You own the ad account and see every dollar. We tell you what to start with on the call.",
+    a: "No. Ad money goes to Facebook on your own card. You own the ad account. You see every dollar.",
   },
   {
     q: "How fast do I get leads?",
-    a: "Ads can bring leads in the first week. Videos take longer and build up over time. The first month is for getting it dialed in. Anyone who promises you a flood of jobs in week one is lying.",
+    a: "Ads can bring leads the first week. The first month is for tuning. Anyone who promises a flood of jobs in week one is lying.",
   },
   {
     q: "Am I stuck in a contract?",
-    a: "We ask for 90 days. That is how long it takes to make the content, get the data, and let the ads learn. Quitting at day 30 wastes the work you paid for. After that it is month to month.",
+    a: "We ask for 90 days. That is how long it takes to film, test, and let the ads learn. After that, it is month to month.",
   },
   {
     q: "What do you need from me?",
-    a: "About an hour the first week. After that, just send us photos and clips from your phone. We do the rest.",
+    a: "About an hour the first week. Then send us photos and clips from your phone. We do the rest.",
   },
   {
     q: "Why only Houston?",
-    a: "Because we live here. We know what a Houston homeowner pays, which areas are worth your gas, and which ones waste your money. We can also come film with you.",
+    a: "We live here. We know which areas are worth your gas. And we can come film you on the job.",
   },
   {
     q: "What does it cost?",
-    a: "It depends on your trade and whether you want us calling your leads. That is what the 15 minute call is for. We are not the cheapest in Houston and we are not trying to be.",
+    a: "It depends on your trade and your goals. We go over price on the call. Not online.\n\nWe are not the cheapest in Houston. We are not trying to be.",
   },
 ];

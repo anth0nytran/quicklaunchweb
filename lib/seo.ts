@@ -8,8 +8,29 @@ export const siteUrl = (() => {
   if (!value && process.env.NODE_ENV === "production") {
     throw new Error("Missing NEXT_PUBLIC_SITE_URL in production.");
   }
-  return value || "http://localhost:3000";
+  if (!value) {
+    return "http://localhost:3000";
+  }
+  // The live site serves only HTTPS (http:// 308-redirects). If the env var was
+  // saved as http://, canonicals, og:url and every JSON-LD @id would point at a
+  // redirecting URL, so force https for any non-local host.
+  return /^http:\/\/(localhost|127\.0\.0\.1)(:|$)/.test(value)
+    ? value
+    : value.replace(/^http:\/\//, "https://");
 })();
+
+/** Public NAP. Keep identical to the Google Business Profile, Bing Places, Yelp, etc. */
+export const sitePhone = "+1-832-552-3458";
+export const siteLocality = { addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" };
+
+/**
+ * Official profiles for Organization.sameAs (entity building for Google + AI engines).
+ * Add each URL here as the profile goes live (GBP share link, LinkedIn company page,
+ * Facebook page, Instagram, YouTube, Clutch, BBB, Crunchbase...). Real URLs only.
+ */
+export const sameAsProfiles: string[] = [];
+
+export const founderId = `${siteUrl}/#founder`;
 
 export const organizationId = `${siteUrl}/#organization`;
 export const websiteId = `${siteUrl}/#website`;

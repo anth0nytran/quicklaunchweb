@@ -352,6 +352,11 @@ const guides: Guide[] = [
             tag: "Pillar",
           },
           {
+            href: "/guides/shared-leads-vs-exclusive-leads-contractors",
+            label: "Shared Leads vs. Exclusive Leads: Which Is Better for Contractors?",
+            tag: "Leads",
+          },
+          {
             href: "/guides/why-website-not-getting-customers",
             label: "Why Your Website Isn't Getting You Customers",
             tag: "Pillar",
@@ -909,6 +914,11 @@ const guides: Guide[] = [
             href: "/guides/invisible-contractor-ai-search",
             label: "Invisible Contractor: Why Customers Can't Find You",
             tag: "Pillar",
+          },
+          {
+            href: "/guides/how-to-book-more-estimates-contractors",
+            label: "How Do Contractors Book More Estimates and Win Bigger Jobs?",
+            tag: "Booking",
           },
           {
             href: "/guides/how-to-get-more-customers-website",
@@ -2549,6 +2559,2060 @@ const guides: Guide[] = [
             q: "How do I know if my content is good enough?",
             a: "If a stranger can read it and understand what you do, who you serve, and how to contact you, it is good enough. You can always improve it later. Clarity matters more than cleverness.",
           },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Facebook/Instagram ads by trade: Roofing
+     Primary KW: "how much do facebook ads cost for roofers in houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "facebook-ads-for-roofers-houston",
+    type: "support",
+    title: "How Much Do Facebook Ads Cost for Roofers in Houston?",
+    description:
+      "There is no set price. You pick your own budget, and you can raise it, lower it, or stop any day. What each lead costs depends on your ad, your offer, and the season. Roofers who show their own face on real roofs tend to get calls from better homeowners.",
+    metaTitle: "Facebook Ads for Roofers in Houston: Cost & What Works",
+    metaDescription:
+      "What Facebook and Instagram ads cost Houston roofers, what drives the price, and the ad types that bring real roof replacement calls.",
+    kicker: "Support Guide",
+    category: "Facebook & Instagram Ads",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "What sets the cost of a roofing ad.",
+      "Ad types that work for Houston roofers.",
+      "When to spend more, and when to pull back.",
+      "How to turn a lead into a signed roof.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "what-sets-cost", label: "What sets the cost" },
+      { id: "ad-types", label: "Ad types that work" },
+      { id: "houston-seasons", label: "Houston seasons" },
+      { id: "after-the-lead", label: "After the lead" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Roofer in Houston?",
+      description: "We film you on real roofs, run the ads, text every lead, and our team books the estimate.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want more roof replacements, not more tire kickers?",
+      description: "Let's talk about your area, your jobs, and what a good month looks like for you.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "You set the budget. Facebook does not.",
+        "Real job video beats stock photos.",
+        "A fast reply matters as much as the ad.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "How much do Facebook ads cost for roofers in Houston?",
+        paragraphs: [
+          "Facebook and Instagram ads have no fixed price.",
+          "You choose a daily or monthly budget. You can change it any time. You can also pause it.",
+          "So the real question is not “what does it cost?” The real question is “what does one signed roof cost me?”",
+          "That number depends on three things. Your ad. Your offer. And how fast you call people back.",
+          "Two roofers can spend the same money. One gets signed jobs. The other gets people who never answer. The ad is only half of it.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "what-sets-cost",
+        title: "What makes a roofing lead cost more or less?",
+        columns: ["Thing", "Makes leads cost less", "Makes leads cost more"],
+        rows: [
+          ["The ad", "Owner on a real Houston roof, talking", "Stock photo of a house"],
+          ["The offer", "Clear and easy, like a free roof check", "Vague, like “call us today”"],
+          ["The area", "Neighborhoods you can reach fast", "All of Texas"],
+          ["The form", "A few questions that show real need", "Name and phone only"],
+          ["The season", "Right after a storm hits your area", "A slow, dry month with no storms"],
+          ["The follow-up", "Text and call within minutes", "Call back the next day"],
+        ],
+        note: "These are patterns we see in how ads work. They are not promises of a price.",
+      },
+      {
+        kind: "checklist",
+        id: "ad-types",
+        title: "What kind of Facebook ads work for roofers?",
+        items: [
+          {
+            title: "The roof walk video",
+            detail: "You on a roof with your phone. Show the damage. Say what you see. Homeowners trust a face more than a logo.",
+          },
+          {
+            title: "The before and after",
+            detail: "Old roof, new roof. Same house. Real job. Ask the homeowner first.",
+          },
+          {
+            title: "The “what we check” video",
+            detail: "Walk through what you look at on a roof check. Flashing, vents, soft spots. This teaches and builds trust.",
+          },
+          {
+            title: "The crew at work",
+            detail: "Short clips of your crew tearing off and laying shingles. Clean site. Safe work. People want to see who will be at their house.",
+          },
+          {
+            title: "The happy homeowner",
+            detail: "A real customer says a few words on camera. Only if they agree. Never script fake words for them.",
+          },
+        ],
+        note: "Want more video ideas? See our guide on what to film on the job.",
+      },
+      {
+        kind: "text",
+        id: "who-to-reach",
+        title: "Who should a Houston roofer show ads to?",
+        paragraphs: [
+          "Show ads to homeowners. Not renters.",
+          "Pick the areas you want to work in. Maybe Katy, Cypress, Pearland, or The Woodlands. Do not pick every zip code at once.",
+          "Ask a few questions in the form. Is it your home? Is the roof leaking? When do you want it done?",
+          "These questions cut out people who are just curious. You get fewer leads. But more of them are real.",
+        ],
+        list: [
+          "Homeowners only.",
+          "Areas you can reach in a short drive.",
+          "Questions that show real need.",
+          "One clear offer per ad.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "houston-seasons",
+        title: "When should Houston roofers spend more on ads?",
+        paragraphs: [
+          "Houston weather drives roofing work.",
+          "The National Oceanic and Atmospheric Administration (NOAA) says Atlantic hurricane season runs June 1 to November 30.",
+          "Hail and big spring storms also hit the Houston area. After a storm, many homeowners look for help at the same time.",
+          "That is when good ads matter most. Be ready before the storm. Have videos filmed. Have your ad set up and paused. Then turn it on when the storm passes.",
+          "In slow months, keep a small budget running. Show your work. Stay in front of people. When they need a roof, they will think of you.",
+        ],
+        links: [
+          {
+            context: "For a full year plan, read",
+            label: "the Houston contractor marketing calendar",
+            href: "/guides/houston-contractor-marketing-calendar",
+            suffix: "for heat, storms, and freezes.",
+          },
+        ],
+      },
+      {
+        kind: "callout",
+        id: "storm-chasers",
+        title: "Stand apart from storm chasers",
+        body: [
+          "After a big storm, out-of-town crews show up fast. Homeowners know this. Many are careful.",
+          "Texas does not have a state license for roofers. So homeowners look for other proof.",
+          "Show your face. Show your trucks. Show jobs on streets they know. Say how long you have worked in Houston.",
+          "Local proof is your best ad.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "after-the-lead",
+        title: "What should happen after a roofing lead comes in?",
+        paragraphs: [
+          "The ad gets the lead. Speed gets the job.",
+          "A homeowner with a leak fills out three forms. The first roofer to call often gets the visit.",
+          "Text them right away. Call them in minutes. Set a time to look at the roof.",
+          "This is how the Houston Growth Engine works. We text every lead fast. Our team calls and books the estimate on your calendar. You show up and sell the roof.",
+        ],
+        links: [
+          {
+            context: "See how we run",
+            label: "Facebook ads for contractors",
+            href: "/services/facebook-ads",
+            suffix: "in Houston.",
+          },
+          {
+            context: "Learn how to",
+            label: "book more estimates and win bigger jobs",
+            href: "/guides/how-to-book-more-estimates-contractors",
+            suffix: "from the leads you get.",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "How much should a roofer spend on Facebook ads?",
+            a: "Start with an amount you can keep running for a few months. Ads need time to learn. Judge by signed roofs, not by clicks or likes.",
+          },
+          {
+            q: "Do Facebook ads work for roofing in Houston?",
+            a: "They can. They work best with real video of you, a clear offer, a tight area, and a very fast call back.",
+          },
+          {
+            q: "Are Facebook leads worse than Google leads?",
+            a: "They are different. Google catches people searching right now. Facebook reaches homeowners before they search. Good questions in your form help sort out the real ones.",
+          },
+          {
+            q: "Should I run ads after a hurricane?",
+            a: "Yes, if you can handle the work. Have your ads and videos ready before the storm. Turn them on when it is safe and you have crew time.",
+          },
+          {
+            q: "Do I need to make the videos myself?",
+            a: "You need to be in them. Homeowners want to see who they are hiring. We can film you on real jobs so you do not have to.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/guides/houston-contractor-marketing-calendar", label: "Houston Contractor Marketing Calendar", tag: "Houston" },
+          { href: "/services/facebook-ads", label: "Facebook Ads for Houston Contractors", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Facebook/Instagram ads by trade: HVAC
+     Primary KW: "facebook ads for hvac companies houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "facebook-ads-for-hvac-companies-houston",
+    type: "support",
+    title: "Do Facebook Ads Work for HVAC Companies in Houston?",
+    description:
+      "Yes, they can. Facebook and Instagram ads work best for Houston HVAC companies when they sell bigger jobs, like new systems, not just quick repairs. Show your real techs, put your license number in the ad, and call every lead back in minutes.",
+    metaTitle: "Facebook Ads for HVAC Companies in Houston | QuickLaunchWeb",
+    metaDescription:
+      "How Houston HVAC companies can use Facebook and Instagram ads to book system replacements, what to show in the ad, and the Texas license rule to follow.",
+    kicker: "Support Guide",
+    category: "Facebook & Instagram Ads",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "Which HVAC jobs fit Facebook ads best.",
+      "What to show so homeowners trust you.",
+      "The Texas license rule for A/C ads.",
+      "How Houston heat changes your plan.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "which-jobs", label: "Which jobs" },
+      { id: "what-to-show", label: "What to show" },
+      { id: "license-rule", label: "License rule" },
+      { id: "houston-heat", label: "Houston heat" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "HVAC owner in Houston?",
+      description: "We film your techs, run the ads, text every lead, and our team books the visit.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want more system replacements on your calendar?",
+      description: "Tell us your area and your best jobs. We will show you how we would run it.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Sell the big job, not the cheap tune-up.",
+        "Show real techs and real trucks.",
+        "Put your TDLR license number in every ad.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Do Facebook ads work for HVAC companies in Houston?",
+        paragraphs: [
+          "Yes. But not the way most people run them.",
+          "Many HVAC ads push a cheap tune-up. That brings in people who only want the cheap thing.",
+          "Better ads talk to homeowners with an old system. Their unit is loud. Their bill is high. One room never cools. They are ready for a real fix.",
+          "Facebook and Instagram reach these people before they search. That is the big plus. You show up first. You look like the expert.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "which-jobs",
+        title: "Which HVAC jobs fit Facebook ads best?",
+        columns: ["Job", "Good fit for Facebook ads?", "Why"],
+        rows: [
+          ["New A/C or full system", "Yes", "Big ticket. People plan it. Trust matters a lot."],
+          ["Heat pump or upgrade", "Yes", "Needs teaching. Video explains it well."],
+          ["Duct work and air flow", "Yes", "Many people do not know it is the problem."],
+          ["Maintenance plans", "Sometimes", "Good for repeat work. Lower first ticket."],
+          ["Emergency “no cool” repair", "Less so", "People in a rush search Google first."],
+        ],
+        note: "Many shops run Google for urgent repairs and Facebook for planned, bigger jobs.",
+      },
+      {
+        kind: "checklist",
+        id: "what-to-show",
+        title: "What should an HVAC ad show?",
+        items: [
+          {
+            title: "Your real tech in a real attic",
+            detail: "Hot, dusty, honest. Homeowners see who will come to their home.",
+          },
+          {
+            title: "The old unit next to the new one",
+            detail: "Rust, dirt, and age are easy to see. Ask the homeowner before you film.",
+          },
+          {
+            title: "A simple tip",
+            detail: "“Change your filter.” “Clear around the outside unit.” Help first. Sell second.",
+          },
+          {
+            title: "The owner saying who you are",
+            detail: "Ten seconds. Your name. How long you have served Houston. What you stand for.",
+          },
+          {
+            title: "Your truck and uniform",
+            detail: "It shows you are a real local company, not a lead seller.",
+          },
+        ],
+        note: "Video of you on the job is the core of what we film for clients.",
+      },
+      {
+        kind: "text",
+        id: "lead-form",
+        title: "What should an HVAC lead form ask?",
+        paragraphs: [
+          "A good form sorts people for you.",
+          "Ask a few simple questions. Keep each one short. Too many questions and people quit.",
+          "The answers help your team know who to call first. A homeowner with a 15-year-old unit and no cool air is a hot lead.",
+        ],
+        list: [
+          "Do you own the home?",
+          "How old is your system?",
+          "What is going on? Not cooling, loud, high bills?",
+          "When do you want it fixed or replaced?",
+          "What part of Houston are you in?",
+        ],
+      },
+      {
+        kind: "text",
+        id: "license-rule",
+        title: "Do HVAC ads in Texas need a license number?",
+        paragraphs: [
+          "Yes. Texas has a rule for this.",
+          "The Texas Department of Licensing and Regulation (TDLR) licenses air conditioning contractors.",
+          "Its rule, 16 Texas Administrative Code §75.71, says ads that ask for A/C work must show the license number.",
+          "That means your Facebook and Instagram ads too. Put the number in the ad text or on the image.",
+          "This also helps you. It shows you are licensed. Many homeowners like to check.",
+        ],
+        links: [
+          {
+            context: "Read the rule text at",
+            label: "16 Tex. Admin. Code §75.71",
+            href: "https://www.law.cornell.edu/regulations/texas/16-Tex-Admin-Code-SS-75-71",
+            suffix: "(Cornell Law School).",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "houston-heat",
+        title: "How does Houston heat change HVAC ads?",
+        paragraphs: [
+          "Houston summers are long and hot. When it gets hot, old systems fail.",
+          "In peak heat, you may have more work than you can do. That is a good time to sell replacements, not chase every repair.",
+          "In spring, run ads about getting ready. “Is your A/C ready for summer?” works because it is true.",
+          "In fall and winter, talk about heaters and heat pumps. Houston can freeze too. Many people remember the February 2021 winter storm.",
+          "Keep ads on all year. Just change the message with the season.",
+        ],
+        links: [
+          {
+            context: "Plan the whole year with",
+            label: "the Houston contractor marketing calendar",
+            href: "/guides/houston-contractor-marketing-calendar",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "after-the-lead",
+        title: "What happens after an HVAC lead comes in?",
+        paragraphs: [
+          "Speed wins. A hot homeowner will not wait.",
+          "Text them right away. Call them in minutes. Book a time for a tech or a comfort advisor.",
+          "That is what the Houston Growth Engine does. We text every lead fast. Our team calls and books the visit. Your team runs the call and sells the system.",
+        ],
+        links: [
+          {
+            context: "See how we run",
+            label: "the Houston Growth Engine",
+            href: "/houston-growth-engine",
+            suffix: "from ad to booked visit.",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Are Facebook ads good for HVAC repair calls?",
+            a: "They can bring some. But urgent repair calls usually start on Google. Facebook is better for planned jobs like new systems.",
+          },
+          {
+            q: "Do I need my license number in Facebook ads?",
+            a: "Texas rule 16 TAC §75.71 says A/C ads that ask for work must show the license number. Check the TDLR site for the latest rule.",
+          },
+          {
+            q: "What is the best time to run HVAC ads in Houston?",
+            a: "All year. Change the message. Get ready in spring. Replace in summer. Heat in winter.",
+          },
+          {
+            q: "Should I advertise a cheap tune-up?",
+            a: "It can fill the schedule. But it often brings bargain hunters. An honest message about old systems tends to bring better jobs.",
+          },
+          {
+            q: "Who books the appointments?",
+            a: "With us, our team calls and books the visit. You can also do it in house. The key is speed.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/guides/how-to-book-more-estimates-contractors", label: "How to Book More Estimates and Win Bigger Jobs", tag: "Booking" },
+          { href: "/guides/facebook-ads-for-plumbers-houston", label: "Facebook Ads for Plumbers in Houston", tag: "Ads" },
+          { href: "/services/facebook-ads", label: "Facebook Ads for Houston Contractors", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Facebook/Instagram ads by trade: Plumbing
+     Primary KW: "facebook ads for plumbers houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "facebook-ads-for-plumbers-houston",
+    type: "support",
+    title: "Facebook Ads for Plumbers in Houston: What Gets Booked Jobs?",
+    description:
+      "The Facebook ads that work best for Houston plumbers sell planned, bigger jobs like water heaters, repipes, and slab leak repair. They show the real plumber, include the master plumber's license number, and get a fast call back. Clogged drains usually still start on Google.",
+    metaTitle: "Facebook Ads for Plumbers in Houston: What Works",
+    metaDescription:
+      "Which plumbing jobs fit Facebook and Instagram ads in Houston, what to film, the Texas license rule for plumbing ads, and how to book the job fast.",
+    kicker: "Support Guide",
+    category: "Facebook & Instagram Ads",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "The plumbing jobs that fit Facebook best.",
+      "Video ideas that build trust fast.",
+      "The Texas license rule for plumbing ads.",
+      "Houston freezes, old pipes, and timing.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "which-jobs", label: "Which jobs" },
+      { id: "video-ideas", label: "Video ideas" },
+      { id: "license-rule", label: "License rule" },
+      { id: "houston-timing", label: "Houston timing" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Plumber in Houston?",
+      description: "We film you on the job, run the ads, text every lead, and our team books the estimate.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want more repipes and water heaters, fewer small callouts?",
+      description: "Tell us the jobs you want more of. We will show you how we would go after them.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Use Facebook for planned jobs.",
+        "Use Google for “right now” jobs.",
+        "Show the RMP license number in your ads.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Do Facebook ads work for plumbers in Houston?",
+        paragraphs: [
+          "Yes, for the right jobs.",
+          "When a toilet overflows, people grab their phone and search. That is a Google moment.",
+          "But some jobs are planned. A water heater that is getting old. Low water pressure. Old pipes in a 1960s house. A homeowner thinks about these for weeks.",
+          "Facebook and Instagram are great for those jobs. You show up in their feed. You teach them. When they are ready, they already know your face.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "which-jobs",
+        title: "Which plumbing jobs fit Facebook ads?",
+        columns: ["Job", "Best place to advertise", "Why"],
+        rows: [
+          ["Water heater swap or tankless", "Facebook and Instagram", "Planned. People compare. Trust matters."],
+          ["Whole house repipe", "Facebook and Instagram", "Big job. Needs a clear, calm explainer."],
+          ["Slab leak repair", "Both", "Scary for homeowners. Video helps calm them."],
+          ["Water filters and softeners", "Facebook and Instagram", "People learn about it from ads."],
+          ["Clogged drain, burst pipe", "Google", "Urgent. People search right now."],
+        ],
+        note: "This is a common way to split the work. Your market may be different.",
+      },
+      {
+        kind: "checklist",
+        id: "video-ideas",
+        title: "What should a plumber film for ads?",
+        items: [
+          {
+            title: "The old water heater",
+            detail: "Show rust and leaks. Say how you can tell it is near the end. Simple and honest.",
+          },
+          {
+            title: "Inside the wall",
+            detail: "When you open a wall for a repipe, film the old pipe. People are shocked by what they see.",
+          },
+          {
+            title: "The clean job site",
+            detail: "Drop cloths. Shoe covers. A tidy truck. This answers the fear of a mess.",
+          },
+          {
+            title: "A quick tip",
+            detail: "Where your main shutoff is. How to wrap pipes before a freeze. Help people for free.",
+          },
+          {
+            title: "You saying hello",
+            detail: "Your name, your trade, and the part of Houston you serve. People hire people.",
+          },
+        ],
+        note: "Phone video is fine. Good light and clear sound matter more than a fancy camera.",
+      },
+      {
+        kind: "text",
+        id: "who-to-reach",
+        title: "Who should Houston plumbers show ads to?",
+        paragraphs: [
+          "Show ads to homeowners, not renters. Renters call the landlord.",
+          "Pick areas your trucks can reach fast. Houston traffic is real. A tight area means more jobs per day.",
+          "Older neighborhoods often have older pipes. Those homes may need repipes and new water heaters. Think about where your best past jobs came from.",
+          "Ask a few questions in the form. Is it your home? What is the problem? How soon do you need help?",
+        ],
+      },
+      {
+        kind: "text",
+        id: "license-rule",
+        title: "Do plumbing ads in Texas need a license number?",
+        paragraphs: [
+          "Yes. The Texas State Board of Plumbing Examiners has a rule for it.",
+          "Rule 22 Texas Administrative Code §367.10 says ads that ask for plumbing work must show the license number of the Responsible Master Plumber.",
+          "The rule says this is true for every kind of media. So it covers your Facebook and Instagram ads.",
+          "Put the number in the ad text or on the image. It also tells homeowners you are the real deal.",
+        ],
+        links: [
+          {
+            context: "Read the rule text at",
+            label: "22 Tex. Admin. Code §367.10",
+            href: "https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-367-10",
+            suffix: "(Cornell Law School). Check the board's site for updates.",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "houston-timing",
+        title: "When should Houston plumbers run more ads?",
+        paragraphs: [
+          "Houston does not freeze often. But when it does, pipes burst.",
+          "Many Texans remember the February 2021 winter storm. Homes lost power and water lines broke.",
+          "Before a cold snap, run ads with freeze tips. Wrap pipes. Drip faucets. Know your shutoff. You help people and they remember you.",
+          "After a freeze, be ready for repair calls. Then follow up with repipe and water heater offers.",
+          "In older parts of town, aging pipes are a year round topic. Film them when you find them.",
+        ],
+        links: [
+          {
+            context: "See the full year in",
+            label: "the Houston contractor marketing calendar",
+            href: "/guides/houston-contractor-marketing-calendar",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "after-the-lead",
+        title: "How do you turn a plumbing lead into a booked job?",
+        paragraphs: [
+          "Call fast. The homeowner may have asked three plumbers.",
+          "Text them first so they know you got it. Then call. Ask about the problem. Book a time.",
+          "With the Houston Growth Engine, we text every lead fast and our team books the estimate. You walk in and do what you do best.",
+        ],
+        links: [
+          {
+            context: "Learn more about",
+            label: "contractor video production",
+            href: "/services/video-production",
+            suffix: "and how we film real jobs.",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Are Facebook ads worth it for plumbers?",
+            a: "They can be for planned jobs like water heaters and repipes. For urgent calls, Google is usually first. Judge ads by booked jobs, not clicks.",
+          },
+          {
+            q: "Do Texas plumbing ads need a license number?",
+            a: "Yes. 22 TAC §367.10 says ads that ask for plumbing work must show the Responsible Master Plumber's license number.",
+          },
+          {
+            q: "What is the best plumbing ad to run?",
+            a: "A short video of you on a real job, explaining a real problem. Real beats polished.",
+          },
+          {
+            q: "Should I run ads before a freeze?",
+            a: "Yes. Freeze tips help people and keep your name in their head when pipes break.",
+          },
+          {
+            q: "How fast should I call back a lead?",
+            a: "Within minutes. A text right away, then a call. The first plumber to reach them often gets the job.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/shared-leads-vs-exclusive-leads-contractors", label: "Shared Leads vs. Exclusive Leads", tag: "Leads" },
+          { href: "/guides/facebook-ads-for-hvac-companies-houston", label: "Facebook Ads for HVAC Companies in Houston", tag: "Ads" },
+          { href: "/guides/how-to-book-more-estimates-contractors", label: "How to Book More Estimates and Win Bigger Jobs", tag: "Booking" },
+          { href: "/services/facebook-ads", label: "Facebook Ads for Houston Contractors", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Facebook/Instagram ads by trade: Remodeling
+     Primary KW: "facebook ads for remodelers houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "facebook-ads-for-remodelers-houston",
+    type: "support",
+    title: "Facebook Ads for Remodelers in Houston: How to Get Bigger Jobs",
+    description:
+      "Houston remodelers get the best Facebook and Instagram results when the ads show real finished rooms and the owner talking on camera. Ads should target homeowners in the areas you want and ask a few budget and timing questions. That way the leads fit the size of job you want.",
+    metaTitle: "Facebook Ads for Remodelers in Houston | QuickLaunchWeb",
+    metaDescription:
+      "How Houston kitchen, bath, and home remodelers use Facebook and Instagram ads to find bigger jobs: what to show, who to reach, and how to sort leads.",
+    kicker: "Support Guide",
+    category: "Facebook & Instagram Ads",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "Why remodeling fits Facebook and Instagram.",
+      "Ads that sell kitchens and baths.",
+      "How to sort out small, cheap jobs.",
+      "How to book the in-home visit.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "why-it-fits", label: "Why it fits" },
+      { id: "ads-that-work", label: "Ads that work" },
+      { id: "sort-leads", label: "Sort the leads" },
+      { id: "book-visit", label: "Book the visit" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Remodeler in Houston?",
+      description: "We film your finished rooms and your crew, run the ads, and our team books the in-home visit.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Ready for fewer small jobs and more full remodels?",
+      description: "Let's talk about the jobs you want and the parts of Houston you want to work in.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Remodeling is a visual sale. Show it.",
+        "Ask budget and timing in the form.",
+        "Book the visit fast, while they are excited.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Do Facebook ads work for remodelers in Houston?",
+        paragraphs: [
+          "Yes. Remodeling may be one of the best fits for Facebook and Instagram ads.",
+          "People scroll and dream about a new kitchen. They save photos. They show their spouse.",
+          "Most remodels are planned for months. That gives you time to show up again and again in their feed.",
+          "The goal is not more leads. The goal is the right leads. People with a real budget and a real plan.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "why-it-fits",
+        title: "Why is remodeling a good fit for social ads?",
+        paragraphs: [
+          "Remodeling is a picture sale. People buy what they can see.",
+          "Facebook and Instagram are made for pictures and video. Your work looks good there.",
+          "It is also a trust sale. A remodel means a crew in the house for weeks. Homeowners want to know who you are. Video of you answers that.",
+        ],
+        list: [
+          "People plan remodels for a long time.",
+          "They want to see real finished work.",
+          "They want to see the person in charge.",
+          "They often decide as a couple.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "ads-that-work",
+        title: "What Facebook ads work for remodelers?",
+        items: [
+          {
+            title: "The slow walk-through",
+            detail: "Film a finished kitchen or bath. Walk in slowly. Point out the details you are proud of.",
+          },
+          {
+            title: "Before, during, after",
+            detail: "Show the gutted room. Show the crew at work. Show the final reveal. People love the change.",
+          },
+          {
+            title: "The owner explains",
+            detail: "You talk about how a project works. Design, pricing, timeline, cleanup. This calms nerves.",
+          },
+          {
+            title: "The homeowner reaction",
+            detail: "With permission, film the first look. Real joy is hard to fake, so never fake it.",
+          },
+          {
+            title: "The “mistakes to avoid” video",
+            detail: "Tell people three things to ask any remodeler. You help them and look like the pro.",
+          },
+        ],
+        note: "Only show your own work. Never use stock photos as if they were your jobs.",
+      },
+      {
+        kind: "table",
+        id: "sort-leads",
+        title: "How do you sort out small or cheap remodel leads?",
+        columns: ["Form question", "What it tells you"],
+        rows: [
+          ["Do you own the home?", "Cuts out renters."],
+          ["What room or project?", "Kitchen, bath, whole home, or a small fix."],
+          ["When do you want to start?", "Ready now, or just looking."],
+          ["What budget range fits you?", "Lets you skip jobs too small for you."],
+          ["What part of Houston?", "Keeps you near your crews."],
+        ],
+        note: "More questions means fewer leads. But it often means better leads. Find your balance.",
+      },
+      {
+        kind: "text",
+        id: "who-to-reach",
+        title: "Who should Houston remodelers target?",
+        paragraphs: [
+          "Pick the parts of Houston where you want to work. Think about drive time for your crews.",
+          "Target homeowners. Keep it simple. Let the form questions do the sorting.",
+          "Show different ads to different people. Kitchen ads to some. Bath ads to others. Then see which bring the best jobs.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "ad-cost",
+        title: "How much do Facebook ads cost for remodelers?",
+        paragraphs: [
+          "There is no set price. You pick the budget. You can change it or pause it any day.",
+          "A remodel lead may cost more than a small repair lead. That can still be a great deal. One kitchen can be worth many small jobs.",
+          "So do not judge by cost per lead alone. Judge by cost per signed job. And by how big those jobs are.",
+          "Give your ads a few months. The first weeks are for testing which rooms, areas, and videos bring the best homeowners.",
+        ],
+        links: [
+          {
+            context: "Set your number with",
+            label: "how much a contractor should spend on ads",
+            href: "/guides/how-much-should-a-contractor-spend-on-ads",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "book-visit",
+        title: "How do you turn a remodel lead into a visit?",
+        paragraphs: [
+          "A remodel lead is excited right now. That fades fast.",
+          "Text them right away. Call soon after. Book a time to see the space. Ask if both decision makers can be there.",
+          "This is the job of the Houston Growth Engine. We text every lead fast. Our team calls, asks the key questions, and books the visit. You show up to a homeowner who is ready to talk.",
+        ],
+        links: [
+          {
+            context: "See how we film",
+            label: "contractor videos in Houston",
+            href: "/services/video-production",
+            suffix: "on real job sites.",
+          },
+          {
+            context: "Learn how to",
+            label: "book more estimates and win bigger jobs",
+            href: "/guides/how-to-book-more-estimates-contractors",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Are Facebook ads good for kitchen remodelers?",
+            a: "They can be. Kitchens are visual and planned. Real video of your work and a few smart form questions help a lot.",
+          },
+          {
+            q: "How do I avoid tiny jobs from ads?",
+            a: "Ask about the project and the budget in the form. Show big jobs in your ads. People see what you do and self-sort.",
+          },
+          {
+            q: "Do I need a pro camera for remodel videos?",
+            a: "No. A newer phone with good light works. Keep it steady and walk slowly.",
+          },
+          {
+            q: "How long until a remodel lead signs?",
+            a: "It varies. Some sign in weeks. Some take months. Keep following up kindly.",
+          },
+          {
+            q: "Should I show prices in my ads?",
+            a: "That is your call. Some remodelers share a starting range to sort leads. Others talk price at the visit.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/guides/how-to-choose-a-marketing-agency-houston", label: "How to Choose a Marketing Agency in Houston", tag: "Agency" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Video
+     Primary KW: "on the job video for contractors" / "contractor video marketing houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "on-the-job-video-for-contractors",
+    type: "support",
+    title: "What Should Contractors Film on the Job? 12 Video Ideas",
+    description:
+      "Contractors should film themselves on real jobs: the problem, the work, the finished result, and a few words to the camera. Homeowners trust a real face more than a logo. A phone, good light, and clear sound are enough to start.",
+    metaTitle: "On-the-Job Video for Contractors: 12 Ideas | QuickLaunchWeb",
+    metaDescription:
+      "12 easy on-the-job video ideas for Houston contractors, simple phone tips, and how real job video builds trust and books bigger jobs.",
+    kicker: "Support Guide",
+    category: "Contractor Video",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    heroBullets: [
+      "Why homeowners trust job video.",
+      "12 things to film this week.",
+      "Simple phone video tips.",
+      "How to turn clips into ads.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "why-video", label: "Why video works" },
+      { id: "video-ideas", label: "12 video ideas" },
+      { id: "phone-tips", label: "Phone tips" },
+      { id: "what-not-to-do", label: "What not to do" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "No time to film?",
+      description: "We come to your real jobs, film you, and turn it into Facebook and Instagram ads.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want your real work to sell for you?",
+      description: "We film you on the job, run the ads, and our team books the estimates.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Real beats polished.",
+        "Sound matters more than the camera.",
+        "Always ask the homeowner before filming.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "What should a contractor film on the job?",
+        paragraphs: [
+          "Film the real work. Film yourself talking.",
+          "Show the problem you found. Show how you fix it. Show the clean result.",
+          "Then look at the camera and say who you are. That part is the most important.",
+          "Homeowners are letting a stranger into their home. Video lets them meet you first.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "why-video",
+        title: "Why does on-the-job video build trust?",
+        paragraphs: [
+          "A logo cannot shake your hand. A stock photo cannot answer a question.",
+          "Video shows your face, your voice, and how you work. People can tell if you are kind and if you know your stuff.",
+          "It also shows real Houston homes. Streets and houses that look like theirs. That feels close and real.",
+          "Good contractors often skip video. They are busy doing the work. That is why video can help you stand out.",
+        ],
+        list: [
+          "People see who will come to their home.",
+          "They see that your work is real.",
+          "They hear how you explain things.",
+          "They feel like they know you before you call.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "video-ideas",
+        title: "What are 12 easy video ideas for contractors?",
+        columns: ["#", "Video idea", "What to show", "Good for"],
+        rows: [
+          ["1", "Meet the owner", "You say your name, trade, and area", "Trust"],
+          ["2", "The problem", "Damage, rot, rust, or a leak you found", "Showing need"],
+          ["3", "Before and after", "Same spot, start and finish", "Proof"],
+          ["4", "Time lapse", "Phone on a stand while the crew works", "Showing effort"],
+          ["5", "What we check", "Walk through your inspection steps", "Teaching"],
+          ["6", "Quick tip", "One thing a homeowner can do today", "Helping first"],
+          ["7", "Myth vs. truth", "A common belief, then the real answer", "Expert look"],
+          ["8", "Meet the crew", "Each person waves and says their role", "Trust"],
+          ["9", "Clean job site", "Drop cloths, cleanup, a swept driveway", "Calming fears"],
+          ["10", "Materials", "Show the product you use and why", "Bigger jobs"],
+          ["11", "Customer words", "A real homeowner, only if they agree", "Proof"],
+          ["12", "Ask me anything", "Answer a question you hear a lot", "Teaching"],
+        ],
+        note: "Film a few of these on every job. In a month you will have plenty for ads.",
+      },
+      {
+        kind: "checklist",
+        id: "phone-tips",
+        title: "How do you film good video with a phone?",
+        items: [
+          {
+            title: "Hold it up and down",
+            detail: "Film tall, not wide. Facebook and Instagram feeds and Reels are made for tall video.",
+          },
+          {
+            title: "Face the light",
+            detail: "Stand so the sun or a bright window is in front of you, not behind you.",
+          },
+          {
+            title: "Get close for sound",
+            detail: "Wind and saws are loud. A small clip-on mic helps a lot. If not, stand close to the phone.",
+          },
+          {
+            title: "Keep it steady",
+            detail: "Use two hands or lean on something. Move slowly.",
+          },
+          {
+            title: "Start strong",
+            detail: "Say the big thing first. “This roof is leaking in three spots.” Then explain.",
+          },
+          {
+            title: "Keep it short",
+            detail: "Most clips can be under a minute. Say one idea per video.",
+          },
+        ],
+        note: "You do not need a film crew to start. You just need to start.",
+      },
+      {
+        kind: "text",
+        id: "what-not-to-do",
+        title: "What should contractors avoid in videos?",
+        paragraphs: [
+          "Do not film a home without asking. Get the homeowner's OK first. Do not show house numbers or faces without permission.",
+          "Do not show unsafe work. No missing safety gear. Homeowners notice. So do other pros.",
+          "Do not fake it. No paid actors pretending to be customers. No stock clips sold as your jobs. Fake proof breaks trust fast.",
+          "Do not wait for perfect. A real, kind, simple video beats a fancy one you never post.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "turn-into-ads",
+        title: "How do you turn job videos into ads?",
+        paragraphs: [
+          "Pick your best clips. Add short captions, since many people watch with the sound off.",
+          "Run them as Facebook and Instagram ads to homeowners in the areas you serve.",
+          "Add a simple form. Then call every lead fast.",
+          "This is the core of the Houston Growth Engine. We film you on real jobs. We run the ads. We text every lead fast. Our team calls and books the estimate.",
+        ],
+        links: [
+          {
+            context: "See how our",
+            label: "contractor video production",
+            href: "/services/video-production",
+            suffix: "works in Houston.",
+          },
+          {
+            context: "See trade examples in",
+            label: "Facebook ads for roofers in Houston",
+            href: "/guides/facebook-ads-for-roofers-houston",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Do contractor videos really help get jobs?",
+            a: "They help homeowners trust you before you meet. Trust is a big part of who gets hired. Video is one of the clearest ways to show it.",
+          },
+          {
+            q: "What camera should a contractor use?",
+            a: "A newer phone is enough. Good light and clear sound matter more than the camera.",
+          },
+          {
+            q: "How long should a contractor video be?",
+            a: "Short. Many good ad clips are under a minute. One idea per video.",
+          },
+          {
+            q: "I am shy on camera. Can I still do this?",
+            a: "Yes. Talk like you talk to a customer. Show your hands and the work if you want. It gets easier fast.",
+          },
+          {
+            q: "Can someone film for me?",
+            a: "Yes. A crew member can film. Or we can come to your real jobs and film you.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/facebook-ads-for-remodelers-houston", label: "Facebook Ads for Remodelers in Houston", tag: "Ads" },
+          { href: "/guides/facebook-ads-for-roofers-houston", label: "How Much Do Facebook Ads Cost for Roofers in Houston?", tag: "Ads" },
+          { href: "/guides/how-to-book-more-estimates-contractors", label: "How to Book More Estimates and Win Bigger Jobs", tag: "Booking" },
+          { href: "/services/video-production", label: "Contractor Video Production", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Shared vs. exclusive leads
+     Primary KW: "shared leads vs exclusive leads contractors"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "shared-leads-vs-exclusive-leads-contractors",
+    type: "support",
+    title: "Shared Leads vs. Exclusive Leads: Which Is Better for Contractors?",
+    description:
+      "Exclusive leads are usually better for contractors who want bigger jobs. A shared lead from a site like Angi, HomeAdvisor, or Thumbtack can go to more than one pro, so you race on speed and price. An exclusive lead comes from your own ads with your name on it, so the homeowner already knows who you are.",
+    metaTitle: "Shared vs. Exclusive Leads for Contractors | QuickLaunchWeb",
+    metaDescription:
+      "Shared leads from Angi, HomeAdvisor, and Thumbtack vs. exclusive leads from your own ads. What each costs you, the FTC case, and how to switch.",
+    kicker: "Support Guide",
+    category: "Lead Generation",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    heroBullets: [
+      "What shared and exclusive leads are.",
+      "A side by side comparison table.",
+      "What the FTC said about HomeAdvisor leads.",
+      "How to move off shared leads slowly.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "what-they-are", label: "What they are" },
+      { id: "comparison", label: "Comparison" },
+      { id: "hidden-costs", label: "Hidden costs" },
+      { id: "ftc-case", label: "The FTC case" },
+      { id: "how-to-switch", label: "How to switch" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Tired of racing other pros?",
+      description: "We run ads with your face and name on them, so the leads are yours. Our team books the estimate.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want leads that are only yours?",
+      description: "Let's look at what you get from lead sites now and what your own ads could do instead.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Shared leads mean a race.",
+        "Exclusive leads mean a head start.",
+        "Do not quit lead sites in one day. Test first.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Are shared leads or exclusive leads better?",
+        paragraphs: [
+          "For most good contractors, exclusive leads are better.",
+          "With a shared lead, you are one of a few pros calling the same person. The fastest or cheapest often wins.",
+          "With an exclusive lead, the homeowner saw your ad. They saw your face. They asked for you.",
+          "Shared leads can still fill gaps. But it is hard to build a business on a lead someone else also bought.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "what-they-are",
+        title: "What is the difference between shared and exclusive leads?",
+        paragraphs: [
+          "A shared lead is a homeowner request sold to more than one business. Sites like Angi, HomeAdvisor, and Thumbtack match homeowners with pros. You pay for leads or for being matched. Rules and prices change, so check each site.",
+          "An exclusive lead goes only to you. It comes from your own marketing. Your Facebook and Instagram ads. Your website. Your Google profile. Referrals.",
+          "With exclusive leads, you own the whole path. The ad, the message, and the follow-up are all yours.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "comparison",
+        title: "How do shared and exclusive leads compare?",
+        columns: ["", "Shared leads (lead sites)", "Exclusive leads (your own ads)"],
+        rows: [
+          ["Who else gets it", "Often other pros too", "Only you"],
+          ["What the homeowner knows", "The site's name", "Your name and face"],
+          ["How you win", "Call first, often price low", "Show trust, sell value"],
+          ["Job size", "Often small or price shopped", "Can aim at bigger jobs"],
+          ["Control of the ad", "The site controls it", "You control it"],
+          ["Brand building", "Builds the site's brand", "Builds your brand"],
+          ["If you stop paying", "Leads stop", "Leads slow, but your name stays known"],
+          ["Setup time", "Fast", "Takes a few weeks to tune"],
+        ],
+        note: "Every market is different. This is a general comparison, not a promise.",
+      },
+      {
+        kind: "checklist",
+        id: "hidden-costs",
+        title: "What are the hidden costs of shared leads?",
+        items: [
+          {
+            title: "Time chasing people who chose someone else",
+            detail: "You call. They already booked. That is time you do not get back.",
+          },
+          {
+            title: "Price pressure",
+            detail: "When four pros call, someone goes low. That drags your price down too.",
+          },
+          {
+            title: "Bad fits",
+            detail: "Some leads are too small, out of area, or just looking. You may still pay for them.",
+          },
+          {
+            title: "No name recognition",
+            detail: "The homeowner remembers the website, not you. Next time, they go back to the site.",
+          },
+          {
+            title: "Stress",
+            detail: "Racing to call back every lead in the middle of a job is hard on you and your crew.",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "ftc-case",
+        title: "What did the FTC say about HomeAdvisor leads?",
+        paragraphs: [
+          "The Federal Trade Commission (FTC) took action against HomeAdvisor. In 2023, the FTC finalized an order that requires HomeAdvisor to pay up to $7.2 million.",
+          "The FTC said HomeAdvisor made misleading claims about its leads. That included claims about how likely homeowners were to hire soon.",
+          "HomeAdvisor disputed the FTC's claims. The order also bans false or misleading claims about leads going forward.",
+          "The lesson is simple. Track every lead you buy. How many turn into real visits? How many turn into paid jobs?",
+        ],
+      },
+      {
+        kind: "text",
+        id: "how-to-switch",
+        title: "How do you switch from shared leads to exclusive leads?",
+        paragraphs: [
+          "Do not quit all at once. Lead sites may be paying some bills today.",
+          "Start your own ads next to them. Track both for a few months. Count booked jobs and money made, not just leads.",
+          "As your own ads start to work, move money over bit by bit.",
+        ],
+        list: [
+          "Film yourself on real jobs.",
+          "Run Facebook and Instagram ads in your areas.",
+          "Text and call every lead within minutes.",
+          "Track jobs and revenue from each source.",
+          "Move budget to what makes the most money.",
+        ],
+        links: [
+          {
+            context: "This is what",
+            label: "the Houston Growth Engine",
+            href: "/houston-growth-engine",
+            suffix: "does for Houston contractors.",
+          },
+          {
+            context: "Not sure on budget? Read",
+            label: "how much a contractor should spend on ads",
+            href: "/guides/how-much-should-a-contractor-spend-on-ads",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Is Angi worth it for contractors?",
+            a: "It depends on your trade, area, and how fast you call. Track how many Angi leads become paid jobs. Compare that to other sources.",
+          },
+          {
+            q: "What is an alternative to HomeAdvisor and Thumbtack?",
+            a: "Your own exclusive leads. Facebook and Instagram ads, Google, your website, and referrals all bring leads that only go to you.",
+          },
+          {
+            q: "Are exclusive leads more expensive?",
+            a: "Sometimes each lead costs more. But if more of them turn into bigger jobs, the cost per job can be lower. Judge by jobs, not leads.",
+          },
+          {
+            q: "How fast do exclusive leads start?",
+            a: "Ads can start in days. Tuning them to bring good jobs usually takes a few weeks.",
+          },
+          {
+            q: "Should I stop using lead sites right away?",
+            a: "No. Run both and track results. Move money over as your own ads prove they work.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/how-to-book-more-estimates-contractors", label: "How to Book More Estimates and Win Bigger Jobs", tag: "Booking" },
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Speed to lead / booking / bigger jobs
+     Primary KW: "how to book more estimates contractor"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "how-to-book-more-estimates-contractors",
+    type: "support",
+    title: "How Do Contractors Book More Estimates and Win Bigger Jobs?",
+    description:
+      "Contractors book more estimates by answering every lead within minutes, with a text first and then a call. They win bigger jobs by asking good questions, showing up on time, and offering a good, better, and best choice. Most lost jobs are lost in the follow-up, not in the ad.",
+    metaTitle: "How to Book More Estimates as a Contractor | QuickLaunchWeb",
+    metaDescription:
+      "A simple plan to book more estimates from your leads and win bigger jobs: speed to lead, a call script, follow-up steps, and good-better-best options.",
+    kicker: "Support Guide",
+    category: "Speed to Lead",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    heroBullets: [
+      "Why speed matters so much.",
+      "A simple first-call script.",
+      "A follow-up plan you can copy.",
+      "How to turn a small job into a bigger one.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "speed", label: "Speed to lead" },
+      { id: "first-call", label: "First call" },
+      { id: "follow-up", label: "Follow-up plan" },
+      { id: "bigger-jobs", label: "Bigger jobs" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Too busy to call back fast?",
+      description: "We text every lead right away, and our team calls and books the estimate for you.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want more estimates on your calendar?",
+      description: "Let's look at what happens to your leads today, and where jobs slip away.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Text right away. Call within minutes.",
+        "Follow up more than once.",
+        "Always offer more than one choice.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "How can a contractor book more estimates?",
+        paragraphs: [
+          "Answer fast. Follow up more. Make it easy to say yes.",
+          "Most contractors do not need more leads first. They need to book more of the leads they already get.",
+          "A lead that waits a day often goes cold. They found someone else. Or they just forgot.",
+          "Fix the follow-up, and every dollar you spend on ads goes further.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "speed",
+        title: "How fast should you respond to a new lead?",
+        paragraphs: [
+          "As fast as you can. Minutes, not hours.",
+          "A well known study in Harvard Business Review, “The Short Life of Online Sales Leads” (2011), checked how fast 2,241 U.S. companies replied to web leads.",
+          "It found that 23% of the companies never replied at all. Many others took more than a day.",
+          "That was across many kinds of businesses, not just contractors. But the lesson fits. Being fast is an easy way to beat a lot of competitors.",
+        ],
+        links: [
+          {
+            context: "Read the study summary at",
+            label: "Harvard Business Review",
+            href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "why-cold",
+        title: "Why do contractor leads go cold?",
+        paragraphs: [
+          "Most leads do not go cold because they were bad. They go cold because no one reached them in time.",
+          "The owner is on a job. The phone is in the truck. By the time they call back, it is dinner time. The homeowner already booked someone.",
+          "Other times, there is one call and no follow-up. The homeowner missed it. Then life got busy.",
+          "These are fixable problems. You need a fast first touch and a simple plan for what comes next.",
+        ],
+        links: [
+          {
+            context: "See how missed calls add up in",
+            label: "the missed-call leak guide",
+            href: "/guides/120k-leak-missed-calls-reviews",
+          },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "first-call",
+        title: "What should you say on the first call?",
+        items: [
+          {
+            title: "Say who you are",
+            detail: "“Hi, this is Maria with your roofing company. You asked about your roof. Is now a good time?”",
+          },
+          {
+            title: "Ask what is going on",
+            detail: "Let them talk. What is the problem? How long has it been going on?",
+          },
+          {
+            title: "Ask about timing",
+            detail: "“When would you like this done?” It tells you how ready they are.",
+          },
+          {
+            title: "Ask who decides",
+            detail: "“Will anyone else be part of the decision?” Try to have them both at the estimate.",
+          },
+          {
+            title: "Book a time",
+            detail: "Give two choices. “Tuesday at 10 or Wednesday at 4?” It is easier than an open question.",
+          },
+          {
+            title: "Confirm by text",
+            detail: "Send the time, your name, and a photo of who is coming.",
+          },
+        ],
+        note: "The name and trade above are just an example. Use your own words.",
+      },
+      {
+        kind: "table",
+        id: "follow-up",
+        title: "What does a good follow-up plan look like?",
+        columns: ["When", "What to do"],
+        rows: [
+          ["Right away", "Send a text: you got their request and will call soon."],
+          ["Within minutes", "Call. If no answer, leave a short voicemail."],
+          ["Same day", "Text again with a simple question."],
+          ["Next day", "Call one more time."],
+          ["Day 3", "Text a short job video or a photo of similar work."],
+          ["Week 1", "One last friendly check-in."],
+          ["Day before the estimate", "Text a reminder with who is coming."],
+          ["After the estimate", "Follow up on the quote within a couple of days."],
+        ],
+        note: "This is a sample plan. Adjust it to your trade. Always respect people who ask you to stop.",
+      },
+      {
+        kind: "text",
+        id: "bigger-jobs",
+        title: "How do contractors win bigger jobs?",
+        paragraphs: [
+          "Bigger jobs come from trust and choices.",
+          "Show up on time. Look clean. Explain what you see in plain words. Show photos of the problem.",
+          "Then give options. A good fix. A better fix. The best fix. Many homeowners pick the middle or the top when they understand why.",
+          "Your ads matter too. If your videos show big, beautiful jobs, you attract people who want big, beautiful jobs.",
+        ],
+        list: [
+          "Be on time and send a heads-up text.",
+          "Explain the problem with photos.",
+          "Offer good, better, and best options.",
+          "Put the quote in writing the same day.",
+          "Follow up, kindly, until they decide.",
+        ],
+      },
+      {
+        kind: "callout",
+        id: "how-we-help",
+        title: "We do the fast part for you",
+        body: [
+          "Most owners are on a roof or under a sink when a lead comes in. That is normal.",
+          "In the Houston Growth Engine, we text every lead fast. Our team calls, asks the key questions, and books the estimate on your calendar.",
+          "You show up and sell. We track what turns into real jobs and money.",
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "What is speed to lead?",
+            a: "It is how fast you reply to a new lead. Faster replies usually mean more booked estimates.",
+          },
+          {
+            q: "Should I text or call a new lead first?",
+            a: "Do both. A quick text lets them know you got it. A call right after books the visit.",
+          },
+          {
+            q: "How many times should I follow up?",
+            a: "More than once. Many people need a few touches. Stop if they ask you to.",
+          },
+          {
+            q: "How do I get bigger jobs, not small repairs?",
+            a: "Show big jobs in your ads, ask good questions, and give good, better, and best options at the estimate.",
+          },
+          {
+            q: "Can someone else book estimates for me?",
+            a: "Yes. A person in your office can. Or our team can call and book for you as part of the Houston Growth Engine.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/120k-leak-missed-calls-reviews", label: "The Missed-Call Leak Costing Contractors Jobs", tag: "Leads" },
+          { href: "/guides/shared-leads-vs-exclusive-leads-contractors", label: "Shared Leads vs. Exclusive Leads", tag: "Leads" },
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Budget
+     Primary KW: "how much should a contractor spend on ads"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "how-much-should-a-contractor-spend-on-ads",
+    type: "support",
+    title: "How Much Should a Contractor Spend on Ads?",
+    description:
+      "Spend what you can keep running for at least a few months, and set it by the jobs you want, not by a guess. Work backward from how many jobs you need, how many estimates it takes to win one, and how many leads it takes to book an estimate. Then judge your ads by booked jobs and money made, not by clicks.",
+    metaTitle: "How Much Should a Contractor Spend on Ads? | QuickLaunchWeb",
+    metaDescription:
+      "A simple way for contractors to set an ad budget: work back from the jobs you want, use a rule of thumb, and judge ads by booked jobs, not clicks.",
+    kicker: "Support Guide",
+    category: "Marketing Budget",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "A rule of thumb many owners start with.",
+      "A fill-in-the-blank budget table.",
+      "What to count, and what to ignore.",
+      "When to spend more, and when to stop.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "rule-of-thumb", label: "Rule of thumb" },
+      { id: "work-backward", label: "Work backward" },
+      { id: "what-to-count", label: "What to count" },
+      { id: "when-to-change", label: "When to change" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Not sure what to spend?",
+      description: "On a free call, we can walk through your numbers and what a budget could look like for your trade.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want a budget built around jobs, not guesses?",
+      description: "Bring your average job size and your goals. We will talk it through with you.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Start with jobs you want, then work back.",
+        "Give ads a few months to learn.",
+        "Count booked jobs and revenue, not likes.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "How much should a contractor spend on ads?",
+        paragraphs: [
+          "There is no one right number. But there is a right way to pick one.",
+          "Start with how many new jobs you want each month. Then work backward to the budget.",
+          "Pick an amount you can keep running for a few months. Ads need time to learn who your best customers are.",
+          "Do not spend money you need for payroll. Ads should be a steady habit, not a gamble.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "rule-of-thumb",
+        title: "Is there a rule of thumb for marketing budgets?",
+        paragraphs: [
+          "Yes, a common one.",
+          "Many business guides credit the U.S. Small Business Administration (SBA) with this rule of thumb: spend about 7% to 8% of gross revenue on marketing if you make under $5 million a year.",
+          "That is total marketing, not just ads. And it is only a starting point.",
+          "A new company trying to grow fast may spend more. A busy company with a long wait list may spend less.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "work-backward",
+        title: "How do you work backward to an ad budget?",
+        columns: ["Step", "Question", "Your number"],
+        rows: [
+          ["1", "How many new jobs do you want per month?", "A"],
+          ["2", "Out of 10 estimates, how many do you win?", "B (out of 10)"],
+          ["3", "So how many estimates do you need?", "A ÷ B × 10"],
+          ["4", "Out of 10 leads, how many book an estimate?", "C (out of 10)"],
+          ["5", "So how many leads do you need?", "Estimates ÷ C × 10"],
+          ["6", "What does one lead cost you now?", "D (from your own ads)"],
+          ["7", "Estimated monthly ad budget", "Leads × D"],
+        ],
+        note: "This is a simple estimate. Use your own real numbers. If you do not know them yet, start tracking them now.",
+      },
+      {
+        kind: "text",
+        id: "example",
+        title: "Can you show an example?",
+        paragraphs: [
+          "Here is a made-up example. These are not real client numbers.",
+          "Say you want 4 new jobs a month. You win 3 out of 10 estimates. So you need about 14 estimates.",
+          "Say 5 out of 10 leads book an estimate. So you need about 28 leads.",
+          "Now multiply 28 by what one lead costs you. That is your rough monthly ad budget.",
+          "Here is the key part. If you book 7 out of 10 leads instead of 5, you need fewer leads. Better follow-up lowers the budget you need.",
+        ],
+        links: [
+          {
+            context: "Learn how to",
+            label: "book more estimates from your leads",
+            href: "/guides/how-to-book-more-estimates-contractors",
+          },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "what-to-count",
+        title: "What should a contractor track to judge ads?",
+        items: [
+          { title: "Leads", detail: "How many people asked for help." },
+          { title: "Booked estimates", detail: "How many of them you set a visit with." },
+          { title: "Jobs won", detail: "How many signed and paid." },
+          { title: "Revenue", detail: "How much money those jobs brought in." },
+          { title: "Cost per job", detail: "Ad spend divided by jobs won. This is the number that matters most." },
+        ],
+        note: "Clicks, likes, and views are nice. But they do not pay the bills. Booked jobs do.",
+      },
+      {
+        kind: "text",
+        id: "when-to-change",
+        title: "When should you spend more or less on ads?",
+        paragraphs: [
+          "Spend more when ads bring jobs that make money and you have crew time.",
+          "Hold steady when you are booked out. Do not pay for leads you cannot serve.",
+          "Spend less or change the ad when leads come in but do not turn into jobs. Look at the follow-up first. Then look at the ad.",
+          "In Houston, seasons matter. Storms, heat, and freezes all change demand. Plan for them.",
+        ],
+        links: [
+          {
+            context: "See the",
+            label: "Houston contractor marketing calendar",
+            href: "/guides/houston-contractor-marketing-calendar",
+            suffix: "for the busy seasons.",
+          },
+          {
+            context: "See how we run",
+            label: "Facebook ads for contractors",
+            href: "/services/facebook-ads",
+            suffix: "in Houston.",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "What percent of revenue should a contractor spend on marketing?",
+            a: "Many guides cite an SBA rule of thumb of about 7% to 8% of gross revenue for businesses under $5 million a year. Treat it as a starting point.",
+          },
+          {
+            q: "Is ad spend the same as what I pay an agency?",
+            a: "No. Ad spend goes to Facebook, Instagram, or Google. Agency fees are paid to the people who run it. Ask any agency to show both clearly.",
+          },
+          {
+            q: "How long before I know if ads work?",
+            a: "Give it a few months. The first weeks are for testing. Judge by booked jobs over time.",
+          },
+          {
+            q: "Can I start small?",
+            a: "Yes. A small budget can test your ads and your follow-up. Grow it as you see real jobs come in.",
+          },
+          {
+            q: "What is a good cost per lead?",
+            a: "It depends on your trade and job size. A lead that costs more can still be a great deal if it turns into a big job.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/how-to-choose-a-marketing-agency-houston", label: "How to Choose a Marketing Agency in Houston", tag: "Agency" },
+          { href: "/guides/shared-leads-vs-exclusive-leads-contractors", label: "Shared Leads vs. Exclusive Leads", tag: "Leads" },
+          { href: "/guides/facebook-ads-for-roofers-houston", label: "How Much Do Facebook Ads Cost for Roofers in Houston?", tag: "Ads" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Judge an agency
+     Primary KW: "how to choose a marketing agency in houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "how-to-choose-a-marketing-agency-houston",
+    type: "support",
+    title: "How Do You Choose a Marketing Agency in Houston as a Contractor?",
+    description:
+      "Pick a Houston agency that works with home service companies, shows its work, and tracks booked jobs and revenue, not just clicks. Ask who owns the ad account, how fast leads get a call back, and how you can leave. Be careful of big promises and long contracts you cannot get out of.",
+    metaTitle: "How to Choose a Marketing Agency in Houston",
+    metaDescription:
+      "Questions Houston contractors should ask before hiring a marketing agency, red flags to watch for, and a simple scorecard to compare agencies.",
+    kicker: "Support Guide",
+    category: "Marketing Budget",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    heroBullets: [
+      "12 questions to ask any agency.",
+      "Red flags that should make you pause.",
+      "A scorecard to compare agencies.",
+      "What a good first 90 days looks like.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "questions", label: "12 questions" },
+      { id: "red-flags", label: "Red flags" },
+      { id: "scorecard", label: "Scorecard" },
+      { id: "first-90-days", label: "First 90 days" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Comparing agencies?",
+      description: "Bring these questions to a free call with us. We will answer every one.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Ask us the hard questions",
+      description: "We will tell you how we work, what we track, and whether we are a fit for your company.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "You should own your ad account.",
+        "Judge agencies by booked jobs and revenue.",
+        "Be careful of big guarantees.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "How should a contractor choose a marketing agency?",
+        paragraphs: [
+          "Choose an agency that knows your kind of work.",
+          "Selling a roof is not like selling shoes. The agency should know how homeowners pick a contractor.",
+          "Ask what they track. Good agencies care about booked jobs and money made. Not just clicks and likes.",
+          "Ask what happens after a lead comes in. Ads are only half the job. The call back is the other half.",
+          "And ask how you can leave. A good agency keeps you because it works, not because of a contract.",
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "questions",
+        title: "What questions should you ask a marketing agency?",
+        items: [
+          { title: "Do you work with home service companies?", detail: "Ask which trades. Ask to see real ads they have run." },
+          { title: "Who owns the ad account?", detail: "It should be in your name. If you leave, you keep it." },
+          { title: "What do you track?", detail: "Look for leads, booked estimates, jobs won, and revenue." },
+          { title: "What happens when a lead comes in?", detail: "Who texts? Who calls? How fast?" },
+          { title: "Who makes the ads?", detail: "Will they use real video of you, or stock photos?" },
+          { title: "How much is ad spend vs. your fee?", detail: "These should be two clear, separate numbers." },
+          { title: "How often will we talk?", detail: "Weekly or monthly? Who is your contact?" },
+          { title: "What does month one look like?", detail: "There should be a clear plan for setup and testing." },
+          { title: "How do I leave if it is not working?", detail: "Know the terms before you sign." },
+          { title: "Can I talk to a client?", detail: "A good agency can connect you with someone, with that client's OK." },
+          { title: "Are you local to Houston?", detail: "Local helps with filming, seasons, and knowing the areas." },
+          { title: "What will you need from me?", detail: "Time on camera? Photos? Fast replies? Know up front." },
+        ],
+        note: "Write down the answers. Compare agencies side by side.",
+      },
+      {
+        kind: "checklist",
+        id: "red-flags",
+        title: "What are red flags when hiring an agency?",
+        items: [
+          { title: "Big guarantees", detail: "No one controls Facebook, Google, or the weather. Be careful of promises that sound too good." },
+          { title: "They own your account", detail: "If you leave, you may lose your ads, data, and history." },
+          { title: "Only talks about clicks and likes", detail: "Those are not jobs. Ask about booked jobs and revenue." },
+          { title: "No real examples", detail: "If they cannot show work they have done, ask why." },
+          { title: "Fake reviews or stock “results”", detail: "If something looks made up, it might be." },
+          { title: "Long contract with no way out", detail: "Read the cancel terms closely." },
+          { title: "Hard to reach", detail: "If they are slow to reply before you sign, it may get worse after." },
+        ],
+      },
+      {
+        kind: "table",
+        id: "scorecard",
+        title: "How can you compare agencies side by side?",
+        columns: ["Question", "Agency A", "Agency B", "Agency C"],
+        rows: [
+          ["Works with home service trades", "Yes / No", "Yes / No", "Yes / No"],
+          ["You own the ad account", "Yes / No", "Yes / No", "Yes / No"],
+          ["Tracks booked jobs and revenue", "Yes / No", "Yes / No", "Yes / No"],
+          ["Handles fast lead follow-up", "Yes / No", "Yes / No", "Yes / No"],
+          ["Uses real video of your work", "Yes / No", "Yes / No", "Yes / No"],
+          ["Clear fee vs. ad spend", "Yes / No", "Yes / No", "Yes / No"],
+          ["Fair cancel terms", "Yes / No", "Yes / No", "Yes / No"],
+          ["Local to Houston", "Yes / No", "Yes / No", "Yes / No"],
+        ],
+        note: "Circle the answers on each call. The agency with the most “Yes” answers is a good place to start.",
+      },
+      {
+        kind: "text",
+        id: "first-90-days",
+        title: "What should the first 90 days with an agency look like?",
+        paragraphs: [
+          "Month one is setup. Filming. Ads built. Tracking set up. The first leads come in.",
+          "Month two is learning. Which ads bring real jobs? Which areas? What do people ask on the phone?",
+          "Month three is tuning. Spend more on what works. Cut what does not.",
+          "You should know what is going on each step of the way. If you feel lost, ask.",
+        ],
+      },
+      {
+        kind: "text",
+        id: "how-we-work",
+        title: "How does QuickLaunchWeb work?",
+        paragraphs: [
+          "We are a Houston team that works with home service companies.",
+          "We film you on real jobs. We run Facebook and Instagram ads to homeowners who want bigger jobs. We text every lead fast. Our team calls and books the estimate.",
+          "We judge our work by booked jobs and money in your pocket. We do not offer a guarantee. We would rather show you how we work and let you decide.",
+        ],
+        links: [
+          {
+            context: "See",
+            label: "the Houston Growth Engine",
+            href: "/houston-growth-engine",
+            suffix: "for the full process.",
+          },
+          {
+            context: "Before you talk budget, read",
+            label: "how much a contractor should spend on ads",
+            href: "/guides/how-much-should-a-contractor-spend-on-ads",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "What is the best marketing agency in Houston for contractors?",
+            a: "The best one for you knows home services, tracks booked jobs and revenue, lets you own your ad account, and has fair terms. Use the questions above to compare.",
+          },
+          {
+            q: "Should I own my Facebook ad account?",
+            a: "Yes. Ask for the account to be in your business name. Then your data stays with you.",
+          },
+          {
+            q: "Should I trust an agency that guarantees results?",
+            a: "Be careful. Ask exactly what is promised and what happens if it is not met. Read the fine print.",
+          },
+          {
+            q: "How long should I give an agency?",
+            a: "Most ad work needs a few months to test and tune. Watch for clear progress and honest updates along the way.",
+          },
+          {
+            q: "Is a local Houston agency better?",
+            a: "It can be. A local team can film your jobs, knows the seasons, and knows the areas you serve.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/guides/shared-leads-vs-exclusive-leads-contractors", label: "Shared Leads vs. Exclusive Leads", tag: "Leads" },
+          { href: "/guides/facebook-ads-for-hvac-companies-houston", label: "Facebook Ads for HVAC Companies in Houston", tag: "Ads" },
+          { href: "/services/facebook-ads", label: "Facebook Ads for Houston Contractors", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 BATCH — Houston-specific seasons
+     Primary KW: "houston contractor marketing calendar" / "best time to advertise home services houston"
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "houston-contractor-marketing-calendar",
+    type: "support",
+    title: "When Should Houston Contractors Advertise? A Season-by-Season Calendar",
+    description:
+      "Houston contractors should advertise all year and change the message with the weather. Spring is for getting ready, summer is heat and A/C, June through November is hurricane season, and winter brings freeze worries. Have ads and videos ready before each season, not after it starts.",
+    metaTitle: "Houston Contractor Marketing Calendar by Season",
+    metaDescription:
+      "A month-by-month marketing calendar for Houston contractors: heat, hurricane season, freezes, and the ad messages that fit each one.",
+    kicker: "Support Guide",
+    category: "Houston Marketing",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    heroBullets: [
+      "A month-by-month plan for Houston.",
+      "Hurricane season dates from NOAA.",
+      "How to get ready before a storm or freeze.",
+      "Messages that fit each season.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "calendar", label: "The calendar" },
+      { id: "hurricane-season", label: "Hurricane season" },
+      { id: "freeze", label: "Freezes" },
+      { id: "storm-kit", label: "Storm-ready kit" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Plan your next season",
+      description: "We film ahead, keep ads ready, and our team books the estimates when demand hits.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Be ready before the next storm",
+      description: "Let's plan your ads, videos, and follow-up for the season ahead.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Advertise all year. Change the message.",
+        "Film and build ads before the busy season.",
+        "Help first during storms. Sell second.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "When is the best time for Houston contractors to advertise?",
+        paragraphs: [
+          "All year. Houston weather keeps changing what people need.",
+          "Heat breaks A/C units. Storms damage roofs and fences. Freezes burst pipes. Each season brings a different kind of call.",
+          "The trick is to be ready early. Film your videos and build your ads before the season starts. Then turn them on at the right time.",
+          "Keep a small, steady budget running in slow months. People remember who they saw all year.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "calendar",
+        title: "What should Houston contractors promote each season?",
+        columns: ["Months", "What is going on", "Ad message ideas", "Trades that fit"],
+        rows: [
+          ["Jan – Feb", "Cold snaps can happen", "Freeze prep, heaters, pipe checks, plan spring projects", "Plumbing, HVAC, remodeling"],
+          ["Mar – Apr", "Spring storms, people plan projects", "Roof checks, A/C tune-ups, remodel planning", "Roofing, HVAC, remodeling, fencing"],
+          ["May", "Heat starts building, storms continue", "Get ready for summer, roof and gutter checks", "HVAC, roofing, pools"],
+          ["Jun – Aug", "Peak heat, hurricane season starts June 1", "New A/C systems, insulation, storm prep", "HVAC, insulation, roofing, electrical"],
+          ["Sep – Oct", "Hurricane season peak months, still hot", "Storm repair, roof replacement, generators", "Roofing, electrical, tree, fencing"],
+          ["Nov – Dec", "Hurricane season ends Nov 30, holidays", "Get it done before family visits, heaters, freeze prep", "Remodeling, painting, plumbing, HVAC"],
+        ],
+        note: "This is a general guide. Watch the real forecast and your own call volume.",
+      },
+      {
+        kind: "text",
+        id: "hurricane-season",
+        title: "How should contractors market during hurricane season?",
+        paragraphs: [
+          "The National Oceanic and Atmospheric Administration (NOAA) says Atlantic hurricane season runs from June 1 to November 30.",
+          "Houston has seen big storms. Hurricane Harvey in 2017 caused huge flooding. Hurricane Beryl in July 2024 left many homes without power.",
+          "Before a storm, run helpful ads. How to check your roof. How to secure your fence. When to call a pro.",
+          "After a storm, check on safety first. Then turn on repair ads in the areas that were hit. Be honest and calm. Do not use fear to sell.",
+        ],
+        links: [
+          {
+            context: "Track storms at the",
+            label: "NOAA National Hurricane Center",
+            href: "https://www.nhc.noaa.gov/",
+          },
+          {
+            context: "Roofers, see",
+            label: "Facebook ads for roofers in Houston",
+            href: "/guides/facebook-ads-for-roofers-houston",
+            suffix: "for storm season ad ideas.",
+          },
+        ],
+      },
+      {
+        kind: "text",
+        id: "freeze",
+        title: "How should contractors market before a Houston freeze?",
+        paragraphs: [
+          "Houston freezes are rare. But they hit hard.",
+          "Many Texans remember the February 2021 winter storm. Power went out across the state. Pipes burst in many homes.",
+          "When a cold front is coming, run quick tip videos. Wrap your pipes. Drip your faucets. Know where your water shutoff is.",
+          "This helps people for free. And when a pipe does break, they call the plumber who helped them.",
+        ],
+        links: [
+          {
+            context: "Plumbers, read",
+            label: "Facebook ads for plumbers in Houston",
+            href: "/guides/facebook-ads-for-plumbers-houston",
+          },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "storm-kit",
+        title: "How do you get your marketing storm-ready?",
+        items: [
+          { title: "Film before you need it", detail: "Record tip videos and job videos in calm weeks." },
+          { title: "Build ads and pause them", detail: "Have storm and freeze ads ready to turn on fast." },
+          { title: "Pick your areas", detail: "Know which parts of Houston you can reach quickly after a storm." },
+          { title: "Plan your follow-up", detail: "Calls spike after storms. Know who will text and call every lead." },
+          { title: "Know your crew limits", detail: "Do not book more than you can do well. A bad job hurts more than a missed one." },
+          { title: "Keep it honest", detail: "No scare tactics. No fake damage photos. Show real work only." },
+        ],
+      },
+      {
+        kind: "text",
+        id: "local-areas",
+        title: "Does it matter which part of Houston you target?",
+        paragraphs: [
+          "Yes. Houston is huge. Drive time eats your day.",
+          "Pick the areas where you want to work. Maybe Katy, Cypress, Sugar Land, Pearland, The Woodlands, or inside the Loop.",
+          "Show homes and streets that look like theirs in your videos. Mention the area by name. Local feels trusted.",
+          "With the Houston Growth Engine, we film you on real Houston jobs, run ads in the areas you choose, and our team books the estimates.",
+        ],
+        links: [
+          {
+            context: "See",
+            label: "the Houston Growth Engine",
+            href: "/houston-growth-engine",
+            suffix: "for how it works.",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "When is hurricane season in Houston?",
+            a: "NOAA says Atlantic hurricane season runs June 1 to November 30.",
+          },
+          {
+            q: "Should I stop ads in slow months?",
+            a: "It is often better to keep a small budget running. People remember who they saw before they needed help.",
+          },
+          {
+            q: "When should HVAC companies advertise in Houston?",
+            a: "All year. Push tune-ups in spring, new systems in the summer heat, and heaters before cold snaps.",
+          },
+          {
+            q: "Is it OK to advertise right after a storm?",
+            a: "Yes, if you are helpful and honest. Check on safety first. Only take work you can do well.",
+          },
+          {
+            q: "When should I film my ads?",
+            a: "Before the busy season. Film in calm weeks so you are ready when calls spike.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/facebook-ads-for-hvac-companies-houston", label: "Facebook Ads for HVAC Companies in Houston", tag: "Ads" },
+          { href: "/guides/facebook-ads-for-roofers-houston", label: "How Much Do Facebook Ads Cost for Roofers in Houston?", tag: "Ads" },
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
         ],
       },
     ],

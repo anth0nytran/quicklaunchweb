@@ -26,10 +26,12 @@ import {
 export const HERO_DASHBOARD = {
   /** Shown on the screen. Required while any value below is illustrative. */
   label: "Example dashboard",
+  /** Always shown under the art. Keep while any value below is illustrative. */
+  disclaimer: "Example numbers for illustration, not a client result. Results vary.",
   durationMs: 2400,
   staggerMs: 150,
   metrics: [
-    { key: "leads", value: 312, format: "number" },
+    { key: "leads", value: 128, format: "number" },
     { key: "booked", value: 47, format: "number" },
     { key: "revenue", value: 38500, format: "currency" },
   ] as {
@@ -263,7 +265,7 @@ export function HeroDashboard() {
             style={{
               right: pct(W - 1008, W),
               top: pct(320, H),
-              fontSize: "max(8px, 1.05cqw)",
+              fontSize: "max(10px, 1.05cqw)",
               letterSpacing: "0.08em",
               padding: "0.35em 0.8em",
             }}
@@ -345,8 +347,12 @@ export function HeroDashboard() {
         </div>
       </div>
 
-      <p className="ql-hero-caption mt-1 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#0866FF]">
-        {HERO_DASHBOARD.label}
+      {/* Always visible (FTC): the numbers above are made up for illustration. */}
+      <p className="mt-1 text-center text-[12px] leading-[1.4] text-[#46516B]">
+        <span className="ql-hero-caption font-semibold uppercase tracking-[0.12em] text-[#0753CF]">
+          {HERO_DASHBOARD.label}.{" "}
+        </span>
+        {HERO_DASHBOARD.disclaimer}
       </p>
     </div>
   );

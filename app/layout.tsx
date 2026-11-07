@@ -1,13 +1,14 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Lato, Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { SiteEngagementTracker } from "@/lib/analytics";
 import { SiteStructuredData } from "@/components/seo/SiteStructuredData";
 import { buildPageMetadata, siteUrl } from "@/lib/seo";
+import { ConsentManager } from "@/components/consent/consent-manager";
+import { SkipToContent } from "@/components/skip-to-content";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ const inter = Inter({
 });
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "";
 const homeMetadata = buildPageMetadata({
   title: "Houston Facebook Ads & Video for Contractors | QuickLaunchWeb",
   description:
@@ -89,25 +91,8 @@ export default function RootLayout({
       <body
         className={`${lato.variable} ${montserrat.variable} ${inter.variable} ${lato.className} bg-black text-white antialiased overflow-x-hidden`}
       >
-        {GA_MEASUREMENT_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}', {
-                  anonymize_ip: true,
-                  cookie_flags: 'SameSite=None;Secure'
-                });
-              `}
-            </Script>
-          </>
-        )}
+        <SkipToContent />
+        {/* Google Analytics and the Meta Pixel load ONLY after consent (components/consent). */}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -118,7 +103,9 @@ export default function RootLayout({
         </ThemeProvider>
         <SiteStructuredData />
         <SiteEngagementTracker />
+        {/* Vercel Analytics: cookieless, aggregate page views. Not gated by the banner. */}
         <Analytics />
+        <ConsentManager gaId={GA_MEASUREMENT_ID} pixelId={META_PIXEL_ID} />
       </body>
     </html>
   );

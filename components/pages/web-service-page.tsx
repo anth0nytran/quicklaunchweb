@@ -169,7 +169,7 @@ function BrandButton({
 
 /**
  * "Book a call" button. Must render inside <BrandShell>: useBooking() reads its
- * context, tracks cta_click with `location`, and scrolls to #book.
+ * context, tracks cta_click with `location`, and opens the booking popup.
  */
 function BookButton({
   location,
@@ -863,7 +863,7 @@ export default function WebServicePage() {
   // Plan picker modal state (shown before upsell for generic CTAs)
   const [showPlanPicker, setShowPlanPicker] = useState(false);
 
-  // Mobile sticky CTA: BrandShell's own "Book a Free Strategy Call" button.
+  // Mobile sticky CTA: BrandShell's own "Book a Free Call" button.
 
   // Open plan picker (for generic CTAs that don't specify a plan)
   const openPlanPicker = () => {
@@ -1230,7 +1230,7 @@ export default function WebServicePage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <BookButton location="hero" className={`${primaryBtn} px-7 py-4 text-[16px]`}>
-                Book a Free Strategy Call
+                Book a Free Call
                 <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </BookButton>
               <button
@@ -1686,13 +1686,13 @@ export default function WebServicePage() {
       <DiscoveryCallSection
         theme="light"
         source={pageCopy.bookingSource}
-        eyebrow="BOOK YOUR FREE STRATEGY CALL"
+        eyebrow="BOOK YOUR FREE CALL"
         heading={
           <>
             See how you show up on <span className="text-[#0866FF]">Google, Maps, and AI search</span>.
           </>
         }
-        subheading="5 quick questions, then pick a time. On the call we look at where you stand today and which plan fits. No obligation."
+        subheading="A few quick questions, then pick a time. On the call we look at where you stand today and which plan fits. No obligation."
       />
 
       {/* ===================== FAQ ===================== */}
@@ -1848,7 +1848,7 @@ export default function WebServicePage() {
               location="final_cta"
               className="group inline-flex items-center gap-2.5 whitespace-nowrap rounded-xl bg-white px-8 py-4 text-[16px] font-bold text-[#0866FF] shadow-xl shadow-[#07143F]/25 transition-all hover:bg-[#EFF8FF] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/50 active:scale-[0.98]"
             >
-              Book a Free Strategy Call
+              Book a Free Call
               <KitIcon name="arrow-right" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </BookButton>
             <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-[13px] text-white/85">

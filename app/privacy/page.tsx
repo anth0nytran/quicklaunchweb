@@ -1,19 +1,107 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BrandShell } from "@/components/brand/brand-shell";
 import { Eyebrow } from "@/components/brand/primitives";
 import { buildPageMetadata } from "@/lib/seo";
 import { focusRing, container, pageH1, bodyText } from "@/components/brand/tokens";
+import { ConsentSettingsButton } from "@/components/consent/consent-links";
+import {
+  LEGAL_BUSINESS_NAME,
+  LEGAL_CITY_STATE,
+  LEGAL_EFFECTIVE_DATE,
+  LEGAL_EMAIL,
+  LEGAL_OWNER_NAME,
+  LEGAL_PHONE_DISPLAY,
+} from "@/lib/legal";
+
+// Plain-English privacy notice written to match what the code actually does
+// (see components/consent, app/api/lead, app/api/instagram, app/api/stripe).
+// Update it whenever a vendor, form, or tracking tool is added or removed.
+// Not legal advice: have a lawyer review before relying on it.
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Privacy Policy | QuickLaunchWeb",
   description:
-    "Read how QuickLaunchWeb collects, uses, shares, and protects your information.",
+    "What QuickLaunchWeb collects, why, who we share it with, the cookies we use, and how to access, correct, delete, or opt out.",
   path: "/privacy",
 });
 
 const legalH2 =
   "scroll-mt-28 text-[22px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[#07143F] sm:text-[24px]";
+const legalH3 = "mt-7 text-[18px] font-bold text-[#07143F]";
 const tocLink = `block rounded-md py-1 text-[15px] leading-[1.4] text-[#46516B] transition-colors hover:text-[#0866FF] ${focusRing}`;
+const list = "mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]";
+const strong = "font-semibold text-[#07143F]";
+const link = "font-medium text-[#0753CF] underline underline-offset-2 hover:text-[#07143F]";
+const th = "border-b border-[#E5EDF6] px-3 py-2 text-left text-[13px] font-semibold text-[#07143F]";
+const td = "border-b border-[#E5EDF6] px-3 py-2 align-top text-[14px] leading-[1.5]";
+
+const sections = [
+  ["summary", "The short version"],
+  ["who-we-are", "Who we are"],
+  ["what-we-collect", "What we collect"],
+  ["how-we-use", "How we use it"],
+  ["who-we-share-with", "Who we share it with"],
+  ["cookies", "Cookies and tracking"],
+  ["targeted-ads", "Targeted ads, “sale,” and your opt-out"],
+  ["sms", "Text messages (SMS)"],
+  ["retention", "How long we keep it"],
+  ["your-rights", "Your rights and how to use them"],
+  ["appeals", "Appeals"],
+  ["client-data", "Data we handle for our clients"],
+  ["children", "Children"],
+  ["security", "Security"],
+  ["changes", "Changes to this policy"],
+  ["contact", "Contact us"],
+] as const;
+
+const vendors: { name: string; what: string; when: string }[] = [
+  {
+    name: "Vercel",
+    what: "Hosts the website and runs our forms' servers. Vercel Analytics counts page views without cookies and without identifying you.",
+    when: "Every visit",
+  },
+  {
+    name: "Google Analytics (Google LLC)",
+    what: "Pages viewed, clicks, device and browser type, approximate location from IP (IP is anonymized), and how you found us.",
+    when: "Only if you allow Analytics",
+  },
+  {
+    name: "Meta Pixel and Meta Conversions API (Meta Platforms, Inc.)",
+    what: "Page views and actions such as submitting the free-call form or booking a call, browser and device details, IP address, Meta cookie IDs (_fbp, _fbc) and ad click IDs. When you submit the free-call form, our server also sends Meta a hashed (scrambled) copy of your phone number and first name plus your form answers (trade, job size, ad spend and revenue range) so Meta can measure and improve our ads. Meta may combine this with what it already knows about you.",
+    when: "Only if you allow Advertising and your browser does not send Global Privacy Control",
+  },
+  {
+    name: "HighLevel (GoHighLevel / LeadConnector)",
+    what: "Our CRM. Stores what you enter in our forms (name, phone, answers, page and ad source, SMS consent record) and sends our follow-up texts and emails through its messaging carriers.",
+    when: "When you submit a form",
+  },
+  {
+    name: "Calendly",
+    what: "Runs the booking calendar embedded on our pages. Collects the name, email, phone and answers you give when booking, and sets its own cookies inside the calendar.",
+    when: "When the calendar loads or you book",
+  },
+  {
+    name: "Web3Forms",
+    what: "Emails us a backup copy of form submissions (free-call form, support form, website-project form).",
+    when: "When you submit a form",
+  },
+  {
+    name: "Stripe",
+    what: "Processes payments on its own secure checkout page. We receive your name, email, plan, and payment status. We never see or store your full card number.",
+    when: "When you buy",
+  },
+  {
+    name: "Resend",
+    what: "Sends our transactional emails (for example, purchase confirmations and next steps) and internal lead alerts.",
+    when: "When you buy or submit some forms",
+  },
+  {
+    name: "Google Workspace (Gmail and Google Sheets)",
+    what: "Our business email, and spreadsheets where we log some leads, checklist requests, and purchases.",
+    when: "When you email us, submit some forms, or buy",
+  },
+];
 
 export default function PrivacyPage() {
   return (
@@ -23,7 +111,9 @@ export default function PrivacyPage() {
           <div className="mx-auto max-w-[760px]">
             <Eyebrow>Legal</Eyebrow>
             <h1 className={`mt-4 ${pageH1}`}>Privacy Policy</h1>
-            <p className={`mt-4 max-w-[40rem] ${bodyText}`}>How we collect, use, share, and protect your information.</p>
+            <p className={`mt-4 max-w-[40rem] ${bodyText}`}>
+              What we collect, why, who we share it with, and how you control it. In plain English.
+            </p>
           </div>
         </div>
       </section>
@@ -31,521 +121,438 @@ export default function PrivacyPage() {
       <section className="bg-white pb-16 pt-10 sm:pb-24 sm:pt-14">
         <div className={container}>
           <article className="mx-auto max-w-[760px]">
-          <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-5 sm:p-6 md:grid md:grid-cols-2 md:gap-6">
-            <div className="space-y-4">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Last updated</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">April 2026</p>
+            <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-5 sm:p-6 md:grid md:grid-cols-2 md:gap-6">
+              <div className="space-y-4">
+                <Fact label="Effective date" value={LEGAL_EFFECTIVE_DATE} />
+                <Fact label="Business" value={`${LEGAL_BUSINESS_NAME}, owned and run by ${LEGAL_OWNER_NAME}`} />
               </div>
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Owner / Operator</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">Anthony Tran (QuickLaunchWeb, we, us)</p>
-              </div>
-            </div>
-            <div className="mt-4 space-y-4 md:mt-0">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Website</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">quicklaunchweb.us</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Form</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">quicklaunchweb.us/support</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Email</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">anthotranllc@gmail.com</p>
+              <div className="mt-4 space-y-4 md:mt-0">
+                <Fact label="Privacy email" value={LEGAL_EMAIL} />
+                <Fact label="Phone / text" value={`${LEGAL_PHONE_DISPLAY} (${LEGAL_CITY_STATE})`} />
               </div>
             </div>
-          </div>
 
-          <div className="mt-4 rounded-xl border border-[#E5EDF6] bg-white p-4 text-[13px] leading-relaxed text-[#46516B]">
-            Disclaimer: This policy is provided for informational purposes only and does not constitute legal advice.
-            Privacy laws vary by jurisdiction; consult a qualified attorney to ensure compliance.
-          </div>
+            <div className="mt-4 flex flex-col gap-3 rounded-xl border border-[#0866FF]/30 bg-[#EFF8FF] p-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[14px] leading-relaxed text-[#07143F]">
+                Change your cookie choices or opt out of targeted ads at any time.
+              </p>
+              <ConsentSettingsButton
+                className={`inline-flex min-h-[40px] items-center justify-center rounded-lg bg-[#0866FF] px-4 text-[14px] font-semibold text-white hover:bg-[#0753CF] ${focusRing}`}
+              >
+                Your Privacy Choices
+              </ConsentSettingsButton>
+            </div>
 
-          <nav aria-label="Contents" className="mt-8 rounded-xl border border-[#E5EDF6] bg-white p-5 shadow-[0_4px_20px_-10px_rgba(7,20,63,0.12)] sm:p-6">
+            <nav
+              aria-label="Contents"
+              className="mt-8 rounded-xl border border-[#E5EDF6] bg-white p-5 shadow-[0_4px_20px_-10px_rgba(7,20,63,0.12)] sm:p-6"
+            >
               <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">On this page</p>
               <ol className="mt-3 grid gap-x-8 gap-y-1 sm:grid-cols-2">
-                <li>
-                  <a href="#introduction" className={tocLink}>
-                    1. Introduction
-                  </a>
-                </li>
-                <li>
-                  <a href="#information-we-collect" className={tocLink}>
-                    2. Information We Collect
-                  </a>
-                </li>
-                <li>
-                  <a href="#how-we-use-information" className={tocLink}>
-                    3. How We Use Information
-                  </a>
-                </li>
-                <li>
-                  <a href="#legal-bases-for-processing-eu-uk-users" className={tocLink}>
-                    4. Legal Bases for Processing (EU/UK users)
-                  </a>
-                </li>
-                <li>
-                  <a href="#sharing-your-information" className={tocLink}>
-                    5. Sharing Your Information
-                  </a>
-                </li>
-                <li>
-                  <a href="#cookies-and-tracking-technologies" className={tocLink}>
-                    6. Cookies and Tracking Technologies
-                  </a>
-                </li>
-                <li>
-                  <a href="#sms-text-messaging" className={tocLink}>
-                    7. SMS/Text Messaging
-                  </a>
-                </li>
-                <li>
-                  <a href="#data-retention" className={tocLink}>
-                    8. Data Retention
-                  </a>
-                </li>
-                <li>
-                  <a href="#your-rights-and-choices" className={tocLink}>
-                    9. Your Rights and Choices
-                  </a>
-                </li>
-                <li>
-                  <a href="#childrens-privacy" className={tocLink}>
-                    10. Children&#39;s Privacy
-                  </a>
-                </li>
-                <li>
-                  <a href="#international-data-transfers" className={tocLink}>
-                    11. International Data Transfers
-                  </a>
-                </li>
-                <li>
-                  <a href="#data-security" className={tocLink}>
-                    12. Data Security
-                  </a>
-                </li>
-                <li>
-                  <a href="#changes-to-this-policy" className={tocLink}>
-                    13. Changes to This Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact-us" className={tocLink}>
-                    14. Contact Us
-                  </a>
-                </li>
+                {sections.map(([id, title], i) => (
+                  <li key={id}>
+                    <a href={`#${id}`} className={tocLink}>
+                      {i + 1}. {title}
+                    </a>
+                  </li>
+                ))}
               </ol>
             </nav>
 
             <hr className="my-10 border-[#E5EDF6] sm:my-12" />
 
-          <div className="space-y-12 text-[16px] leading-[1.7] text-[#46516B] sm:text-[17px]">
-            <section>
-              <h2 id="introduction" className={legalH2}>1. Introduction</h2>
-              <p className="mt-3">
-                This Privacy Policy explains how QuickLaunchWeb collects, uses, shares, and safeguards personal information
-                in connection with our website and services. By using our website or purchasing our services, you agree to
-                the collection and use of information in accordance with this policy. We serve customers around the world
-                but primarily in the United States, and we comply with applicable privacy laws in the jurisdictions where we
-                operate.
-              </p>
-            </section>
+            <div className="space-y-12 text-[16px] leading-[1.7] text-[#46516B] sm:text-[17px]">
+              <section>
+                <h2 id="summary" className={legalH2}>1. The short version</h2>
+                <ul className={list}>
+                  <li>We collect what you type into our forms and booking calendar, plus basic visit data.</li>
+                  <li>
+                    Google Analytics and the Meta Pixel only run if you say yes in the cookie banner. Say no and they
+                    never load.
+                  </li>
+                  <li>We don&apos;t sell your info for money. We never share your mobile number with other companies for their marketing.</li>
+                  <li>We only text you if you check the box to agree. Reply STOP any time.</li>
+                  <li>
+                    You can ask to see, fix, or delete your info, and opt out of targeted ads. Email {LEGAL_EMAIL}.
+                  </li>
+                </ul>
+              </section>
 
-            <section>
-              <h2 id="information-we-collect" className={legalH2}>2. Information We Collect</h2>
-              <p className="mt-3">We collect the following categories of information:</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Information you provide:</span> Name, email address, phone number,
-                  business name and address, logo, photos, services offered, and other onboarding details.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Payment information:</span> Stripe processes subscription payments
-                  on our behalf. We do not store full payment card numbers on our servers.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Analytics and usage data:</span> Device type, browser type, pages
-                  viewed, and time spent on pages via tools like Umami, Vercel Analytics, or Google Analytics.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Cookies and similar technologies:</span> We and our partners use
-                  cookies to operate the site and analyze traffic.
-                </li>
-              </ul>
-            </section>
+              <section>
+                <h2 id="who-we-are" className={legalH2}>2. Who we are</h2>
+                <p className="mt-3">
+                  {LEGAL_BUSINESS_NAME} (&ldquo;we,&rdquo; &ldquo;us&rdquo;) is a marketing agency in {LEGAL_CITY_STATE},
+                  owned and run by {LEGAL_OWNER_NAME}. We sell ads, video, websites, SEO, and automation services to home
+                  service businesses in the United States. This policy covers this website, our forms, our calls and texts,
+                  and our services. Our site is meant for people in the United States.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="how-we-use-information" className={legalH2}>3. How We Use Information</h2>
-              <p className="mt-3">We use personal information for the following purposes:</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Provide services:</span> Build, host, and maintain your website,
-                  process payments via Stripe, and deliver support.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Communicate:</span> Contact you about onboarding, updates, support
-                  requests, and marketing offers (you may opt out at any time).
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Improve and secure:</span> Analyze usage, improve the experience,
-                  and protect against fraud and abuse.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Legal compliance:</span> Comply with legal obligations, enforce our
-                  Terms, resolve disputes, and protect our rights.
-                </li>
-              </ul>
-            </section>
+              <section>
+                <h2 id="what-we-collect" className={legalH2}>3. What we collect</h2>
+                <h3 className={legalH3}>What you give us</h3>
+                <ul className={list}>
+                  <li>
+                    <span className={strong}>Contact info:</span> name, phone number, email, business name, and website.
+                  </li>
+                  <li>
+                    <span className={strong}>Business details:</span> your answers on our forms, such as your trade, typical
+                    job size, monthly ad spend, and revenue range, and anything you write in a message.
+                  </li>
+                  <li>
+                    <span className={strong}>Booking details:</span> what you enter in our Calendly calendar.
+                  </li>
+                  <li>
+                    <span className={strong}>Purchase details:</span> name, email, plan, and payment status from Stripe. No
+                    full card numbers.
+                  </li>
+                  <li>
+                    <span className={strong}>Client materials:</span> logos, photos, videos, service lists, and account
+                    access you give us so we can do the work.
+                  </li>
+                  <li>
+                    <span className={strong}>Your SMS consent record:</span> whether you checked the box, the exact words
+                    you agreed to, the time, and the page.
+                  </li>
+                  <li>
+                    <span className={strong}>Calls and texts:</span> the content of texts you send us and notes from our
+                    calls with you.
+                  </li>
+                </ul>
+                <h3 className={legalH3}>What we collect automatically</h3>
+                <ul className={list}>
+                  <li>
+                    <span className={strong}>Visit data:</span> IP address, browser, device, pages viewed, the page that
+                    sent you, and ad campaign tags (UTM tags and Facebook click IDs).
+                  </li>
+                  <li>
+                    <span className={strong}>Cookies and similar tech:</span> see <a href="#cookies" className={link}>Cookies and tracking</a>.
+                  </li>
+                </ul>
+                <h3 className={legalH3}>What we don&apos;t collect</h3>
+                <p className="mt-2">
+                  We don&apos;t ask for sensitive data such as health, race, religion, immigration status, precise
+                  location, biometrics, or Social Security numbers. Please don&apos;t send it to us. We do not sell
+                  sensitive data.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="legal-bases-for-processing-eu-uk-users" className={legalH2}>4. Legal Bases for Processing (EU/UK users)</h2>
-              <p className="mt-3">If you are located in the EEA or United Kingdom, we process personal data based on:</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Contractual necessity:</span> To provide the services you request.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Legitimate interests:</span> To improve services, prevent fraud,
-                  and maintain security.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Consent:</span> For non-essential cookies and marketing
-                  communications.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Legal obligations:</span> To comply with applicable laws and
-                  regulations.
-                </li>
-              </ul>
-            </section>
+              <section>
+                <h2 id="how-we-use" className={legalH2}>4. How we use it</h2>
+                <ul className={list}>
+                  <li>To answer your request, book and run your call, and follow up by phone, text, or email.</li>
+                  <li>To deliver services you buy, bill you, and support you.</li>
+                  <li>To see how the site is used and make it better (only with Analytics consent for Google Analytics).</li>
+                  <li>
+                    To measure and improve our ads on Facebook and Instagram, and to show our ads to people who visited
+                    (only with Advertising consent).
+                  </li>
+                  <li>To prevent spam, fraud, and abuse, and to keep records the law requires.</li>
+                  <li>To send you marketing, only where you agreed or the law allows. You can opt out any time.</li>
+                </ul>
+              </section>
 
-            <section>
-              <h2 id="sharing-your-information" className={legalH2}>5. Sharing Your Information</h2>
-              <p className="mt-3">
-                We do not sell your personal information. We may share information with trusted third parties, including:
-              </p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Payment processors:</span> Stripe, to process subscription
-                  payments.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Hosting and infrastructure:</span> Vercel and similar providers.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Analytics providers:</span> Umami, Vercel Analytics, or Google
-                  Analytics.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Service partners:</span> Optional add-on services you request.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Compliance and legal:</span> If required by law or to protect
-                  rights, property, or safety.
-                </li>
-              </ul>
-              <p className="mt-3">
-                These third parties process personal data on our behalf and are bound by contractual obligations to keep
-                information confidential and use it only for disclosed purposes.
-              </p>
-            </section>
-
-            <section>
-              <h2 id="cookies-and-tracking-technologies" className={legalH2}>6. Cookies and Tracking Technologies</h2>
-              <p className="mt-3">
-                We use cookies and similar technologies to operate our website, remember preferences, and analyze traffic.
-                Some cookies are essential for the site to function; others are used for analytics and marketing.
-              </p>
-              <p className="mt-3">
-                If you are located in a jurisdiction that requires cookie consent, we will display a cookie notice and allow
-                you to accept or decline non-essential cookies. At present we do not show a cookie banner, but as we expand
-                internationally we may implement one. You can also modify cookie settings in your browser, though disabling
-                cookies may affect site functionality.
-              </p>
-            </section>
-
-            <section id="sms" className="scroll-mt-28">
-              <h2 id="sms-text-messaging" className={legalH2}>7. SMS/Text Messaging</h2>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.1 Platform Operator Disclosure</h3>
-              <p className="mt-2">
-                <span className="font-semibold text-[#07143F]">Program Name:</span> QuickLaunchWeb SMS Program
-              </p>
-              <p className="mt-2">
-                QuickLaunchWeb is a platform that builds, hosts, and operates websites and business communication
-                tools for local service businesses. As the platform operator, QuickLaunchWeb is the sole sender of
-                all SMS messages across every client website and business account on our platform. Each business
-                client may be assigned a dedicated phone number for their SMS communications, but all phone numbers
-                are owned, registered, and operated by QuickLaunchWeb under a single brand registration. The
-                individual business does not independently send text messages — QuickLaunchWeb sends all messages on
-                their behalf through our platform.
-              </p>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.2 Message Types and Purpose</h3>
-              <p className="mt-2">
-                All SMS messages sent through our platform are <span className="font-semibold text-[#07143F]">transactional
-                and informational only</span>. We do not send marketing, promotional, or advertising messages via SMS.
-                Message types include:
-              </p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Lead confirmations (to consumers):</span> When you submit a
-                  lead form on a QuickLaunchWeb-powered website and opt in to SMS, you receive a confirmation that the
-                  business received your request.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Lead alerts (to business owners/staff):</span> When a new
-                  lead is submitted, the business owner or designated staff receives an SMS notification with the
-                  lead details.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Missed call text-back (to consumers):</span> If a consumer
-                  calls a business and the call is not answered, an automated text is sent to the caller letting them
-                  know the business will follow up.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Auto follow-ups (to consumers):</span> Automated follow-up
-                  messages sent to leads who have not yet been contacted, to ensure no inquiry goes unanswered.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Review requests (to customers):</span> After a completed
-                  service, a one-time SMS inviting the customer to share feedback about their experience. This message
-                  includes a link to a short feedback page.
-                </li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.3 How You Opt In</h3>
-              <p className="mt-2 font-semibold text-[#07143F]">Consumers / Leads:</p>
-              <p className="mt-1">
-                Each QuickLaunchWeb-powered website includes a lead form with a phone number field and
-                an <span className="font-semibold text-[#07143F]">unchecked</span> SMS consent checkbox (not pre-checked).
-                The disclosure language next to the checkbox reads:
-              </p>
-              <div className="mt-3 rounded-r-xl border-l-4 border-[#0866FF] bg-[#EFF8FF] px-4 py-3 text-[15px] italic leading-[1.6] text-[#46516B]">
-                &ldquo;I consent to receive SMS notifications, alerts &amp; occasional updates from QuickLaunchWeb.
-                Message frequency may vary. Msg &amp; data rates may apply. Text HELP for assistance.
-                You may reply STOP to unsubscribe at any time. Privacy Policy &amp; Terms.&rdquo;
-              </div>
-              <p className="mt-2">
-                The Privacy Policy and Terms links are clickable. We capture and store proof of opt-in including
-                timestamp, source page URL, phone number, and checkbox state.
-              </p>
-              <p className="mt-3 font-semibold text-[#07143F]">Business Owners / Staff:</p>
-              <p className="mt-1">
-                Business owners opt in during onboarding when they subscribe to a plan that includes text alerts.
-                They provide their mobile number and explicitly agree to receive SMS lead notifications by checking
-                an SMS consent checkbox. The disclosure reads: &ldquo;I agree to receive SMS lead alert notifications
-                from QuickLaunchWeb. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out,
-                HELP for help. See Privacy Policy &amp; Terms.&rdquo; SMS consent is not required to use our services.
-              </p>
-              <p className="mt-3 font-semibold text-[#07143F]">Review Request Recipients:</p>
-              <p className="mt-1">
-                Review request messages are only sent to customers who have already opted in to SMS through the
-                website lead form consent checkbox described above. After a completed service, the business owner
-                may trigger a one-time review request through the QuickLaunchWeb platform. The message includes
-                opt-out instructions (reply STOP). Only one review request is sent per service interaction. No
-                review request messages are sent to customers who did not opt in via the lead form.
-              </p>
-              <p className="mt-3 font-semibold text-[#07143F]">
-                Consent to receive SMS is not a condition of any purchase or service. You may use our services,
-                submit lead forms, or receive services without opting in to SMS.
-              </p>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.4 Message Frequency and Costs</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Frequency:</span> Message frequency varies based on
-                  activity. Typically 1&ndash;5 messages per customer interaction.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Message and data rates:</span> Standard message and data
-                  rates from your mobile carrier may apply. QuickLaunchWeb is not responsible for carrier charges.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Supported carriers:</span> Major US carriers including
-                  AT&amp;T, T-Mobile, Verizon, and Sprint. Service availability may vary by carrier.
-                </li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.5 Opt-Out and Help</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Opt-out:</span> Reply <span className="font-semibold text-[#07143F]">STOP</span> to
-                  any message to immediately unsubscribe. You will receive a one-time confirmation and no further
-                  messages will be sent from that number.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Help:</span> Reply <span className="font-semibold text-[#07143F]">HELP</span> to
-                  any message for assistance, or email anthotranllc@gmail.com.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Re-subscribe:</span> Reply <span className="font-semibold text-[#07143F]">START</span> to
-                  re-subscribe if you previously opted out.
-                </li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.6 SMS Data and Privacy</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  We do <span className="font-semibold text-[#07143F]">not</span> sell, rent, or share your mobile phone
-                  number or SMS consent data with any third parties for their marketing purposes.
-                </li>
-                <li>
-                  SMS consent and opt-in data is used solely for sending the transactional messages described in this
-                  section.
-                </li>
-                <li>
-                  Opt-in records (timestamp, source URL, phone number, consent state) are retained for compliance
-                  purposes and are available upon request.
-                </li>
-                <li>
-                  All the above categories exclude text messaging originator opt-in data and consent; this
-                  information will not be shared with any third parties, excluding aggregators and providers
-                  of the Text Message services.
-                </li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">7.7 Sample Messages</h3>
-              <div className="mt-3 space-y-3">
-                <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-4">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF]">Lead confirmation (to consumer)</p>
-                  <p className="text-[15px] leading-[1.6] text-[#07143F]">
-                    Hi John &mdash; we received your request for ABC Fencing. Someone will reach out shortly.
-                    Reply STOP to opt out, HELP for help.
-                  </p>
+              <section>
+                <h2 id="who-we-share-with" className={legalH2}>5. Who we share it with</h2>
+                <p className="mt-3">
+                  We use these companies to run our business. They get only what they need for the job listed.
+                </p>
+                <div className="mt-4 overflow-x-auto rounded-xl border border-[#E5EDF6]">
+                  <table className="w-full min-w-[560px] border-collapse">
+                    <caption className="sr-only">Companies we share data with</caption>
+                    <thead className="bg-[#F7FBFF]">
+                      <tr>
+                        <th scope="col" className={th}>Company</th>
+                        <th scope="col" className={th}>What they get and why</th>
+                        <th scope="col" className={th}>When</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {vendors.map((v) => (
+                        <tr key={v.name}>
+                          <th scope="row" className={`${td} font-semibold text-[#07143F]`}>{v.name}</th>
+                          <td className={td}>{v.what}</td>
+                          <td className={td}>{v.when}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-4">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF]">Missed call text-back (to consumer)</p>
-                  <p className="text-[15px] leading-[1.6] text-[#07143F]">
-                    Hi, you just called ABC Fencing. Sorry we missed you! We&rsquo;ll get back to you shortly. If
-                    you&rsquo;d like, reply with details about what you need.
-                    Reply STOP to opt out, HELP for help.
-                  </p>
+                <p className="mt-4">We may also share information:</p>
+                <ul className={list}>
+                  <li>When the law requires it, or to protect our rights, safety, or the safety of others.</li>
+                  <li>If our business is sold or merged, with the new owner, who must follow this policy.</li>
+                  <li>With anyone else only when you ask us to.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 id="cookies" className={legalH2}>6. Cookies and tracking</h2>
+                <p className="mt-3">
+                  When you first visit, a banner lets you <span className={strong}>Accept all</span>,{" "}
+                  <span className={strong}>Reject non-essential</span>, or <span className={strong}>Choose</span>. Until
+                  you choose, only necessary cookies run, and Google Analytics and the Meta Pixel do not load. We keep
+                  your choice for 12 months, then ask again. Change it any time with{" "}
+                  <span className={strong}>Cookie settings</span> in the footer.
+                </p>
+                <div className="mt-4 overflow-x-auto rounded-xl border border-[#E5EDF6]">
+                  <table className="w-full min-w-[560px] border-collapse">
+                    <caption className="sr-only">Cookies used on this site</caption>
+                    <thead className="bg-[#F7FBFF]">
+                      <tr>
+                        <th scope="col" className={th}>Cookie</th>
+                        <th scope="col" className={th}>Type</th>
+                        <th scope="col" className={th}>What it does</th>
+                        <th scope="col" className={th}>Lasts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row" className={`${td} font-mono text-[13px] text-[#07143F]`}>ql_consent</th>
+                        <td className={td}>Necessary</td>
+                        <td className={td}>Remembers your cookie choice (also saved in your browser&apos;s local storage).</td>
+                        <td className={td}>12 months</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className={`${td} font-mono text-[13px] text-[#07143F]`}>Calendly cookies</th>
+                        <td className={td}>Necessary</td>
+                        <td className={td}>Set by Calendly inside the booking calendar so booking works.</td>
+                        <td className={td}>Set by Calendly</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className={`${td} font-mono text-[13px] text-[#07143F]`}>_ga, _ga_*</th>
+                        <td className={td}>Analytics</td>
+                        <td className={td}>Google Analytics. Tells visits apart so we can count pages and visitors.</td>
+                        <td className={td}>Up to 2 years</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className={`${td} font-mono text-[13px] text-[#07143F]`}>_fbp, _fbc</th>
+                        <td className={td}>Advertising</td>
+                        <td className={td}>Meta Pixel. Connects visits and form submits to our Facebook and Instagram ads.</td>
+                        <td className={td}>90 days</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-4">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF]">Lead alert (to business owner)</p>
-                  <p className="text-[15px] leading-[1.6] text-[#07143F]">
-                    New lead: John &mdash; (555) 123-4567 &mdash; Fence Installation &mdash; Houston.
-                    Reply STOP to opt out, HELP for help.
-                  </p>
-                </div>
-                <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-4">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF]">Review request (to customer)</p>
-                  <p className="text-[15px] leading-[1.6] text-[#07143F]">
-                    Hey John &mdash; thanks for choosing ABC Fencing! If you have a moment, we&rsquo;d love your
-                    feedback: https://quicklaunchweb.us/r/abc123.
-                    Reply STOP to opt out, HELP for help.
-                  </p>
-                </div>
-              </div>
-            </section>
+                <ul className={list}>
+                  <li>
+                    <span className={strong}>Vercel Analytics</span> counts page views without cookies and without
+                    identifying you, so it runs for everyone.
+                  </li>
+                  <li>
+                    <span className={strong}>Stripe</span> checkout happens on Stripe&apos;s own site, under Stripe&apos;s
+                    cookies and privacy policy.
+                  </li>
+                  <li>
+                    <span className={strong}>Google Consent Mode:</span> Google tags start with all storage set to
+                    &ldquo;denied&rdquo; and only switch to &ldquo;granted&rdquo; for the categories you allow.
+                  </li>
+                  <li>
+                    <span className={strong}>Global Privacy Control (GPC):</span> if your browser sends a GPC signal, we
+                    treat it as an opt-out of targeted ads and sale/sharing. The Meta Pixel stays off and we don&apos;t
+                    send your data to Meta, even if you click Accept.
+                  </li>
+                  <li>
+                    <span className={strong}>&ldquo;Do Not Track&rdquo;:</span> browsers&apos; older Do Not Track setting has
+                    no agreed standard, so we don&apos;t respond to it. We do honor GPC.
+                  </li>
+                </ul>
+              </section>
 
-            <section>
-              <h2 id="data-retention" className={legalH2}>8. Data Retention</h2>
-              <p className="mt-3">
-                We retain personal information for as long as necessary to fulfill the purposes described in this policy and
-                to comply with legal obligations. Because we maintain only a small database, we may store data until the
-                database reaches capacity. If we plan to delete data because our database is full, we will provide notice so
-                you can request a copy of your data. You may request deletion of your personal information at any time, and
-                we will delete it as soon as practicable, subject to legal obligations. Upon request, we will export your
-                data and then remove it from our systems.
-              </p>
-            </section>
+              <section>
+                <h2 id="targeted-ads" className={legalH2}>7. Targeted ads, &ldquo;sale,&rdquo; and your opt-out</h2>
+                <p className="mt-3">
+                  We don&apos;t sell your personal data for money. But if you allow Advertising, the Meta Pixel and Meta
+                  Conversions API share your visit and form data with Meta so we can measure our ads and show them to
+                  people who visited. Texas, California, and other state privacy laws may call this
+                  &ldquo;targeted advertising,&rdquo; &ldquo;sharing,&rdquo; or a &ldquo;sale.&rdquo;
+                </p>
+                <p className="mt-3">
+                  <span className={strong}>To opt out</span>, use any of these:
+                </p>
+                <ul className={list}>
+                  <li>
+                    Click <span className={strong}>Your Privacy Choices / Do Not Sell or Share My Personal Information</span>{" "}
+                    in the footer (or the button at the top of this page) and turn off Advertising.
+                  </li>
+                  <li>Turn on Global Privacy Control in your browser.</li>
+                  <li>
+                    Email {LEGAL_EMAIL} with &ldquo;Opt out&rdquo; in the subject. We&apos;ll apply it to the records we hold
+                    about you, for example by not adding your contact info to ad audiences.
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  The cookie choice is saved per browser. If you use more than one browser or device, set it on each one,
+                  or email us. We do not use your data for profiling that has legal or similarly significant effects on
+                  you.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="your-rights-and-choices" className={legalH2}>9. Your Rights and Choices</h2>
-              <p className="mt-3">Depending on your location, you may have the following rights:</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>
-                  <span className="font-semibold text-[#07143F]">Access:</span> Request a copy of the personal information we hold.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Correction:</span> Request corrections to inaccurate information.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Deletion:</span> Request deletion of your personal data, subject to
-                  legal exceptions.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Opt-out of marketing:</span> Unsubscribe from marketing emails.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Opt-out of SMS:</span> Reply STOP to any text message to
-                  unsubscribe from SMS communications.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Opt-out of cookies:</span> Decline non-essential cookies where
-                  required.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Data portability:</span> EEA/UK users may request a transfer of
-                  personal data.
-                </li>
-                <li>
-                  <span className="font-semibold text-[#07143F]">Do Not Sell/Share (California residents):</span> We do not sell
-                  personal information. If we later share personal data for cross-context behavioral advertising, we will
-                  provide notice and an opt-out mechanism as required by CCPA/CPRA.
-                </li>
-              </ul>
-              <p className="mt-3">
-                To exercise these rights, contact us at anthotranllc@gmail.com. We may need to verify your identity before
-                processing your request.
-              </p>
-            </section>
+              <section id="sms-text-messaging" className="scroll-mt-28">
+                <h2 id="sms" className={legalH2}>8. Text messages (SMS)</h2>
+                <p className="mt-3">
+                  We only text you if you check the unchecked consent box on our form (or opt in another way the law
+                  allows). Checking it is never required to buy or to book a call. Texts may be about your free call,
+                  appointment reminders, follow-up on your request, and our services. Message frequency varies. Message and
+                  data rates may apply. Reply <span className={strong}>STOP</span> to stop, <span className={strong}>HELP</span>{" "}
+                  for help. Carriers are not liable for delayed or undelivered messages.
+                </p>
+                <p className="mt-3">
+                  <span className={strong}>
+                    We do not sell or share your mobile number or SMS opt-in data with third parties or affiliates for
+                    their marketing or promotional purposes.
+                  </span>{" "}
+                  We share it only with the companies that deliver our texts (HighLevel and its carriers and messaging
+                  providers). Full program terms are on our{" "}
+                  <Link href="/sms-consent" className={link}>
+                    SMS Terms
+                  </Link>{" "}
+                  page.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="childrens-privacy" className={legalH2}>10. Children&#39;s Privacy</h2>
-              <p className="mt-3">
-                Our services are intended for adults and businesses, not for children under 13. We do not knowingly collect
-                personal information from children under 13. If we become aware that a child has provided us with personal
-                information, we will delete it. If you believe a child has provided us with personal information, please
-                contact us.
-              </p>
-            </section>
+              <section>
+                <h2 id="retention" className={legalH2}>9. How long we keep it</h2>
+                <ul className={list}>
+                  <li>
+                    <span className={strong}>Leads and CRM records:</span> up to 3 years after our last contact, unless you
+                    become a client or ask us to delete them sooner.
+                  </li>
+                  <li>
+                    <span className={strong}>Client and billing records:</span> while you are a client and up to 7 years
+                    after, for tax and legal reasons.
+                  </li>
+                  <li>
+                    <span className={strong}>SMS consent and opt-out records:</span> 5 years, so we can prove consent and
+                    honor opt-outs.
+                  </li>
+                  <li>
+                    <span className={strong}>Google Analytics data:</span> up to 14 months.
+                  </li>
+                  <li>
+                    <span className={strong}>Cookies:</span> see the cookie table above.
+                  </li>
+                  <li>
+                    <span className={strong}>Data held by our vendors</span> (for example Meta, Calendly, Stripe) is also
+                    kept under their own policies.
+                  </li>
+                </ul>
+              </section>
 
-            <section>
-              <h2 id="international-data-transfers" className={legalH2}>11. International Data Transfers</h2>
-              <p className="mt-3">
-                QuickLaunchWeb is based in the United States and serves customers globally. By using our services, you
-                understand that your information may be transferred to, stored in, and processed in the U.S. or other
-                countries. These countries may have data-protection laws that are different from those of your jurisdiction.
-                If you are in the EEA/UK, we rely on standard contractual clauses or other legal mechanisms to lawfully
-                transfer your personal data.
-              </p>
-            </section>
+              <section>
+                <h2 id="your-rights" className={legalH2}>10. Your rights and how to use them</h2>
+                <p className="mt-3">
+                  Depending on where you live (including Texas, California, and other states with privacy laws), you can
+                  ask us to:
+                </p>
+                <ul className={list}>
+                  <li><span className={strong}>Know and access</span> the personal data we have about you.</li>
+                  <li><span className={strong}>Correct</span> data that is wrong.</li>
+                  <li><span className={strong}>Delete</span> your data.</li>
+                  <li><span className={strong}>Get a copy</span> of your data in a usable format.</li>
+                  <li>
+                    <span className={strong}>Opt out</span> of targeted advertising, the sale or sharing of your data, and
+                    profiling.
+                  </li>
+                  <li><span className={strong}>Stop marketing</span>: reply STOP to texts, or tell us on a call or by email.</li>
+                </ul>
+                <p className="mt-3">
+                  <span className={strong}>How:</span> email {LEGAL_EMAIL}, call or text {LEGAL_PHONE_DISPLAY}, or use our{" "}
+                  <Link href="/support" className={link}>
+                    support form
+                  </Link>
+                  . Tell us what you want and the name, phone, or email you used with us. We may ask a question or two to
+                  confirm it&apos;s you before we hand over or delete anything. You can use an authorized agent; we may ask
+                  for proof they act for you.
+                </p>
+                <p className="mt-3">
+                  We answer within 45 days. If we need more time (up to 45 more days), we&apos;ll tell you why. Requests are
+                  free up to twice a year. We will never charge you more, give you worse service, or treat you differently
+                  for using your rights.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="data-security" className={legalH2}>12. Data Security</h2>
-              <p className="mt-3">
-                We implement reasonable technical and organizational measures to protect personal information, including
-                encryption in transit, restricted access, regular backups, and secure hosting. However, no method of
-                transmission or storage is completely secure, so we cannot guarantee absolute security.
-              </p>
-            </section>
+              <section>
+                <h2 id="appeals" className={legalH2}>11. Appeals</h2>
+                <p className="mt-3">
+                  If we say no to your request, you can appeal. Email {LEGAL_EMAIL} with &ldquo;Privacy appeal&rdquo; in the
+                  subject and tell us what you asked for. We will reply in writing within 60 days and explain what we
+                  decided and why. If you are still not satisfied, you can contact your state attorney general. Texas
+                  residents can file a complaint with the{" "}
+                  <a
+                    href="https://www.texasattorneygeneral.gov/consumer-protection/file-consumer-complaint"
+                    className={link}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Texas Attorney General
+                  </a>
+                  .
+                </p>
+              </section>
 
-            <section>
-              <h2 id="changes-to-this-policy" className={legalH2}>13. Changes to This Policy</h2>
-              <p className="mt-3">
-                We may update this Privacy Policy from time to time. We will notify you of material changes by posting the
-                new policy on our website and updating the "Last updated" date. In some cases, we may also send an email
-                notification. Your continued use of our services after changes take effect signifies acceptance of the
-                updated policy.
-              </p>
-            </section>
+              <section>
+                <h2 id="client-data" className={legalH2}>12. Data we handle for our clients</h2>
+                <p className="mt-3">
+                  When we run ads, websites, lead forms, or texting for a client business, we handle their customers&apos;
+                  data on that business&apos;s behalf and follow its instructions. If you contacted one of our clients
+                  (for example, a roofer or remodeler), send privacy requests to that business. We&apos;ll help them
+                  answer.
+                </p>
+              </section>
 
-            <section>
-              <h2 id="contact-us" className={legalH2}>14. Contact Us</h2>
-              <p className="mt-3">
-                If you have questions about this Privacy Policy or wish to exercise your rights, please contact Anthony Tran
-                at anthotranllc@gmail.com or via our support form.
-              </p>
-            </section>
-          </div>
+              <section>
+                <h2 id="children" className={legalH2}>13. Children</h2>
+                <p className="mt-3">
+                  This site is for business owners. It is not directed at children under 13, and we do not knowingly
+                  collect data from them. If you think a child gave us information, email {LEGAL_EMAIL} and we&apos;ll
+                  delete it.
+                </p>
+              </section>
+
+              <section>
+                <h2 id="security" className={legalH2}>14. Security</h2>
+                <p className="mt-3">
+                  We use encrypted connections (HTTPS), limit who can access data, and pick vendors with strong security.
+                  No system is perfectly secure, so we can&apos;t promise data will never be exposed. If a breach affects
+                  you, we will notify you as the law requires.
+                </p>
+              </section>
+
+              <section>
+                <h2 id="changes" className={legalH2}>15. Changes to this policy</h2>
+                <p className="mt-3">
+                  We&apos;ll update this page when our practices change and change the effective date at the top. If a
+                  change is significant, we&apos;ll post a notice on the site or tell clients directly.
+                </p>
+              </section>
+
+              <section>
+                <h2 id="contact" className={legalH2}>16. Contact us</h2>
+                <p className="mt-3">
+                  {LEGAL_BUSINESS_NAME}, attn: {LEGAL_OWNER_NAME}, {LEGAL_CITY_STATE}
+                  <br />
+                  Email: {LEGAL_EMAIL}
+                  <br />
+                  Phone / text: {LEGAL_PHONE_DISPLAY}
+                </p>
+                <p className="mt-6 rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-4 text-[13px] leading-relaxed text-[#46516B]">
+                  This policy describes our practices. It is not legal advice to you.
+                </p>
+              </section>
+            </div>
           </article>
         </div>
       </section>
     </BrandShell>
+  );
+}
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">{label}</p>
+      <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">{value}</p>
+    </div>
   );
 }

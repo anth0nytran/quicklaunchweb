@@ -2,6 +2,7 @@ import { StructuredData } from "@/components/seo/StructuredData";
 import type { Guide, GuideSection } from "@/lib/guides";
 import {
   absoluteUrl,
+  founderId,
   organizationId,
   parseMonthYearToIso,
   websiteId,
@@ -34,8 +35,11 @@ export function GuideStructuredData({ guide }: { guide: Guide }) {
       mainEntityOfPage: guideUrl,
       url: guideUrl,
       image: [absoluteUrl("/icon.jpg")],
+      // Person author (E-E-A-T); the Person node lives in SiteStructuredData.
       author: {
-        "@id": organizationId,
+        "@type": "Person",
+        "@id": founderId,
+        name: "Anthony Tran",
       },
       publisher: {
         "@id": organizationId,

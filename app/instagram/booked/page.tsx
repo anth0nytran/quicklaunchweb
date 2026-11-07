@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getAdConsent } from '@/lib/consent';
 import {
   Check,
   ChevronLeft,
@@ -169,6 +170,7 @@ async function sendMetaServerEvent(event: {
         fbc: event.context.fbc,
         fbclid: event.context.fbclid,
         customData: event.customData,
+        adConsent: getAdConsent(),
       }),
     });
   } catch {

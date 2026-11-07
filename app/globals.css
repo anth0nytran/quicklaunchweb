@@ -1518,7 +1518,7 @@
     display: none;
   }
   .ql-hero-caption {
-    display: block;
+    display: inline;
   }
 }
 

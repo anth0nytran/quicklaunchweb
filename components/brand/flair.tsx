@@ -107,6 +107,23 @@ const tradeLabel = (t: string) =>
   t === "hvac" ? "HVAC" : t.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
 
 /** Slow scrolling strip of the trades we serve (kit trade icons). */
+/** Static, centered row of trade pills. Use under a moving logo marquee so only one thing scrolls. */
+export function TradeRow() {
+  return (
+    <ul className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3" aria-label="Trades we work with">
+      {TRADES.map((t) => (
+        <li
+          key={t}
+          className="flex items-center gap-2 rounded-full border border-[#E5EDF6] bg-white px-3.5 py-2 text-[13px] font-semibold text-[#07143F] shadow-[0_4px_14px_-8px_rgba(7,20,63,0.2)] sm:text-[14px]"
+        >
+          <KitIcon name={`trade-${t}`} className="h-5 w-5" />
+          {tradeLabel(t)}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function TradeMarquee() {
   const row = [...TRADES, ...TRADES];
   return (

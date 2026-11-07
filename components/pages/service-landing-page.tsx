@@ -174,12 +174,6 @@ function Sections({ content }: { content: ServiceLanding }) {
       <DiscoveryCallSection
         theme="light"
         source={`website_${content.slug}`}
-        eyebrow="BOOK YOUR FREE STRATEGY CALL"
-        heading={
-          <>
-            5 Quick Questions. Then <span className="text-[#0866FF]">Pick a Time</span>.
-          </>
-        }
       />
 
       {/* ===================== FAQ ===================== */}

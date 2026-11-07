@@ -3,11 +3,14 @@ import { BrandShell } from "@/components/brand/brand-shell";
 import { Eyebrow } from "@/components/brand/primitives";
 import { buildPageMetadata } from "@/lib/seo";
 import { focusRing, container, pageH1, bodyText } from "@/components/brand/tokens";
+import { LEGAL_EFFECTIVE_DATE, LEGAL_EMAIL, LEGAL_PHONE_DISPLAY } from "@/lib/legal";
+
+// Not legal advice: have a lawyer review before relying on it.
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Terms of Service | QuickLaunchWeb",
   description:
-    "Read the QuickLaunchWeb terms of service for subscriptions, website delivery, billing, and support.",
+    "Read the QuickLaunchWeb terms of service for marketing services, websites, subscriptions, billing, and support.",
   path: "/terms",
 });
 
@@ -34,8 +37,8 @@ export default function TermsPage() {
           <div className="rounded-xl border border-[#E5EDF6] bg-[#F7FBFF] p-5 sm:p-6 md:grid md:grid-cols-2 md:gap-6">
             <div className="space-y-4">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Last updated</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">April 2026</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Effective date</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">{LEGAL_EFFECTIVE_DATE}</p>
               </div>
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Owner / Operator</p>
@@ -53,7 +56,7 @@ export default function TermsPage() {
               </div>
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">Support Email</p>
-                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">anthotranllc@gmail.com</p>
+                <p className="mt-0.5 text-[15px] font-medium text-[#07143F]">{LEGAL_EMAIL}</p>
               </div>
             </div>
           </div>
@@ -124,7 +127,7 @@ export default function TermsPage() {
                 </li>
                 <li>
                   <a href="#no-guarantees-disclaimer" className={tocLink}>
-                    12. No Guarantees; Disclaimer
+                    12. No Guarantees; Results Vary
                   </a>
                 </li>
                 <li>
@@ -176,21 +179,22 @@ export default function TermsPage() {
             <section>
               <h2 id="what-we-provide" className={legalH2}>2. What We Provide</h2>
               <p className="mt-3">
-                QuickLaunchWeb offers subscription plans for professionally built websites aimed at local business marketing.
-                Each subscription includes a template-based website build, secure hosting with SSL, basic maintenance to keep
-                the site live and functioning, and basic search-engine optimization (SEO). A free initial build is offered
-                with an active subscription. Optional add-ons (such as analytics) may be available. We focus on creating
-                conversion-oriented websites, but results depend on many factors outside our control; we do not guarantee
-                leads, clients, bookings, revenue, return on investment, ranking positions, or any specific outcome.
+                QuickLaunchWeb provides marketing services for local businesses, which may include Facebook and Instagram
+                advertising, short-form video, social media management, lead follow-up and appointment setting, websites
+                and hosting, search engine and AI search optimization (SEO), and automation software. What you get is what
+                is listed on the checkout page, order form, or written proposal you accept (your &ldquo;Plan&rdquo;). Website
+                subscriptions include a website build, secure hosting with SSL, basic maintenance, and basic SEO as described
+                in your Plan. Results depend on many factors outside our control; we do not guarantee leads, calls, booked
+                jobs, clients, revenue, return on investment, ranking positions, AI search mentions, or any specific outcome
+                (see Section 12).
               </p>
             </section>
 
             <section>
               <h2 id="subscription-plans-and-pricing" className={legalH2}>3. Subscription Plans and Pricing</h2>
               <p className="mt-3">
-                Our Starter, Growth Engine, and City Dominator plans, described on the pricing and checkout pages, define
-                the features available to you. Subscription fees are billed monthly in advance and renew automatically
-                until you cancel. By subscribing, you authorize QuickLaunchWeb (via our payment processor) to charge your
+                Your Plan defines the features and price that apply to you. Subscription fees are billed monthly in advance
+                and renew automatically until you cancel. Any one-time setup fee is shown before you pay. By subscribing, you authorize QuickLaunchWeb (via our payment processor) to charge your
                 payment method on a recurring basis.
               </p>
               <p className="mt-3">
@@ -222,18 +226,20 @@ export default function TermsPage() {
             <section>
               <h2 id="service-scope" className={legalH2}>5. Service Scope</h2>
               <p className="mt-3">
-                You agree that the services provided under your plan include only the features listed on the pricing and
-                checkout page. The Starter plan ($99/mo) includes a custom-built one-page website, hosting and security,
-                basic local SEO, a contact form, and 1 content update per month. The Growth Engine plan ($199/mo) adds
-                service pages, full SEO and AI search setup, Google Business Profile setup, review reply automation, a
-                review request link, 1 blog post per month, a monthly ranking snapshot, and 2 content updates. The City
-                Dominator plan ($399/mo) adds everything in Growth Engine plus a full CRM, missed call text-back, instant
-                lead reply with auto follow-ups, after-hours auto-reply, automated review requests, 2 city pages and 2
-                blog posts per month, a 12-month city growth plan, priority edits, and 4 content updates. Features not
-                expressly included in your plan (for example, custom design, advanced animations, ecommerce, or complex
-                integrations) fall outside the subscription and may be quoted separately.
+                The services under your Plan include only the features listed in your Plan at the time you bought it.
+                Features not expressly included (for example, custom design, advanced animations, ecommerce, extra pages,
+                or complex integrations) fall outside your Plan and may be quoted separately.
               </p>
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.1 Support and Content Updates (Fair Use)</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.1 Ad Spend and Third-Party Platforms</h3>
+              <p className="mt-2">
+                Unless your Plan says otherwise, ad spend is separate from our fees and is paid by you directly to the ad
+                platform (for example, Meta). Ad platforms, Calendly, HighLevel, Google, and other third-party tools have
+                their own terms and can approve, reject, limit, or shut down ads, pages, or accounts at their discretion.
+                We are not responsible for their decisions, outages, policy changes, or charges. You are responsible for
+                your business&apos;s licenses, the accuracy of your offers and claims, and honoring any prices or promises
+                in ads we run for you.
+              </p>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.2 Support and Content Updates (Fair Use)</h3>
               <p className="mt-2">
                 Support is provided primarily through our support form; urgent matters may be submitted via email. We aim to
                 respond as quickly as possible but do not guarantee specific response times. Content updates are small
@@ -241,10 +247,11 @@ export default function TermsPage() {
                 updates, including new pages beyond your plan, full redesigns, custom features, or complex SEO campaigns, are
                 not included and may incur additional charges.
               </p>
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.2 Response Times</h3>
+              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">5.3 Timelines</h3>
               <p className="mt-2">
-                After receiving all required onboarding assets (for example, logo, services, contact information), we aim to
-                deliver an initial website draft within 48 hours. This is a target, not a guarantee. Delays may occur if
+                Launch times we mention (for example, &ldquo;live in 7 days&rdquo; or a website draft within 48 hours) start
+                after we receive everything we need from you (for example, logo, services, account access, and approvals).
+                They are targets, not guarantees. Delays may occur if
                 assets are missing, revisions are requested, or circumstances beyond our control occur.
               </p>
             </section>
@@ -299,76 +306,18 @@ export default function TermsPage() {
             <section id="sms" className="scroll-mt-28">
               <h2 id="sms-text-messaging-terms" className={legalH2}>9. SMS/Text Messaging Terms</h2>
 
-              <h3 className="mt-5 text-[18px] font-bold text-[#07143F]">9.1 Platform Operator</h3>
-              <p className="mt-2">
-                <span className="font-semibold text-[#07143F]">Program Name:</span> QuickLaunchWeb SMS Program
+              <p className="mt-3">
+                Our text message program, including how you opt in, message types, frequency, rates, and how to opt out, is
+                described on our{" "}
+                <a href="/sms-consent" className="font-medium text-[#0753CF] underline underline-offset-2 hover:text-[#07143F]">SMS Terms</a>{" "}
+                page, which is part of these Terms. In short: we only text you if you agree; agreeing is not a condition of
+                any purchase; message frequency varies; message and data rates may apply; reply STOP to opt out and HELP
+                for help; carriers are not liable for delayed or undelivered messages; and we never sell or share your
+                mobile number or SMS opt-in data with third parties for their marketing.
               </p>
               <p className="mt-2">
-                QuickLaunchWeb is a platform that builds, hosts, and operates websites and business communication
-                tools for local service businesses. As the platform operator, QuickLaunchWeb is the sole sender of
-                all SMS messages across every client website and business account on our platform. Each business
-                client may be assigned a dedicated phone number for their SMS communications, but all phone numbers
-                are owned, registered, and operated by QuickLaunchWeb under a single brand registration. The
-                individual business does not independently send text messages — QuickLaunchWeb sends all messages on
-                their behalf through our platform.
-              </p>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.2 Consent</h3>
-              <p className="mt-2">
-                By opting in to receive text messages — whether as a consumer submitting a lead form, a business
-                owner enabling lead alert notifications, or a customer receiving a review request — you consent to
-                receive transactional and informational SMS messages as described in this section. No marketing,
-                promotional, or advertising messages will be sent via SMS.
-              </p>
-              <p className="mt-2">
-                Consumers opt in through an unchecked SMS consent checkbox on each QuickLaunchWeb-powered lead form.
-                The checkbox includes disclosure language with links to our Privacy Policy and Terms of Service.
-                Business owners opt in during onboarding or by enabling text alerts through our support form. Review
-                request recipients receive a one-time message after providing their phone number to the business
-                during a service engagement.
-              </p>
-              <p className="mt-2">
-                We capture and store proof of opt-in including timestamp, source page URL, phone number, and consent
-                checkbox state. Consent to receive SMS is not a condition of any purchase or service.
-              </p>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.3 Message Types</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>Lead submission confirmations sent to consumers who opt in via a lead form.</li>
-                <li>Lead alert notifications sent to business owners and staff.</li>
-                <li>Missed call text-back messages sent to consumers when a call is not answered.</li>
-                <li>Automated follow-up messages sent to leads who have not yet been contacted.</li>
-                <li>After-hours auto-reply messages sent to consumers who reach out outside business hours.</li>
-                <li>Review requests — a one-time SMS after a completed service inviting the customer to share
-                  feedback. The message includes a link to a short feedback page and opt-out instructions.</li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.4 Message Frequency and Costs</h3>
-              <p className="mt-2">
-                Message frequency varies based on activity. Typically 1&ndash;5 messages per customer interaction.
-                Standard message and data rates from your mobile carrier may apply. QuickLaunchWeb is not responsible
-                for carrier charges. Major US carriers are supported including AT&amp;T, T-Mobile, Verizon, and
-                Sprint. Service availability may vary by carrier.
-                Carriers are not liable for delayed or undelivered messages.
-              </p>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.5 Opt-Out, Help, and Re-Subscribe</h3>
-              <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[#0866FF]">
-                <li>Reply <span className="font-semibold text-[#07143F]">STOP</span> to any message to immediately
-                  unsubscribe. You will receive a one-time confirmation and no further messages will be sent from
-                  that number.</li>
-                <li>Reply <span className="font-semibold text-[#07143F]">HELP</span> to any message for assistance, or
-                  email anthotranllc@gmail.com.</li>
-                <li>Reply <span className="font-semibold text-[#07143F]">START</span> to re-subscribe if you previously
-                  opted out.</li>
-              </ul>
-
-              <h3 className="mt-7 text-[18px] font-bold text-[#07143F]">9.6 SMS Data</h3>
-              <p className="mt-2">
-                We do not sell, rent, or share your mobile phone number or SMS consent data with any third parties
-                for their marketing purposes. SMS consent and opt-in data is used solely for sending the
-                transactional messages described in this section. For full details on how we handle your data, see
-                our <a href="/privacy#sms" className="font-medium text-[#0866FF] underline underline-offset-2 hover:text-[#0753CF]">Privacy Policy</a>.
+                If you are a client and we send texts for your business, you must make sure every person we text has given
+                consent that meets the law and carrier rules, and you must tell us right away about any opt-out you receive.
               </p>
             </section>
 
@@ -397,8 +346,12 @@ export default function TermsPage() {
             <section>
               <h2 id="no-guarantees-disclaimer" className={legalH2}>12. No Guarantees; Disclaimer</h2>
               <p className="mt-3">
-                The services are provided "as is" without warranties of any kind. QuickLaunchWeb does not guarantee
-                specific results, leads, revenue, or ROI. To the fullest extent permitted by law, we expressly disclaim all
+                We do not offer a guarantee of results. QuickLaunchWeb does not guarantee specific results, leads, calls,
+                booked jobs, revenue, ROI, rankings, or ad performance. Results vary by trade, location, season, budget,
+                competition, your offer, and how quickly you follow up with leads. Testimonials, case studies, and client
+                results on our website or in our ads describe what happened for those businesses and are not typical or
+                promised results. Example dashboards and numbers on our website are for illustration only. The services
+                are provided &ldquo;as is&rdquo; without warranties of any kind. To the fullest extent permitted by law, we expressly disclaim all
                 warranties, whether express, implied, or statutory, including warranties of merchantability, fitness for a
                 particular purpose, non-infringement, and quiet enjoyment.
               </p>
@@ -410,7 +363,10 @@ export default function TermsPage() {
                 To the maximum extent permitted by law, QuickLaunchWeb shall not be liable for any indirect, incidental,
                 special, consequential, or punitive damages, or for any loss of profits or revenue, arising out of or in
                 connection with these Terms or the services. Our total liability for any claim relating to the services
-                shall not exceed the amount you paid us in the 30 days preceding the event giving rise to the claim.
+                shall not exceed the amount you paid us in the 30 days preceding the event giving rise to the claim. Some
+                states do not allow certain limits on liability, so some of these limits may not apply to you; in that case
+                our liability is limited to the smallest amount the law allows. Nothing in these Terms limits liability that
+                cannot be limited by law.
               </p>
             </section>
 
@@ -431,7 +387,8 @@ export default function TermsPage() {
                 the Americans with Disabilities Act (ADA) or other accessibility regulations. Clients are responsible for
                 verifying that their websites meet accessibility requirements applicable to their industry or jurisdiction.
                 If you require specific accessibility features, please let us know during onboarding so we can evaluate
-                feasibility.
+                feasibility. If you have trouble using our own website, email us or call {LEGAL_PHONE_DISPLAY} and we will
+                help you and work to fix the issue.
               </p>
             </section>
 
@@ -471,8 +428,8 @@ export default function TermsPage() {
             <section>
               <h2 id="contact" className={legalH2}>18. Contact</h2>
               <p className="mt-3">
-                If you have any questions about these Terms, please contact Anthony Tran at anthotranllc@gmail.com or through
-                the support form on our website.
+                If you have any questions about these Terms, please contact Anthony Tran at {LEGAL_EMAIL}, call or text{" "}
+                {LEGAL_PHONE_DISPLAY}, or use the support form on our website.
               </p>
             </section>
           </div>

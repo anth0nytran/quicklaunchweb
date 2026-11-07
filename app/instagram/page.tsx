@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronDown, ArrowRight, Phone } from 'lucide-react';
 import { InlineWidget } from 'react-calendly';
+import { getAdConsent } from '@/lib/consent';
+import { ConsentFooterLinks } from '@/components/consent/consent-links';
 
 declare global {
   interface Window {
@@ -91,6 +93,7 @@ async function sendMetaServerEvent(event: {
         fbc: event.context.fbc,
         fbclid: event.context.fbclid,
         customData: event.customData,
+        adConsent: getAdConsent(),
       }),
     });
   } catch (error) {
@@ -253,8 +256,8 @@ export default function InstagramLanding() {
             />
           </div>
 
-          <p className="text-center text-[11px] text-neutral-500 mt-4 max-w-sm mx-auto">
-            Free call · No credit card · By booking you agree to receive SMS confirmations. Reply STOP to opt out.
+          <p className="text-center text-[12px] text-neutral-400 mt-4 max-w-sm mx-auto">
+            Free call · No credit card · Booking texts are only about your appointment. Reply STOP to opt out.
           </p>
 
           <div className="mt-6 pt-5 border-t border-neutral-800">
@@ -498,22 +501,24 @@ export default function InstagramLanding() {
       <section className="bg-neutral-900 px-6 pt-6 pb-4">
         <div className="max-w-lg mx-auto">
           <div className="border-t border-neutral-800 pt-6">
-            <p className="text-[11px] text-neutral-600 leading-[1.7]">
-              By booking a call, you consent to receive SMS and email communications from QuickLaunchWeb regarding your appointment and our services. Message frequency varies. Message and data rates may apply. Reply STOP to opt out of SMS at any time. Reply HELP for assistance. Your information is never sold to third parties. Carrier conditions may apply. By using this site, you agree to our{' '}
-              <a href="/terms" className="underline hover:text-neutral-400 transition-colors">Terms of Service</a>,{' '}
-              <a href="/privacy" className="underline hover:text-neutral-400 transition-colors">Privacy Policy</a>, and{' '}
-              <a href="/privacy#sms" className="underline hover:text-neutral-400 transition-colors">SMS Disclosures</a>.
+            <p className="text-[12px] text-neutral-400 leading-[1.7]">
+              When you book, we (and our scheduler, Calendly) use your contact info to confirm, remind you about, and follow up on your appointment by email, and by text if you choose to get text reminders. We only send marketing texts if you separately agree, and agreeing is never a condition of buying anything or booking a call. Message frequency varies. Message and data rates may apply. Reply STOP to opt out of texts at any time, HELP for help. Carriers are not liable for delayed or undelivered messages. We never sell your phone number or share it with third parties for their marketing. See our{' '}
+              <a href="/terms" className="underline hover:text-neutral-200 transition-colors">Terms of Service</a>,{' '}
+              <a href="/privacy" className="underline hover:text-neutral-200 transition-colors">Privacy Policy</a>, and{' '}
+              <a href="/sms-consent" className="underline hover:text-neutral-200 transition-colors">SMS Terms</a>.
               QuickLaunchWeb is not affiliated with or endorsed by Calendly, Google, Meta, or any third-party platform referenced on this page. Results mentioned in testimonials are based on individual experiences and are not guaranteed. Individual results may vary depending on business type, location, and market conditions.
             </p>
-            <p className="text-[11px] text-neutral-600 mt-3">
+            <p className="text-[12px] text-neutral-400 mt-3">
               QuickLaunchWeb · Houston, TX · (832) 552-3458 · support@quicklaunchweb.com
             </p>
           </div>
         </div>
       </section>
 
-      <footer className="bg-neutral-900 text-center px-6 pb-24 pt-2 text-[11px] text-neutral-600">
+      <footer className="bg-neutral-900 text-center px-6 pb-24 pt-2 text-[12px] text-neutral-400">
         &copy; {new Date().getFullYear()} QuickLaunchWeb
+        <span className="mx-2" aria-hidden="true">·</span>
+        <ConsentFooterLinks className="underline hover:text-neutral-200 mx-1" />
       </footer>
 
       {/* ══════════════════════════════════
