@@ -45,7 +45,7 @@ export function absoluteUrl(path = "/") {
 
 function defaultOgImage(title: string) {
   return {
-    url: absoluteUrl("/icon.jpg"),
+    url: absoluteUrl("/og-image.png"),
     width: 1200,
     height: 630,
     alt: title,

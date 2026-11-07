@@ -34,7 +34,7 @@ export function GuideStructuredData({ guide }: { guide: Guide }) {
       description: guide.metaDescription,
       mainEntityOfPage: guideUrl,
       url: guideUrl,
-      image: [absoluteUrl("/icon.jpg")],
+      image: [absoluteUrl("/og-image.png")],
       // Person author (E-E-A-T); the Person node lives in SiteStructuredData.
       author: {
         "@type": "Person",

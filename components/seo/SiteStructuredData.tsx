@@ -50,9 +50,9 @@ export function SiteStructuredData() {
             founder: { "@id": founderId },
             logo: {
               "@type": "ImageObject",
-              url: absoluteUrl("/icon.jpg"),
+              url: absoluteUrl("/icon.png"),
             },
-            image: absoluteUrl("/icon.jpg"),
+            image: absoluteUrl("/og-image.png"),
             contactPoint: [
               {
                 "@type": "ContactPoint",
