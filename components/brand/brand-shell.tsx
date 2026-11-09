@@ -112,7 +112,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Main">
           {mainLinks.map((link) => {
             const active = link.match(pathname);
             return (
@@ -133,7 +133,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
           <button
             type="button"
             onClick={() => onBook("header")}
-            className={`${primaryBtn} hidden px-5 py-3 text-[15px] sm:inline-flex`}
+            className={`${primaryBtn} hidden whitespace-nowrap px-5 py-3 text-[15px] sm:inline-flex`}
           >
             Book a Free Call
             <KitIcon name="arrow-right" white className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -141,7 +141,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
           <button
             type="button"
             onClick={() => setMenuOpen((o) => !o)}
-            className={`flex h-11 w-11 items-center justify-center rounded-xl text-[#07143F] hover:bg-[#EFF8FF] lg:hidden ${focusRing}`}
+            className={`flex h-11 w-11 items-center justify-center rounded-xl text-[#07143F] hover:bg-[#EFF8FF] xl:hidden ${focusRing}`}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
@@ -157,7 +157,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-[#E5EDF6] bg-white lg:hidden"
+            className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-[#E5EDF6] bg-white xl:hidden"
             aria-label="Mobile"
           >
             <div className={`${container} flex flex-col py-4`}>
@@ -426,7 +426,7 @@ export function BrandShell({
           style={{ ...BRAND_VARS, color: NAVY, fontFamily: "var(--font-inter), Arial, sans-serif" }}
         >
           <SiteHeader onBook={book} />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
           <div className="bg-[#07143F]">
             <SiteFooter />
           </div>
@@ -443,10 +443,10 @@ export function BrandShell({
                 <button
                   type="button"
                   onClick={() => book("mobile_sticky")}
-                  className={`${primaryBtn} pointer-events-auto w-full max-w-sm px-6 py-4 text-base shadow-2xl`}
+                  className={`${primaryBtn} pointer-events-auto w-auto px-6 py-3 text-[15px] shadow-[0_12px_30px_-10px_rgba(8,102,255,0.6)]`}
                 >
                   Book a Free Call
-                  <KitIcon name="arrow-right" white className="h-5 w-5" />
+                  <KitIcon name="arrow-right" white className="h-4 w-4" />
                 </button>
               </motion.div>
             )}

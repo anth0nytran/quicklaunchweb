@@ -1,19 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { DiscoveryCallSection } from "@/components/discovery-call";
 import { BrandShell, CtaBand, useBooking } from "@/components/brand/brand-shell";
 import { ResultsSection } from "@/components/brand/results";
 import { ClientLogoGrid } from "@/components/brand/client-logo-grid";
-import { HeroScene, HeroSceneMobile, signRect, useHero3D } from "@/components/brand/hero-art";
+import { HeroScene, HeroSceneMobile, useHero3D } from "@/components/brand/hero-art";
 import { HowItWorksCutaway } from "@/components/brand/how-it-works-cutaway";
 import { AnimatedIcon } from "@/components/brand/animated-icon";
 import {
   Backdrop,
   Eyebrow,
   DrawIcon,
-  IconCircle,
   KitIcon,
   Reveal,
   container,
@@ -50,10 +48,10 @@ const services: { anim: string; title: string; body: string; href?: string }[] =
 ];
 
 const whyUs = [
-  { icon: "map-pin", title: "Houston-based", body: "We live here and know which areas are worth your gas. Out of town? We fly out to film." },
-  { icon: "shield", title: "One business per trade per area", body: "We won't run ads for the guy down the street." },
-  { icon: "lock", title: "You own your ad account", body: "Your ads. Your card. You see every dollar." },
-  { icon: "target", title: "Built for bigger jobs", body: "We aim your ads at jobs worth your time." },
+  { icon: "map-pin", anim: "local", title: "Houston-based", body: "We live here and know which areas are worth your gas. Out of town? We fly out to film." },
+  { icon: "shield", anim: "exclusive", title: "One business per trade per area", body: "We won't run ads for the guy down the street." },
+  { icon: "lock", anim: "own", title: "You own your ad account", body: "Your ads. Your card. You see every dollar." },
+  { icon: "target", anim: "bigger", title: "Built for bigger jobs", body: "We aim your ads at jobs worth your time." },
 ];
 
 const mostAds = ["Stock photos", "Actors reading a script", "Nobody knows who shows up", "Homeowners scroll past"];
@@ -69,22 +67,6 @@ function HomeSections() {
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   const hero3d = useHero3D();
-  // Desktop: place the hero copy onto the plate's glass sign (re-measured on resize).
-  const heroRef = useRef<HTMLElement>(null);
-  const [sign, setSign] = useState<ReturnType<typeof signRect> | null>(null);
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    const measure = () => {
-      if (!window.matchMedia("(min-width: 1024px)").matches) return setSign(null);
-      const r = el.getBoundingClientRect();
-      setSign(signRect(r.width, r.height));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
 
   return (
     <>
@@ -92,35 +74,18 @@ function HomeSections() {
       {/* A place, not a picture with text on it: the plaza plate has a blank glass sign on the left and the
           launch pad on the right. On desktop the headline is placed onto that sign (measured from the plate),
           the buttons stand on the plaza in front of it, and the ship lands on the pad. Phones stack simply. */}
-      <section
-        ref={heroRef}
-        className="relative overflow-hidden bg-white pb-10 pt-[104px] sm:pt-28 lg:h-[min(100vh,56vw)] lg:min-h-[600px] lg:pb-0 lg:pt-0"
-      >
+      <section data-hero-stage className="ql-hero relative overflow-hidden bg-[#E9E9E6] lg:h-[min(100vh,56vw)] lg:bg-white">
         <HeroScene mode={hero3d} />
-        <div className={`${container} relative z-10 lg:static lg:max-w-none lg:px-0`}>
+        <HeroSceneMobile />
+        <div className={`${container} lg:max-w-none lg:px-0`}>
           {/* Fine scan lines across the sign's glass (desktop). */}
-          {sign && (
-            <div
-              aria-hidden="true"
-              className="ql-holo-scan ql-sign-flicker pointer-events-none absolute z-[9] shadow-[inset_0_0_60px_rgba(255,255,255,0.55),inset_0_0_24px_rgba(8,102,255,0.12)]"
-              style={{ left: sign.left, top: sign.top, width: sign.width, height: sign.height }}
-            />
-          )}
+          <div aria-hidden="true" className="ql-sign-rect ql-holo-scan ql-sign-flicker pointer-events-none hidden lg:block" />
           {/* On the glass sign (desktop) / top of the stack (phones). Real HTML for SEO. */}
-          <div
-            className={sign ? "ql-hero-copy ql-holo-text absolute z-10 flex flex-col justify-center" : ""}
-            style={sign ? { left: sign.left, top: sign.top, width: sign.width, height: sign.height, padding: `0 ${sign.width * 0.075}px` } : undefined}
-          >
+          <div className="ql-sign ql-hero-copy">
             {/* The eyebrow lives inside the H1 so the heading carries the target phrase
                 ("Houston marketing for home service businesses") without changing the look. */}
-            <h1
-              className="text-[36px] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#07143F] sm:text-[46px]"
-              style={sign ? { fontSize: Math.round(sign.width * 0.072) } : undefined}
-            >
-              <span
-                className="mb-3 block text-[11px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]"
-                style={sign ? { fontSize: Math.max(10, Math.round(sign.width * 0.02)) } : undefined}
-              >
+            <h1 className="text-[36px] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#07143F] sm:text-[46px]">
+              <span className="ql-sign-eyebrow mb-3 block text-[11px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]">
                 Houston marketing for home service businesses
               </span>
               {/* Rocket wordplay: launch / land, same promise (calls, booked jobs, money). */}
@@ -128,19 +93,13 @@ function HomeSections() {
               <span className="block">Land More Jobs.</span>
               <span className="block text-[#0866FF]">Make More Money.</span>
             </h1>
-            <p
-              className="mt-4 max-w-[30rem] text-[17px] leading-[1.5] text-[#46516B] sm:text-[18px]"
-              style={sign ? { fontSize: Math.max(14, Math.round(sign.width * 0.0275)), maxWidth: "none" } : undefined}
-            >
+            <p className="mt-4 max-w-[30rem] text-[17px] leading-[1.5] text-[#46516B] sm:text-[18px]">
               We film your work, run your ads, and book the jobs for you.
             </p>
           </div>
 
           {/* In front of the sign, on the plaza (desktop) / under the copy (phones). */}
-          <div
-            className={sign ? "ql-hero-copy ql-rise-in absolute z-10" : "mt-7"}
-            style={sign ? { left: sign.left + sign.width * 0.075, top: sign.top + sign.height * 1.13, width: sign.width * 0.85 } : undefined}
-          >
+          <div className="ql-sign-cta ql-hero-copy mt-7 lg:mt-0">
             <div className="flex flex-col gap-3 sm:flex-row">
               <button type="button" onClick={() => book("hero")} className={`${primaryBtn} whitespace-nowrap px-7 py-4 text-[16px]`}>
                 Book a Free Call
@@ -151,7 +110,7 @@ function HomeSections() {
                 <KitIcon name="arrow-right" className="h-4 w-4" />
               </button>
             </div>
-            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2.5">
+            <ul className="mt-5 hidden flex-wrap gap-x-5 gap-y-2.5 xl:flex">
               {heroChecks.map((item) => (
                 <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[#46516B]">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0866FF]/10">
@@ -162,13 +121,20 @@ function HomeSections() {
               ))}
             </ul>
           </div>
-          <HeroSceneMobile />
         </div>
       </section>
 
       {/* ===================== TRUST LINE: client logos ===================== */}
       <section className="bg-gradient-to-b from-[#F7FBFF] to-white py-9 sm:py-10" aria-label="Houston businesses we've helped">
         <div className={container}>
+          <ul className="mb-7 flex flex-wrap justify-center gap-x-4 gap-y-2 xl:hidden">
+            {heroChecks.map((item) => (
+              <li key={item} className="flex items-center gap-1.5 text-[13.5px] font-medium text-[#46516B]">
+                <KitIcon name="check" className="h-3.5 w-3.5" />
+                {item}
+              </li>
+            ))}
+          </ul>
           <p className="text-center text-[11px] font-semibold uppercase tracking-[0.25em] text-[#46516B] sm:text-[12px]">
             Houston businesses we&apos;ve helped
           </p>
@@ -307,8 +273,8 @@ function HomeSections() {
               <li key={item.title}>
                 <Reveal delay={i * 0.05} className="h-full">
                   <div className="h-full rounded-xl border border-[#E5EDF6] bg-white p-6 shadow-[0_8px_30px_-16px_rgba(7,20,63,0.18)]">
-                    <IconCircle name={item.icon} />
-                    <h3 className="mt-4 text-[18px] font-extrabold tracking-[-0.02em]">{item.title}</h3>
+                    <AnimatedIcon name={item.anim} size={76} offset={i * 0.8} className="-ml-2 -mt-2" />
+                    <h3 className="mt-2 text-[18px] font-extrabold tracking-[-0.02em]">{item.title}</h3>
                     <p className="mt-1.5 text-[15px] leading-[1.55] text-[#46516B]">{item.body}</p>
                   </div>
                 </Reveal>

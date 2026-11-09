@@ -14,7 +14,7 @@ const csp = [
   "default-src 'self'",
   `script-src ${scriptSrc}`,
   "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
-  "img-src 'self' data: blob: https://images.unsplash.com https://www.facebook.com",
+  "img-src 'self' data: blob: https://images.unsplash.com https://www.facebook.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com",
   "font-src 'self' data:",
   // blob:/data: let the 3D hero (three.js GLTFLoader) read the model's embedded textures.
   "connect-src 'self' blob: data: https://api.web3forms.com https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vitals.vercel-analytics.com https://www.facebook.com https://graph.facebook.com https://connect.facebook.net",

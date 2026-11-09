@@ -9,6 +9,7 @@ const privatePaths = [
   '/instagram/booked',
   '/call-booked',
   '/sms-consent',
+  '/dev/',
 ];
 
 // Search + AI answer-engine crawlers we explicitly WANT (visibility in ChatGPT,

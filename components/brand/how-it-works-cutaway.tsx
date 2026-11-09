@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Eyebrow } from "@/components/brand/primitives";
 import { container, primaryBtn, sectionH2 } from "@/components/brand/tokens";
 import { MediaSlot } from "@/components/brand/media-slot";
@@ -74,20 +74,16 @@ function Check() {
 
 export function HowItWorksCutaway() {
   const book = useBooking();
-  const reduce = useReducedMotion();
   const listRef = useRef<HTMLOListElement>(null);
   const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 70%", "end 60%"] });
   const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
-  const rise = (d = 0) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0.35, y: 14 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-80px" },
-          transition: { duration: 0.6, delay: d, ease: [0.22, 1, 0.36, 1] as const },
-        };
+  const rise = (d = 0) => ({
+    initial: { y: 14 },
+    whileInView: { y: 0 },
+    viewport: { once: true, margin: "-80px" },
+    transition: { duration: 0.6, delay: d, ease: [0.22, 1, 0.36, 1] as const },
+  });
 
   return (
     <section id="how-it-works" className="relative scroll-mt-20 bg-white" aria-labelledby="how-title">
@@ -126,7 +122,7 @@ export function HowItWorksCutaway() {
             <motion.span
               aria-hidden="true"
               className="absolute bottom-6 left-[9px] top-6 w-px origin-top bg-[#0866FF] sm:left-[13px]"
-              style={{ scaleY: reduce ? 1 : fill }}
+              style={{ scaleY: fill }}
             />
             {STEPS.map((s, i) => (
               <motion.li key={s.n} id={`step-${s.n}`} className="relative scroll-mt-28" {...rise(0.04)}>
@@ -144,7 +140,7 @@ export function HowItWorksCutaway() {
                   <AnimatedIcon name={ICONS[i]} size={72} offset={i * 0.9} className="-ml-2 mb-2 sm:hidden" />
                   <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                     <p className="font-mono text-[12px] font-semibold tracking-[0.18em] text-[#0866FF]">
-                      STEP {s.n} <span className="text-[#07143F]/30">/ 05</span>
+                      STEP {s.n} <span className="text-[#46516B]">/ 05</span>
                     </p>
                     <p className="text-[13px] text-[#46516B]">
                       <span className="font-semibold text-[#07143F]">Your part:</span> {s.part}
@@ -155,7 +151,7 @@ export function HowItWorksCutaway() {
                   </div>
                   </div>
                   <div className="mt-5 border-t border-[#07143F]/[0.07] pt-5">
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#07143F]/55">What you get</p>
+                    <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">What you get</p>
                     <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
                       {s.get.map((g) => (
                         <li key={g} className="flex items-start gap-2.5 text-[15px] leading-[1.45] text-[#07143F]">

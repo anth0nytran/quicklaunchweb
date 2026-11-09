@@ -1755,3 +1755,253 @@ section[data-zoom="1"] .ql-hero-plate {
 .ql-holo-scan::after {
   display: none;
 }
+
+
+/* Hero copy on the plate's glass sign (desktop), placed with pure CSS from the plate geometry,
+   so nothing moves after load (no layout shift). The hero is a size container; the plate is
+   object-cover and, at h = min(100vh, 56vw), always as wide as the hero, so:
+     plate height D = 56.017cqw (3856x2160), top offset = (100% - D) / 2,
+     sign = x 3.6%..37.1% of width, y 34.8%..67.9% of D  (keep in sync with SIGN in hero-art.tsx). */
+@media (min-width: 1024px) {
+  .ql-hero {
+    container-type: size;
+  }
+  .ql-sign,
+  .ql-sign-rect {
+    position: absolute;
+    left: 3.6cqw;
+    width: 33.5cqw;
+    top: calc((100cqh - 56.017cqw) / 2 + 0.348 * 56.017cqw);
+    height: calc(0.331 * 56.017cqw);
+  }
+  .ql-sign {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 calc(33.5cqw * 0.075);
+  }
+  .ql-sign h1 {
+    font-size: calc(33.5cqw * 0.072);
+  }
+  .ql-sign .ql-sign-eyebrow {
+    font-size: max(10px, calc(33.5cqw * 0.02));
+  }
+  .ql-sign p {
+    font-size: max(14px, calc(33.5cqw * 0.0275));
+    max-width: none;
+  }
+  .ql-sign-rect {
+    z-index: 9;
+    box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.55), inset 0 0 24px rgba(8, 102, 255, 0.12);
+  }
+  .ql-sign-cta {
+    position: absolute;
+    z-index: 10;
+    left: calc(3.6cqw + 33.5cqw * 0.075);
+    top: calc((100cqh - 56.017cqw) / 2 + (0.348 + 0.331 * 1.13) * 56.017cqw);
+    width: calc(33.5cqw * 0.85);
+    animation: ql-rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 2.8s both;
+  }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .ql-sign-cta { animation: none; }
+}
+
+/* Desktop only: the copy reads as printed on the glass and fades in once (phones: no fade, so the
+   headline paints immediately for a fast LCP). */
+@media (min-width: 1024px) {
+  .ql-sign { animation: ql-holo-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+  .ql-sign h1 { color: #0b1838; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .ql-sign h1 .text-\[\#0866FF\] { color: #0a5be0; }
+  .ql-sign p { color: #354159; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .ql-sign { animation: none; }
+}
+
+
+/* ============ Phone hero: the vertical plaza fills the screen ============
+   plaza-portrait.webp is 2160x3856 (aspect 0.5602), shown object-cover in a 100svh box.
+   Cover math in container units: shown width D = max(100cqw, 100cqh * 0.5602), height D/0.5602,
+   offsets (box - shown) / 2. Measured on the plate: glass sign y 29.5%..50%, pad center y 69%,
+   pad rim x 2%..98% (PLATE_PORTRAIT in hero-rocket-3d.tsx). */
+@media (max-width: 1023px) {
+  .ql-hero {
+    height: 100svh;
+    min-height: 600px;
+    max-height: 1000px;
+  }
+  .ql-hero,
+  .ql-m-stage {
+    container-type: size;
+  }
+  .ql-hero > *,
+  .ql-m-stage > * {
+    --m-dw: max(100cqw, calc(100cqh * 0.5602));
+    --m-dh: calc(var(--m-dw) / 0.5602);
+    --m-ox: calc((100cqw - var(--m-dw)) / 2);
+    --m-oy: calc((100cqh - var(--m-dh)) / 2);
+  }
+  .ql-hero .ql-m-stage { --m-dw: max(100cqw, calc(100cqh * 0.5602)); }
+  .ql-m-stage * {
+    --m-dw: max(100cqw, calc(100cqh * 0.5602));
+    --m-dh: calc(var(--m-dw) / 0.5602);
+    --m-ox: calc((100cqw - var(--m-dw)) / 2);
+    --m-oy: calc((100cqh - var(--m-dh)) / 2);
+  }
+  /* headline on the glass sign */
+  .ql-hero .ql-sign {
+    position: absolute;
+    z-index: auto; /* no stacking context: the words blend into the glass, and the ship (front layer) covers them */
+    transform: translateY(calc(var(--hp, 0) * 34px));
+    left: max(20px, calc(var(--m-ox) + 0.08 * var(--m-dw)));
+    right: max(20px, calc(var(--m-ox) + 0.08 * var(--m-dw)));
+    /* the visible glass above the ship's nose, text centered on it like a real sign */
+    top: calc(var(--m-oy) + 0.312 * var(--m-dh));
+    height: calc(0.145 * var(--m-dh));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .ql-hero .ql-sign h1 {
+    /* fits the glass on short phones too (capped by screen height) */
+    font-size: clamp(24px, min(9.4cqw, 4.6cqh), 44px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    /* projected onto the glass: crisp ink with a soft blue halo */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45), 0 0 18px rgba(8, 102, 255, 0.22);
+    color: #0b1838;
+  }
+  .ql-hero .ql-sign h1 .text-\[\#0866FF\] { color: #0a5be0; }
+  .ql-m-fg {
+    transform: translateY(calc(var(--hp, 0) * -26px)) scale(calc(1 + var(--hp, 0) * 0.05));
+    transform-origin: 50% 70%;
+  }
+  .ql-hero .ql-sign .ql-sign-eyebrow {
+    font-size: 8.5px;
+    margin-bottom: 5px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  /* the one-line pitch sits on the stone, just above the buttons */
+  .ql-hero .ql-sign p {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(0.51 * var(--m-dh));
+    margin: 0;
+    max-width: none;
+    text-align: center;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: #2b3650;
+  }
+  /* buttons on the stone at the bottom */
+  .ql-hero .ql-sign-cta {
+    position: absolute;
+    z-index: 10;
+    left: 16px;
+    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    margin: 0;
+  }
+  .ql-hero .ql-sign-cta > div {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .ql-hero .ql-sign-cta button {
+    flex: 1 1 0;
+    padding: 11px 8px;
+    font-size: 14px;
+    border-radius: 12px;
+    gap: 6px;
+  }
+  .ql-hero .ql-sign-cta button svg { width: 14px; height: 14px; }
+  /* the big ship, standing on the pad */
+  .ql-m-ship {
+    left: 50%;
+    top: calc(var(--m-oy) + 0.70 * var(--m-dh));
+    height: calc(0.29 * var(--m-dh));
+    transform: translate(-50%, -88%);
+  }
+  .ql-m-pill {
+    top: calc(var(--m-oy) + 0.735 * var(--m-dh));
+  }
+  /* stepping into the scene: the hero copy clears away */
+  html[data-exploring="1"] .ql-hero .ql-hero-copy {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+  }
+  .ql-hero .ql-hero-copy {
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+}
+
+/* Phone hologram: a slow band of light sweeps across the glass behind the words. */
+@media (max-width: 1023px) {
+  .ql-hero .ql-sign::before {
+    content: "";
+    position: absolute;
+    inset: -12% -40%;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.55) 50%, rgba(140, 185, 255, 0.25) 53%, transparent 60%);
+    mix-blend-mode: screen;
+    animation: ql-m-sweep 6.5s cubic-bezier(0.45, 0, 0.2, 1) 1.2s infinite;
+    transform: translateX(-70%);
+  }
+  .ql-hero .ql-sign > * { position: relative; }
+}
+@keyframes ql-m-sweep {
+  0% { transform: translateX(-70%); opacity: 0; }
+  12% { opacity: 1; }
+  45%, 100% { transform: translateX(70%); opacity: 0; }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .ql-hero .ql-sign::before { animation: none; display: none; }
+}
+
+/* Tablets / narrow windows (640-1023px): show the whole vertical plaza (contain, not cover) so the
+   sign, ship, pitch and buttons keep their places; the stone tone fills the sides. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .ql-hero { background: #d9d6d0; }
+  .ql-hero > *,
+  .ql-m-stage *,
+  .ql-m-stage > * {
+    --m-dw: min(100cqw, calc(100cqh * 0.5602));
+    --m-dh: calc(var(--m-dw) / 0.5602);
+  }
+  .ql-m-stage .ql-hero-plate { object-fit: contain; }
+  .ql-hero .ql-sign p { top: calc(0.505 * var(--m-dh)); }
+  .ql-hero .ql-sign-cta {
+    left: calc(var(--m-ox) + 16px);
+    right: calc(var(--m-ox) + 16px);
+    bottom: calc(var(--m-oy) + 14px);
+  }
+  .ql-hero .ql-sign h1 { font-size: calc(var(--m-dw) * 0.077); }
+}
+
+/* Desktop still ship: pinned to the pad with the same plate math as the sign (pad center x 71.7%,
+   y 71.4% of the plate height D = 56.017cqw), so it never drifts off the pad at any window size. */
+@media (min-width: 1024px) {
+  .ql-d-ship {
+    left: 71.7cqw;
+    top: calc((100cqh - 56.017cqw) / 2 + 0.714 * 56.017cqw);
+    height: calc(0.4 * 56.017cqw);
+    transform: translate(-50%, -88%);
+  }
+}
+
+/* Phone: tapping the ship launches it up and out of the screen before the 3D scene opens. */
+@media (max-width: 1023px) {
+  .ql-hero .ql-m-ship {
+    transition: transform 0.55s cubic-bezier(0.55, 0, 0.8, 0.3), opacity 0.4s ease 0.15s;
+  }
+  html[data-exploring="1"] .ql-hero .ql-m-ship {
+    transform: translate(-50%, -330%);
+    opacity: 0;
+  }
+}
