@@ -83,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth overflow-x-clip">
+    <html lang="en" className="scroll-smooth overflow-x-clip" suppressHydrationWarning>
       <body
         className={`${lato.variable} ${montserrat.variable} ${inter.variable} ${lato.className} bg-black text-white antialiased overflow-x-clip`}
       >

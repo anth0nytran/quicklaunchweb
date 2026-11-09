@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ContactShadows, Environment, Html, Lightformer } from "@react-three/drei";
 import { AnimatePresence, motion } from "framer-motion";
 import * as THREE from "three";
-import { PARTS, ShipHybrid, partAnchor, useShipProfile, type ShipRig } from "@/components/brand/ship-hybrid";
+import { PARTS, REST_FACE, ShipHybrid, partAnchor, useShipProfile, type ShipRig } from "@/components/brand/ship-hybrid";
 import { useBooking } from "@/components/booking/booking-context";
 
 // Interactive 3D hero ship (home page, desktop). Igloo-inspired.
@@ -21,7 +21,7 @@ import { useBooking } from "@/components/booking/booking-context";
 // - Scroll-linked lift-off: reads window.scrollY only; never blocks or hijacks scrolling.
 
 /** Plate (launchpad.webp) aspect and the pad's center / left / right edge in plate fractions. */
-export type PlateSpec = { aspect: number; cx: number; cy: number; left: number; right: number };
+export type PlateSpec = { aspect: number; cx: number; cy: number; left: number; right: number; /** how the backdrop photo fits the box (must match the CSS) */ fit?: "cover" | "contain" };
 /** Desktop hero plate (launchpad.webp): aspect + the pad's center / left / right edge in plate fractions. */
 export const PLATE: PlateSpec = { aspect: 3856 / 2160, cx: 0.717, cy: 0.714, left: 0.454, right: 0.979 };
 /** Phone viewer plate (launchpad-sm.webp, a 4:3 crop around the pad). */
@@ -36,8 +36,8 @@ const INTRO_S = 2.6;
 /** Start height of the landing, in ship heights above the pad. */
 const DROP = 1.1;
 /** How far the camera zooms in on an open part, and where on screen that part lands. */
-const ZOOM = 1.45;
-const FOCUS_AT = { x: 0.66, y: 0.56 };
+const ZOOM = 1.7;
+const FOCUS_AT = { x: 0.68, y: 0.5 };
 /** Phone viewer: the part sits centered, above the step sheet. */
 const FOCUS_AT_COMPACT = { x: 0.5, y: 0.24 };
 const SHIP_MID = new THREE.Vector3(0, 0.5, 0);
@@ -47,37 +47,42 @@ export const STEPS = [
   {
     n: "01",
     tag: "Plan",
-    title: "We make a plan",
-    line: "We talk with you. We learn what jobs you want and where.",
-    points: ["We find what makes you the best pick.", "We pick the towns you want to work in.", "You get a clear plan before we spend a dollar."],
+    title: "We sit down and build your plan",
+    line: "A one-hour strategy session. We plan how you win your city before we spend a dollar.",
+    tip: "We go through your best jobs and find what they share: area, home age, job size, how they found you. That tells us who to target.",
+    points: ["Find where your best jobs came from.", "See what your best clients have in common.", "Build your offer, ads, and sales calls around them."],
   },
   {
     n: "02",
     tag: "Video",
-    title: "We film you",
-    line: "Our crew comes to your job and films you at work.",
-    points: ["We write the script for you.", "Real jobs. Real you. No actors.", "You get videos and photos to keep."],
+    title: "We film a full set of ads",
+    line: "Our crew films you on a real job. Not one video. A full set to test.",
+    tip: "We write a different opening line for each kind of client you want. “Just bought a home?” stops the right people.",
+    points: ["Lots of hooks, to find what stops the scroll.", "Each one calls out a different homeowner in your city.", "Clear asks that get people to reach out."],
   },
   {
     n: "03",
     tag: "Ads",
-    title: "We run your ads",
-    line: "We put your videos in front of homeowners near you.",
-    points: ["Ads on Facebook and Instagram.", "Only in the towns you pick.", "We handle it. You keep working."],
+    title: "We bring in better leads",
+    line: "Facebook and Instagram ads built to pull in serious homeowners, not price shoppers.",
+    tip: "Your ads show real jobs at your real size, so the wrong people scroll past before they ever cost you a call.",
+    points: ["Lead forms that ask the right questions first.", "Only in the towns you pick.", "Every dollar shown to you, in your own ad account."],
   },
   {
     n: "04",
     tag: "Testing",
-    title: "We test to find the winner",
-    line: "We try different ads to see which one gets the most calls.",
-    points: ["Each ad talks to a different kind of homeowner.", "We keep the ones that work.", "Then we keep making them better."],
+    title: "We test until we find the winner",
+    line: "Hooks and messages go head to head. We keep what books jobs.",
+    tip: "We judge every ad by booked jobs, not cheap leads. The cheapest leads are often the worst ones.",
+    points: ["Hooks, messages, and callouts tested side by side.", "Losers cut fast.", "More money behind the winners."],
   },
   {
     n: "05",
     tag: "Booked jobs",
-    title: "You get booked jobs",
-    line: "When a homeowner reaches out, we text them in seconds and book the job.",
-    points: ["Our team books it, or your office does.", "It shows up on your calendar.", "We train your team to close more, the simple way."],
+    title: "Booked jobs, every month",
+    line: "Every lead gets a text in seconds. Then we film again and grow it, month after month.",
+    tip: "We ask your new clients what made them call. Their answers become next month’s ads.",
+    points: ["We text every lead fast and book the estimate.", "New videos every month for ads and your page.", "More jobs from paid ads and free posts."],
   },
 ] as const;
 
@@ -87,11 +92,19 @@ type Shared = {
   scroll: number;
   thrust: number;
   introDone: boolean;
+  /** play controls: zoom target (1 = normal), tilt target, and how far up the ship a zoom looks (0 base .. 1 nose) */
+  zoom: number;
+  pitch: number;
+  look: number;
+  /** performance.now() of the last touch / drag / zoom: after HOME_AFTER ms of nothing, the view glides home */
+  touchedAt: number;
 };
+const ZOOM_MAX = 2.4;
+const HOME_AFTER = 5000;
 
 /** Plate fraction -> screen fraction for an object-cover, centered image in a W x H box. */
 function plateToScreen(px: number, py: number, W: number, H: number, plate: PlateSpec = PLATE) {
-  const dispH = Math.max(W / plate.aspect, H);
+  const dispH = plate.fit === "contain" ? Math.min(W / plate.aspect, H) : Math.max(W / plate.aspect, H);
   const dispW = plate.aspect * dispH;
   return { x: ((W - dispW) / 2 + px * dispW) / W, y: ((H - dispH) / 2 + py * dispH) / H };
 }
@@ -102,6 +115,7 @@ function Hotspot({
   n,
   tag,
   visible,
+  view,
   onOpen,
   onHover,
 }: {
@@ -110,6 +124,7 @@ function Hotspot({
   n: string;
   tag: string;
   visible: boolean;
+  view: React.MutableRefObject<{ z: number; x: number; y: number }>;
   onOpen: () => void;
   onHover: (on: boolean) => void;
 }) {
@@ -129,8 +144,8 @@ function Hotspot({
     out.copy(outward).transformDirection(a.parent.matrixWorld);
     dir.copy(camera.position).sub(world).normalize();
     // visible unless the dot is right behind the ship
-    let o = Math.max(0, Math.min(1, (out.dot(dir) + 0.75) / 0.3));
-    if (!visible) o = 0;
+    let o = Math.max(0, Math.min(1, (out.dot(dir) + 0.05) / 0.25));
+    if (!visible || view.current.z > 1.15) o = 0;
     node.style.opacity = String(o);
     node.style.pointerEvents = o > 0.5 ? "auto" : "none";
   });
@@ -239,12 +254,22 @@ function Ship({
     const r = hit(plate.right, plate.cy);
     if (c && l && r && base.current) {
       base.current.position.copy(c);
-      base.current.scale.setScalar(l.distanceTo(r) * SHIP_TO_PAD * (compact ? SHIP_SCALE_COMPACT : 1));
+      let sc = l.distanceTo(r) * SHIP_TO_PAD * (compact ? SHIP_SCALE_COMPACT : 1);
+      if (compact) {
+        // phones turned sideways: the cover-fit plate gets huge, so cap the ship at ~60% of the visible height
+        const pc = camera as THREE.PerspectiveCamera;
+        const visH = 2 * camera.position.distanceTo(c) * Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2);
+        sc = Math.min(sc, visH * 0.6);
+      }
+      base.current.scale.setScalar(sc);
     }
     view.current = { z: 1, x: 0, y: 0 };
   }, [camera, size.width, size.height, plate, compact]);
 
   const spots = useMemo(() => PARTS.map((_, i) => partAnchor(prof, i)), [prof]);
+  const restWait = useRef(0);
+  const userZoomed = useRef(false);
+  const swayT = useRef(0);
 
   useFrame((_, dt) => {
     const g = spin.current;
@@ -295,22 +320,42 @@ function Ship({
     }
 
     // Turn: open part swings to face the camera; otherwise slow showroom turn + drag.
+    b.updateMatrixWorld();
+    const camAngle = Math.atan2(camera.position.x - b.position.x, camera.position.z - b.position.z);
     if (open) {
-      b.updateMatrixWorld();
-      const camAngle = Math.atan2(camera.position.x - b.position.x, camera.position.z - b.position.z);
       const target = camAngle - PARTS[openIdx].face;
       let d = target - S.drag.spin;
       d = Math.atan2(Math.sin(d), Math.cos(d));
       S.drag.spin += d * (1 - Math.exp(-dt * 3.4));
       S.drag.vx = 0;
+      restWait.current = 0;
     } else {
-      if (!S.drag.active) S.drag.vx *= 0.94;
-      // phones: no idle turn, so every dot stays where you can tap it
-      S.drag.spin += S.drag.vx + (hovering.current || compact ? 0 : dt * 0.08);
+      // Drag to turn it; let go and it settles back to the angle where all five dots face you
+      // (a slow sway keeps it alive). No endless spin, so the dots never hide behind the ship.
+      if (!S.drag.active) S.drag.vx *= 0.88;
+      S.drag.spin += S.drag.vx;
+      restWait.current = S.drag.active || Math.abs(S.drag.vx) > 0.002 ? 0 : restWait.current + dt;
+      // after you let go it turns back so the QL logo faces you (a bit longer while zoomed in to look around)
+      // Can't get lost: a few seconds after the last touch, zoom / tilt / turn all glide back home.
+      const idle = performance.now() - S.touchedAt > HOME_AFTER;
+      if (introDone && idle && !S.drag.active) {
+        const k = 1 - Math.exp(-dt * 1.4);
+        S.zoom += (1 - S.zoom) * k;
+        if (S.zoom < 1.003) S.zoom = 1;
+        S.look += (0.5 - S.look) * k;
+      }
+      if (restWait.current > (introDone ? (S.zoom > 1.05 && !idle ? 99 : 1.5) : 0)) {
+        swayT.current += dt;
+        const target = camAngle - REST_FACE + (compact ? 0 : 0.1 * Math.sin(swayT.current * 0.35));
+        let d = target - S.drag.spin;
+        d = Math.atan2(Math.sin(d), Math.cos(d));
+        S.drag.spin += d * (1 - Math.exp(-dt * (introDone ? 1.6 : 0.9)));
+      }
     }
     g.rotation.y = S.drag.spin;
     const lean = open ? 0 : 0.03 + S.scroll * 0.08;
-    t.rotation.x += (S.pointer.y * lean - t.rotation.x) * 0.06;
+    if (open || (!S.drag.active && restWait.current > 1.5)) S.pitch *= 1 - Math.min(1, dt * 1.5);
+    t.rotation.x += (S.pointer.y * lean + (open ? 0 : S.pitch) - t.rotation.x) * 0.08;
     t.rotation.z += (-S.pointer.x * lean - t.rotation.z) * 0.06;
     const lift = Math.pow(S.scroll, 1.4) * 2.2;
     t.position.y = introDone ? t.position.y + (lift - t.position.y) * 0.08 : hover;
@@ -330,7 +375,10 @@ function Ship({
     if (open) {
       baseCam.copy(camera as THREE.PerspectiveCamera);
       baseCam.clearViewOffset();
-      tmp.copy(spots[openIdx].pos).lerp(SHIP_MID, compact ? 0.15 : 0.65);
+      // aim at the part itself (a touch toward the hull center, so the moving bits stay in frame)
+      tmp.copy(spots[openIdx].pos).lerp(SHIP_MID, 0.12);
+      tmp.x *= 0.4;
+      tmp.z *= 0.4;
       g.localToWorld(tmp);
       tmp.project(baseCam);
       const fx = (tmp.x * 0.5 + 0.5) * W;
@@ -343,6 +391,29 @@ function Ship({
       V.z += (ZOOM - V.z) * kz;
       V.x += (tx - V.x) * kz;
       V.y += (ty - V.y) * kz;
+    } else if (S.zoom > 1.001 || userZoomed.current) {
+      // Play zoom: a lens-style zoom on the ship (pinch, trackpad pinch, or the +/- buttons).
+      // It zooms about the ship's own spot, sliding up and down the hull with S.look.
+      baseCam.copy(camera as THREE.PerspectiveCamera);
+      baseCam.clearViewOffset();
+      tmp.set(0, 0.12 + 0.8 * S.look, 0);
+      g.localToWorld(tmp);
+      tmp.project(baseCam);
+      const fx = (tmp.x * 0.5 + 0.5) * W;
+      const fy = (-tmp.y * 0.5 + 0.5) * H;
+      const kz = 1 - Math.exp(-dt * 3.5);
+      V.z += (S.zoom - V.z) * kz;
+      if (Math.abs(S.zoom - 1) < 0.001 && V.z < 1.002) {
+        V.z = 1;
+        userZoomed.current = false;
+      } else userZoomed.current = true;
+      const w = W / V.z;
+      const h = H / V.z;
+      // keep the ship where it sits on screen, but bring the looked-at spot toward the middle as you zoom
+      const ax = THREE.MathUtils.lerp(fx / W, 0.5, Math.min(1, (V.z - 1) * 0.8));
+      const ay = THREE.MathUtils.lerp(fy / H, 0.5, Math.min(1, (V.z - 1) * 0.8));
+      V.x = Math.min(W - w, Math.max(0, fx - ax * w));
+      V.y = Math.min(H - h, Math.max(0, fy - ay * h));
     } else if (V.z > 1.0005) {
       // Zoom back out around the same spot.
       const fx = V.x + (focusAt.x * W) / V.z;
@@ -358,7 +429,7 @@ function Ship({
       cam.setViewOffset(W, H, V.x, V.y, W / V.z, H / V.z);
       if (el) {
         el.style.setProperty("--hz", `translate(${-V.x * V.z}px, ${-V.y * V.z}px) scale(${V.z})`);
-        el.dataset.zoom = open ? "1" : "0";
+        el.dataset.zoom = open || V.z > 1.05 ? "1" : "0";
       }
     } else if (cam.view?.enabled) {
       V.z = 1;
@@ -384,6 +455,7 @@ function Ship({
               n={STEPS[i].n}
               tag={STEPS[i].tag}
               visible={introDone && openIdx === null}
+              view={view}
               onHover={(on) => {
                 hovering.current = on;
               }}
@@ -497,10 +569,10 @@ function StepPanel({ idx, onClose, onGo, onBook, compact = false }: { idx: numbe
       animate={compact ? { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.45, ease: [0.22, 1, 0.36, 1] } } : { opacity: 1, x: 0, transition: { delay: 0.35, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
       exit={compact ? { opacity: 0, y: 30, transition: { duration: 0.2 } } : { opacity: 0, x: -20, transition: { duration: 0.25 } }}
       onPointerDown={(e) => e.stopPropagation()}
-      className={compact ? "absolute inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[44%] cursor-default overflow-y-auto rounded-2xl" : "absolute left-[6%] top-1/2 z-40 w-[400px] max-w-[38vw] cursor-default"}
+      className={compact ? "absolute inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[56%] cursor-default overflow-y-auto rounded-2xl" : "absolute left-[6%] top-1/2 z-40 w-[400px] max-w-[38vw] cursor-default"}
       style={compact ? undefined : { y: "-50%" }}
     >
-      <div className={`relative overflow-hidden rounded-2xl border border-white/70 bg-white/80 ${compact ? "p-5" : "p-7"} shadow-[0_40px_80px_-40px_rgba(7,20,63,0.55),0_0_0_1px_rgba(8,102,255,0.06)] backdrop-blur-xl`}>
+      <div className={`relative overflow-hidden rounded-2xl border border-white/70 bg-white/80 ${compact ? "p-4" : "p-7"} shadow-[0_40px_80px_-40px_rgba(7,20,63,0.55),0_0_0_1px_rgba(8,102,255,0.06)] backdrop-blur-xl`}>
         {/* thin blue scan line across the top, like the hologram sign */}
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#0866FF] to-transparent" />
         <div className="flex items-center justify-between">
@@ -520,8 +592,8 @@ function StepPanel({ idx, onClose, onGo, onBook, compact = false }: { idx: numbe
         </div>
         <AnimatePresence mode="wait">
           <motion.div key={idx} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.28 }}>
-            <h3 className={`mt-2 font-extrabold leading-[1.1] tracking-[-0.02em] text-[#07143F] ${compact ? "text-[22px]" : "mt-3 text-[28px]"}`}>{s.title}</h3>
-            <p className={`text-[#46516B] ${compact ? "mt-1.5 text-[15px] leading-[1.45]" : "mt-2.5 text-[16px] leading-[1.5]"}`}>{s.line}</p>
+            <h3 className={`mt-2 font-extrabold leading-[1.1] tracking-[-0.02em] text-[#07143F] ${compact ? "text-[20px]" : "mt-3 text-[28px]"}`}>{s.title}</h3>
+            <p className={`text-[#46516B] ${compact ? "hidden" : "mt-2.5 text-[16px] leading-[1.5]"}`}>{s.line}</p>
             <ul className={compact ? "hidden" : "mt-5 space-y-2.5"}>
               {s.points.map((p) => (
                 <li key={p} className="flex items-start gap-2.5 text-[15px] font-medium text-[#07143F]">
@@ -534,6 +606,14 @@ function StepPanel({ idx, onClose, onGo, onBook, compact = false }: { idx: numbe
                 </li>
               ))}
             </ul>
+            <p className={`flex items-start gap-2 rounded-xl bg-[#0866FF]/[0.06] text-[#07143F] ${compact ? "mt-3 px-3 py-2 text-[13px] leading-[1.4]" : "mt-5 px-3.5 py-3 text-[14px] leading-[1.45]"}`}>
+              <svg viewBox="0 0 20 20" className="mt-[1px] h-4 w-4 shrink-0 text-[#0866FF]" fill="currentColor" aria-hidden="true">
+                <path d="M10 2a6 6 0 0 0-3.6 10.8c.4.3.6.8.6 1.2v.5h6V14c0-.4.2-.9.6-1.2A6 6 0 0 0 10 2zM7.5 16.5h5V17a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-.5z" />
+              </svg>
+              <span>
+                <strong className="font-semibold text-[#0866FF]">How we do it:</strong> {s.tip}
+              </span>
+            </p>
           </motion.div>
         </AnimatePresence>
 
@@ -588,8 +668,11 @@ export default function HeroRocket3D({
   plate = PLATE,
   compact = false,
   skipIntro = false,
+  onExit,
 }: {
   onReady?: () => void;
+  /** phone viewer: close the viewer (used before the booking popup opens, so it lands on the home screen) */
+  onExit?: () => void;
   /** which backdrop the ship stands on (desktop hero plate or the phone viewer crop) */
   plate?: PlateSpec;
   /** phone viewer: centered zoom, step panel as a bottom sheet, lighter rendering */
@@ -599,13 +682,42 @@ export default function HeroRocket3D({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLElement | null>(null);
-  const shared = useRef<Shared>({ pointer: { x: 0, y: 0 }, drag: { active: false, vx: 0, spin: compact ? -0.15 : 2.2 } /* phones: dots face you from the start */, scroll: 0, thrust: 0, introDone: false });
+  const shared = useRef<Shared>({ pointer: { x: 0, y: 0 }, drag: { active: false, vx: 0, spin: compact ? -0.15 : 2.2 } /* phones: dots face you from the start */, scroll: 0, thrust: 0, introDone: false, zoom: 1, pitch: 0, look: 0.5, touchedAt: 0 });
   const [visible, setVisible] = useState(true);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [landed, setLanded] = useState(false);
   const [hintPos, setHintPos] = useState<{ left: number; top: number } | null>(null);
   const openRef = useRef<number | null>(null);
   openRef.current = openIdx;
+  // opening a step takes over the camera: drop any play zoom / tilt first
+  useEffect(() => {
+    if (openIdx === null) return;
+    const S = shared.current;
+    S.zoom = 1;
+    S.look = 0.5;
+  }, [openIdx]);
+  const zoomBy = (f: number) => {
+    const S = shared.current;
+    S.zoom = Math.min(ZOOM_MAX, Math.max(1, S.zoom * f));
+    S.touchedAt = performance.now();
+  };
+  const resetView = () => {
+    const S = shared.current;
+    S.zoom = 1;
+    S.look = 0.5;
+    S.pitch = 0;
+    S.drag.vx = 0;
+    S.touchedAt = 0; // go home now
+  };
+  // show "back to start" only once you've moved away from it
+  const [away, setAway] = useState(false);
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      const S = shared.current;
+      setAway(S.zoom > 1.02 || Math.abs(S.pitch) > 0.03 || performance.now() - S.touchedAt < 1500);
+    }, 250);
+    return () => window.clearInterval(id);
+  }, []);
   const book = useBooking();
 
   const close = useCallback(() => setOpenIdx(null), []);
@@ -621,17 +733,65 @@ export default function HeroRocket3D({
       const r = el.getBoundingClientRect();
       shared.current.pointer.x = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
       shared.current.pointer.y = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
-      if (shared.current.drag.active) {
-        shared.current.drag.vx = (e.clientX - lastX) * 0.006;
+      const S = shared.current;
+      if (pts.has(e.pointerId)) pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pts.size >= 2) {
+        const [a, b] = Array.from(pts.values());
+        const dd = Math.hypot(a.x - b.x, a.y - b.y);
+        if (pinch0 > 0) S.zoom = Math.min(ZOOM_MAX, Math.max(1, zoom0 * (dd / pinch0)));
+        S.touchedAt = performance.now();
+        S.drag.vx = 0;
+        return;
+      }
+      if (S.drag.active) {
+        // capped so a hard flick turns it a little, never sends it spinning
+        S.drag.vx = Math.max(-0.05, Math.min(0.05, (e.clientX - lastX) * 0.005));
+        S.touchedAt = performance.now();
+        const dy = e.clientY - lastY;
+        // drag up/down: tilt it, or (zoomed in) slide your view along the hull
+        if (S.zoom > 1.1) S.look = Math.min(1, Math.max(0, S.look + (dy * 1.6) / r.height));
+        else S.pitch = Math.min(0.18, Math.max(-0.12, S.pitch + dy * 0.0015));
         lastX = e.clientX;
+        lastY = e.clientY;
       }
     };
+    const pts = new Map<number, { x: number; y: number }>();
+    let lastY = 0;
+    let pinch0 = 0;
+    let zoom0 = 1;
     const onDown = (e: PointerEvent) => {
-      shared.current.drag.active = true;
+      if (openRef.current !== null) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pts.size === 2) {
+        const [a, b] = Array.from(pts.values());
+        pinch0 = Math.hypot(a.x - b.x, a.y - b.y);
+        zoom0 = shared.current.zoom;
+      }
+      shared.current.drag.active = pts.size === 1;
+      shared.current.touchedAt = performance.now();
       lastX = e.clientX;
+      lastY = e.clientY;
     };
-    const onUp = () => {
+    const onUp = (e: PointerEvent) => {
+      pts.delete(e.pointerId);
+      if (pts.size < 2) pinch0 = 0;
       shared.current.drag.active = false;
+    };
+    // switching tabs / apps mid-drag never sends pointerup: let go of everything
+    const onBlur = () => {
+      pts.clear();
+      pinch0 = 0;
+      shared.current.drag.active = false;
+    };
+    // trackpad pinch (and Ctrl + wheel) zooms the ship; a plain wheel still scrolls the page
+    const onWheel = (e: WheelEvent) => {
+      // trackpad pinches send small ctrl+wheel steps; a real Ctrl + mouse wheel (big steps) is left
+      // alone so people can still zoom the page itself
+      if (!e.ctrlKey || openRef.current !== null || Math.abs(e.deltaY) > 40) return;
+      e.preventDefault();
+      const S = shared.current;
+      S.zoom = Math.min(ZOOM_MAX, Math.max(1, S.zoom * Math.exp(-e.deltaY * 0.01)));
+      S.touchedAt = performance.now();
     };
     const onScroll = () => {
       const h = el.getBoundingClientRect();
@@ -640,6 +800,7 @@ export default function HeroRocket3D({
     };
     const place = () => {
       const r = el.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return; // not laid out yet (viewer opening): avoid NaN positions
       const p = plateToScreen(plate.cx, plate.cy + 0.2, r.width, r.height, plate);
       setHintPos({ left: p.x * r.width, top: Math.min(r.height - 64, p.y * r.height) });
     };
@@ -649,6 +810,9 @@ export default function HeroRocket3D({
     window.addEventListener("pointermove", onMove, { passive: true });
     el.addEventListener("pointerdown", onDown);
     window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    window.addEventListener("blur", onBlur);
+    el.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
@@ -657,6 +821,9 @@ export default function HeroRocket3D({
       window.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+      window.removeEventListener("blur", onBlur);
+      el.removeEventListener("wheel", onWheel);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
@@ -699,7 +866,12 @@ export default function HeroRocket3D({
 
   return (
     <>
-      <div ref={wrapRef} className={`absolute inset-0 ${openIdx === null ? "cursor-grab active:cursor-grabbing" : ""}`} >
+      <div
+        ref={wrapRef}
+        className={`absolute inset-0 ${openIdx === null ? "cursor-grab active:cursor-grabbing" : ""}`}
+        // phones/tablets (the full-screen viewer): one finger turns, two fingers pinch-zoom the ship, not the page
+        style={{ touchAction: compact ? "none" : "pan-y pinch-zoom" }}
+      >
         <Canvas
           frameloop={visible ? "always" : "never"}
           dpr={compact ? [1, 1.5] : [1, 2]}
@@ -745,6 +917,38 @@ export default function HeroRocket3D({
         </div>
       )}
 
+      {/* Play controls: big, plain, out of the way. + and - zoom; "back to start" shows only when you've moved away. */}
+      <div
+        className={`absolute z-30 flex flex-col items-center gap-2 transition-opacity duration-500 ${compact ? "bottom-24 right-3" : "bottom-6 right-6"} ${landed && openIdx === null ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        onPointerDown={(e) => e.stopPropagation()}
+        data-hotspot
+      >
+        {[
+          { label: "Zoom in", icon: "M12 5v14M5 12h14", on: () => zoomBy(1.35) },
+          { label: "Zoom out", icon: "M5 12h14", on: () => zoomBy(1 / 1.35) },
+        ].map((b) => (
+          <button
+            key={b.label}
+            type="button"
+            aria-label={b.label}
+            title={b.label}
+            onClick={b.on}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#07143F]/10 bg-white/95 text-[#07143F] shadow-[0_6px_18px_-10px_rgba(7,20,63,0.4)] backdrop-blur transition-colors hover:border-[#0866FF]/40 hover:text-[#0866FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0866FF] active:scale-95"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+              <path d={b.icon} />
+            </svg>
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={resetView}
+          className={`mt-1 whitespace-nowrap rounded-full bg-[#07143F] px-3.5 py-2 text-[12.5px] font-semibold text-white shadow-[0_8px_20px_-10px_rgba(7,20,63,0.6)] transition-all duration-300 ${away ? "opacity-100" : "pointer-events-none translate-y-1 opacity-0"}`}
+        >
+          Back to start
+        </button>
+      </div>
+
       <AnimatePresence>
         {openIdx !== null && (
           <StepPanel
@@ -754,7 +958,10 @@ export default function HeroRocket3D({
             onGo={(i) => setOpenIdx(i)}
             onBook={() => {
               setOpenIdx(null);
-              book("hero-ship");
+              if (onExit) {
+                onExit();
+                window.setTimeout(() => book("hero-ship"), 380);
+              } else book("hero-ship");
             }}
           />
         )}

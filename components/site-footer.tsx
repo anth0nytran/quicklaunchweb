@@ -45,7 +45,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
             <Link href="/" className="flex items-center gap-1.5 font-bold tracking-tight">
-              <span className="text-accent font-black text-lg">QL</span>
+              <span className="font-black text-lg text-[#6EA8FF]">QL</span>
               <span className="text-white/20 font-light">|</span>
               <span className="text-white/90">QuickLaunchWeb</span>
             </Link>
@@ -54,7 +54,7 @@ export function SiteFooter() {
             </p>
             <a
               href="sms:+18325523458"
-              className="mt-3 inline-block text-sm text-accent hover:underline"
+              className="mt-3 inline-block text-sm text-[#6EA8FF] hover:underline"
             >
               Text us: 832-552-3458
             </a>

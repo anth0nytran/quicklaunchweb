@@ -71,6 +71,7 @@ export function SiteStructuredData() {
             "@id": founderId,
             name: "Anthony Tran",
             jobTitle: "Founder",
+            image: absoluteUrl("/home/anthony.jpg"),
             worksFor: { "@id": organizationId },
             homeLocation: { "@type": "City", name: "Houston" },
           },

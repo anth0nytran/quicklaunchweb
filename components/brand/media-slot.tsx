@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import type { HomeMedia } from "@/lib/home-media";
+import { useBooking } from "@/components/booking/booking-context";
 
 // Frames client media (videos, screenshots, reviews) in the hero's style: frosted glass,
-// a hairline blueprint-blue edge, mono labels. Empty: nothing on the live site, dashed
-// outlines on the local preview so it's obvious where media will go.
+// a hairline blueprint-blue edge, mono labels.
+// Empty (no items yet in lib/home-media.ts): a "Now filming" note that reads as busy and in demand,
+// with a soft push to book. It disappears on its own the moment real items are added.
 
 const IS_DEV = process.env.NODE_ENV !== "production";
 
@@ -62,6 +64,34 @@ function ReviewTile({ m }: { m: Extract<HomeMedia, { kind: "review" }> }) {
   );
 }
 
+/** Inside a step card: one quiet line, like a caption (no push). */
+function NowFilmingLine({ className }: { className: string; onBook: () => void }) {
+  return (
+    <p className={`flex items-center gap-2 border-t border-[#07143F]/[0.07] pt-4 text-[13.5px] text-[#46516B]/80 ${className}`}>
+      <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0 text-[#0866FF]/60" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+        <rect x="2.5" y="5" width="11" height="10" rx="2" />
+        <path d="M13.5 9l4-2.5v7l-4-2.5" strokeLinejoin="round" />
+      </svg>
+      Client results for this step are being added.
+    </p>
+  );
+}
+
+/** Where the client video wall goes: a calm placeholder that reads as "more on the way". */
+function NowFilmingCard({ className, onBook }: { className: string; onBook: () => void }) {
+  return (
+    <div className={`mx-auto max-w-2xl rounded-2xl border border-[#E5EDF6] bg-white/70 px-6 py-6 text-center ${className}`}>
+      <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#46516B]/80">Client videos</p>
+      <p className="mt-2 text-[16px] leading-[1.55] text-[#46516B]">
+        We film with clients every month. New videos are added here as they go live.{" "}
+        <button type="button" onClick={onBook} className="font-semibold text-[#0866FF] hover:underline">
+          Want to be next?
+        </button>
+      </p>
+    </div>
+  );
+}
+
 function EmptyFrame({ label, vertical }: { label: string; vertical?: boolean }) {
   return (
     <div
@@ -89,13 +119,9 @@ export function MediaSlot({
   className?: string;
   columns?: 2 | 3 | 4;
 }) {
-  if (!items.length && IS_DEV && slim)
-    return (
-      <p className={`rounded-lg border border-dashed border-[#0866FF]/30 px-3 py-2 font-mono text-[10.5px] uppercase tracking-[0.12em] text-[#0866FF]/70 ${className}`}>
-        {label}: add videos, reviews, or screenshots in lib/home-media.ts
-      </p>
-    );
-  if (!items.length && !(IS_DEV && preview > 0)) return null;
+  const book = useBooking();
+  if (!items.length && slim) return <NowFilmingLine className={className} onBook={() => book("proof-slot")} />;
+  if (!items.length && !(IS_DEV && preview > 0)) return <NowFilmingCard className={className} onBook={() => book("proof-reel")} />;
   const cols = columns === 2 ? "sm:grid-cols-2" : columns === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3";
   return (
     <div className={className}>

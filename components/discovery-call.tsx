@@ -449,10 +449,10 @@ function PrivacyLine({ className, linkClass }: { className: string; linkClass: s
 }
 
 /** Three-stage stepper: Your business -> Your info -> Pick a time. */
-function Stepper({ t, light, stage }: { t: Theme; light: boolean; stage: 0 | 1 | 2 }) {
+function Stepper({ t, light, stage, compact = false }: { t: Theme; light: boolean; stage: 0 | 1 | 2; compact?: boolean }) {
   const labels = ["Your business", "Your info", "Pick a time"];
   return (
-    <ol className="mb-6 flex items-center gap-2" aria-label="Booking steps">
+    <ol className={`${compact ? "mb-3 sm:mb-6" : "mb-6"} flex items-center gap-2`} aria-label="Booking steps">
       {labels.map((label, i) => {
         const done = i < stage;
         const now = i === stage;
@@ -563,16 +563,16 @@ export function QualifierFlow({
 
       {/* ---- One question per screen ---- */}
       {!q.isComplete && !q.onContactStep && current && (
-        <Surface light={light} className="p-5 sm:p-8">
-          <Stepper t={t} light={light} stage={0} />
+        <Surface light={light} className={inModal ? "p-4 sm:p-8" : "p-5 sm:p-8"}>
+          <Stepper t={t} light={light} stage={0} compact={inModal} />
 
-          <p className={`mb-1.5 text-[13px] font-semibold uppercase tracking-[0.12em] ${t.cheer}`}>
+          <p className={`mb-1.5 text-[13px] font-semibold uppercase tracking-[0.12em] ${inModal ? "hidden sm:block" : ""} ${t.cheer}`}>
             Question {q.step + 1} of {q.total}
           </p>
           <h3 id={`${uid}-q`} ref={headingRef} tabIndex={-1} className={headingCls}>
             {current.label}
           </h3>
-          <p id={`${uid}-help`} className={`mt-2 text-[16px] ${t.help}`}>
+          <p id={`${uid}-help`} className={`${inModal ? "mt-2 hidden text-[16px] sm:block" : "mt-2 text-[16px]"} ${t.help}`}>
             {current.help}
           </p>
 
@@ -580,7 +580,11 @@ export function QualifierFlow({
             role="group"
             aria-labelledby={`${uid}-q`}
             aria-describedby={`${uid}-help`}
-            className={current.layout === "tiles" ? "mt-6 grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-2.5" : "mt-6 grid gap-2.5"}
+            className={
+              current.layout === "tiles"
+                ? `${inModal ? "mt-4 grid-cols-4 gap-1.5 sm:mt-6 sm:gap-2.5" : "mt-6 grid-cols-3 gap-2 sm:gap-2.5"} grid sm:grid-cols-5`
+                : `${inModal ? "mt-4 gap-2 sm:mt-6 sm:gap-2.5" : "mt-6 gap-2.5"} grid`
+            }
           >
             {current.layout === "tiles" &&
               current.options.map((option) => {
@@ -591,7 +595,7 @@ export function QualifierFlow({
                     type="button"
                     aria-pressed={selected}
                     onClick={() => q.answer(current, option.value)}
-                    className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-xl border-2 px-1.5 py-3 text-center text-[13px] font-semibold sm:min-h-[92px] sm:text-[14px] leading-tight transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
+                    className={`flex ${inModal ? "min-h-[66px] gap-1 px-0.5 py-2 text-[11.5px] leading-[1.15] [overflow-wrap:anywhere] sm:text-[14px]" : "min-h-[84px] gap-2 py-3"} flex-col items-center justify-center rounded-xl border-2 px-1.5 text-center text-[13px] font-semibold sm:min-h-[92px] sm:text-[14px] leading-tight transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
                       selected ? t.optionOn : t.option
                     } ${t.ring}`}
                   >
@@ -611,7 +615,7 @@ export function QualifierFlow({
                   type="button"
                   aria-pressed={selected}
                   onClick={() => q.answer(current, option.value)}
-                  className={`group flex min-h-[60px] items-center gap-3 rounded-xl border-2 px-4 py-3 text-left text-[17px] font-semibold transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
+                  className={`group flex ${inModal ? "min-h-[54px] py-2.5 text-[16px] sm:min-h-[60px] sm:py-3 sm:text-[17px]" : "min-h-[60px] py-3 text-[17px]"} items-center gap-3 rounded-xl border-2 px-4 text-left font-semibold transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
                     selected ? t.optionOn : t.option
                   } ${t.ring}`}
                 >
@@ -630,7 +634,7 @@ export function QualifierFlow({
             })}
           </div>
 
-          <div className="mt-5 flex min-h-[44px] items-center justify-between">
+          <div className={`${inModal ? "mt-3 sm:mt-4" : "mt-5"} flex min-h-[44px] items-center justify-between`}>
             {q.step > 0 ? <BackButton t={t} onClick={q.back} /> : <span />}
             <span className={`text-[13px] ${t.meta}`}>One tap moves you on</span>
           </div>
@@ -758,10 +762,14 @@ export function QualifierFlow({
           <h3 ref={headingRef} tabIndex={-1} className={headingCls}>
             {q.booked ? "You're on the calendar!" : `Thanks${q.firstName.trim() ? `, ${q.firstName.trim()}` : ""}! Pick a time.`}
           </h3>
-          <p className={`mt-2 text-[16px] ${t.help}`}>
-            {q.booked
-              ? "Check your email for the details. Talk soon."
-              : "You talk to Anthony, not a sales team. We look at your trade and area and tell you straight if we can help."}
+          <p className={`mt-2 flex items-start gap-2.5 text-[16px] ${t.help}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/home/anthony.webp" alt="Anthony Tran" width={32} height={32} loading="lazy" className="mt-0.5 h-8 w-8 shrink-0 rounded-full object-cover" />
+            <span>
+              {q.booked
+                ? "Check your email for the details. Talk soon."
+                : "You talk to Anthony, not a sales team. We look at your trade and area and tell you straight if we can help."}
+            </span>
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2">

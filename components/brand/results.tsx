@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MediaSlot } from "@/components/brand/media-slot";
-import { SLOT_PREVIEW, STUDIO_REEL } from "@/lib/home-media";
+import { STUDIO_REEL } from "@/lib/home-media";
 import { useBooking } from "@/components/brand/brand-shell";
 import { Eyebrow, KitIcon, Reveal, container, outlineBtn, sectionH2, sectionPad } from "@/components/brand/primitives";
 import { adTotals, costPerLead, featuredAdResults, formatUsd } from "@/lib/adResults";
@@ -116,7 +116,7 @@ export function ResultsSection({ id = "results" }: { id?: string }) {
           </p>
         </Reveal>
 
-        <MediaSlot items={STUDIO_REEL} preview={SLOT_PREVIEW.studio} label="Client video" className="mt-10" columns={3} />
+        <MediaSlot items={STUDIO_REEL} label="Client video" className="mt-10" columns={3} />
 
         <div className="mt-10 grid gap-6">
           <Reveal className="min-w-0">

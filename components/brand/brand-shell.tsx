@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { Menu } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { CloudBand } from "@/components/brand/flair";
@@ -202,14 +202,13 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
  * drifts up with scroll) → clouds (front). Decorative; reduced motion = static.
  */
 function CtaRocketScene() {
-  const reduce = useReducedMotion();
-
   return (
     <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[360px] md:block lg:w-[460px]" aria-hidden="true">
 
       <Parallax distance={-16} className="absolute bottom-[24%] right-[20%] w-[140px] lg:w-[165px]">
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: -70, y: 70 }}
+          // same on server and client (no hydration mismatch); MotionConfig reducedMotion="user" drops the movement
+          initial={{ opacity: 0, x: -70, y: 70 }}
           whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}

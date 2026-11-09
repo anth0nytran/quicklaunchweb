@@ -25,13 +25,17 @@ const PANEL = { y0: 0.31, y1: 0.55 };
 const BLUE = "#2F7BFF";
 
 /** Parts: height (0..1), angle around the body (0 = +z, toward +x), and the angle that faces the camera. */
+// At rest the QL logo faces you (REST_FACE); the five dots sit in one straight column just to
+// its right, on the skin of the hull, so they line up and never cover the logo.
 export const PARTS = [
-  { y: 0.92, angle: 0.5, face: 0.35, lift: 0.5 },
-  { y: 0.69, angle: 0, face: 0, lift: 0 },
-  { y: 0.43, angle: Math.PI / 2, face: 1.0, lift: 0 },
-  { y: 0.23, angle: -0.9, face: -0.7, lift: 0 },
-  { y: 0.08, angle: 0.35, face: 0.35, lift: 0 },
+  { y: 0.895, angle: 2.35, face: 0.35, lift: 0.35 },
+  { y: 0.69, angle: 2.35, face: 0, lift: 0 },
+  { y: 0.43, angle: 2.35, face: 1.0, lift: 0 },
+  { y: 0.285, angle: 2.35, face: -0.7, lift: 0 },
+  { y: 0.158, angle: 2.35, face: 0.35, lift: 0 },
 ] as const;
+/** The body angle that faces the camera when nothing is open: the QL logo (measured on the model). */
+export const REST_FACE = 1.97;
 
 type Key = "legs" | "bodyLow" | "bodyMid" | "door" | "bodyHigh" | "nose";
 /** Which section turns to wireframe for each step, and the height band its wire draws across. */
@@ -201,7 +205,8 @@ export function useShipProfile() {
 export function partAnchor(prof: Profile, i: number) {
   const p = PARTS[i];
   const out = new THREE.Vector3(Math.sin(p.angle), p.lift, Math.cos(p.angle)).normalize();
-  const rr = prof.r(p.y) * (i === 0 ? 0.7 : 1.08) + 0.01;
+  // on the skin, not floating beside it
+  const rr = prof.r(p.y) + 0.006;
   const pos = new THREE.Vector3(Math.sin(p.angle) * rr, p.y, Math.cos(p.angle) * rr);
   return { pos, out };
 }
@@ -229,7 +234,7 @@ export function ShipHybrid({
   const wires = useRef<Partial<Record<Key, THREE.LineSegments | null>>>({});
   // inner mechanisms
   const plan = useRef<THREE.Group>(null);
-  const core = useRef<THREE.MeshStandardMaterial>(null);
+  const core = useRef<THREE.MeshPhysicalMaterial>(null);
   const gyroA = useRef<THREE.Mesh>(null);
   const gyroB = useRef<THREE.Mesh>(null);
   const cam = useRef<THREE.Group>(null);
@@ -477,11 +482,13 @@ export function ShipHybrid({
     if (plan.current) {
       const a = inner(0);
       plan.current.visible = a > 0.01;
-      plan.current.scale.setScalar(0.85 + 0.15 * a);
+      plan.current.scale.set(1, 1, 1);
+      void a;
     }
-    if (core.current) core.current.emissiveIntensity = 0.6 + 2.2 * smooth(seg(p0, 0.2, 0.7));
-    if (gyroA.current) gyroA.current.rotation.x += dt * (0.6 + 2.2 * p0);
-    if (gyroB.current) gyroB.current.rotation.y += dt * (0.8 + 2.6 * p0);
+    // a soft breathing glow (never a flat blue blob); rings turn slow and steady
+    if (core.current) core.current.emissiveIntensity = 0.15 + smooth(seg(p0, 0.2, 0.7)) * (0.45 + 0.15 * Math.sin(S.since * 2.4));
+    if (gyroA.current) gyroA.current.rotation.z += dt * (0.3 + 0.9 * p0);
+    if (gyroB.current) gyroB.current.rotation.z -= dt * (0.4 + 1.1 * p0);
 
     // 02 Video: camera barrel inside the window band; the iris opens, the lens brightens.
     const p1 = S.p[1];
@@ -604,8 +611,8 @@ export function ShipHybrid({
     [-aEdge, PANEL.y1 - 0.025],
     [aEdge, PANEL.y1 - 0.025],
   ] as const;
-  const yPlan = 0.9;
-  const rPlan = prof.r(yPlan);
+  const rCut = prof.r(NOSE_CUT);
+  const yPlan = NOSE_CUT + rCut * 0.52;
   return (
     <group>
       <group ref={legsG}>
@@ -650,20 +657,34 @@ export function ShipHybrid({
         <primitive object={built.xrayObj.bodyHigh} />
         {wire("bodyHigh")}
 
-        {/* 01: core + gyro rings inside the nose */}
-        <group ref={plan} position={[0, yPlan, 0]} visible={false}>
-          <mesh>
-            <sphereGeometry args={[rPlan * 0.32, 32, 16]} />
-            <meshStandardMaterial ref={core} color="#0866FF" emissive="#0866FF" emissiveIntensity={0.6} toneMapped={false} />
+        {/* 01: the "brain": a sealed deck closes the opening, a pearl core on a post, two thin rings, all inside the hull */}
+        <group ref={plan} visible={false}>
+          <mesh position={[0, NOSE_CUT + 0.003, 0]}>
+            <cylinderGeometry args={[rCut * 0.97, rCut * 0.97, 0.006, 64]} />
+            <meshStandardMaterial color="#E9EDF3" metalness={0.55} roughness={0.32} />
           </mesh>
-          <mesh ref={gyroA}>
-            <torusGeometry args={[rPlan * 0.55, 0.004, 8, 96]} />
-            <meshStandardMaterial color="#C9D3E2" metalness={0.9} roughness={0.2} />
+          <mesh position={[0, NOSE_CUT + 0.0065, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[rCut * 0.8, 0.0018, 6, 96]} />
+            <meshBasicMaterial color={BLUE} toneMapped={false} />
           </mesh>
-          <mesh ref={gyroB} rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[rPlan * 0.68, 0.004, 8, 96]} />
-            <meshStandardMaterial color="#8FB4FF" metalness={0.6} roughness={0.25} emissive={BLUE} emissiveIntensity={0.6} toneMapped={false} />
+          <mesh position={[0, (NOSE_CUT + yPlan) / 2, 0]}>
+            <cylinderGeometry args={[0.004, 0.006, yPlan - NOSE_CUT, 16]} />
+            <meshStandardMaterial color="#B8C2D2" metalness={0.9} roughness={0.2} />
           </mesh>
+          <group position={[0, yPlan, 0]}>
+            <mesh>
+              <sphereGeometry args={[rCut * 0.23, 48, 24]} />
+              <meshPhysicalMaterial ref={core} color="#F4F7FC" emissive="#2F7BFF" emissiveIntensity={0.15} metalness={0.1} roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} />
+            </mesh>
+            <mesh ref={gyroA} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[rCut * 0.44, 0.0028, 8, 128]} />
+              <meshStandardMaterial color="#D6DDE8" metalness={0.95} roughness={0.15} />
+            </mesh>
+            <mesh ref={gyroB} rotation={[Math.PI / 2.6, 0, 0]}>
+              <torusGeometry args={[rCut * 0.56, 0.0024, 8, 128]} />
+              <meshBasicMaterial color="#5B95FF" toneMapped={false} />
+            </mesh>
+          </group>
         </group>
         <group ref={noseG}>
           <primitive object={obj.nose} />

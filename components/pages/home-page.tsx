@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { DiscoveryCallSection } from "@/components/discovery-call";
 import { BrandShell, CtaBand, useBooking } from "@/components/brand/brand-shell";
 import { ResultsSection } from "@/components/brand/results";
@@ -47,15 +48,24 @@ const services: { anim: string; title: string; body: string; href?: string }[] =
   { anim: "website", title: "Website & CRM", body: "One place to see every lead and every job.", href: "/services/automations" },
 ];
 
+// Why Us: each card answers a fear an owner has about agencies, in one line.
+// Why Us: local first (the #1 reason owners pick us), then the fears an owner has about agencies.
 const whyUs = [
-  { icon: "map-pin", anim: "local", title: "Houston-based", body: "We live here and know which areas are worth your gas. Out of town? We fly out to film." },
-  { icon: "shield", anim: "exclusive", title: "One business per trade per area", body: "We won't run ads for the guy down the street." },
-  { icon: "lock", anim: "own", title: "You own your ad account", body: "Your ads. Your card. You see every dollar." },
-  { icon: "target", anim: "bigger", title: "Built for bigger jobs", body: "We aim your ads at jobs worth your time." },
+  { icon: "map-pin", anim: "local", title: "We're local", body: "We're in Houston. We meet you, film on your real jobs, and know which areas are worth your gas. Out of town? We fly out to film." },
+  { icon: "shield", anim: "exclusive", title: "Only one per trade per area", body: "Once we take your trade in your area, we turn your competitors away. Ask if your spot is open." },
+  { icon: "target", anim: "bigger", title: "Better jobs, not just more leads", body: "We aim at clients like your best ones. Fewer tire kickers, more jobs worth your time." },
+  { icon: "lock", anim: "own", title: "You own everything", body: "Your ad account, your card, your videos. They stay yours, even if you leave." },
 ];
 
-const mostAds = ["Stock photos", "Actors reading a script", "Nobody knows who shows up", "Homeowners scroll past"];
-const ourAds = ["You, on your real job", "Your crew, your trucks, your work", "Homeowners know who is coming", "They trust you before you call"];
+// Why It Works: side-by-side, one row per difference. Each row is a result the owner cares about.
+const compareRows: { most: string; ours: string }[] = [
+  { most: "Agency in another state", ours: "Local team that comes to your job site" },
+  { most: "Chase cheap leads", ours: "Go after more clients like your best ones" },
+  { most: "Actors and stock photos", ours: "You and your crew on real jobs" },
+  { most: "One ad for everyone", ours: "A callout for each kind of homeowner you want" },
+  { most: "Leads sit for hours", ours: "Every lead gets a text in seconds" },
+  { most: "Report clicks and views", ours: "Report booked jobs" },
+];
 
 // =============================================================================
 // Sections (inside BrandShell so they can use useBooking)
@@ -192,12 +202,15 @@ function HomeSections() {
             })}
           </ul>
 
-          <Reveal className="mt-10 text-center">
+          <Reveal className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
+            <button type="button" onClick={() => book("services")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
+              Get All of This: Book a Free Call <span aria-hidden="true">&rarr;</span>
+            </button>
             <Link
               href="/houston-growth-engine"
-              className={`group inline-flex items-center gap-2 rounded-lg text-[16px] font-bold text-[#0866FF] ${focusRing}`}
+              className={`group inline-flex items-center gap-2 rounded-lg text-[15px] font-bold text-[#0866FF] ${focusRing}`}
             >
-              See every part of the Houston Growth Engine
+              See every part
               <KitIcon name="arrow-right" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Reveal>
@@ -205,52 +218,52 @@ function HomeSections() {
       </section>
 
       {/* ===================== 3. WHY IT WORKS ===================== */}
-      <section className={`relative overflow-hidden bg-gradient-to-b from-white via-[#EFF8FF] to-white ${sectionPad}`}>
-        <Backdrop variant="glow" />
-        <div className={`${container} relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14`}>
-          <Reveal>
+      {/* One idea: most agencies chase cheap leads, we chase more of your best clients. A plain
+          side-by-side anyone can read in 10 seconds, then one button into the booking quiz. */}
+      <section className={`relative bg-white ${sectionPad}`}>
+        <div className={`${container} relative`}>
+          <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>Why It Works</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>Homeowners Trust a Face.</h2>
-            <div className="mt-5 space-y-2 text-[17px] leading-[1.55] text-[#46516B] sm:text-[18px]">
-              <p>People hire who they trust.</p>
-              <p>So we film you. The real you. On the real job.</p>
-              <p>No actors. No stock photos.</p>
-              <p className="font-semibold text-[#07143F]">Homeowners see your work and your face. Then they call.</p>
+            <h2 className={`mt-3 ${sectionH2}`}>Most Agencies Chase Cheap Leads. We Chase Your Best Clients.</h2>
+            <p className="mt-3 text-[16px] leading-[1.55] text-[#46516B] sm:text-[18px]">
+              Cheap leads don&apos;t pick up and don&apos;t pay. So we find out who your best clients are, then put you in front of more people just like them.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.06} className="mx-auto mt-10 max-w-4xl">
+            <div className="overflow-hidden rounded-2xl border border-[#E5EDF6] bg-white shadow-[0_8px_30px_-16px_rgba(7,20,63,0.18)]">
+              <div className="grid grid-cols-2 border-b border-[#E5EDF6] text-[12px] font-bold uppercase tracking-[0.16em] sm:text-[13px]">
+                <p className="flex items-center gap-2 bg-[#F7F9FC] px-4 py-3.5 text-[#46516B] sm:px-6">
+                  <DrawIcon name="x-circle" className="h-4 w-4 shrink-0 opacity-60" />
+                  Most agencies
+                </p>
+                <p className="flex items-center gap-2 px-4 py-3.5 text-[#0866FF] sm:px-6">
+                  <DrawIcon name="check-circle" delay={0.2} className="h-4 w-4 shrink-0" />
+                  <span className="sm:hidden">Us</span>
+                  <span className="hidden sm:inline">QuickLaunchWeb</span>
+                </p>
+              </div>
+              <ul>
+                {compareRows.map((r, i) => (
+                  <li key={r.ours} className="grid grid-cols-2 border-b border-[#E5EDF6] last:border-b-0">
+                    <p className="bg-[#F7F9FC] px-4 py-4 text-[15px] leading-[1.45] text-[#46516B] line-through decoration-[#46516B]/30 sm:px-6 sm:text-[16px]">{r.most}</p>
+                    <p className="flex items-start gap-2.5 px-4 py-4 text-[15px] font-semibold leading-[1.45] text-[#07143F] sm:px-6 sm:text-[16px]">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0866FF]/10">
+                        <DrawIcon name="check" delay={0.3 + i * 0.12} className="h-3.5 w-3.5" />
+                      </span>
+                      {r.ours}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Reveal>
-          <Reveal delay={0.07}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-[#E5EDF6] bg-[#F7F9FC] p-6">
-                <p className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-[#46516B]">
-                  <DrawIcon name="x-circle" className="h-5 w-5 opacity-60" />
-                  Most ads
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {mostAds.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[15px] leading-[1.5] text-[#46516B]">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#46516B]/40" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-xl border-2 border-[#0866FF]/40 bg-white p-6 shadow-[0_20px_50px_-24px_rgba(8,102,255,0.35)]">
-                <p className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-[#0866FF]">
-                  <DrawIcon name="check-circle" delay={0.2} className="h-5 w-5" />
-                  Our ads
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {ourAds.map((item, i) => (
-                    <li key={item} className="flex items-start gap-3 text-[15px] font-medium leading-[1.5] text-[#07143F]">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0866FF]/10">
-                        <DrawIcon name="check" delay={0.4 + i * 0.15} className="h-3.5 w-3.5" />
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+
+          <Reveal delay={0.1} className="mt-9 flex flex-col items-center gap-3 text-center">
+            <button type="button" onClick={() => book("why-it-works")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
+              See If Your Area Is Open <span aria-hidden="true">&rarr;</span>
+            </button>
+            <p className="text-[14px] text-[#46516B]">We only take one business per trade in each area.</p>
           </Reveal>
         </div>
       </section>
@@ -266,7 +279,8 @@ function HomeSections() {
         <div className={`${container} relative`}>
           <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>Why Us</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>Why Houston Owners Pick Us</h2>
+            <h2 className={`mt-3 ${sectionH2}`}>Why Owners Pick Us</h2>
+            <p className="mt-3 text-[16px] leading-[1.55] text-[#46516B] sm:text-[18px]">Most owners pick us for one reason: we&apos;re local. You can meet us, and we show up.</p>
           </Reveal>
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {whyUs.map((item, i) => (
@@ -281,6 +295,35 @@ function HomeSections() {
               </li>
             ))}
           </ul>
+          {/* Founder: a real face behind the company (trust). Small, clean, official. */}
+          <Reveal className="mx-auto mt-12 max-w-2xl">
+            <figure className="flex flex-col items-center gap-5 rounded-2xl border border-[#E5EDF6] bg-white px-6 py-6 text-center shadow-[0_10px_34px_-20px_rgba(7,20,63,0.25)] sm:flex-row sm:items-start sm:gap-6 sm:px-7 sm:text-left">
+              <Image
+                src="/home/anthony.webp"
+                alt="Anthony Tran, founder of QuickLaunchWeb"
+                width={144}
+                height={144}
+                loading="lazy"
+                className="h-[72px] w-[72px] shrink-0 rounded-full object-cover ring-[3px] ring-white shadow-[0_0_0_1px_#DCE6F2,0_6px_18px_rgba(7,20,63,0.18)]"
+              />
+              <div className="min-w-0">
+                <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0866FF]">Meet the founder</p>
+                <figcaption className="mt-1.5">
+                  <span className="block text-[18px] font-extrabold tracking-[-0.01em] text-[#07143F]">Anthony Tran</span>
+                  <span className="block text-[13.5px] text-[#46516B]">Founder, QuickLaunchWeb · Houston, TX</span>
+                </figcaption>
+                <blockquote className="mt-3 border-t border-[#EEF2F7] pt-3 text-[15.5px] leading-[1.55] text-[#07143F]">
+                  &ldquo;I&apos;m here in Houston. You talk to me on the call, not a sales team. If we can&apos;t help, I&apos;ll tell you straight.&rdquo;
+                </blockquote>
+              </div>
+            </figure>
+          </Reveal>
+          <Reveal className="mt-8 flex flex-col items-center gap-3 text-center">
+            <button type="button" onClick={() => book("why-us")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
+              Check My Area: Book a Free Call <span aria-hidden="true">&rarr;</span>
+            </button>
+            <p className="text-[14px] text-[#46516B]">3 quick questions, then pick a time. Under a minute.</p>
+          </Reveal>
         </div>
       </section>
 

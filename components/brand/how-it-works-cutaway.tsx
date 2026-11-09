@@ -21,42 +21,47 @@ const STEPS = [
   {
     n: "01",
     tag: "Plan",
-    title: "We make a plan",
-    body: "One call. We learn your best jobs, your towns, and what makes you the best pick. Then we set everything up in week one.",
-    part: "One call. About an hour.",
-    get: ["Your offer, sharpened", "The towns and homeowners we'll go after", "Ads, lead forms, text-back, and calendar set up"],
+    title: "We sit down and build your plan",
+    body: "One hour with you. We find where your best jobs came from and what your best clients have in common. Then we plan how to get more of them.",
+    part: "About an hour",
+    lesson: { title: "How we find who your ads should talk to", steps: ["We go through your best jobs from the last year.", "We look at what they share: area, home age, job size, and how they found you.", "What repeats becomes your target. Your ads go after more people just like them."] },
+    get: ["Know your best clients", "An offer that stands out", "Sales call prep"],
   },
   {
     n: "02",
     tag: "Video",
-    title: "We film you",
-    body: "We write the scripts. Our crew comes to a real job and films you and your team at work. No actors. No stock video.",
-    part: "Show up on one job.",
-    get: ["Scripts written for you", "A film day on a real job", "Short videos and photos you keep"],
+    title: "We film a full set of ads",
+    body: "Our crew films you on a real job. We shoot lots of openers, each one aimed at a different kind of best client.",
+    part: "One job day",
+    lesson: { title: "How we plan your shoot", steps: ["We pick the 3 or 4 kinds of clients you want most.", "We write a different opening line for each one, like “Just bought a home?”", "We film every opener on the same job day, so nothing goes to waste."] },
+    get: ["Scripts written for you", "Many openers to test", "Videos you keep"],
   },
   {
     n: "03",
     tag: "Ads",
-    title: "We run your ads",
-    body: "Your videos go on Facebook and Instagram, in front of homeowners in the towns you pick.",
-    part: "Nothing. We run it.",
-    get: ["An ad account in your name", "Ads aimed only at your towns", "Every dollar of spend shown to you"],
+    title: "We bring in better leads",
+    body: "Your ads run on Facebook and Instagram, only in your areas. They are built to bring serious homeowners, not price shoppers.",
+    part: "Nothing",
+    lesson: { title: "How we keep the wrong leads out", steps: ["Your ads show real jobs at your real size.", "The first line says who it is for, so the wrong people scroll past.", "The form asks a few smart questions first: address, timeline, kind of job."] },
+    get: ["Leads that pick up", "Only your areas", "Your own ad account"],
   },
   {
     n: "04",
     tag: "Testing",
-    title: "We test to find the winner",
-    body: "We run a few ads at once. Each one talks to a different kind of homeowner. We keep what books jobs and cut what doesn't.",
-    part: "Nothing. We run the tests.",
-    get: ["Several ads, each for a different homeowner", "Losers cut, winners kept", "New versions to beat the winner"],
+    title: "We test until we find the winner",
+    body: "Your ads go head to head. We keep what books jobs and cut the rest fast.",
+    part: "Nothing",
+    lesson: { title: "How we pick the winner", steps: ["Every ad gets its own name, so we know where each lead came from.", "We change one thing at a time, like the opening line.", "We count booked jobs per ad, not just leads, and put more money behind what wins."] },
+    get: ["Side-by-side tests", "Losers cut in days", "More spend on winners"],
   },
   {
     n: "05",
     tag: "Booked jobs",
-    title: "You get booked jobs",
-    body: "Every lead gets a text in seconds. Our team calls and books the estimate, or hands it to your office.",
-    part: "Show up to the estimates.",
-    get: ["A text to every lead in seconds", "Estimates booked on your calendar", "Simple training to close more", "A one-page report every Monday"],
+    title: "Booked jobs, every month",
+    body: "Every lead gets a text in seconds and a booked estimate. Then we film again and grow it every month.",
+    part: "Show up to estimates",
+    lesson: { title: "How we keep it growing", steps: ["We ask your new clients what made them call, and what almost stopped them.", "Their answers become next month’s opening lines.", "We film again, so your ads and your page stay fresh."] },
+    get: ["A text to every lead", "Estimates on your calendar", "New videos every month"],
   },
 ] as const;
 
@@ -95,11 +100,11 @@ export function HowItWorksCutaway() {
               <motion.div {...rise()}>
                 <Eyebrow>How It Works</Eyebrow>
                 <h2 id="how-title" className={`mt-3 text-[#07143F] ${sectionH2}`}>
-                  Five steps to launch.
+                  How we win your city.
                 </h2>
-                <p className="mt-3 text-[16px] leading-[1.55] text-[#46516B] sm:text-[18px]">About an hour of your time the first week. We do the rest.</p>
+                <p className="mt-3 text-[16px] leading-[1.55] text-[#46516B] sm:text-[18px]">Five simple steps. About an hour of your time to start.</p>
               </motion.div>
-              <ul className="mt-8 hidden space-y-1 lg:block" aria-hidden="true">
+              <ul className="mt-8 hidden space-y-1 lg:block" aria-label="Steps">
                 {STEPS.map((s) => (
                   <li key={s.n}>
                     <a href={`#step-${s.n}`} className="group flex items-center gap-3 rounded-lg py-1.5 text-[15px] text-[#46516B] transition-colors hover:text-[#07143F]">
@@ -133,46 +138,77 @@ export function HowItWorksCutaway() {
                 >
                   <span className="h-[7px] w-[7px] rounded-full bg-[#0866FF]" />
                 </span>
-                <article className={`${cardCls} p-6 sm:p-8`}>
-                  <div className="flex items-start gap-5">
-                  <AnimatedIcon name={ICONS[i]} size={88} offset={i * 0.9} className="-ml-2 -mt-2 hidden sm:block" />
-                  <div className="min-w-0 flex-1">
-                  <AnimatedIcon name={ICONS[i]} size={72} offset={i * 0.9} className="-ml-2 mb-2 sm:hidden" />
-                  <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                    <p className="font-mono text-[12px] font-semibold tracking-[0.18em] text-[#0866FF]">
-                      STEP {s.n} <span className="text-[#46516B]">/ 05</span>
-                    </p>
-                    <p className="text-[13px] text-[#46516B]">
-                      <span className="font-semibold text-[#07143F]">Your part:</span> {s.part}
-                    </p>
+                <article className={`${cardCls} p-6 sm:p-7`}>
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <AnimatedIcon name={ICONS[i]} size={64} offset={i * 0.9} className="-ml-1 -mt-1 shrink-0 sm:hidden" />
+                    <AnimatedIcon name={ICONS[i]} size={80} offset={i * 0.9} className="-ml-2 -mt-2 hidden shrink-0 sm:block" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <p className="font-mono text-[12px] font-semibold tracking-[0.18em] text-[#0866FF]">STEP {s.n}</p>
+                        <p className="rounded-full bg-[#07143F]/[0.05] px-2.5 py-0.5 text-[12.5px] text-[#46516B]">
+                          <span className="font-semibold text-[#07143F]">Your part:</span> {s.part}
+                        </p>
+                      </div>
+                      <h3 className="mt-1.5 text-[22px] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#07143F] sm:text-[26px]">{s.title}</h3>
+                    </div>
                   </div>
-                  <h3 className="mt-3 text-[24px] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#07143F] sm:text-[28px]">{s.title}</h3>
-                  <p className="mt-3 text-[16px] leading-[1.6] text-[#46516B]">{s.body}</p>
-                  </div>
-                  </div>
-                  <div className="mt-5 border-t border-[#07143F]/[0.07] pt-5">
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#46516B]">What you get</p>
-                    <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                      {s.get.map((g) => (
-                        <li key={g} className="flex items-start gap-2.5 text-[15px] leading-[1.45] text-[#07143F]">
-                          <Check />
-                          {g}
+                  <p className="mt-3 text-[17px] leading-[1.55] text-[#46516B]">{s.body}</p>
+                  <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                    {s.get.map((g) => (
+                      <li key={g} className="flex items-start gap-2 text-[15px] font-medium leading-[1.4] text-[#07143F]">
+                        <Check />
+                        {g}
+                      </li>
+                    ))}
+                  </ul>
+                  {i === 0 && (
+                    <button type="button" onClick={() => book("how-it-works-step1")} className={`${primaryBtn} mt-5 px-5 py-3 text-[15px]`}>
+                      Start Step 1: Book Your Free Call <span aria-hidden="true">&rarr;</span>
+                    </button>
+                  )}
+                  {/* How we do it: our own 3-step checklist for this step (shows real know-how, builds trust).
+                      Folded so the card stays easy to scan; still real text on the page. */}
+                  <details className="group mt-4 rounded-xl border border-[#E5EDF6] bg-[#F7F9FC] px-4 py-3 [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer list-none items-center gap-2.5 text-[15px] font-semibold text-[#07143F]">
+                      <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0 text-[#0866FF]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="14" height="14" rx="3" />
+                        <path d="M7 10l2 2 4-4.5" />
+                      </svg>
+                      <span className="flex-1">
+                        {s.lesson.title}
+                      </span>
+                      <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0 text-[#46516B] transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                        <path d="M5 8l5 5 5-5" />
+                      </svg>
+                    </summary>
+                    <ol className="mt-3 space-y-2.5">
+                      {s.lesson.steps.map((st, k) => (
+                        <li key={st} className="flex items-start gap-3 text-[15px] leading-[1.5] text-[#07143F]">
+                          <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#0866FF]/30 bg-white font-mono text-[11px] font-semibold text-[#0866FF]">
+                            {k + 1}
+                          </span>
+                          {st}
                         </li>
                       ))}
-                    </ul>
-                  </div>
-                  <MediaSlot items={STEP_MEDIA[i]} slim label={`Proof for step ${s.n}`} className="mt-5" columns={3} />
+                    </ol>
+                  </details>
+                  <MediaSlot items={STEP_MEDIA[i]} slim label={`Proof for step ${s.n}`} className="mt-4" columns={3} />
                 </article>
               </motion.li>
             ))}
           </ol>
         </div>
 
-        {/* Phones: the one next step */}
-        <div className="mt-10 lg:hidden">
-          <button type="button" onClick={() => book("how-it-works")} className={`${primaryBtn} w-full px-6 py-4 text-[16px]`}>
+        {/* The one next step: book the call (all screen sizes) */}
+        <div className="mx-auto mt-14 max-w-[720px] rounded-2xl bg-[#07143F] px-6 py-9 text-center sm:px-10">
+          <h3 className="text-[24px] font-extrabold leading-[1.2] tracking-[-0.02em] text-white sm:text-[30px]">Want us to do this for you?</h3>
+          <p className="mx-auto mt-3 max-w-[30rem] text-[16px] leading-[1.55] text-white/75 sm:text-[17px]">
+            Book a free 15-minute call. We&apos;ll look at your best jobs and tell you if we can get you more like them.
+          </p>
+          <button type="button" onClick={() => book("how-it-works")} className={`${primaryBtn} mt-6 w-full px-7 py-4 text-[16px] sm:w-auto`}>
             Book a Free Call <span aria-hidden="true">&rarr;</span>
           </button>
+          <p className="mt-3 text-[13px] text-white/60">Free. No pressure. Takes under a minute to book.</p>
         </div>
 
       </div>

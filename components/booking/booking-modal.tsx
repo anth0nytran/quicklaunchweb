@@ -53,16 +53,16 @@ export function BookingModal({
                 style={{ ...BRAND_VARS, color: NAVY, fontFamily: "var(--font-inter), Arial, sans-serif" }}
               >
                 <div className="sticky top-0 z-10 border-b border-[#E5EDF6] bg-white/95 backdrop-blur">
-                  <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:h-[72px] sm:px-6">
+                  <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4 sm:h-[72px] sm:px-6">
                     <Image
                       src="/home/logo.png"
                       alt="QuickLaunchWeb"
                       width={687}
                       height={215}
-                      className="h-auto w-[140px] sm:w-[170px]"
+                      className="h-auto w-[124px] sm:w-[170px]"
                     />
                     <Dialog.Close
-                      className={`flex h-12 w-12 items-center justify-center rounded-xl text-[#07143F] transition-colors hover:bg-[#EFF8FF] ${focusRing}`}
+                      className={`flex h-11 w-11 items-center justify-center rounded-xl text-[#07143F] transition-colors hover:bg-[#EFF8FF] ${focusRing}`}
                       aria-label="Close booking"
                     >
                       <KitIcon name="close" className="h-6 w-6" />
@@ -70,34 +70,40 @@ export function BookingModal({
                   </div>
                 </div>
 
-                <div className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-6 sm:px-6 sm:pt-10">
-                  <div className="mb-6 text-center sm:mb-8 lg:text-left">
-                    <Dialog.Title className="text-[26px] font-extrabold leading-tight tracking-[-0.03em] text-[#07143F] sm:text-[34px]">
+                <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-6 pt-4 sm:px-6 sm:pb-16 sm:pt-10 lg:justify-center lg:py-12">
+                  <div className="mb-3 text-center sm:mb-8 lg:mb-10 lg:text-left">
+                    <Dialog.Title className="text-[22px] font-extrabold leading-tight tracking-[-0.03em] text-[#07143F] sm:text-[34px]">
                       {q.isComplete ? "Pick a time for your free call" : "Book your free strategy call"}
                     </Dialog.Title>
-                    <Dialog.Description className="mx-auto mt-2 max-w-md text-[16px] text-[#46516B] sm:text-[17px] lg:mx-0">
+                    <Dialog.Description className="mx-auto mt-2 hidden max-w-md text-[17px] text-[#46516B] sm:block lg:mx-0">
                       {q.isComplete
                         ? "15 minutes. Pick whatever time works for you."
                         : `${q.total} quick questions, then pick a time. Under a minute.`}
                     </Dialog.Description>
+                    {/* phones: who you'll talk to, in one line (the full card shows on desktop) */}
+                    <div className="mt-3 flex items-center justify-center gap-2.5 lg:hidden">
+                      <Image src="/home/anthony.webp" alt="Anthony Tran, founder of QuickLaunchWeb" width={80} height={80} className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-[0_2px_8px_rgba(7,20,63,0.15)]" />
+                      <p className="text-left text-[13px] leading-tight text-[#46516B]">
+                        <span className="block font-semibold text-[#07143F]">You talk to Anthony, the founder</span>
+                        Free, 15 min. No pressure.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="grid gap-6 lg:grid-cols-[300px_1fr] lg:items-start lg:gap-8">
+                  <div className="grid gap-6 lg:grid-cols-[320px_1fr] lg:items-start lg:gap-10">
                     {/* Who you'll talk to + what you get. Sits beside the form on desktop, above it on phones. */}
-                    <aside className="rounded-2xl border border-[#E3E9F2] bg-white p-4 shadow-[0_1px_2px_rgba(7,20,63,0.04)] lg:sticky lg:top-24 lg:p-5">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#07143F] text-[16px] font-bold text-white">
-                          A
-                        </span>
+                    <aside className="hidden rounded-2xl border border-[#E3E9F2] bg-white p-4 shadow-[0_1px_2px_rgba(7,20,63,0.04)] lg:sticky lg:top-24 lg:block lg:p-6">
+                      <div className="flex items-center gap-4">
+                        <Image src="/home/anthony.webp" alt="Anthony Tran, founder of QuickLaunchWeb" width={128} height={128} className="h-16 w-16 shrink-0 rounded-full object-cover ring-[3px] ring-white shadow-[0_4px_14px_rgba(7,20,63,0.18)]" />
                         <div className="leading-tight">
-                          <p className="text-[15px] font-bold text-[#07143F]">Anthony</p>
+                          <p className="text-[16px] font-bold text-[#07143F]">Anthony Tran</p>
                           <p className="text-[13px] text-[#46516B]"><span className="lg:hidden">Founder · you talk to me, not a sales team</span><span className="hidden lg:inline">Founder, QuickLaunchWeb</span></p>
                         </div>
                       </div>
-                      <p className="mt-3 hidden text-[14px] leading-[1.55] text-[#46516B] lg:block">
+                      <p className="mt-4 hidden text-[14.5px] leading-[1.55] text-[#46516B] lg:block">
                         You talk to me, not a sales team. If we can&apos;t help, I&apos;ll tell you straight.
                       </p>
-                      <p className="mt-4 hidden font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF] lg:block">
+                      <p className="mt-5 hidden font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF] lg:block">
                         On the call
                       </p>
                       <ul className="mt-2 hidden space-y-2.5 lg:block">

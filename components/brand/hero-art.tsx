@@ -157,7 +157,9 @@ function MobileShipViewer({ onClose }: { onClose: () => void }) {
   const [plateSpec, setPlateSpec] = useState<import("@/components/brand/hero-rocket-3d").PlateSpec | null>(null);
   const [live, setLive] = useState(false);
   useEffect(() => {
-    import("@/components/brand/hero-rocket-3d").then((m) => setPlateSpec(m.PLATE_PORTRAIT));
+    // tablets and sideways phones show the whole photo (CSS: object-fit contain), so the 3D must use the same fit
+    const contain = window.matchMedia("(min-width: 640px), (orientation: landscape)").matches;
+    import("@/components/brand/hero-rocket-3d").then((m) => setPlateSpec({ ...m.PLATE_PORTRAIT, fit: contain ? "contain" : "cover" }));
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -182,7 +184,7 @@ function MobileShipViewer({ onClose }: { onClose: () => void }) {
       <div data-hero-stage className="ql-m-stage absolute inset-0">
         <PhonePlaza />
         {/* the ship flies back in from the top and lands on the pad (the hero's ship just launched away) */}
-        {plateSpec && <HeroRocket3D plate={plateSpec} compact onReady={() => window.setTimeout(() => setLive(true), 250)} />}
+        {plateSpec && <HeroRocket3D plate={plateSpec} compact onExit={onClose} onReady={() => window.setTimeout(() => setLive(true), 250)} />}
         {!live && (
           <p className="ql-m-pill absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/85 px-4 py-2 text-[13px] font-semibold text-[#07143F]/70 backdrop-blur">
             Incoming…

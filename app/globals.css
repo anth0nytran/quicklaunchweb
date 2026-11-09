@@ -1725,6 +1725,13 @@ section[data-zoom="1"] .ql-hero-copy {
   filter: blur(6px);
   pointer-events: none;
 }
+/* the sign's glass overlay is drawn in screen space, so it can't follow the zoomed plate: hide it */
+.ql-sign-rect {
+  transition: opacity 0.35s ease;
+}
+section[data-zoom="1"] .ql-sign-rect {
+  opacity: 0 !important;
+}
 section[data-zoom="1"] .ql-hero-plate {
   filter: saturate(0.9) brightness(1.02);
 }
@@ -1966,7 +1973,7 @@ section[data-zoom="1"] .ql-hero-plate {
 
 /* Tablets / narrow windows (640-1023px): show the whole vertical plaza (contain, not cover) so the
    sign, ship, pitch and buttons keep their places; the stone tone fills the sides. */
-@media (min-width: 640px) and (max-width: 1023px) {
+@media (min-width: 640px) and (max-width: 1023px), (max-width: 1023px) and (orientation: landscape) {
   .ql-hero { background: #d9d6d0; }
   .ql-hero > *,
   .ql-m-stage *,
