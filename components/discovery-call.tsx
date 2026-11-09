@@ -582,7 +582,7 @@ export function QualifierFlow({
             aria-describedby={`${uid}-help`}
             className={
               current.layout === "tiles"
-                ? `${inModal ? "mt-4 grid-cols-4 gap-1.5 sm:mt-6 sm:gap-2.5" : "mt-6 grid-cols-3 gap-2 sm:gap-2.5"} grid sm:grid-cols-5`
+                ? `${inModal ? "mt-4 gap-1.5 sm:mt-6 sm:gap-2.5" : "mt-6 gap-2 sm:gap-2.5"} grid grid-cols-3 sm:grid-cols-5`
                 : `${inModal ? "mt-4 gap-2 sm:mt-6 sm:gap-2.5" : "mt-6 gap-2.5"} grid`
             }
           >
@@ -595,7 +595,7 @@ export function QualifierFlow({
                     type="button"
                     aria-pressed={selected}
                     onClick={() => q.answer(current, option.value)}
-                    className={`flex ${inModal ? "min-h-[66px] gap-1 px-0.5 py-2 text-[11.5px] leading-[1.15] [overflow-wrap:anywhere] sm:text-[14px]" : "min-h-[84px] gap-2 py-3"} flex-col items-center justify-center rounded-xl border-2 px-1.5 text-center text-[13px] font-semibold sm:min-h-[92px] sm:text-[14px] leading-tight transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
+                    className={`flex ${inModal ? "min-h-[54px] gap-1 py-1.5 text-[13px] leading-[1.15]" : "min-h-[84px] gap-2 py-3"} flex-col items-center justify-center rounded-xl border-2 px-1.5 text-center text-[13px] font-semibold sm:min-h-[92px] sm:text-[14px] leading-tight transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
                       selected ? t.optionOn : t.option
                     } ${t.ring}`}
                   >
@@ -634,7 +634,7 @@ export function QualifierFlow({
             })}
           </div>
 
-          <div className={`${inModal ? "mt-3 sm:mt-4" : "mt-5"} flex min-h-[44px] items-center justify-between`}>
+          <div className={`${inModal ? `mt-3 sm:mt-4 ${q.step === 0 ? "hidden sm:flex" : "flex"}` : "mt-5 flex"} min-h-[44px] items-center justify-between`}>
             {q.step > 0 ? <BackButton t={t} onClick={q.back} /> : <span />}
             <span className={`text-[13px] ${t.meta}`}>One tap moves you on</span>
           </div>
@@ -764,11 +764,16 @@ export function QualifierFlow({
           </h3>
           <p className={`mt-2 flex items-start gap-2.5 text-[16px] ${t.help}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/home/anthony.webp" alt="Anthony Tran" width={32} height={32} loading="lazy" className="mt-0.5 h-8 w-8 shrink-0 rounded-full object-cover" />
+            <span className="mt-0.5 flex shrink-0 -space-x-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/home/anthony.webp" alt="Anthony Tran" width={32} height={32} loading="lazy" className="h-8 w-8 rounded-full object-cover ring-2 ring-white" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/home/ryan.webp" alt="Ryan Buesa" width={32} height={32} loading="lazy" className="h-8 w-8 rounded-full object-cover ring-2 ring-white" />
+            </span>
             <span>
               {q.booked
                 ? "Check your email for the details. Talk soon."
-                : "You talk to Anthony, not a sales team. We look at your trade and area and tell you straight if we can help."}
+                : "You talk with a real strategist from our team. We look at your trade and area and tell you straight if we can help."}
             </span>
           </p>
 

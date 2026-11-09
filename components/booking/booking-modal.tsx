@@ -70,8 +70,8 @@ export function BookingModal({
                   </div>
                 </div>
 
-                <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-6 pt-4 sm:px-6 sm:pb-16 sm:pt-10 lg:justify-center lg:py-12">
-                  <div className="mb-3 text-center sm:mb-8 lg:mb-10 lg:text-left">
+                <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-4 pt-3 sm:px-6 sm:pb-16 sm:pt-10 lg:justify-center lg:py-12">
+                  <div className="mb-2.5 text-center sm:mb-8 lg:mb-10 lg:text-left">
                     <Dialog.Title className="text-[22px] font-extrabold leading-tight tracking-[-0.03em] text-[#07143F] sm:text-[34px]">
                       {q.isComplete ? "Pick a time for your free call" : "Book your free strategy call"}
                     </Dialog.Title>
@@ -81,10 +81,13 @@ export function BookingModal({
                         : `${q.total} quick questions, then pick a time. Under a minute.`}
                     </Dialog.Description>
                     {/* phones: who you'll talk to, in one line (the full card shows on desktop) */}
-                    <div className="mt-3 flex items-center justify-center gap-2.5 lg:hidden">
-                      <Image src="/home/anthony.webp" alt="Anthony Tran, founder of QuickLaunchWeb" width={80} height={80} className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-[0_2px_8px_rgba(7,20,63,0.15)]" />
+                    <div className="mt-2 flex items-center justify-center gap-2.5 lg:hidden">
+                      <span className="flex -space-x-2.5">
+                        <Image src="/home/anthony.webp" alt="Anthony Tran, founder" width={80} height={80} className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-[0_2px_8px_rgba(7,20,63,0.15)]" />
+                        <Image src="/home/ryan.webp" alt="Ryan Buesa, growth strategist" width={80} height={80} className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-[0_2px_8px_rgba(7,20,63,0.15)]" />
+                      </span>
                       <p className="text-left text-[13px] leading-tight text-[#46516B]">
-                        <span className="block font-semibold text-[#07143F]">You talk to Anthony, the founder</span>
+                        <span className="block font-semibold text-[#07143F]">Talk to a real strategist</span>
                         Free, 15 min. No pressure.
                       </p>
                     </div>
@@ -94,14 +97,17 @@ export function BookingModal({
                     {/* Who you'll talk to + what you get. Sits beside the form on desktop, above it on phones. */}
                     <aside className="hidden rounded-2xl border border-[#E3E9F2] bg-white p-4 shadow-[0_1px_2px_rgba(7,20,63,0.04)] lg:sticky lg:top-24 lg:block lg:p-6">
                       <div className="flex items-center gap-4">
-                        <Image src="/home/anthony.webp" alt="Anthony Tran, founder of QuickLaunchWeb" width={128} height={128} className="h-16 w-16 shrink-0 rounded-full object-cover ring-[3px] ring-white shadow-[0_4px_14px_rgba(7,20,63,0.18)]" />
+                        <span className="flex shrink-0 -space-x-3">
+                          <Image src="/home/anthony.webp" alt="Anthony Tran, founder of QuickLaunchWeb" width={112} height={112} className="h-14 w-14 rounded-full object-cover ring-[3px] ring-white shadow-[0_4px_14px_rgba(7,20,63,0.18)]" />
+                          <Image src="/home/ryan.webp" alt="Ryan Buesa, growth strategist at QuickLaunchWeb" width={112} height={112} className="h-14 w-14 rounded-full object-cover ring-[3px] ring-white shadow-[0_4px_14px_rgba(7,20,63,0.18)]" />
+                        </span>
                         <div className="leading-tight">
-                          <p className="text-[16px] font-bold text-[#07143F]">Anthony Tran</p>
-                          <p className="text-[13px] text-[#46516B]"><span className="lg:hidden">Founder · you talk to me, not a sales team</span><span className="hidden lg:inline">Founder, QuickLaunchWeb</span></p>
+                          <p className="text-[16px] font-bold text-[#07143F]">Anthony &amp; Ryan</p>
+                          <p className="text-[13px] text-[#46516B]">Founder &amp; Growth Strategist</p>
                         </div>
                       </div>
                       <p className="mt-4 hidden text-[14.5px] leading-[1.55] text-[#46516B] lg:block">
-                        You talk to me, not a sales team. If we can&apos;t help, I&apos;ll tell you straight.
+                        A real strategist who knows your market, not a pitch. If we can&apos;t help, we&apos;ll tell you straight.
                       </p>
                       <p className="mt-5 hidden font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF] lg:block">
                         On the call

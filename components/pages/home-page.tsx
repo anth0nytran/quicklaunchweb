@@ -51,13 +51,19 @@ const services: { anim: string; title: string; body: string; href?: string }[] =
 // Why Us: each card answers a fear an owner has about agencies, in one line.
 // Why Us: local first (the #1 reason owners pick us), then the fears an owner has about agencies.
 const whyUs = [
-  { icon: "map-pin", anim: "local", title: "We're local", body: "We're in Houston. We meet you, film on your real jobs, and know which areas are worth your gas. Out of town? We fly out to film." },
+  { icon: "map-pin", anim: "local", title: "We're local", body: "Our founder was born and raised in Houston. We meet you, film on your real jobs, and know which areas are worth your gas. Out of town? We fly out to film." },
   { icon: "shield", anim: "exclusive", title: "Only one per trade per area", body: "Once we take your trade in your area, we turn your competitors away. Ask if your spot is open." },
   { icon: "target", anim: "bigger", title: "Better jobs, not just more leads", body: "We aim at clients like your best ones. Fewer tire kickers, more jobs worth your time." },
   { icon: "lock", anim: "own", title: "You own everything", body: "Your ad account, your card, your videos. They stay yours, even if you leave." },
 ];
 
 // Why It Works: side-by-side, one row per difference. Each row is a result the owner cares about.
+// The team block in Why Us (photos in /public/home).
+const team = [
+  { name: "Anthony Tran", role: "Founder", photo: "/home/anthony.webp" },
+  { name: "Ryan Buesa", role: "Growth Strategist", photo: "/home/ryan.webp" },
+];
+
 const compareRows: { most: string; ours: string }[] = [
   { most: "Agency in another state", ours: "Local team that comes to your job site" },
   { most: "Chase cheap leads", ours: "Go after more clients like your best ones" },
@@ -295,27 +301,31 @@ function HomeSections() {
               </li>
             ))}
           </ul>
-          {/* Founder: a real face behind the company (trust). Small, clean, official. */}
+          {/* The team: real faces behind the company (trust). Small, clean, official. */}
           <Reveal className="mx-auto mt-12 max-w-2xl">
-            <figure className="flex flex-col items-center gap-5 rounded-2xl border border-[#E5EDF6] bg-white px-6 py-6 text-center shadow-[0_10px_34px_-20px_rgba(7,20,63,0.25)] sm:flex-row sm:items-start sm:gap-6 sm:px-7 sm:text-left">
-              <Image
-                src="/home/anthony.webp"
-                alt="Anthony Tran, founder of QuickLaunchWeb"
-                width={144}
-                height={144}
-                loading="lazy"
-                className="h-[72px] w-[72px] shrink-0 rounded-full object-cover ring-[3px] ring-white shadow-[0_0_0_1px_#DCE6F2,0_6px_18px_rgba(7,20,63,0.18)]"
-              />
-              <div className="min-w-0">
-                <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0866FF]">Meet the founder</p>
-                <figcaption className="mt-1.5">
-                  <span className="block text-[18px] font-extrabold tracking-[-0.01em] text-[#07143F]">Anthony Tran</span>
-                  <span className="block text-[13.5px] text-[#46516B]">Founder, QuickLaunchWeb · Houston, TX</span>
-                </figcaption>
-                <blockquote className="mt-3 border-t border-[#EEF2F7] pt-3 text-[15.5px] leading-[1.55] text-[#07143F]">
-                  &ldquo;I&apos;m here in Houston. You talk to me on the call, not a sales team. If we can&apos;t help, I&apos;ll tell you straight.&rdquo;
-                </blockquote>
-              </div>
+            <figure className="rounded-2xl border border-[#E5EDF6] bg-white px-6 py-6 shadow-[0_10px_34px_-20px_rgba(7,20,63,0.25)] sm:px-8">
+              <p className="text-center font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0866FF]">Meet the team</p>
+              <ul className="mt-5 grid grid-cols-2 gap-4 sm:gap-6">
+                {team.map((m) => (
+                  <li key={m.name} className="flex flex-col items-center text-center sm:flex-row sm:gap-4 sm:text-left">
+                    <Image
+                      src={m.photo}
+                      alt={`${m.name}, ${m.role} at QuickLaunchWeb`}
+                      width={144}
+                      height={144}
+                      loading="lazy"
+                      className="h-16 w-16 shrink-0 rounded-full object-cover ring-[3px] ring-white shadow-[0_0_0_1px_#DCE6F2,0_6px_18px_rgba(7,20,63,0.18)] sm:h-[72px] sm:w-[72px]"
+                    />
+                    <div className="mt-2.5 min-w-0 sm:mt-0">
+                      <p className="text-[16px] font-extrabold leading-tight tracking-[-0.01em] text-[#07143F] sm:text-[17px]">{m.name}</p>
+                      <p className="mt-0.5 text-[13px] text-[#46516B]">{m.role}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <blockquote className="mt-5 border-t border-[#EEF2F7] pt-4 text-center text-[15.5px] leading-[1.55] text-[#07143F]">
+                Real people who know your market. If we can&apos;t help, we&apos;ll tell you straight.
+              </blockquote>
             </figure>
           </Reveal>
           <Reveal className="mt-8 flex flex-col items-center gap-3 text-center">
