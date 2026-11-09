@@ -22,8 +22,11 @@ export const homeServiceLogos = clientLogos.filter((logo) => !NOT_HOME_SERVICE.h
 const MARQUEE_CSS = `
 @keyframes ql-logo-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .ql-logo-track { display: flex; width: max-content; animation: ql-logo-scroll 60s linear infinite; }
-.ql-logo-marquee:hover .ql-logo-track { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .ql-logo-track { animation-duration: 180s; } }
+.ql-logo-marquee:hover .ql-logo-track, .ql-logo-marquee:focus-within .ql-logo-track { animation-play-state: paused; }
+/* Calm, consistent strip: grayscale at rest, full color on hover (per logo). */
+.ql-logo-item img { filter: grayscale(1); opacity: 0.6; transition: filter 300ms ease, opacity 300ms ease; }
+.ql-logo-item:hover img { filter: grayscale(0); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ql-logo-track { animation: none; } }
 `;
 
 export function ClientLogoGrid({ className = "" }: { className?: string }) {
@@ -46,7 +49,7 @@ export function ClientLogoGrid({ className = "" }: { className?: string }) {
             {homeServiceLogos.map((logo) => (
               <li
                 key={logo.alt}
-                className={`flex shrink-0 items-center justify-center ${logo.h || "h-[40px] md:h-[48px]"} ${logo.w}`}
+                className={`ql-logo-item flex shrink-0 items-center justify-center ${logo.h || "h-[40px] md:h-[48px]"} ${logo.w}`}
               >
                 <Image
                   src={logo.src}
@@ -94,7 +97,7 @@ export function ClientLogoWall({ className = "" }: { className?: string }) {
               height={logo.height}
               sizes="(min-width: 768px) 160px, 110px"
               unoptimized={logo.unoptimized}
-              className="h-auto max-h-full w-auto max-w-full object-contain"
+              className="h-auto max-h-full w-auto max-w-full object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
             />
           </div>
         </li>

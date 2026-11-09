@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { KIT_ICON_SVGS } from "@/lib/kitIconSvgs";
 
 // Light brand system (the redesign). Palette, type, and icons come from
 // website-assets/README-LLM.md; icons are the kit SVGs copied to /public/home/icons.
@@ -55,13 +57,76 @@ export function KitIcon({
   );
 }
 
+/**
+ * Kit icon that draws itself stroke by stroke when it scrolls into view (the
+ * "hand-drawn" look). Server HTML is fully drawn, so no-JS and reduced-motion
+ * visitors just see the icon; JS arms it (hides strokes) then draws on view.
+ * Data comes from lib/kitIconSvgs.ts (node tools/build-kit-icons.mjs).
+ */
+export function DrawIcon({
+  name,
+  className = "",
+  white = false,
+  delay = 0,
+}: {
+  name: string;
+  className?: string;
+  white?: boolean;
+  /** Seconds to wait before drawing (stagger icons in a row). */
+  delay?: number;
+}) {
+  const ref = useRef<SVGSVGElement>(null);
+  const [armed, setArmed] = useState(false);
+  const [drawn, setDrawn] = useState(false);
+  const icon = KIT_ICON_SVGS[name];
+  // Stable object: a new {__html} each render makes React rebuild the shapes,
+  // which skips the draw transition (they'd appear already drawn).
+  const html = useMemo(() => (icon ? { __html: icon.inner } : undefined), [icon]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setArmed(true);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        // Next frame, so the hidden (armed) state paints first and the draw transitions.
+        requestAnimationFrame(() => requestAnimationFrame(() => setDrawn(true)));
+      },
+      { rootMargin: "0px 0px -40px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  if (!icon) return <KitIcon name={name} white={white} className={className} />;
+
+  return (
+    <svg
+      ref={ref}
+      viewBox={icon.viewBox}
+      fill="none"
+      stroke={white ? "#FFFFFF" : "#0866FF"}
+      strokeWidth={1.7}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      className={`${armed ? "ql-draw-armed" : ""} ${drawn ? "is-drawn" : ""} ${className}`}
+      style={{ "--draw-delay": `${delay}s` } as React.CSSProperties}
+      dangerouslySetInnerHTML={html}
+    />
+  );
+}
+
 /** White icon in a 48px blue rounded tile (services). */
 export function IconTile({ name, className = "" }: { name: string; className?: string }) {
   return (
     <span
       className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#0866FF] p-2.5 shadow-[0_10px_20px_-10px_rgba(8,102,255,0.8)] ${className}`}
     >
-      <KitIcon name={name} white className="h-full w-full" />
+      <DrawIcon name={name} white className="h-full w-full" />
     </span>
   );
 }
@@ -70,7 +135,7 @@ export function IconTile({ name, className = "" }: { name: string; className?: s
 export function IconCircle({ name, className = "" }: { name: string; className?: string }) {
   return (
     <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#EFF8FF] p-3.5 ${className}`}>
-      <KitIcon name={name} className="h-full w-full" />
+      <DrawIcon name={name} className="h-full w-full" />
     </span>
   );
 }
@@ -86,10 +151,10 @@ export function Eyebrow({ children, className = "" }: { children: React.ReactNod
 export function CheckList({ items, className = "" }: { items: string[]; className?: string }) {
   return (
     <ul className={`space-y-2.5 ${className}`}>
-      {items.map((item) => (
+      {items.map((item, i) => (
         <li key={item} className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[#46516B]">
           <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0866FF]/10">
-            <KitIcon name="check" className="h-3.5 w-3.5" />
+            <DrawIcon name="check" delay={0.1 + i * 0.12} className="h-3.5 w-3.5" />
           </span>
           {item}
         </li>
@@ -109,7 +174,8 @@ export function Reveal({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      // Starts mostly visible: content never depends on the animation firing.
+      initial={{ opacity: 0.35, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}

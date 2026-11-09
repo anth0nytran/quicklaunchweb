@@ -16,7 +16,8 @@ const csp = [
   "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
   "img-src 'self' data: blob: https://images.unsplash.com https://www.facebook.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://api.web3forms.com https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vitals.vercel-analytics.com https://www.facebook.com https://graph.facebook.com https://connect.facebook.net",
+  // blob:/data: let the 3D hero (three.js GLTFLoader) read the model's embedded textures.
+  "connect-src 'self' blob: data: https://api.web3forms.com https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vitals.vercel-analytics.com https://www.facebook.com https://graph.facebook.com https://connect.facebook.net",
   "frame-src https://calendly.com https://*.calendly.com https://checkout.stripe.com https://billing.stripe.com https://js.stripe.com https://hooks.stripe.com https://facebook.com https://www.facebook.com https://*.facebook.com",
   "media-src 'self' https://d8j0ntlcm91z4.cloudfront.net",
   "object-src 'none'",

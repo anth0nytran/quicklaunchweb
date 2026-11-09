@@ -4,10 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { CloudBand } from "@/components/brand/flair";
+import { Parallax } from "@/components/brand/motion";
 import { useEventTracker } from "@/lib/analytics";
 import { BRAND_VARS, Backdrop, NAVY, KitIcon, focusRing, primaryBtn, container } from "@/components/brand/primitives";
 import { BookingContext, useBooking, type BookingContextValue } from "@/components/booking/booking-context";
@@ -193,8 +194,48 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
 }
 
 // =============================================================================
-// CTA band (blue, footer.png bottom right)
+// CTA band (blue, animated rocket scene bottom right)
 // =============================================================================
+
+/**
+ * Layered CTA art: rocket (flies in on view, then bobs and
+ * drifts up with scroll) → clouds (front). Decorative; reduced motion = static.
+ */
+function CtaRocketScene() {
+  const reduce = useReducedMotion();
+
+  return (
+    <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[360px] md:block lg:w-[460px]" aria-hidden="true">
+
+      <Parallax distance={-16} className="absolute bottom-[24%] right-[20%] w-[140px] lg:w-[165px]">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, x: -70, y: 70 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="ql-float">
+            <Image src="/home/rocket.png" alt="" width={1324} height={1106} sizes="185px" className="h-auto w-full" />
+          </div>
+        </motion.div>
+      </Parallax>
+
+      {/* Front clouds (same art as the hero's cloud band), faded in from the left so they never sit under the button. */}
+      <Image
+        src="/home/cloud-band.png"
+        alt=""
+        width={2400}
+        height={197}
+        sizes="800px"
+        className="absolute -bottom-1 right-0 h-auto w-[200%] max-w-none opacity-95"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 45%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 45%)",
+        }}
+      />
+    </div>
+  );
+}
 
 export function CtaBand({
   title = "Ready for More Calls and More Booked Jobs?",
@@ -211,14 +252,7 @@ export function CtaBand({
   const book = useBooking();
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-[#0753CF] via-[#0866FF] to-[#2b7bff]">
-      <Image
-        src="/home/footer.png"
-        alt=""
-        width={1400}
-        height={597}
-        sizes="420px"
-        className="pointer-events-none absolute bottom-0 right-0 hidden h-auto w-[340px] md:block lg:w-[420px]"
-      />
+      <CtaRocketScene />
       <div className={`${container} relative flex flex-col items-center gap-7 py-12 text-center sm:py-14 lg:flex-row lg:justify-between lg:text-left`}>
         <div>
           <h2 className="text-[26px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[32px]">{title}</h2>
@@ -234,7 +268,7 @@ export function CtaBand({
             <KitIcon name="arrow-right" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </button>
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-[13px] text-white/85">
-            {["100% Free", "No Pressure", "Houston Only"].map((item) => (
+            {["100% Free", "No Pressure", "Houston-Based"].map((item) => (
               <li key={item} className="flex items-center gap-1.5">
                 <KitIcon name="check" white className="h-3.5 w-3.5" />
                 {item}

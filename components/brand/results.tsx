@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { MediaSlot } from "@/components/brand/media-slot";
+import { SLOT_PREVIEW, STUDIO_REEL } from "@/lib/home-media";
 import { useBooking } from "@/components/brand/brand-shell";
 import { Eyebrow, KitIcon, Reveal, container, outlineBtn, sectionH2, sectionPad } from "@/components/brand/primitives";
 import { adTotals, costPerLead, featuredAdResults, formatUsd } from "@/lib/adResults";
@@ -104,7 +106,7 @@ export function ResultsSection({ id = "results" }: { id?: string }) {
   const book = useBooking();
   const quotes = socialClients.filter((c) => c.quote);
   return (
-    <section id={id} className={`scroll-mt-20 bg-[#EFF8FF] ${sectionPad}`}>
+    <section id={id} className={`scroll-mt-20 bg-gradient-to-b from-white via-[#EFF8FF] to-white ${sectionPad}`}>
       <div className={container}>
         <Reveal className="mx-auto max-w-3xl text-center">
           <Eyebrow>Our Clients</Eyebrow>
@@ -113,6 +115,8 @@ export function ResultsSection({ id = "results" }: { id?: string }) {
             Here are some of the businesses we help.
           </p>
         </Reveal>
+
+        <MediaSlot items={STUDIO_REEL} preview={SLOT_PREVIEW.studio} label="Client video" className="mt-10" columns={3} />
 
         <div className="mt-10 grid gap-6">
           <Reveal className="min-w-0">
@@ -183,7 +187,7 @@ export function ResultsStatCard() {
         ))}
       </ul>
       <p className="mt-5 border-t border-[#E5EDF6] pt-4 text-[13px] leading-[1.5] text-[#46516B]">
-        Houston only. One business per trade per area.
+        Based in Houston. One business per trade per area.
       </p>
     </div>
   );

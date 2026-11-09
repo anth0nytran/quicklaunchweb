@@ -1,18 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { DiscoveryCallSection } from "@/components/discovery-call";
 import { BrandShell, CtaBand, useBooking } from "@/components/brand/brand-shell";
 import { ResultsSection } from "@/components/brand/results";
 import { ClientLogoGrid } from "@/components/brand/client-logo-grid";
-import { HeroDashboard } from "@/components/brand/hero-dashboard";
-import { CloudBand, CloudCorner } from "@/components/brand/flair";
+import { HeroScene, HeroSceneMobile, signRect, useHero3D } from "@/components/brand/hero-art";
+import { HowItWorksCutaway } from "@/components/brand/how-it-works-cutaway";
+import { AnimatedIcon } from "@/components/brand/animated-icon";
 import {
   Backdrop,
   Eyebrow,
+  DrawIcon,
   IconCircle,
-  IconTile,
   KitIcon,
   Reveal,
   container,
@@ -36,26 +37,20 @@ import { usePageTracker, useEventTracker } from "@/lib/analytics";
 // Content
 // =============================================================================
 
-const heroChecks = ["Houston only", "One business per trade per area", "You own your ad account"];
+const heroChecks = ["Houston-based", "One business per trade per area", "You own your ad account"];
 
-const services: { icon: string; title: string; body: string; href?: string }[] = [
-  { icon: "video-camera", title: "Videos", body: "We film you on your real jobs." },
-  { icon: "ads", title: "Facebook & Instagram Ads", body: "We show your videos to Houston homeowners." },
-  { icon: "search", title: "Google", body: "Homeowners find you on Google and Maps.", href: "/services/web-design" },
-  { icon: "calendar", title: "Our Team Books Your Leads", body: "We call, check, and book the job for you." },
-  { icon: "phone-message", title: "Follow-Up Texts", body: "Every lead gets a text in 60 seconds." },
-  { icon: "website", title: "Website & CRM", body: "One place to see every lead and every job.", href: "/services/automations" },
-];
-
-const steps = [
-  { icon: "rocket", title: "We Set It Up", body: "Your ads, your texts, your calendar. We do it all." },
-  { icon: "video-camera", title: "We Film and Run Ads", body: "We film you on a job. Then your ads go live." },
-  { icon: "calendar", title: "Our Team Books the Jobs", body: "We text every lead. We call. We book it." },
-  { icon: "growth", title: "Every Monday, You See It", body: "Calls, jobs, and money made. On one page." },
+// anim: the animated 3D icon (public/icons3d/<anim>.mp4 + .webp)
+const services: { anim: string; title: string; body: string; href?: string }[] = [
+  { anim: "camera", title: "Videos", body: "We film you on your real jobs." },
+  { anim: "ads", title: "Facebook & Instagram Ads", body: "We show your videos to Houston homeowners." },
+  { anim: "google", title: "Google", body: "Homeowners find you on Google and Maps.", href: "/services/web-design" },
+  { anim: "booked", title: "Our Team Books Your Leads", body: "We call, check, and book the job for you." },
+  { anim: "texts", title: "Follow-Up Texts", body: "Every lead gets a text in 60 seconds." },
+  { anim: "website", title: "Website & CRM", body: "One place to see every lead and every job.", href: "/services/automations" },
 ];
 
 const whyUs = [
-  { icon: "map-pin", title: "Houston only", body: "We live here. We know which areas are worth your gas." },
+  { icon: "map-pin", title: "Houston-based", body: "We live here and know which areas are worth your gas. Out of town? We fly out to film." },
   { icon: "shield", title: "One business per trade per area", body: "We won't run ads for the guy down the street." },
   { icon: "lock", title: "You own your ad account", body: "Your ads. Your card. You see every dollar." },
   { icon: "target", title: "Built for bigger jobs", body: "We aim your ads at jobs worth your time." },
@@ -73,46 +68,90 @@ function HomeSections() {
   const { track } = useEventTracker();
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const hero3d = useHero3D();
+  // Desktop: place the hero copy onto the plate's glass sign (re-measured on resize).
+  const heroRef = useRef<HTMLElement>(null);
+  const [sign, setSign] = useState<ReturnType<typeof signRect> | null>(null);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const measure = () => {
+      if (!window.matchMedia("(min-width: 1024px)").matches) return setSign(null);
+      const r = el.getBoundingClientRect();
+      setSign(signRect(r.width, r.height));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <>
       {/* ===================== 1. HERO ===================== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] to-[#f7fbff] pb-16 pt-[104px] sm:pt-28 lg:pb-28 lg:pt-32">
-        <Backdrop variant="dots" />
-        <CloudBand className="opacity-60" />
-        <div className={`${container} relative z-10 grid items-center gap-10 md:grid-cols-[1fr_1fr] lg:grid-cols-[1.05fr_1fr] lg:gap-8 xl:grid-cols-[1.2fr_1fr]`}>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      {/* A place, not a picture with text on it: the plaza plate has a blank glass sign on the left and the
+          launch pad on the right. On desktop the headline is placed onto that sign (measured from the plate),
+          the buttons stand on the plaza in front of it, and the ship lands on the pad. Phones stack simply. */}
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden bg-white pb-10 pt-[104px] sm:pt-28 lg:h-[min(100vh,56vw)] lg:min-h-[600px] lg:pb-0 lg:pt-0"
+      >
+        <HeroScene mode={hero3d} />
+        <div className={`${container} relative z-10 lg:static lg:max-w-none lg:px-0`}>
+          {/* Fine scan lines across the sign's glass (desktop). */}
+          {sign && (
+            <div
+              aria-hidden="true"
+              className="ql-holo-scan ql-sign-flicker pointer-events-none absolute z-[9] shadow-[inset_0_0_60px_rgba(255,255,255,0.55),inset_0_0_24px_rgba(8,102,255,0.12)]"
+              style={{ left: sign.left, top: sign.top, width: sign.width, height: sign.height }}
+            />
+          )}
+          {/* On the glass sign (desktop) / top of the stack (phones). Real HTML for SEO. */}
+          <div
+            className={sign ? "ql-hero-copy ql-holo-text absolute z-10 flex flex-col justify-center" : ""}
+            style={sign ? { left: sign.left, top: sign.top, width: sign.width, height: sign.height, padding: `0 ${sign.width * 0.075}px` } : undefined}
           >
             {/* The eyebrow lives inside the H1 so the heading carries the target phrase
                 ("Houston marketing for home service businesses") without changing the look. */}
-            <h1 className="text-[40px] font-extrabold leading-[1.07] tracking-[-0.04em] sm:text-[50px] lg:text-[52px] xl:text-[56px] 2xl:text-[60px]">
-              <span className="mb-4 block text-[12px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]">
+            <h1
+              className="text-[36px] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#07143F] sm:text-[46px]"
+              style={sign ? { fontSize: Math.round(sign.width * 0.072) } : undefined}
+            >
+              <span
+                className="mb-3 block text-[11px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]"
+                style={sign ? { fontSize: Math.max(10, Math.round(sign.width * 0.02)) } : undefined}
+              >
                 Houston marketing for home service businesses
               </span>
-              More Calls. <br />
-              More Booked Jobs. <br />
-              <span className="text-[#0866FF]">More Money.</span>
+              {/* Rocket wordplay: launch / land, same promise (calls, booked jobs, money). */}
+              <span className="block">Launch More Calls.</span>
+              <span className="block">Land More Jobs.</span>
+              <span className="block text-[#0866FF]">Make More Money.</span>
             </h1>
-
-            <p className="mt-5 max-w-[34rem] text-[18px] leading-[1.55] text-[#46516B] sm:text-[19px]">
-              We film you on the job, run your ads, and our team books the jobs for you. Houston only.
+            <p
+              className="mt-4 max-w-[30rem] text-[17px] leading-[1.5] text-[#46516B] sm:text-[18px]"
+              style={sign ? { fontSize: Math.max(14, Math.round(sign.width * 0.0275)), maxWidth: "none" } : undefined}
+            >
+              We film your work, run your ads, and book the jobs for you.
             </p>
+          </div>
 
-            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
-              <button type="button" onClick={() => book("hero")} className={`${primaryBtn} px-7 py-4 text-[16px]`}>
+          {/* In front of the sign, on the plaza (desktop) / under the copy (phones). */}
+          <div
+            className={sign ? "ql-hero-copy ql-rise-in absolute z-10" : "mt-7"}
+            style={sign ? { left: sign.left + sign.width * 0.075, top: sign.top + sign.height * 1.13, width: sign.width * 0.85 } : undefined}
+          >
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button type="button" onClick={() => book("hero")} className={`${primaryBtn} whitespace-nowrap px-7 py-4 text-[16px]`}>
                 Book a Free Call
                 <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
-              <button type="button" onClick={() => scrollTo("results")} className={`${outlineBtn} px-7 py-4 text-[16px]`}>
+              <button type="button" onClick={() => scrollTo("results")} className={`${outlineBtn} whitespace-nowrap bg-white/85 px-7 py-4 text-[16px] backdrop-blur`}>
                 See Our Clients
                 <KitIcon name="arrow-right" className="h-4 w-4" />
               </button>
             </div>
-
-            <ul className="mt-7 flex flex-wrap gap-x-7 gap-y-3">
+            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2.5">
               {heroChecks.map((item) => (
                 <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[#46516B]">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0866FF]/10">
@@ -122,21 +161,13 @@ function HomeSections() {
                 </li>
               ))}
             </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto w-full max-w-[660px] xl:-mr-6 xl:w-[calc(100%+24px)] xl:max-w-none"
-          >
-            <HeroDashboard />
-          </motion.div>
+          </div>
+          <HeroSceneMobile />
         </div>
       </section>
 
       {/* ===================== TRUST LINE: client logos ===================== */}
-      <section className="border-y border-[#E5EDF6] bg-[#EFF8FF] py-9 sm:py-10" aria-label="Houston businesses we've helped">
+      <section className="bg-gradient-to-b from-[#F7FBFF] to-white py-9 sm:py-10" aria-label="Houston businesses we've helped">
         <div className={container}>
           <p className="text-center text-[11px] font-semibold uppercase tracking-[0.25em] text-[#46516B] sm:text-[12px]">
             Houston businesses we&apos;ve helped
@@ -148,7 +179,6 @@ function HomeSections() {
       {/* ===================== 2. WHAT WE DO ===================== */}
       <section id="services" className={`relative scroll-mt-20 overflow-hidden bg-white ${sectionPad}`}>
         <Backdrop variant="dots" />
-        <CloudCorner className="-right-12 top-16 hidden w-48 opacity-40 xl:block" />
         <div className={`${container} relative`}>
           <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>What We Do</Eyebrow>
@@ -162,7 +192,7 @@ function HomeSections() {
             {services.map((s, i) => {
               const inner = (
                 <>
-                  <IconTile name={s.icon} />
+                  <AnimatedIcon name={s.anim} size={76} offset={i * 0.8} className="-my-2 -ml-2" />
                   <div>
                     <h3 className="text-[19px] font-extrabold tracking-[-0.02em]">{s.title}</h3>
                     <p className="mt-1.5 text-[15px] leading-[1.55] text-[#46516B]">{s.body}</p>
@@ -209,7 +239,7 @@ function HomeSections() {
       </section>
 
       {/* ===================== 3. WHY IT WORKS ===================== */}
-      <section className={`relative overflow-hidden bg-[#EFF8FF] ${sectionPad}`}>
+      <section className={`relative overflow-hidden bg-gradient-to-b from-white via-[#EFF8FF] to-white ${sectionPad}`}>
         <Backdrop variant="glow" />
         <div className={`${container} relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14`}>
           <Reveal>
@@ -226,7 +256,7 @@ function HomeSections() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl border border-[#E5EDF6] bg-[#F7F9FC] p-6">
                 <p className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-[#46516B]">
-                  <KitIcon name="x-circle" className="h-5 w-5 opacity-60" />
+                  <DrawIcon name="x-circle" className="h-5 w-5 opacity-60" />
                   Most ads
                 </p>
                 <ul className="mt-4 space-y-3">
@@ -240,14 +270,14 @@ function HomeSections() {
               </div>
               <div className="rounded-xl border-2 border-[#0866FF]/40 bg-white p-6 shadow-[0_20px_50px_-24px_rgba(8,102,255,0.35)]">
                 <p className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-[#0866FF]">
-                  <KitIcon name="check-circle" className="h-5 w-5" />
+                  <DrawIcon name="check-circle" delay={0.2} className="h-5 w-5" />
                   Our ads
                 </p>
                 <ul className="mt-4 space-y-3">
-                  {ourAds.map((item) => (
+                  {ourAds.map((item, i) => (
                     <li key={item} className="flex items-start gap-3 text-[15px] font-medium leading-[1.5] text-[#07143F]">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0866FF]/10">
-                        <KitIcon name="check" className="h-3.5 w-3.5" />
+                        <DrawIcon name="check" delay={0.4 + i * 0.15} className="h-3.5 w-3.5" />
                       </span>
                       {item}
                     </li>
@@ -259,38 +289,8 @@ function HomeSections() {
         </div>
       </section>
 
-      {/* ===================== 4. HOW IT WORKS ===================== */}
-      <section id="how-it-works" className={`relative scroll-mt-20 overflow-hidden bg-white ${sectionPad}`}>
-        <Backdrop variant="dots" />
-        <div className={`${container} relative`}>
-          <Reveal className="text-center">
-            <Eyebrow>How It Works</Eyebrow>
-            <h2 className={`mt-3 ${sectionH2}`}>Four Simple Steps.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[16px] leading-[1.5] text-[#46516B] sm:text-[18px]">
-              About an hour of your time the first week. We do the rest.
-            </p>
-          </Reveal>
-
-          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {steps.map((step, i) => (
-              <li key={step.title} className="relative">
-                <Reveal delay={i * 0.07} className="flex items-start gap-4">
-                  <IconCircle name={step.icon} />
-                  <div className="lg:pr-6">
-                    <h3 className="text-[17px] font-bold">
-                      {i + 1}. {step.title}
-                    </h3>
-                    <p className="mt-1.5 text-[15px] leading-[1.5] text-[#46516B]">{step.body}</p>
-                  </div>
-                </Reveal>
-                {i < steps.length - 1 && (
-                  <KitIcon name="arrow-right" className="absolute -right-1 top-5 hidden h-5 w-5 lg:block" />
-                )}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* ===================== 4. HOW IT WORKS (the ship, step by step) ===================== */}
+      <HowItWorksCutaway />
 
       {/* ===================== 5. PROOF ===================== */}
       <ResultsSection />

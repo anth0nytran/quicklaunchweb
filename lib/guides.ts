@@ -4849,7 +4849,7 @@ const guides: Guide[] = [
     },
     ctaBottom: {
       title: "Want it done for you?",
-      description: "We film you on the job, run your ads, and our team books the estimates. Houston only.",
+      description: "We film you on the job, run your ads, and our team books the estimates. Based in Houston.",
       href: "/#book",
       label: "Book a Free Call",
     },
@@ -5032,7 +5032,7 @@ const guides: Guide[] = [
     },
     ctaBottom: {
       title: "Let's film you on a real job",
-      description: "About an hour of your time. We handle the filming, editing, and ads. Houston only.",
+      description: "About an hour of your time. We handle the filming, editing, and ads. Based in Houston.",
       href: "/#book",
       label: "Book a Free Call",
     },

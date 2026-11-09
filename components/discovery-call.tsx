@@ -20,18 +20,6 @@ export const DISCOVERY_CALENDLY_URL = "https://calendly.com/quicklaunchweb/15min
 // Qualifier questions live in lib/leadQualifier.ts (shared with /api/lead).
 type Question = QualifierQuestion;
 const QUESTIONS = QUALIFIER_QUESTIONS;
-/** Questions + the name/mobile step. */
-const TOTAL_STEPS = QUESTIONS.length + 1;
-
-/** Short, friendly line above each question after the first. Index = step. */
-const CHEERS = [
-  "",
-  "Great, thanks!",
-  "Got it. You're moving fast.",
-  "Halfway there.",
-  "Almost done.",
-  "Last tap. Then your info.",
-];
 
 /** Short pause so the tap shows as picked before the next screen. */
 const ADVANCE_DELAY_MS = 160;
@@ -460,29 +448,35 @@ function PrivacyLine({ className, linkClass }: { className: string; linkClass: s
   );
 }
 
-function Progress({ t, stepNumber, label }: { t: Theme; stepNumber: number; label?: string }) {
-  const pct = Math.round((stepNumber / TOTAL_STEPS) * 100);
+/** Three-stage stepper: Your business -> Your info -> Pick a time. */
+function Stepper({ t, light, stage }: { t: Theme; light: boolean; stage: 0 | 1 | 2 }) {
+  const labels = ["Your business", "Your info", "Pick a time"];
   return (
-    <div className="mb-5">
-      <div className={`flex items-center justify-between text-[13px] font-semibold ${t.meta}`}>
-        <span>{label ?? `Step ${stepNumber} of ${TOTAL_STEPS}`}</span>
-        <span aria-hidden="true">{pct}%</span>
-      </div>
-      <div
-        className={`mt-2 h-2 w-full overflow-hidden rounded-full ${t.track}`}
-        role="progressbar"
-        aria-label="Progress"
-        aria-valuemin={0}
-        aria-valuemax={TOTAL_STEPS}
-        aria-valuenow={stepNumber}
-        aria-valuetext={`Step ${stepNumber} of ${TOTAL_STEPS}`}
-      >
-        <div
-          className="h-full rounded-full bg-accent transition-[width] duration-300 ease-out motion-reduce:transition-none"
-          style={{ width: `${Math.max(pct, 6)}%` }}
-        />
-      </div>
-    </div>
+    <ol className="mb-6 flex items-center gap-2" aria-label="Booking steps">
+      {labels.map((label, i) => {
+        const done = i < stage;
+        const now = i === stage;
+        return (
+          <li key={label} className={`flex min-w-0 items-center gap-2 ${now ? "flex-1" : "sm:flex-1"}`} aria-current={now ? "step" : undefined}>
+            <span
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold transition-colors ${
+                done || now ? "bg-[#0866FF] text-white" : light ? "bg-slate-100 text-slate-400" : "bg-white/[0.08] text-white/40"
+              }`}
+            >
+              {done ? (
+                <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M2.5 6.2 5 8.5l4.5-5" />
+                </svg>
+              ) : (
+                i + 1
+              )}
+            </span>
+            <span className={`truncate text-[13px] font-semibold ${now ? t.h3 : `hidden sm:inline ${t.meta}`}`}>{label}</span>
+            {i < labels.length - 1 && <span className={`hidden h-px flex-1 sm:block ${light ? "bg-slate-200" : "bg-white/[0.1]"}`} aria-hidden="true" />}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -539,9 +533,9 @@ export function QualifierFlow({
       ? "You are booked. Check your email for the details."
       : "Thanks. Now pick a time on the calendar."
     : q.onContactStep
-      ? `Step ${TOTAL_STEPS} of ${TOTAL_STEPS}. Last step: your name and mobile number.`
+      ? "Your info: first name and mobile number."
       : current
-        ? `Step ${q.step + 1} of ${TOTAL_STEPS}. ${current.label}`
+        ? `Question ${q.step + 1} of ${q.total}. ${current.label}`
         : "";
 
   const inputCls = (invalid: boolean) =>
@@ -570,11 +564,11 @@ export function QualifierFlow({
       {/* ---- One question per screen ---- */}
       {!q.isComplete && !q.onContactStep && current && (
         <Surface light={light} className="p-5 sm:p-8">
-          <Progress t={t} stepNumber={q.step + 1} />
+          <Stepper t={t} light={light} stage={0} />
 
-          {q.step > 0 && CHEERS[q.step] && (
-            <p className={`mb-1.5 text-[15px] font-semibold ${t.cheer}`}>{CHEERS[q.step]}</p>
-          )}
+          <p className={`mb-1.5 text-[13px] font-semibold uppercase tracking-[0.12em] ${t.cheer}`}>
+            Question {q.step + 1} of {q.total}
+          </p>
           <h3 id={`${uid}-q`} ref={headingRef} tabIndex={-1} className={headingCls}>
             {current.label}
           </h3>
@@ -586,9 +580,30 @@ export function QualifierFlow({
             role="group"
             aria-labelledby={`${uid}-q`}
             aria-describedby={`${uid}-help`}
-            className="mt-6 grid gap-3 sm:grid-cols-2"
+            className={current.layout === "tiles" ? "mt-6 grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-2.5" : "mt-6 grid gap-2.5"}
           >
-            {current.options.map((option) => {
+            {current.layout === "tiles" &&
+              current.options.map((option) => {
+                const selected = q.answers[current.id] === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => q.answer(current, option.value)}
+                    className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-xl border-2 px-1.5 py-3 text-center text-[13px] font-semibold sm:min-h-[92px] sm:text-[14px] leading-tight transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
+                      selected ? t.optionOn : t.option
+                    } ${t.ring}`}
+                  >
+                    {option.icon && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={`/home/icons/${option.icon}.svg`} alt="" width={28} height={28} className="h-7 w-7" />
+                    )}
+                    {option.label}
+                  </button>
+                );
+              })}
+            {current.layout !== "tiles" && current.options.map((option) => {
               const selected = q.answers[current.id] === option.value;
               return (
                 <button
@@ -608,9 +623,7 @@ export function QualifierFlow({
                   </span>
                   <span className="flex-1">
                     {option.label}
-                    {option.note && (
-                      <span className={`ml-2 text-[13px] font-medium ${t.cheer}`}>{option.note}</span>
-                    )}
+                    {option.note && <span className={`block text-[13px] font-medium ${t.help}`}>{option.note}</span>}
                   </span>
                 </button>
               );
@@ -619,7 +632,7 @@ export function QualifierFlow({
 
           <div className="mt-5 flex min-h-[44px] items-center justify-between">
             {q.step > 0 ? <BackButton t={t} onClick={q.back} /> : <span />}
-            <span className={`text-[13px] ${t.meta}`}>Tap an answer to keep going</span>
+            <span className={`text-[13px] ${t.meta}`}>One tap moves you on</span>
           </div>
         </Surface>
       )}
@@ -627,15 +640,12 @@ export function QualifierFlow({
       {/* ---- Name + mobile (before the calendar, so no lead is lost) ---- */}
       {q.onContactStep && (
         <Surface light={light} className="p-5 sm:p-8">
-          <Progress t={t} stepNumber={TOTAL_STEPS} label={`Step ${TOTAL_STEPS} of ${TOTAL_STEPS} · Last one`} />
+          <Stepper t={t} light={light} stage={1} />
 
-          <p className={`mb-1.5 text-[15px] font-semibold ${t.cheer}`}>You did it! Just one more thing.</p>
           <h3 ref={headingRef} tabIndex={-1} className={headingCls}>
-            Last step: where should we text your call details?
+            Where should we send your call details?
           </h3>
-          <p className={`mt-2 text-[16px] ${t.help}`}>
-            We only use this for your call. Want texts too? Check the box below.
-          </p>
+          <p className={`mt-2 text-[16px] ${t.help}`}>Your confirmation and a reminder go to this number.</p>
 
           <form onSubmit={q.submitContact} noValidate className="relative mt-6 grid gap-5">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -725,12 +735,18 @@ export function QualifierFlow({
                 disabled={q.submitting}
                 className={`inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-[#0866FF] px-7 text-[17px] font-bold text-white shadow-[0_10px_25px_-10px_rgba(8,102,255,0.7)] transition-colors hover:bg-[#0753CF] disabled:opacity-60 sm:w-auto ${t.ring}`}
               >
-                {q.submitting ? "One sec..." : "Show Me the Calendar"}
+                {q.submitting ? "One sec..." : "Continue to Calendar"}
                 <span aria-hidden="true">&rarr;</span>
               </button>
             </div>
 
-            <PrivacyLine className={`text-center text-[13px] sm:text-right ${t.help}`} linkClass={t.link} />
+            <div className={`flex items-start justify-center gap-2 text-[13px] sm:justify-end ${t.help}`}>
+              <svg viewBox="0 0 24 24" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+              </svg>
+              <PrivacyLine className="text-left sm:text-right" linkClass={t.link} />
+            </div>
           </form>
         </Surface>
       )}
@@ -738,6 +754,7 @@ export function QualifierFlow({
       {/* ---- Calendar ---- */}
       {q.isComplete && (
         <Surface light={light} className="p-4 sm:p-6">
+          <Stepper t={t} light={light} stage={2} />
           <h3 ref={headingRef} tabIndex={-1} className={headingCls}>
             {q.booked ? "You're on the calendar!" : `Thanks${q.firstName.trim() ? `, ${q.firstName.trim()}` : ""}! Pick a time.`}
           </h3>

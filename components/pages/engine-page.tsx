@@ -41,7 +41,7 @@ function Sections() {
         secondary={{ label: "See What's Inside", href: "#inside" }}
       >
         <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3">
-          {["Houston only", "One business per trade per area", "Live in 7 days"].map((item) => (
+          {["Houston-based", "One business per trade per area", "Live in 7 days"].map((item) => (
             <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[#46516B]">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0866FF]/10">
                 <KitIcon name="check" className="h-3.5 w-3.5" />

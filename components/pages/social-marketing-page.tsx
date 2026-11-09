@@ -75,7 +75,7 @@ const navLinks = [
 const heroBullets = [
   "We film your videos and run your Facebook ads.",
   "You call the leads. Or we call them for you.",
-  "Houston only. One business per trade.",
+  "Houston-based. One business per trade per area.",
 ];
 
 const problems = [
