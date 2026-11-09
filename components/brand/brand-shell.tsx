@@ -439,8 +439,11 @@ export function PageHero({
   primaryLabel = "Book a Free Call",
   secondary,
   children,
+  eyebrowInHeading = false,
 }: {
   eyebrow: string;
+  /** Render the eyebrow inside the H1 (same look) so the heading carries the page's target phrase. */
+  eyebrowInHeading?: boolean;
   title: React.ReactNode;
   intro?: React.ReactNode;
   art?: React.ReactNode;
@@ -460,10 +463,21 @@ export function PageHero({
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className={art ? "" : "max-w-3xl"}
         >
-          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">{eyebrow}</p>
-          <h1 className="mt-4 text-[36px] font-extrabold leading-[1.08] tracking-[-0.04em] sm:text-[46px] lg:text-[52px]">
-            {title}
-          </h1>
+          {eyebrowInHeading ? (
+            <h1 className="text-[36px] font-extrabold leading-[1.08] tracking-[-0.04em] sm:text-[46px] lg:text-[52px]">
+              <span className="mb-4 block text-[12px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]">
+                {eyebrow}
+              </span>
+              {title}
+            </h1>
+          ) : (
+            <>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#46516B]">{eyebrow}</p>
+              <h1 className="mt-4 text-[36px] font-extrabold leading-[1.08] tracking-[-0.04em] sm:text-[46px] lg:text-[52px]">
+                {title}
+              </h1>
+            </>
+          )}
           {intro && <div className="mt-5 max-w-[36rem] text-[17px] leading-[1.55] text-[#46516B] sm:text-[18px]">{intro}</div>}
           <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
             <button type="button" onClick={() => book("hero")} className={`${primaryBtn} px-7 py-4 text-[16px]`}>

@@ -4617,6 +4617,558 @@ const guides: Guide[] = [
       },
     ],
   },
+  /* ───────────────────────────────────────────────────────────
+     NOV 2026 COMPARISON BATCH: "X vs Y" pages (the format that got the
+     Wix guide cited by AI). Short answer → sourced stats → table → who
+     should pick which. Stats verified at the source on 2026-11-08.
+     No client lead counts / CPL / spend (owner's rule, Nov 2026).
+     ─────────────────────────────────────────────────────────── */
+  {
+    slug: "facebook-ads-vs-google-local-services-ads-contractors",
+    type: "support",
+    title: "Facebook Ads vs. Google Local Services Ads: Which Is Better for Houston Contractors?",
+    description:
+      "Google Local Services Ads catch people already searching for help right now, so they fit urgent work like plumbing, A/C repair, and leaks. Facebook and Instagram ads reach homeowners before they search, so they fit bigger planned jobs like roofs, remodels, fences, and paint. The 2025 national average for a Facebook lead in home improvement was $41.26 (WordStream). Many Houston contractors do best with both: Google for urgent calls, Facebook video for bigger jobs.",
+    metaTitle: "Facebook Ads vs Google Local Services Ads for Contractors (2026)",
+    metaDescription:
+      "Facebook ads vs Google Local Services Ads for Houston contractors: 2025 cost-per-lead benchmarks, how each one charges you, a side-by-side table, and which trades should pick which.",
+    kicker: "Comparison Guide",
+    category: "Paid Ads",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    stats: [
+      { label: "Avg FB lead, home improvement", value: "$41.26" },
+      { label: "Avg FB lead, all industries", value: "$27.66" },
+      { label: "Houston metro population", value: "7.9M" },
+    ],
+    heroBullets: [
+      "Real 2025 Facebook lead cost numbers, with sources.",
+      "How each ad type charges you.",
+      "A side-by-side table.",
+      "Which trades should start where.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "numbers", label: "The numbers" },
+      { id: "comparison", label: "Comparison table" },
+      { id: "google-wins", label: "When Google wins" },
+      { id: "facebook-wins", label: "When Facebook wins" },
+      { id: "both", label: "Running both" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Not sure which fits your trade?",
+      description: "Tell us your trade and your part of Houston. We will tell you straight where we would start.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want a straight answer for your business?",
+      description: "On a 15-minute call we look at your trade, your job size, and your area, and tell you which ads make sense.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Google LSA = people searching right now.",
+        "Facebook = people who will need you soon.",
+        "Judge both by cost per booked job.",
+      ],
+      benchmarks: [
+        "Home improvement FB lead: $41.26",
+        "Home improvement FB lead form rate: 5.22%",
+        "All-industry FB lead: $27.66",
+      ],
+      benchmarkNote: "WordStream / LocaliQ Facebook Ads Benchmarks 2025, leads campaigns, U.S. averages.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Are Facebook ads or Google Local Services Ads better for contractors?",
+        paragraphs: [
+          "It depends on the job.",
+          "Google Local Services Ads (LSA) show up at the top of Google when someone searches for help, like \"A/C repair near me.\" That person needs help today. Google charges you for each valid lead, not each click.",
+          "Facebook and Instagram ads show up while people scroll. They are not searching yet. But a good video of you on a real job makes them remember you when they need a roof, a fence, or a remodel.",
+          "Urgent jobs lean Google. Big planned jobs lean Facebook. Lots of Houston contractors use both.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "numbers",
+        title: "What do Facebook leads cost for home service businesses?",
+        columns: ["Facebook lead ads (2025, U.S. average)", "Home & Home Improvement", "All industries"],
+        rows: [
+          ["Cost per lead", "$41.26", "$27.66"],
+          ["Lead form rate (conversion rate)", "5.22%", "7.72%"],
+          ["Click-through rate", "1.94%", "2.59%"],
+          ["Cost per click", "$2.23", "n/a"],
+        ],
+        note: "Source: WordStream / LocaliQ, Facebook Ads Benchmarks 2025 (leads campaigns). The all-industry cost per lead rose about 21% from $22.87 the year before. These are national averages. Your cost in Houston depends on your trade, your area, your ads, and the season.",
+      },
+      {
+        kind: "table",
+        id: "comparison",
+        title: "Facebook ads vs. Google Local Services Ads",
+        columns: ["Factor", "Google Local Services Ads", "Facebook & Instagram ads"],
+        rows: [
+          ["Who sees it", "People searching for your service right now", "Homeowners in your area while they scroll"],
+          ["What you pay for", "Each valid lead (a call, message, or booking)", "People seeing your ad (you set a daily budget)"],
+          ["Bad leads", "Google can credit low-quality leads back", "You pay either way, so your form has to filter"],
+          ["Best for", "Emergency and repair work", "Bigger, planned jobs"],
+          ["Setup", "Google screens your business (license, insurance, background for many trades)", "Ad account, video or photos, and a lead form"],
+          ["What sells", "Reviews, rating, and how fast you answer", "Video of you and your work"],
+          ["Room on screen", "Only a few pros show at once", "Lots of room, but you have to stop the scroll"],
+          ["Builds your name", "A little", "A lot. People see your face again and again"],
+          ["Biggest risk", "Missed calls and slow replies", "Weak ads or slow follow-up"],
+        ],
+        note: "LSA billing per Google's Local Services Ads help center (\"How leads work\" and \"lead credits\" articles, 2026).",
+      },
+      {
+        kind: "checklist",
+        id: "google-wins",
+        title: "When Google Local Services Ads make more sense",
+        items: [
+          { title: "Your jobs are urgent", detail: "Leaks, no A/C in a Houston August, no heat in a freeze. People search and call the first good name." },
+          { title: "You can answer every call fast", detail: "Missed calls are missed money, and they can hurt how often you show." },
+          { title: "You already have lots of good reviews", detail: "Reviews and rating help decide who shows up first." },
+          { title: "You can pass the screening", detail: "Google checks your business before you can run in many trades." },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "facebook-wins",
+        title: "When Facebook and Instagram ads make more sense",
+        items: [
+          { title: "Your jobs are big and planned", detail: "Roofs, remodels, fences, paint, pools, insulation. People think about these for weeks. Video helps them pick you." },
+          { title: "You want bigger tickets", detail: "You can aim ads at the parts of Houston where jobs are worth your drive." },
+          { title: "You will be on camera, or let your crew be", detail: "85% of people say a video has convinced them to buy (Wyzowl, 2026). A real video of you builds trust a search ad cannot." },
+          { title: "You want leads that are only yours", detail: "The homeowner filled out your form after seeing your face. It is not shared with other pros." },
+        ],
+      },
+      {
+        kind: "text",
+        id: "both",
+        title: "Should a contractor run both?",
+        paragraphs: [
+          "Often, yes. They do different jobs.",
+          "Google catches the person who needs help today. Facebook makes sure you are the name they already know before they ever search.",
+          "If you can only pick one, pick the one that fits your biggest money jobs. Add the other once the first one works and you can handle more calls.",
+          "Whichever you run, follow-up decides it. A lead that waits an hour for a call often books someone else.",
+          "Houston is a big market. The metro had about 7.9 million people in 2025 and added more residents than any other U.S. metro that year (U.S. Census Bureau). There is room to pick the areas and jobs you want most.",
+        ],
+        links: [
+          {
+            context: "See how we run",
+            label: "Facebook ads for Houston contractors",
+            href: "/services/facebook-ads",
+            suffix: "with real video and fast follow-up.",
+          },
+          {
+            context: "Setting a budget? Read",
+            label: "how much a contractor should spend on ads",
+            href: "/guides/how-much-should-a-contractor-spend-on-ads",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "How much does a Facebook lead cost for a contractor?",
+            a: "The 2025 U.S. average for Home & Home Improvement lead ads was $41.26 per lead, per WordStream / LocaliQ. Real costs swing a lot by trade, area, season, and how good the ad is.",
+          },
+          {
+            q: "How do Google Local Services Ads charge you?",
+            a: "You pay for each valid lead, like a call or message, not for clicks. Google says it can credit leads it finds to be low quality.",
+          },
+          {
+            q: "Which is cheaper, Facebook or Google?",
+            a: "It changes by trade and season. A cheap lead that never books is not cheap. Compare cost per booked job and how big the jobs are.",
+          },
+          {
+            q: "What about regular Google Ads?",
+            a: "Regular Google search ads are pay per click and give you more control, but take more work to run well. Many home service companies start with LSA and add search ads later.",
+          },
+          {
+            q: "Which is better for roofers in Houston?",
+            a: "Roofing is a big, planned job most of the year, so Facebook video often fits well. After a hail or wind storm, urgent searches jump, so Google can help too.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/shared-leads-vs-exclusive-leads-contractors", label: "Shared Leads vs. Exclusive Leads", tag: "Leads" },
+          { href: "/guides/facebook-ads-for-roofers-houston", label: "Facebook Ads for Roofers in Houston", tag: "Ads" },
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/services/facebook-ads", label: "Facebook Ads for Houston Contractors", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "marketing-agency-vs-in-house-vs-diy-home-service",
+    type: "support",
+    title: "Marketing Agency vs. In-House Hire vs. Doing It Yourself: What's Best for a Home Service Business?",
+    description:
+      "Doing your own marketing costs the least money but the most time, and it is hard to film, run ads, and call leads back while you run jobs. An in-house marketer gives you control but costs a full salary, and one person rarely does video, ads, and follow-up well. A done-for-you agency costs a monthly fee plus ad spend, but you get a full team working in days. Pick based on your free time, your budget, and how much one extra job is worth to you.",
+    metaTitle: "Marketing Agency vs In-House vs DIY for Home Service Businesses",
+    metaDescription:
+      "Should a contractor hire a marketing agency, hire a marketer, or do it themselves? Costs, time, a side-by-side table, and a simple way to decide.",
+    kicker: "Comparison Guide",
+    category: "Marketing Budget",
+    updated: "Nov 2026",
+    readTime: "7 min read",
+    heroBullets: [
+      "What each option really costs you.",
+      "A side-by-side table.",
+      "Who should pick which.",
+      "A 2-minute way to decide.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "comparison", label: "Comparison table" },
+      { id: "diy", label: "When DIY works" },
+      { id: "in-house", label: "When to hire" },
+      { id: "agency", label: "When an agency wins" },
+      { id: "decide", label: "How to decide" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Weighing your options?",
+      description: "We will tell you honestly if an agency makes sense for you yet, or if you should keep doing it yourself.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Want it done for you?",
+      description: "We film you on the job, run your ads, and our team books the estimates. Houston only.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "DIY costs time, not money.",
+        "One hire rarely covers video, ads, and calls.",
+        "Ask any agency who owns the ad account.",
+      ],
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Should a contractor hire an agency, hire a marketer, or do it themselves?",
+        paragraphs: [
+          "If you are just starting and money is tight, do it yourself.",
+          "If you are big enough to keep one person busy full time, and you know what good marketing looks like, hire in-house.",
+          "If you want video, ads, and lead follow-up working in the next few weeks, and your jobs are worth a few thousand dollars or more, a done-for-you agency is usually the fastest path.",
+          "The real question is not cost. It is what your time is worth, and what one more booked job is worth.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "comparison",
+        title: "Agency vs. in-house vs. DIY",
+        columns: ["Factor", "Do it yourself", "Hire in-house", "Done-for-you agency"],
+        rows: [
+          ["Monthly cost (not counting ad spend)", "$0 to a few hundred for tools", "A full salary plus taxes, benefits, and tools", "A monthly fee"],
+          ["Your time each week", "10+ hours", "A few hours to manage them", "About an hour, plus time on camera"],
+          ["Video", "Your phone, when you have time", "Only if they can film and edit", "Filmed and edited for you"],
+          ["Running ads", "You learn as you go", "Depends on the person", "A team that runs ads every day"],
+          ["Calling leads back", "You, between jobs", "Maybe, if it is in the job", "Can be done for you"],
+          ["How fast it starts", "Weeks to months", "Months to hire and train", "Days to a few weeks"],
+          ["If it stops working", "You figure it out", "Hard to replace a hire", "Switch or cancel per your terms"],
+          ["Who owns the ad account", "You", "You", "Should be you. Ask."],
+        ],
+        note: "Ad spend is a separate number in every option. It goes to Meta or Google, not to the person running it.",
+      },
+      {
+        kind: "checklist",
+        id: "diy",
+        title: "When doing it yourself makes sense",
+        items: [
+          { title: "Money is very tight", detail: "You can only afford ad money right now. Any marketing beats none." },
+          { title: "You have slow weeks", detail: "You have real time to learn ads, film, and edit." },
+          { title: "Your jobs are small", detail: "If each job is worth a few hundred dollars, a big monthly fee is hard to earn back." },
+          { title: "You like it", detail: "Some owners enjoy filming and testing ads. If that is you, go for it." },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "in-house",
+        title: "When hiring someone in-house makes sense",
+        items: [
+          { title: "You have several crews or locations", detail: "There is enough work to keep one person busy every week." },
+          { title: "You know what good marketing looks like", detail: "You can train and manage a marketer, and spot bad work." },
+          { title: "You want daily content", detail: "Someone on site every day can film a lot." },
+          { title: "You can wait", detail: "Hiring and training takes months before it pays off." },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "agency",
+        title: "When a done-for-you agency wins",
+        items: [
+          { title: "Your jobs are big", detail: "Roofs, remodels, HVAC systems, fences. One extra job a month can cover the fee." },
+          { title: "You are busy on jobs", detail: "You do not have 10 hours a week to film, edit, run ads, and call leads." },
+          { title: "You want it working fast", detail: "A team that has done it before can be live in days, not months." },
+          { title: "Leads slip through the cracks", detail: "If nobody calls leads back fast, a team that follows up for you pays off quickly." },
+        ],
+      },
+      {
+        kind: "text",
+        id: "decide",
+        title: "A simple way to decide",
+        paragraphs: [
+          "Write down what an average job is worth to you after costs.",
+          "Then ask: how many extra jobs a month would pay for each option?",
+          "If one or two extra jobs cover an agency fee, the math usually works. If it takes ten, do it yourself for now and come back later.",
+          "Whatever you pick, track booked jobs and revenue. Not likes. Not clicks.",
+        ],
+        list: [
+          "Know your average job value.",
+          "Be honest about your free hours each week.",
+          "Keep the ad account in your name.",
+          "Judge by booked jobs, not lead counts.",
+        ],
+        links: [
+          {
+            context: "Comparing agencies? Use",
+            label: "our 12 questions to ask a Houston marketing agency",
+            href: "/guides/how-to-choose-a-marketing-agency-houston",
+          },
+          {
+            context: "See what done-for-you looks like in",
+            label: "the Houston Growth Engine",
+            href: "/houston-growth-engine",
+          },
+        ],
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Is a marketing agency worth it for a contractor?",
+            a: "It is when your jobs are big enough that one or two extra jobs a month cover the fee, and the agency tracks booked jobs, not just leads.",
+          },
+          {
+            q: "How much does a marketing agency cost for a home service business?",
+            a: "Fees vary a lot by what is included. Ask for two separate numbers: the agency fee, and the ad money you pay to Facebook or Google directly.",
+          },
+          {
+            q: "Can I run Facebook ads myself?",
+            a: "Yes. Use a real lead campaign, not boosted posts. Use real video of your work, aim at homeowners near you, and call every lead back within minutes.",
+          },
+          {
+            q: "Should I hire a marketer or an agency first?",
+            a: "Most small home service companies start with DIY or an agency. A full-time hire makes more sense once you have several crews and steady work to keep them busy.",
+          },
+          {
+            q: "Do I lose my ads if I leave an agency?",
+            a: "Not if the ad account is in your business name. Ask before you sign.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/how-to-choose-a-marketing-agency-houston", label: "How to Choose a Marketing Agency in Houston", tag: "Agency" },
+          { href: "/guides/how-much-should-a-contractor-spend-on-ads", label: "How Much Should a Contractor Spend on Ads?", tag: "Budget" },
+          { href: "/guides/wix-vs-hiring-someone-to-build-website", label: "Wix vs Hiring Someone for a Website", tag: "Website" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "real-video-vs-ai-stock-video-ads-contractors",
+    type: "support",
+    title: "Real Job-Site Video vs. AI or Stock Video Ads: What Works Better for Contractors?",
+    description:
+      "For most contractors, real video of the owner and crew on a real job works better than AI avatars or stock footage. Homeowners are letting you into their house, so they want to see who will show up. 85% of people say a video has convinced them to buy, and 63% would rather learn about a service from a short video than any other way (Wyzowl, 2026). AI and stock video are cheaper and faster, but they cannot prove you do good work. Lead with real video and use AI for editing and captions.",
+    metaTitle: "Real Video vs AI or Stock Video Ads for Contractors (2026)",
+    metaDescription:
+      "Should contractors use real job-site video, AI avatar video, or stock footage in ads? 2026 video stats, a side-by-side table, and what homeowners trust.",
+    kicker: "Comparison Guide",
+    category: "Video",
+    updated: "Nov 2026",
+    readTime: "6 min read",
+    stats: [
+      { label: "Convinced to buy by a video", value: "85%" },
+      { label: "Prefer a short video to learn", value: "63%" },
+      { label: "Prefer a sales call", value: "5%" },
+    ],
+    heroBullets: [
+      "Real 2026 video stats, with sources.",
+      "Real video vs. AI vs. stock footage.",
+      "Where AI tools do help.",
+      "What to film first.",
+    ],
+    jumpLinks: [
+      { id: "short-answer", label: "Short answer" },
+      { id: "numbers", label: "The numbers" },
+      { id: "comparison", label: "Comparison table" },
+      { id: "why-real", label: "Why real video wins" },
+      { id: "ai-helps", label: "Where AI helps" },
+      { id: "faqs", label: "FAQs" },
+      { id: "related", label: "Related" },
+    ],
+    ctaTop: {
+      eyebrow: "Want real video without the hassle?",
+      description: "We come to your Houston job sites, film you and your crew, and turn it into ads.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    ctaBottom: {
+      title: "Let's film you on a real job",
+      description: "About an hour of your time. We handle the filming, editing, and ads. Houston only.",
+      href: "/#book",
+      label: "Book a Free Call",
+    },
+    aside: {
+      takeaways: [
+        "Homeowners hire people they trust.",
+        "Real video shows who will show up.",
+        "Use AI to edit, not to pretend.",
+      ],
+      benchmarks: [
+        "85% convinced to buy by a video",
+        "63% prefer a short video to learn",
+        "12% prefer an article, 5% a sales call",
+      ],
+      benchmarkNote: "Wyzowl State of Video Marketing 2026, survey of 266 consumers, late 2025.",
+    },
+    sections: [
+      {
+        kind: "text",
+        id: "short-answer",
+        title: "Is real video or AI video better for contractor ads?",
+        paragraphs: [
+          "Real video, for most contractors.",
+          "A homeowner is about to let a stranger work on their house. They want to see who that is.",
+          "A short clip of you on a real Houston job, explaining what you did, does something an AI actor cannot. It proves you are real and you know your stuff.",
+          "AI and stock video still have a place. Just not as the face of your business.",
+        ],
+      },
+      {
+        kind: "table",
+        id: "numbers",
+        title: "How do people want to learn about a service?",
+        columns: ["How they'd most like to learn", "Share of consumers"],
+        rows: [
+          ["Watch a short video", "63%"],
+          ["Read an article", "12%"],
+          ["View an infographic", "7%"],
+          ["Sales call", "5%"],
+          ["Read an ebook or manual", "4%"],
+          ["Webinar", "4%"],
+        ],
+        note: "Source: Wyzowl, State of Video Marketing 2026 (266 consumers surveyed, late 2025). The same survey found 85% of people say a video has convinced them to buy a product or service.",
+      },
+      {
+        kind: "table",
+        id: "comparison",
+        title: "Real video vs. AI video vs. stock footage",
+        columns: ["Factor", "Real job-site video", "AI avatar video", "Stock footage"],
+        rows: [
+          ["Builds trust", "High. It is you and your work", "Low to medium", "Low"],
+          ["Proves your quality", "Yes, shows real jobs", "No", "No"],
+          ["Cost to make", "Medium. Someone has to film", "Low", "Low"],
+          ["Speed to make", "Days", "Minutes", "Minutes"],
+          ["Looks like competitors", "No. Nobody else has your jobs", "Often. Same avatars everywhere", "Often. Same clips everywhere"],
+          ["Local feel", "Real Houston homes and streets", "Generic", "Generic, sometimes not even Texas"],
+          ["Owner time needed", "About an hour per shoot", "None", "None"],
+          ["Best use", "Main ads and your profile", "Quick tests and explainers", "Filler shots"],
+        ],
+      },
+      {
+        kind: "text",
+        id: "why-real",
+        title: "Why real video works better for home services",
+        paragraphs: [
+          "People hire who they trust. Seeing your face, your truck, and your crew builds trust before you ever knock on the door.",
+          "Real jobs are proof. A before and after on a real roof says more than any claim.",
+          "It is hard to copy. Any competitor can buy the same AI avatar or stock clip. No one else has your jobs.",
+          "It does not need to be fancy. Phone video from the job often beats a polished commercial, as long as the sound is clear and it has captions.",
+        ],
+        list: [
+          "Owner intro: who you are and why you do it right.",
+          "Job walkthrough: what was wrong and how you fixed it.",
+          "Before and after.",
+          "A happy customer on camera.",
+          "Quick answers to questions homeowners always ask.",
+        ],
+        links: [
+          {
+            context: "Need shot ideas? Read",
+            label: "what to film on the job",
+            href: "/guides/on-the-job-video-for-contractors",
+          },
+        ],
+      },
+      {
+        kind: "checklist",
+        id: "ai-helps",
+        title: "Where AI and stock video do help",
+        items: [
+          { title: "Editing and captions", detail: "AI tools cut editing time and add captions, which matter because many people watch on mute." },
+          { title: "More versions", detail: "Try different openers and lengths from the same real footage." },
+          { title: "Filler shots", detail: "A quick stock clip of a storm or a hot Houston day can set the scene." },
+          { title: "Testing ideas", detail: "Test a message cheaply, then film the winner for real." },
+        ],
+        note: "Some platforms label AI-made content. An ad that passes off a fake person as your real team can hurt trust if people find out.",
+      },
+      {
+        kind: "faq",
+        id: "faqs",
+        title: "FAQs",
+        items: [
+          {
+            q: "Do video ads work for contractors?",
+            a: "They can. In Wyzowl's 2026 survey, 85% of people said a video had convinced them to buy, and 63% said a short video is how they most like to learn about a product or service.",
+          },
+          {
+            q: "Do I have to be on camera for my ads to work?",
+            a: "No, but it helps a lot. If you do not want to be on camera, film your crew and your work, or use real job photos.",
+          },
+          {
+            q: "Are AI video ads bad for contractors?",
+            a: "Not bad, just weaker as your main ad. Use AI for editing and testing. Use real video to build trust.",
+          },
+          {
+            q: "Is phone video good enough for ads?",
+            a: "Often, yes. Clear sound, good light, and captions matter more than a fancy camera.",
+          },
+          {
+            q: "Who films real video for Houston contractors?",
+            a: "You can film it yourself, hire a local videographer, or use an agency that films and also runs the ads. QuickLaunchWeb is a Houston team that does the filming, the Facebook and Instagram ads, and the lead follow-up.",
+          },
+        ],
+      },
+      {
+        kind: "related",
+        id: "related",
+        title: "Related guides",
+        items: [
+          { href: "/guides/on-the-job-video-for-contractors", label: "What to Film: On-the-Job Video for Contractors", tag: "Video" },
+          { href: "/guides/facebook-ads-vs-google-local-services-ads-contractors", label: "Facebook Ads vs. Google Local Services Ads", tag: "Ads" },
+          { href: "/services/video-production", label: "Video Marketing for Houston Contractors", tag: "Service" },
+          { href: "/houston-growth-engine", label: "The Houston Growth Engine", tag: "Service" },
+        ],
+      },
+    ],
+  },
 ];
 
 export const pillarGuides = guides.filter((guide) => guide.type === "pillar");

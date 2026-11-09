@@ -8,6 +8,7 @@ import { QUALIFIER_QUESTIONS, normalizeUsPhone, type QualifierQuestion } from "@
 import { FORM_PRIVACY_LINE, LEGAL_LINKS, SMS_CONSENT_TEXT } from "@/lib/legal";
 import { getAdConsent } from "@/lib/consent";
 import { useBookingContext, useRegisterBookingSource } from "@/components/booking/booking-context";
+import { BOOKED_PATH, savePendingBooking, scheduleEventId } from "@/lib/bookedCall";
 
 const InlineWidget = dynamic(
   () => import("react-calendly").then((m) => m.InlineWidget),
@@ -238,29 +239,58 @@ export function useQualifier(source: string, listen = true) {
     setContactDone(true);
   };
 
-  // Calendly posts a message when the booking lands.
+  // Calendly posts a message when the booking lands. We hand off to the
+  // /call-booked thank-you page, which fires the conversion exactly once
+  // (see lib/bookedCall.ts). bookedRef stops a duplicate postMessage.
+  const bookedRef = useRef(false);
   useEffect(() => {
     if (!listen) return;
     const onMessage = (e: MessageEvent) => {
+      if (e.origin !== "https://calendly.com") return;
       if (e?.data?.event !== "calendly.event_scheduled") return;
+      if (bookedRef.current) return;
+      bookedRef.current = true;
       setBooked(true);
-      track("discovery_call_booked", {
-        event_category: "conversion",
-        event_label: "calendly_scheduled",
+
+      const inviteeUri: unknown = e.data?.payload?.invitee?.uri;
+      const id = typeof inviteeUri === "string" && inviteeUri ? inviteeUri : createEventId("booking");
+      const saved = savePendingBooking({
+        id,
+        firstName: firstName.trim() || undefined,
         trade: answers.trade,
         revenue: answers.revenue,
+        source,
+        ts: Date.now(),
       });
-      const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-      if (typeof fbq === "function") {
-        fbq("track", "Schedule", {
-          content_name: "free_call",
-          content_type: "appointment",
+
+      if (!saved) {
+        // Storage blocked: fire here once instead, then still show the thank-you page.
+        track("discovery_call_booked", {
+          event_category: "conversion",
+          event_label: "calendly_scheduled",
+          trade: answers.trade,
+          revenue: answers.revenue,
         });
+        const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+        if (typeof fbq === "function") {
+          fbq(
+            "track",
+            "Schedule",
+            { content_name: "free_call", content_type: "appointment" },
+            { eventID: scheduleEventId(id) }
+          );
+        }
       }
+
+      // Short pause so Calendly's own confirmation flashes, then go.
+      const name = firstName.trim();
+      window.setTimeout(() => {
+        window.location.assign(name ? `${BOOKED_PATH}?n=${encodeURIComponent(name)}` : BOOKED_PATH);
+      }, 600);
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [listen, answers.trade, answers.revenue, track]);
+  }, [listen, answers.trade, answers.revenue, firstName, source, track]);
 
   const calendlyUtm = useMemo(
     () => ({

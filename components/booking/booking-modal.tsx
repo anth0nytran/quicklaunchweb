@@ -77,7 +77,7 @@ export function BookingModal({
                     </Dialog.Title>
                     <Dialog.Description className="mx-auto mt-2 max-w-md text-[16px] text-[#46516B] sm:text-[17px]">
                       {q.isComplete
-                        ? "15 minutes with Anthony. No pressure."
+                        ? "15 minutes with Anthony. You'll see the ads your competitors are running and the job math for your trade. No pressure."
                         : `${q.total} quick taps, then pick a time. About 1 minute.`}
                     </Dialog.Description>
                   </div>

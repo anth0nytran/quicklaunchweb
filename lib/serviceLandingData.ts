@@ -33,7 +33,7 @@ export const facebookAdsLanding: ServiceLanding = {
   trackerName: "QuickLaunchWeb - Facebook Ads for Contractors (Houston)",
   metaTitle: "Facebook Ads for Contractors in Houston | QuickLaunchWeb",
   metaDescription:
-    "Facebook and Instagram ads for Houston home service businesses. We make the ads, run them, and can call your leads and book the estimate. Real lead costs from real Houston accounts.",
+    "Facebook and Instagram ads for Houston home service businesses. We film real video of your jobs, run the ads in your own account, and our team can call your leads and book the estimate.",
   keywords: [
     "facebook ads for contractors",
     "facebook ads agency houston",
@@ -128,11 +128,11 @@ export const facebookAdsLanding: ServiceLanding = {
   faqs: [
     {
       q: "Do Facebook ads work for contractors?",
-      a: "Yes, when they are run as lead campaigns with real photos or video of your work, shown to homeowners in your area, and followed up on fast. Across the Houston home service accounts we manage, Facebook and Instagram ads have brought in over 300 tracked leads, and that is before counting the people who called or messaged.",
+      a: "Yes, when they are run as lead campaigns with real photos or video of your work, shown to homeowners in your area, and followed up on fast. The ads that work best show the real owner and crew on a real Houston job, because homeowners hire people they trust.",
     },
     {
       q: "How much does a Facebook lead cost for a contractor in Houston?",
-      a: "In the Houston accounts we run, it has ranged from about $29 to about $119 per lead, depending on the trade. Insulation and fencing sit at the low end. Painting and roofing cost more per lead, but each job is worth a lot more too.",
+      a: "It depends on the trade, the area, and the ad. Smaller jobs like insulation or fencing usually cost less per lead. Bigger jobs like roofing, painting, and remodeling cost more per lead, but each job is worth a lot more. That is why we judge ads by cost per booked job, not cost per lead.",
     },
     {
       q: "How much should I spend on Facebook ads?",

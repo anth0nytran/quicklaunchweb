@@ -24,7 +24,8 @@ function Sections() {
   return (
     <>
       <PageHero
-        eyebrow="The Houston Growth Engine"
+        eyebrow="Done-for-you video ads for Houston home services"
+        eyebrowInHeading
         title={
           <>
             More Calls. More Booked Jobs. <span className="text-[#0866FF]">More Money.</span>

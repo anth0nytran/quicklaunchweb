@@ -86,9 +86,12 @@ function HomeSections() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Eyebrow className="!text-[#46516B]">For Houston home service businesses</Eyebrow>
-
-            <h1 className="mt-4 text-[40px] font-extrabold leading-[1.07] tracking-[-0.04em] sm:text-[50px] lg:text-[52px] xl:text-[56px] 2xl:text-[60px]">
+            {/* The eyebrow lives inside the H1 so the heading carries the target phrase
+                ("Houston marketing for home service businesses") without changing the look. */}
+            <h1 className="text-[40px] font-extrabold leading-[1.07] tracking-[-0.04em] sm:text-[50px] lg:text-[52px] xl:text-[56px] 2xl:text-[60px]">
+              <span className="mb-4 block text-[12px] font-semibold uppercase leading-normal tracking-[0.2em] text-[#46516B]">
+                Houston marketing for home service businesses
+              </span>
               More Calls. <br />
               More Booked Jobs. <br />
               <span className="text-[#0866FF]">More Money.</span>

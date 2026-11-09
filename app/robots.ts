@@ -7,6 +7,7 @@ const privatePaths = [
   '/cancel',
   '/demo',
   '/instagram/booked',
+  '/call-booked',
   '/sms-consent',
 ];
 
