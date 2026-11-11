@@ -123,7 +123,7 @@ const nextSteps = [
   },
   {
     icon: "calendar",
-    title: "15 minutes with Anthony",
+    title: "30 minutes with our team",
     body: "We look at your trade and your part of Houston and tell you straight if we can help. No pressure.",
   },
 ];

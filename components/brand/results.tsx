@@ -150,7 +150,7 @@ export function ResultsSection({ id = "results" }: { id?: string }) {
                   onClick={() => book("results")}
                   className={`${outlineBtn} mx-auto !border-[#0866FF] px-6 py-3.5 text-[16px]`}
                 >
-                  Book a Free Call
+                  Get My Free Ad Plan
                   <KitIcon name="arrow-right" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>

@@ -70,6 +70,8 @@ export async function POST(req: NextRequest) {
   }
 
   const smsConsent = body.smsConsent === true;
+  // optional free text from the contact step ("biggest headache with getting jobs")
+  const headache = str(body.headache, 400);
   const eventIdIn = str(body.eventId, 100);
   const eventId = EVENT_ID_RE.test(eventIdIn)
     ? eventIdIn
@@ -99,7 +101,8 @@ export async function POST(req: NextRequest) {
     phone: `+1${phone}`,
     sms_consent: smsConsent,
     sms_consent_text: smsConsent ? SMS_CONSENT_TEXT : "",
-    offer: "Free Call",
+    offer: "Free Local Ad Plan",
+    headache,
     source: pageSource,
     page_url: eventSourceUrl,
     submitted_at: submittedAt,
@@ -163,7 +166,8 @@ export async function POST(req: NextRequest) {
         lead_source: pageSource,
         trade: answers.trade,
         area: answers.area,
-        revenue: answers.revenue,
+        goal: answers.goal,
+        ad_budget: answers.ad_budget,
       },
     },
   ]).then((result) => {

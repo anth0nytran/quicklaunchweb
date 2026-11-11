@@ -15,7 +15,7 @@ const InlineWidget = dynamic(
   { ssr: false }
 );
 
-export const DISCOVERY_CALENDLY_URL = "https://calendly.com/quicklaunchweb/15min";
+export const DISCOVERY_CALENDLY_URL = "https://calendly.com/schedule-qlweb/30min";
 
 // Qualifier questions live in lib/leadQualifier.ts (shared with /api/lead).
 type Question = QualifierQuestion;
@@ -63,6 +63,7 @@ export function useQualifier(source: string, listen = true) {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [smsConsent, setSmsConsent] = useState(false);
+  const [headache, setHeadache] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formError, setFormError] = useState("");
   const [errorField, setErrorField] = useState<"" | "firstName" | "phone">("");
@@ -202,6 +203,7 @@ export function useQualifier(source: string, listen = true) {
             firstName: name,
             phone: digits,
             smsConsent: smsConsent === true,
+            headache: headache.trim() || undefined,
             adConsent: getAdConsent(),
             answers,
             source,
@@ -246,7 +248,7 @@ export function useQualifier(source: string, listen = true) {
         id,
         firstName: firstName.trim() || undefined,
         trade: answers.trade,
-        revenue: answers.revenue,
+        revenue: answers.ad_budget,
         source,
         ts: Date.now(),
       });
@@ -257,7 +259,7 @@ export function useQualifier(source: string, listen = true) {
           event_category: "conversion",
           event_label: "calendly_scheduled",
           trade: answers.trade,
-          revenue: answers.revenue,
+          revenue: answers.ad_budget,
         });
         const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
         if (typeof fbq === "function") {
@@ -278,17 +280,15 @@ export function useQualifier(source: string, listen = true) {
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [listen, answers.trade, answers.revenue, firstName, source, track]);
+  }, [listen, answers.trade, answers.ad_budget, firstName, source, track]);
 
   const calendlyUtm = useMemo(
     () => ({
       utmSource: source,
       utmMedium: "discovery_qualifier",
       utmCampaign: answers.trade || "home_services",
-      utmContent: [answers.area, answers.source, answers.spend, answers.job_size, answers.revenue]
-        .filter(Boolean)
-        .join("|"),
-      utmTerm: answers.bottleneck || "",
+      utmContent: [answers.area, answers.goal, answers.lead_source, answers.ad_budget].filter(Boolean).join("|"),
+      utmTerm: "",
     }),
     [answers, source]
   );
@@ -341,6 +341,8 @@ export function useQualifier(source: string, listen = true) {
       }
     },
     setSmsConsent,
+    headache,
+    setHeadache,
     setHoneypot,
     track,
   };
@@ -647,7 +649,7 @@ export function QualifierFlow({
           <Stepper t={t} light={light} stage={1} />
 
           <h3 ref={headingRef} tabIndex={-1} className={headingCls}>
-            Where should we send your call details?
+            Where should we send your plan?
           </h3>
           <p className={`mt-2 text-[16px] ${t.help}`}>Your confirmation and a reminder go to this number.</p>
 
@@ -694,6 +696,23 @@ export function QualifierFlow({
                   className={inputCls(q.errorField === "phone")}
                 />
               </div>
+            </div>
+
+            {/* Optional: the serious ones tell us their pain, so the plan (and the call) starts there */}
+            <div className="grid gap-1.5">
+              <label htmlFor={`${uid}-headache`} className={`text-[15px] font-bold ${t.h3}`}>
+                Biggest headache with getting jobs right now? <span className={`font-normal ${t.help}`}>(optional)</span>
+              </label>
+              <textarea
+                id={`${uid}-headache`}
+                name="headache"
+                rows={2}
+                maxLength={400}
+                value={q.headache}
+                onChange={(e) => q.setHeadache(e.target.value)}
+                placeholder="Like: leads don't pick up, slow in winter, too many small jobs"
+                className={`${inputCls(false)} min-h-[72px] resize-none py-3 text-[16px]`}
+              />
             </div>
 
             {/* Honeypot: hidden from people, bots fill it in. */}
@@ -801,8 +820,10 @@ export function QualifierFlow({
               pageSettings={{
                 hideGdprBanner: true,
                 ...t.calendly,
-                hideEventTypeDetails: false,
-                hideLandingPageDetails: false,
+                // our popup already says who, what, and how long: hide Calendly's repeat header so the
+                // calendar feels like part of the site and the time slots sit higher on phones
+                hideEventTypeDetails: true,
+                hideLandingPageDetails: true,
               }}
             />
           </div>

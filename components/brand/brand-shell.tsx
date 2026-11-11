@@ -36,7 +36,7 @@ const mainLinks: (NavLink & { match: (path: string) => boolean; homeAnchor?: str
 ];
 
 // =============================================================================
-// Booking — every "Book a Free Call" goes through here
+// Booking — every "Get My Free Ad Plan" goes through here
 // =============================================================================
 
 // useBooking() (re-exported above) returns book(location), which opens the
@@ -135,7 +135,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
             onClick={() => onBook("header")}
             className={`${primaryBtn} hidden whitespace-nowrap px-5 py-3 text-[15px] sm:inline-flex`}
           >
-            Book a Free Call
+            Get My Free Ad Plan
             <KitIcon name="arrow-right" white className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
           <button
@@ -182,7 +182,7 @@ function SiteHeader({ onBook }: { onBook: (location: string) => void }) {
                 }}
                 className={`${primaryBtn} mt-5 px-5 py-4 text-base`}
               >
-                Book a Free Call
+                Get My Free Ad Plan
                 <KitIcon name="arrow-right" white className="h-4 w-4" />
               </button>
             </div>
@@ -238,9 +238,9 @@ function CtaRocketScene() {
 
 export function CtaBand({
   title = "Ready for More Calls and More Booked Jobs?",
-  subtitle = "Book a free call. We'll tell you straight if we can help.",
+  subtitle = "A free, full audit of your market: your competitors' ads, where your best jobs are, and 3 ads written for you.",
   location = "cta_band",
-  buttonLabel = "Book a Free Call",
+  buttonLabel = "Get My Free Ad Plan",
 }: {
   title?: string;
   subtitle?: string;
@@ -292,7 +292,7 @@ export function BrandShell({
   children: React.ReactNode;
   /** Used in analytics events. Defaults to the current path. */
   pagePath?: string;
-  /** Show the floating "Book a Free Call" button on phones. */
+  /** Show the floating "Get My Free Ad Plan" button on phones. */
   stickyCta?: boolean;
 }) {
   const pathname = usePathname() || "/";
@@ -317,7 +317,7 @@ export function BrandShell({
   const book = useCallback(
     (location: string) => {
       track("cta_click", {
-        cta_text: "Book a Free Call",
+        cta_text: "Get My Free Ad Plan",
         cta_location: location,
         page_path: path,
         event_category: "engagement",
@@ -444,7 +444,7 @@ export function BrandShell({
                   onClick={() => book("mobile_sticky")}
                   className={`${primaryBtn} pointer-events-auto w-auto px-6 py-3 text-[15px] shadow-[0_12px_30px_-10px_rgba(8,102,255,0.6)]`}
                 >
-                  Book a Free Call
+                  Get My Free Ad Plan
                   <KitIcon name="arrow-right" white className="h-4 w-4" />
                 </button>
               </motion.div>
@@ -469,7 +469,7 @@ export function PageHero({
   title,
   intro,
   art,
-  primaryLabel = "Book a Free Call",
+  primaryLabel = "Get My Free Ad Plan",
   secondary,
   children,
   eyebrowInHeading = false,
@@ -512,15 +512,15 @@ export function PageHero({
             </>
           )}
           {intro && <div className="mt-5 max-w-[36rem] text-[17px] leading-[1.55] text-[#46516B] sm:text-[18px]">{intro}</div>}
-          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
-            <button type="button" onClick={() => book("hero")} className={`${primaryBtn} px-7 py-4 text-[16px]`}>
+          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">
+            <button type="button" onClick={() => book("hero")} className={`${primaryBtn} whitespace-nowrap px-7 py-4 text-[16px]`}>
               {primaryLabel}
               <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </button>
             {secondary && (
               <Link
                 href={secondary.href}
-                className={`group inline-flex items-center justify-center gap-2.5 rounded-xl border-2 border-[#0866FF]/30 bg-white px-7 py-4 text-[16px] font-bold text-[#0866FF] transition-all hover:border-[#0866FF] hover:bg-[#EFF8FF] ${focusRing}`}
+                className={`group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-xl border-2 border-[#0866FF]/30 bg-white px-7 py-4 text-[16px] font-bold text-[#0866FF] transition-all hover:border-[#0866FF] hover:bg-[#EFF8FF] ${focusRing}`}
               >
                 {secondary.label}
                 <KitIcon name="play" className="h-4 w-4" />

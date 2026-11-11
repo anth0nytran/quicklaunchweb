@@ -23,6 +23,8 @@ export function BookingModal({
   onCloseAutoFocus: (e: Event) => void;
 }) {
   const q = qualifier;
+  // Side offers (AI Search & SEO / web design pages) keep a plain strategy call; everything else is the flagship plan.
+  const side = /ai_search|seo|web_design/i.test(q.source);
   const panelRef = useRef<HTMLDivElement>(null);
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -73,12 +75,14 @@ export function BookingModal({
                 <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-4 pt-3 sm:px-6 sm:pb-16 sm:pt-10 lg:justify-center lg:py-12">
                   <div className="mb-2.5 text-center sm:mb-8 lg:mb-10 lg:text-left">
                     <Dialog.Title className="text-[22px] font-extrabold leading-tight tracking-[-0.03em] text-[#07143F] sm:text-[34px]">
-                      {q.isComplete ? "Pick a time for your free call" : "Book your free strategy call"}
+                      {q.isComplete ? (side ? "Pick a time for your free call" : "Pick a time for your plan call") : side ? "Book your free strategy call" : "Get your free local ad plan"}
                     </Dialog.Title>
                     <Dialog.Description className="mx-auto mt-2 hidden max-w-md text-[17px] text-[#46516B] sm:block lg:mx-0">
                       {q.isComplete
-                        ? "15 minutes. Pick whatever time works for you."
-                        : `${q.total} quick questions, then pick a time. Under a minute.`}
+                        ? side
+                          ? "30 minutes. Pick any time that works."
+                          : "30 minutes. We walk you through your plan. Pick any time that works."
+                        : `${q.total} quick taps, then pick a time. Takes under a minute.`}
                     </Dialog.Description>
                     {/* phones: who you'll talk to, in one line (the full card shows on desktop) */}
                     <div className="mt-2 flex items-center justify-center gap-2.5 lg:hidden">
@@ -88,7 +92,7 @@ export function BookingModal({
                       </span>
                       <p className="text-left text-[13px] leading-tight text-[#46516B]">
                         <span className="block font-semibold text-[#07143F]">Talk to a real strategist</span>
-                        Free, 15 min. No pressure.
+                        Free plan. 30 min. No pressure.
                       </p>
                     </div>
                   </div>
@@ -110,14 +114,18 @@ export function BookingModal({
                         A real strategist who knows your market, not a pitch. If we can&apos;t help, we&apos;ll tell you straight.
                       </p>
                       <p className="mt-5 hidden font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0866FF] lg:block">
-                        On the call
+                        {side ? "On the call" : "Your free plan"}
                       </p>
                       <ul className="mt-2 hidden space-y-2.5 lg:block">
-                        {[
-                          "The ads your competitors are running",
-                          "The job math for your trade and area",
-                          "A plan for your first ads",
-                        ].map((item) => (
+                        {(side
+                          ? ["Where you stand on Google, Maps, and AI search", "What your top competitors are doing", "Which package fits, if any"]
+                          : [
+                              "Your competitors' ads on Facebook, Instagram, and Google",
+                              "A map of where your best jobs come from",
+                              "Your job math, and which ads fit your budget",
+                              "Your first 3 ads, written and ready to film",
+                            ]
+                        ).map((item) => (
                           <li key={item} className="flex items-start gap-2 text-[14px] text-[#07143F]">
                             <KitIcon name="check" className="mt-0.5 h-4 w-4 shrink-0" />
                             {item}
@@ -125,7 +133,7 @@ export function BookingModal({
                         ))}
                       </ul>
                       <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[#EEF2F7] pt-3 text-[13px] text-[#46516B] lg:mt-4 lg:pt-4">
-                        {["Free, 15 min", "No pressure", "Houston-based"].map((item) => (
+                        {["Yours to keep", "30 min", "No pressure"].map((item) => (
                           <li key={item} className="flex items-center gap-1.5">
                             <KitIcon name="check" className="h-3.5 w-3.5" />
                             {item}

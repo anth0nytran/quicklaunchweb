@@ -372,7 +372,7 @@ export default function SocialMarketingPage() {
 
   const goToBooking = (location: string) => {
     track("cta_click", {
-      cta_text: "Book a Free Call",
+      cta_text: "Get My Free Ad Plan",
       cta_location: location,
       event_category: "engagement",
       event_label: `${location}_cta`,
@@ -382,7 +382,7 @@ export default function SocialMarketingPage() {
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden font-sans">
-      <Navigation links={navLinks} ctaLabel="Book a Free Call" ctaHref="#book" />
+      <Navigation links={navLinks} ctaLabel="Get My Free Ad Plan" ctaHref="#book" />
 
       <main className="flex-1">
         {/* ===================== HERO ===================== */}
@@ -455,7 +455,7 @@ export default function SocialMarketingPage() {
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
                 className="group w-full text-base sm:w-auto md:px-8 md:py-4"
               >
-                Book a Free Call
+                Get My Free Ad Plan
               </GlassButton>
               <GlassButton
                 variant="ghost"
@@ -479,7 +479,7 @@ export default function SocialMarketingPage() {
               className="mt-5 text-[13px] text-white/60 sm:text-sm"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
             >
-              15 minutes. We tell you if we can help. That is it.
+              30 minutes. You get your free plan. That is it.
             </motion.p>
           </motion.div>
 
@@ -788,7 +788,7 @@ export default function SocialMarketingPage() {
                 icon={<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
                 className="group"
               >
-                Book a Free Call
+                Get My Free Ad Plan
               </GlassButton>
             </div>
           </div>
@@ -811,7 +811,7 @@ export default function SocialMarketingPage() {
               onClick={() => goToBooking("mobile_sticky")}
               className="pointer-events-auto group flex items-center gap-2 rounded-full border border-white/[0.15] bg-black/60 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_-5px_var(--color-accent)] backdrop-blur-md transition-all ease-smooth active:scale-95"
             >
-              Book a Free Call
+              Get My Free Ad Plan
               <ArrowRightIcon className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" />
             </button>
           </motion.div>

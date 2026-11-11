@@ -378,7 +378,7 @@ const defaultPageCopy = {
     "Short, useful guides on getting more calls, ranking higher, and building a business people trust.",
   faqHeading: "Questions Before You Start",
   footerDescription:
-    "Book a free 15-minute call. We'll show you where you stand on Google, Maps, and AI search, and what we'd fix first.",
+    "Book a free 30-minute call. We'll show you where you stand on Google, Maps, and AI search, and what we'd fix first.",
   footerTagline: "Show up when Houston searches for what you do.",
 };
 
@@ -1228,8 +1228,8 @@ export default function WebServicePage() {
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <BookButton location="hero" className={`${primaryBtn} px-7 py-4 text-[16px]`}>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <BookButton location="hero" className={`${primaryBtn} whitespace-nowrap px-7 py-4 text-[16px]`}>
                 Book a Free Call
                 <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </BookButton>
@@ -1250,7 +1250,7 @@ export default function WebServicePage() {
               </button>
             </div>
             <p className="mt-5 text-[14px] text-[#46516B]">
-              Free 15-minute call. No obligation.{" "}
+              Free 30-minute call. No obligation.{" "}
               <a
                 href="#work"
                 onClick={(e) => {

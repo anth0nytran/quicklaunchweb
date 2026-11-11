@@ -1,14 +1,15 @@
 // FAQ for the home page and the Houston Growth Engine page.
 // Keep answers at a 3rd-grade reading level: short words, short lines.
-// No price, no guarantee, no made-up numbers. Each one also feeds FAQPage
+// No price, no made-up numbers. The guarantee is booked estimates with NO number on the
+// site (set on the call by trade; see components/brand/guarantee.tsx). Each one also feeds FAQPage
 // structured data.
 
 export type SocialFaq = { q: string; a: string };
 
 export const socialFaqs: SocialFaq[] = [
   {
-    q: "What happens on the free call?",
-    a: "We look at your trade and your part of Houston. We show you what the guys getting jobs from video ads are doing. We do the math with your job size. That math is a guess, not a promise.\n\nThen we ask one thing: want us to do it for you? If not, no hard feelings.",
+    q: "What do I get in the free ad plan?",
+    a: "A full audit of your market, built for your trade and your area:\n\n1. The ads your competitors are running on Facebook, Instagram, and Google.\n2. A map of where your best jobs come from.\n3. Your job math, and which ads fit your trade and budget: Facebook, Instagram, Google, or a mix.\n4. Your first 3 ads, written and ready to film.\n\nIt takes 30 minutes on a call. The plan is yours to keep, with us or without us.",
   },
   {
     q: "How much should I spend on ads?",
@@ -28,23 +29,27 @@ export const socialFaqs: SocialFaq[] = [
   },
   {
     q: "Is the ad money included?",
-    a: "No. Ad money goes to Facebook on your own card. You own the ad account. You see every dollar.",
+    a: "No. Ad money goes to Facebook or Google on your own card. You own the ad accounts. You see every dollar.",
   },
   {
     q: "How fast do I get leads?",
     a: "Ads can bring leads the first week. The first month is for tuning. Anyone who promises a flood of jobs in week one is lying.",
   },
   {
+    q: "Do you guarantee results?",
+    a: "Yes. We guarantee booked estimates, not just leads. On your free plan call, we set your number based on your trade. Don't hit it in 90 days? We keep working for free until you do.\n\nWe can promise it because our team does the booking. You just approve your ads within 48 hours, let our team handle the leads, keep time open on your calendar, and keep the ad budget we agree on for the full 90 days.",
+  },
+  {
     q: "Am I stuck in a contract?",
-    a: "We ask for 90 days. That is how long it takes to film, test, and let the ads learn. After that, it is month to month.",
+    a: "No. Pay for 90 days up front and we waive the setup fee. Or go month to month with a setup fee and cancel anytime.\n\nThe guarantee covers you when you stay the full 90 days. That is how long it takes to film, test, and let the ads learn.",
   },
   {
     q: "What do you need from me?",
     a: "About an hour the first week. Then send us photos and clips from your phone. We do the rest.",
   },
   {
-    q: "Why only Houston?",
-    a: "We live here. We know which areas are worth your gas. And we can come film you on the job.",
+    q: "Do you only work in Houston?",
+    a: "No. We are Houston-based. Our founder was born and raised here, and we know which areas are worth your gas.\n\nOutside Houston? We fly out to film you on the job.",
   },
   {
     q: "What does it cost?",

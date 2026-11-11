@@ -1,10 +1,11 @@
 // Qualifier questions for the free call (the site booking form).
 // Shared by components/discovery-call.tsx (the form) and app/api/lead/route.ts
 // (which checks every answer against these values).
-// Kept to the three answers that shape the call (Hormozi-style application):
-// what they do, where they are (Houston-based, but we fly out to film anywhere),
-// and whether they can afford it. Ad spend, job size and "biggest problem" are asked on the call.
-// Order: trade -> area -> revenue, then first name + mobile, then the calendar.
+// The free offer is "Your Free Local Ad Plan" (competitor ads, best-client map, job math,
+// first 3 ads written). Five one-tap answers (Hormozi-style application: need, situation,
+// budget), each with a plain "why we ask":
+// trade -> area (to pull competitor ads) -> goal -> where jobs come from now -> ad budget,
+// then first name + mobile (+ optional "biggest headache"), then the calendar.
 // Option values are the stable ids GHL / Meta see. Change labels freely; change
 // values only together with any GHL workflow that reads them.
 
@@ -21,7 +22,7 @@ export const QUALIFIER_QUESTIONS: QualifierQuestion[] = [
   {
     id: "trade",
     label: "What kind of work do you do?",
-    help: "We tailor the call to your trade.",
+    help: "We build your plan for your trade.",
     layout: "tiles",
     options: [
       { value: "roofing", label: "Roofing", icon: "trade-roofing" },
@@ -39,7 +40,7 @@ export const QUALIFIER_QUESTIONS: QualifierQuestion[] = [
   {
     id: "area",
     label: "Where are most of your jobs?",
-    help: "We're based in Houston. Outside Houston? We fly out to film.",
+    help: "So we can pull the ads running in your area. We're Houston-based and fly out to film.",
     options: [
       { value: "houston", label: "Houston" },
       { value: "houston_surrounding", label: "Houston suburbs", note: "Katy, Cypress, Spring, Sugar Land" },
@@ -48,15 +49,38 @@ export const QUALIFIER_QUESTIONS: QualifierQuestion[] = [
     ],
   },
   {
-    id: "revenue",
-    label: "About how much does the business bring in each month?",
-    help: "A ballpark is fine. It stays private and helps us plan the right budget.",
+    id: "goal",
+    label: "What do you want more of?",
+    help: "Your plan is built around this.",
     options: [
-      { value: "under_10k", label: "Under $10,000" },
-      { value: "10k_30k", label: "$10,000 to $30,000" },
-      { value: "30k_60k", label: "$30,000 to $60,000" },
-      { value: "60k_100k", label: "$60,000 to $100,000" },
-      { value: "100k_plus", label: "$100,000 or more" },
+      { value: "more_jobs", label: "More jobs" },
+      { value: "bigger_jobs", label: "Bigger, better-paying jobs" },
+      { value: "steady_work", label: "Steady work all year" },
+      { value: "own_leads", label: "My own leads", note: "Stop paying for shared leads" },
+    ],
+  },
+  {
+    id: "lead_source",
+    label: "Where do most of your jobs come from now?",
+    help: "So we know what to beat.",
+    options: [
+      { value: "referrals", label: "Referrals and word of mouth" },
+      { value: "lead_sites", label: "Angi, Thumbtack, or HomeAdvisor" },
+      { value: "google", label: "Google" },
+      { value: "meta_ads", label: "Facebook or Instagram ads" },
+      { value: "outbound", label: "Door knocking or yard signs" },
+    ],
+  },
+  {
+    id: "ad_budget",
+    label: "How much could you put into ads each month?",
+    help: "A ballpark is fine. It stays private and helps us size your plan.",
+    options: [
+      { value: "not_yet", label: "I don't run ads yet" },
+      { value: "under_1k", label: "Under $1,000" },
+      { value: "1k_2_5k", label: "$1,000 to $2,500" },
+      { value: "2_5k_5k", label: "$2,500 to $5,000" },
+      { value: "5k_plus", label: "$5,000 or more" },
     ],
   },
 ];

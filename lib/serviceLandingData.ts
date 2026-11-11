@@ -113,7 +113,7 @@ export const facebookAdsLanding: ServiceLanding = {
     ],
   },
   steps: [
-    { label: "Day 1", title: "15-minute call", body: "You tell us your trade, your area, and the jobs you want more of. We tell you straight if ads make sense for you." },
+    { label: "Day 1", title: "30-minute plan call", body: "You tell us your trade, your area, and the jobs you want more of. We tell you straight if ads make sense for you." },
     { label: "Days 2–5", title: "We build it", body: "We make your first ads, set up your campaign, and build the lead form and the text-back." },
     { label: "Day 7", title: "Ads go live", body: "Leads start coming to your phone, or to our team if we are booking for you." },
     { label: "Every week", title: "We tune it", body: "We cut what is not working, put more money behind what is, and send you new ads." },
@@ -247,7 +247,7 @@ export const videoProductionLanding: ServiceLanding = {
     ],
   },
   steps: [
-    { label: "Day 1", title: "15-minute call", body: "Tell us your trade and the jobs you want more of. We plan what to film." },
+    { label: "Day 1", title: "30-minute plan call", body: "Tell us your trade and the jobs you want more of. We plan what to film." },
     { label: "Days 2–5", title: "We film and edit", body: "We come to a job, or work from your phone clips, and cut your first videos." },
     { label: "Day 7", title: "Videos go live", body: "Posted on your pages and running as ads to homeowners near you." },
     { label: "Every month", title: "Fresh content", body: "New videos every month so your pages stay active and your ads never go stale." },
@@ -286,7 +286,7 @@ export const videoProductionLanding: ServiceLanding = {
     },
     {
       q: "What does it cost?",
-      a: "It depends on how often we film and whether we run your ads and call your leads. That is what the 15-minute call is for.",
+      a: "It depends on how often we film and whether we run your ads and call your leads. That is what the 30-minute plan call is for.",
     },
   ],
 };

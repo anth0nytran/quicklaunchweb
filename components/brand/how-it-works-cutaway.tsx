@@ -115,7 +115,7 @@ export function HowItWorksCutaway() {
                 ))}
               </ul>
               <button type="button" onClick={() => book("how-it-works")} className={`${primaryBtn} mt-8 hidden px-6 py-3.5 text-[15px] lg:inline-flex`}>
-                Book a Free Call <span aria-hidden="true">&rarr;</span>
+                Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
               </button>
             </div>
           </div>
@@ -145,13 +145,17 @@ export function HowItWorksCutaway() {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                         <p className="font-mono text-[12px] font-semibold tracking-[0.18em] text-[#0866FF]">STEP {s.n}</p>
-                        <p className="rounded-full bg-[#07143F]/[0.05] px-2.5 py-0.5 text-[12.5px] text-[#46516B]">
+                        <p className="hidden whitespace-nowrap rounded-full bg-[#07143F]/[0.05] px-2.5 py-0.5 text-[12.5px] text-[#46516B] sm:block">
                           <span className="font-semibold text-[#07143F]">Your part:</span> {s.part}
                         </p>
                       </div>
                       <h3 className="mt-1.5 text-[22px] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#07143F] sm:text-[26px]">{s.title}</h3>
                     </div>
                   </div>
+                  {/* phones: the "your part" tag gets its own full-width line under the header */}
+                  <p className="mt-3 inline-block whitespace-nowrap rounded-full bg-[#07143F]/[0.05] px-2.5 py-0.5 text-[12.5px] text-[#46516B] sm:hidden">
+                    <span className="font-semibold text-[#07143F]">Your part:</span> {s.part}
+                  </p>
                   <p className="mt-3 text-[17px] leading-[1.55] text-[#46516B]">{s.body}</p>
                   <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
                     {s.get.map((g) => (
@@ -162,8 +166,8 @@ export function HowItWorksCutaway() {
                     ))}
                   </ul>
                   {i === 0 && (
-                    <button type="button" onClick={() => book("how-it-works-step1")} className={`${primaryBtn} mt-5 px-5 py-3 text-[15px]`}>
-                      Start Step 1: Book Your Free Call <span aria-hidden="true">&rarr;</span>
+                    <button type="button" onClick={() => book("how-it-works-step1")} className={`${primaryBtn} mt-5 w-full whitespace-nowrap px-4 py-3 text-[15px] sm:w-auto sm:px-5`}>
+                      <span className="hidden sm:inline">Start Step 1: </span>Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
                     </button>
                   )}
                   {/* How we do it: our own 3-step checklist for this step (shows real know-how, builds trust).
@@ -203,10 +207,10 @@ export function HowItWorksCutaway() {
         <div className="mx-auto mt-14 max-w-[720px] rounded-2xl bg-[#07143F] px-6 py-9 text-center sm:px-10">
           <h3 className="text-[24px] font-extrabold leading-[1.2] tracking-[-0.02em] text-white sm:text-[30px]">Want us to do this for you?</h3>
           <p className="mx-auto mt-3 max-w-[30rem] text-[16px] leading-[1.55] text-white/75 sm:text-[17px]">
-            Book a free 15-minute call. We&apos;ll look at your best jobs and tell you if we can get you more like them.
+            Get your free local ad plan: a full audit of your market. Your competitors&apos; ads on Facebook, Instagram, and Google, where your best jobs come from, and 3 ads written for you. Yours to keep.
           </p>
-          <button type="button" onClick={() => book("how-it-works")} className={`${primaryBtn} mt-6 w-full px-7 py-4 text-[16px] sm:w-auto`}>
-            Book a Free Call <span aria-hidden="true">&rarr;</span>
+          <button type="button" onClick={() => book("how-it-works")} className={`${primaryBtn} mt-6 w-full whitespace-nowrap px-4 py-4 text-[15px] sm:w-auto sm:px-7 sm:text-[16px]`}>
+            Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
           </button>
           <p className="mt-3 text-[13px] text-white/60">Free. No pressure. Takes under a minute to book.</p>
         </div>

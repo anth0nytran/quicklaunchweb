@@ -637,7 +637,7 @@ function StepPanel({ idx, onClose, onGo, onBook, compact = false }: { idx: numbe
               onClick={onBook}
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#0866FF] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(8,102,255,0.8)] transition-colors hover:bg-[#0757DB]"
             >
-              Book a Free Call <span aria-hidden="true">&rarr;</span>
+              Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
             </button>
           ) : (
             <button

@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useBooking } from "@/components/brand/brand-shell";
 import { KitIcon, outlineBtn, primaryBtn } from "@/components/brand/primitives";
 
-const BOOK_LABEL = "Book a Free Call";
+const BOOK_LABEL = "Get My Free Ad Plan";
 
 /**
- * Guide CTA button. With no href it is "Book a Free Call" (via useBooking);
+ * Guide CTA button. With no href it is "Get My Free Ad Plan" (via useBooking);
  * an explicit href is kept as a brand-styled link with its own label.
  * Callers pass hrefs through ctaHref() so old website-offer links become bookings.
  * Hrefs that point at the booking section ("/#book", "/services/automations#book")
@@ -27,7 +27,7 @@ export function GuideCtaButton({
   className?: string;
 }) {
   const book = useBooking();
-  const base = `${variant === "primary" ? primaryBtn : outlineBtn} px-6 py-3.5 text-[16px] ${className}`;
+  const base = `${variant === "primary" ? primaryBtn : outlineBtn} whitespace-nowrap px-5 py-3.5 text-[15px] sm:px-6 sm:text-[16px] ${className}`;
   const arrow = (
     <KitIcon
       name="arrow-right"

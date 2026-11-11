@@ -469,7 +469,7 @@ export function HowItWorksStory({ steps }: { steps: StoryStep[] }) {
             <p className="mt-2 text-[22px] font-extrabold leading-tight tracking-[-0.02em] text-[#07143F]">Ready to launch?</p>
             <p className="mt-2 text-[15px] leading-[1.5] text-[#46516B]">On a free call we map your offer, your areas, and your first ads.</p>
             <a href="#book" className={`${primaryBtn} mt-5 px-6 py-3 text-[15px]`}>
-              Book a Free Call
+              Get My Free Ad Plan
               <span aria-hidden="true">→</span>
             </a>
           </div>

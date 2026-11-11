@@ -277,7 +277,7 @@ function Sections() {
       <CtaBand
         location="engine_cta_band"
         title="Ready for More Booked Jobs?"
-        subtitle="Book a free call. We'll tell you if your trade and area are open."
+        subtitle="Get your free local ad plan, and find out if your trade and area are open."
       />
 
       <DiscoveryCallSection

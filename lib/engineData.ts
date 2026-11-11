@@ -1,7 +1,7 @@
 // Content for the Houston Growth Engine page (the flagship offer).
 // Copy rules: 3rd-grade reading level, short plain lines. Sell more calls,
-// more booked jobs, more money. Video of the real contractor is HOW. No
-// guarantee (the owner chose not to offer one). No price on the site. No
+// more booked jobs, more money. Video of the real contractor is HOW. Guarantee:
+// booked estimates, NO number on the site (components/brand/guarantee.tsx). No price on the site. No
 // invented dollar values or results; proof comes from lib/adResults.ts.
 // Say "our team", never "call center". metaTitle/metaDescription/keywords are
 // SEO fields: change them together with the SEO work, not here.

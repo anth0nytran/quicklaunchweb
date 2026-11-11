@@ -14,18 +14,19 @@ const site = "https://quicklaunchweb.us";
 export function GET() {
   const body = `# QuickLaunchWeb
 
-> QuickLaunchWeb is a Houston, Texas marketing agency for home service businesses (roofers, HVAC, plumbers, electricians, painters, remodelers, fencing, insulation). We run Facebook and Instagram (Meta) ads and short-form video, follow up on every lead in seconds, and our team can qualify leads and book the estimate. We measure ourselves in booked jobs and revenue, not lead counts. We work with one business per trade per area.
+> QuickLaunchWeb is a Houston, Texas marketing agency for home service businesses (roofers, HVAC, plumbers, electricians, painters, remodelers, fencing, insulation). We run Facebook and Instagram (Meta) ads, Google Ads, and short-form video, follow up on every lead in seconds, and our team qualifies leads and books the estimate. We guarantee booked estimates (the number is set on the free plan call based on the trade; if it isn't hit in 90 days, we keep working free until it is). We work with one business per trade per area.
 
 - Location: Houston, TX (service-area business)
 - Service area: ${serviceAreas.join(", ")}, and the rest of the Houston metro
 - Phone / text: +1-832-552-3458
 - Website: ${site}
 - Founder: Anthony Tran
-- How to start: book a free strategy call on the website.
+- How to start: get a free local ad plan on the website (a 30-minute call). It is a full audit: competitors' ads on Facebook, Instagram, and Google, a map of where the business's best jobs come from, job math with a channel recommendation by trade and budget, and the first 3 ads written. The plan is the owner's to keep.
+- Contract: pay 90 days up front and the setup fee is waived, or go month to month with a setup fee and cancel anytime.
 
 ## Services
 
-- [Houston Growth Engine](${site}/houston-growth-engine): flagship done-for-you system. Short-form video, Meta ads aimed at bigger jobs, instant lead follow-up, lead qualifying and appointment setting, CRM follow-up.
+- [Houston Growth Engine](${site}/houston-growth-engine): flagship done-for-you system, started as a 90-Day Booked Jobs Launch. Short-form video filmed on the job, Meta and Google ads chosen by trade and budget, instant lead follow-up, lead qualifying and appointment setting, CRM follow-up. Booked estimates guaranteed.
 - [Facebook & Instagram ads for contractors](${site}/services/facebook-ads): Meta ads run in the client's own ad account, with lead follow-up.
 - [Video marketing for contractors](${site}/services/video-production): on-the-job filming turned into short-form videos and video ads.
 - [AI Search & SEO](${site}/services/web-design): local SEO, Google Maps / Google Business Profile, and AI search (ChatGPT, Perplexity, Gemini) visibility packages with a fast website.

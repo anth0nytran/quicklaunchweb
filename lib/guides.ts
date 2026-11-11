@@ -2599,13 +2599,13 @@ const guides: Guide[] = [
       eyebrow: "Roofer in Houston?",
       description: "We film you on real roofs, run the ads, text every lead, and our team books the estimate.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want more roof replacements, not more tire kickers?",
       description: "Let's talk about your area, your jobs, and what a good month looks like for you.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -2819,13 +2819,13 @@ const guides: Guide[] = [
       eyebrow: "HVAC owner in Houston?",
       description: "We film your techs, run the ads, text every lead, and our team books the visit.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want more system replacements on your calendar?",
       description: "Tell us your area and your best jobs. We will show you how we would run it.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -3038,13 +3038,13 @@ const guides: Guide[] = [
       eyebrow: "Plumber in Houston?",
       description: "We film you on the job, run the ads, text every lead, and our team books the estimate.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want more repipes and water heaters, fewer small callouts?",
       description: "Tell us the jobs you want more of. We will show you how we would go after them.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -3250,13 +3250,13 @@ const guides: Guide[] = [
       eyebrow: "Remodeler in Houston?",
       description: "We film your finished rooms and your crew, run the ads, and our team books the in-home visit.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Ready for fewer small jobs and more full remodels?",
       description: "Let's talk about the jobs you want and the parts of Houston you want to work in.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -3462,13 +3462,13 @@ const guides: Guide[] = [
       eyebrow: "No time to film?",
       description: "We come to your real jobs, film you, and turn it into Facebook and Instagram ads.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want your real work to sell for you?",
       description: "We film you on the job, run the ads, and our team books the estimates.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -3671,13 +3671,13 @@ const guides: Guide[] = [
       eyebrow: "Tired of racing other pros?",
       description: "We run ads with your face and name on them, so the leads are yours. Our team books the estimate.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want leads that are only yours?",
       description: "Let's look at what you get from lead sites now and what your own ads could do instead.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -3869,13 +3869,13 @@ const guides: Guide[] = [
       eyebrow: "Too busy to call back fast?",
       description: "We text every lead right away, and our team calls and books the estimate for you.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want more estimates on your calendar?",
       description: "Let's look at what happens to your leads today, and where jobs slip away.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -4085,13 +4085,13 @@ const guides: Guide[] = [
       eyebrow: "Not sure what to spend?",
       description: "On a free call, we can walk through your numbers and what a budget could look like for your trade.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want a budget built around jobs, not guesses?",
       description: "Bring your average job size and your goals. We will talk it through with you.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -4272,13 +4272,13 @@ const guides: Guide[] = [
       eyebrow: "Comparing agencies?",
       description: "Bring these questions to a free call with us. We will answer every one.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Ask us the hard questions",
       description: "We will tell you how we work, what we track, and whether we are a fit for your company.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -4461,13 +4461,13 @@ const guides: Guide[] = [
       eyebrow: "Plan your next season",
       description: "We film ahead, keep ads ready, and our team books the estimates when demand hits.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Be ready before the next storm",
       description: "Let's plan your ads, videos, and follow-up for the season ahead.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -4661,13 +4661,13 @@ const guides: Guide[] = [
       eyebrow: "Not sure which fits your trade?",
       description: "Tell us your trade and your part of Houston. We will tell you straight where we would start.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want a straight answer for your business?",
-      description: "On a 15-minute call we look at your trade, your job size, and your area, and tell you which ads make sense.",
+      description: "On a 30-minute call we build your free local ad plan: your competitors' ads, your job math, and which ads make sense for your trade and area.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -4845,13 +4845,13 @@ const guides: Guide[] = [
       eyebrow: "Weighing your options?",
       description: "We will tell you honestly if an agency makes sense for you yet, or if you should keep doing it yourself.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Want it done for you?",
       description: "We film you on the job, run your ads, and our team books the estimates. Based in Houston.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [
@@ -5028,13 +5028,13 @@ const guides: Guide[] = [
       eyebrow: "Want real video without the hassle?",
       description: "We come to your Houston job sites, film you and your crew, and turn it into ads.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     ctaBottom: {
       title: "Let's film you on a real job",
       description: "About an hour of your time. We handle the filming, editing, and ads. Based in Houston.",
       href: "/#book",
-      label: "Book a Free Call",
+      label: "Get My Free Ad Plan",
     },
     aside: {
       takeaways: [

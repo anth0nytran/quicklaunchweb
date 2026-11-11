@@ -1927,6 +1927,8 @@ section[data-zoom="1"] .ql-hero-plate {
     gap: 6px;
   }
   .ql-hero .ql-sign-cta button svg { width: 14px; height: 14px; }
+  /* "Get My Free Ad Plan" is longer than "See Our Clients": give it more of the row */
+  .ql-hero .ql-sign-cta button:first-child { flex: 1.5 1 0; }
   /* the big ship, standing on the pad */
   .ql-m-ship {
     left: 50%;
@@ -2011,4 +2013,12 @@ section[data-zoom="1"] .ql-hero-plate {
     transform: translate(-50%, -330%);
     opacity: 0;
   }
+}
+
+/* very small phones (320px): smaller hero buttons, no arrows, so both labels fit */
+@media (max-width: 359px) {
+  .ql-hero .ql-sign-cta button { font-size: 12.5px; padding: 11px 4px; letter-spacing: -0.01em; }
+  .ql-hero .ql-sign-cta button:first-child { flex: 1.3 1 0; }
+  /* the label is a text node; the arrow icon is the only element child */
+  .ql-hero .ql-sign-cta button > * { display: none; }
 }

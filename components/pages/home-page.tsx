@@ -9,6 +9,7 @@ import { ClientLogoGrid } from "@/components/brand/client-logo-grid";
 import { HeroScene, HeroSceneMobile, useHero3D } from "@/components/brand/hero-art";
 import { HowItWorksCutaway } from "@/components/brand/how-it-works-cutaway";
 import { AnimatedIcon } from "@/components/brand/animated-icon";
+import { GuaranteeCard } from "@/components/brand/guarantee";
 import {
   Backdrop,
   Eyebrow,
@@ -27,7 +28,7 @@ import { usePageTracker, useEventTracker } from "@/lib/analytics";
 
 // Home page. Copy rules: 3rd-grade reading level, short lines, plain words.
 // The promise is more calls, more booked jobs, more money. Video of the real
-// contractor on the real job is HOW. Price is only on the call. No guarantee.
+// contractor on the real job is HOW. Price is only on the call. Guarantee = booked estimates (no number on site).
 // Only real numbers (lib/adResults.ts). Never say "call center": say "our team".
 // Section order: hero, what we do, why it works, how it works, proof, why us,
 // FAQ, book a call.
@@ -42,7 +43,7 @@ const heroChecks = ["Houston-based", "One business per trade per area", "You own
 const services: { anim: string; title: string; body: string; href?: string }[] = [
   { anim: "camera", title: "Videos", body: "We film you on your real jobs." },
   { anim: "ads", title: "Facebook & Instagram Ads", body: "We show your videos to Houston homeowners." },
-  { anim: "google", title: "Google", body: "Homeowners find you on Google and Maps.", href: "/services/web-design" },
+  { anim: "google", title: "Google Ads & Maps", body: "Google Ads when your trade and budget fit. Show up on Maps too.", href: "/services/web-design" },
   { anim: "booked", title: "Our Team Books Your Leads", body: "We call, check, and book the job for you." },
   { anim: "texts", title: "Follow-Up Texts", body: "Every lead gets a text in 60 seconds." },
   { anim: "website", title: "Website & CRM", body: "One place to see every lead and every job.", href: "/services/automations" },
@@ -118,7 +119,7 @@ function HomeSections() {
           <div className="ql-sign-cta ql-hero-copy mt-7 lg:mt-0">
             <div className="flex flex-col gap-3 sm:flex-row">
               <button type="button" onClick={() => book("hero")} className={`${primaryBtn} whitespace-nowrap px-7 py-4 text-[16px]`}>
-                Book a Free Call
+                Get My Free Ad Plan
                 <KitIcon name="arrow-right" white className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
               <button type="button" onClick={() => scrollTo("results")} className={`${outlineBtn} whitespace-nowrap bg-white/85 px-7 py-4 text-[16px] backdrop-blur`}>
@@ -209,8 +210,8 @@ function HomeSections() {
           </ul>
 
           <Reveal className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
-            <button type="button" onClick={() => book("services")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
-              Get All of This: Book a Free Call <span aria-hidden="true">&rarr;</span>
+            <button type="button" onClick={() => book("services")} className={`${primaryBtn} w-full whitespace-nowrap px-4 py-4 text-[15px] sm:w-auto sm:px-7 sm:text-[16px]`}>
+              Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
             </button>
             <Link
               href="/houston-growth-engine"
@@ -265,8 +266,12 @@ function HomeSections() {
             </div>
           </Reveal>
 
+          <Reveal delay={0.08} className="mx-auto mt-8 max-w-4xl">
+            <GuaranteeCard />
+          </Reveal>
+
           <Reveal delay={0.1} className="mt-9 flex flex-col items-center gap-3 text-center">
-            <button type="button" onClick={() => book("why-it-works")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
+            <button type="button" onClick={() => book("why-it-works")} className={`${primaryBtn} w-full whitespace-nowrap px-4 py-4 text-[15px] sm:w-auto sm:px-7 sm:text-[16px]`}>
               See If Your Area Is Open <span aria-hidden="true">&rarr;</span>
             </button>
             <p className="text-[14px] text-[#46516B]">We only take one business per trade in each area.</p>
@@ -329,8 +334,8 @@ function HomeSections() {
             </figure>
           </Reveal>
           <Reveal className="mt-8 flex flex-col items-center gap-3 text-center">
-            <button type="button" onClick={() => book("why-us")} className={`${primaryBtn} w-full px-7 py-4 text-[16px] sm:w-auto`}>
-              Check My Area: Book a Free Call <span aria-hidden="true">&rarr;</span>
+            <button type="button" onClick={() => book("why-us")} className={`${primaryBtn} w-full whitespace-nowrap px-4 py-4 text-[15px] sm:w-auto sm:px-7 sm:text-[16px]`}>
+              Get My Free Ad Plan <span aria-hidden="true">&rarr;</span>
             </button>
             <p className="text-[14px] text-[#46516B]">3 quick questions, then pick a time. Under a minute.</p>
           </Reveal>
